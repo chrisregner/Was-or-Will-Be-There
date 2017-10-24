@@ -1,0 +1,6 @@
+{
+  "name:": "MapCmpt",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MapCmpt.js"
+}

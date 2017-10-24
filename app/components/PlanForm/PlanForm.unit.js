@@ -2,15 +2,16 @@ import test from 'ava'
 import React from 'react'
 import { shallow } from 'enzyme'
 import td from 'testdouble'
+import I from 'immutable'
 import D from 'date-fp'
 
 import { smartMergeDeep } from 'services/fpUtils'
-
 
 import PlanForm from './PlanForm'
 
 const mocks = {
   handleSubmit: td.func(),
+  push: td.func(),
   ev: { preventDefault: () => {} },
   inOneDay: new Date(),
   inTenDays: D.add('days', 10, new Date()),
@@ -22,25 +23,42 @@ const setup = (args = {}) => {
   const { props } = args
 
   const defaultProps = {
-    handleSubmit: mocks.handleSubmit
+    handleSubmit: mocks.handleSubmit,
+    history: {
+      push: mocks.push,
+    },
+    match: {
+      params: { countryId: '' }
+    }
   }
   const finalProps = smartMergeDeep(defaultProps, props)
+
 
   return shallow(<PlanForm {...finalProps} />)
 }
 
-test('PlanForm | it should render without error', t => {
+const fillForm = (values, wrapper) => {
+  Object.entries(values).forEach(entry => {
+    const getField = () => wrapper.find(`[data-name='${entry[0]}']`)
+
+    getField().simulate('change', mocks.ev, entry[1])
+  })
+}
+
+test('it should render without error', t => {
   const wrapper = setup()
   const actual = wrapper.exists()
 
   t.true(actual)
 })
 
+test.todo('it should render CountyName with correct props')
+
 /**
  * PlanNameField
  */
 
-test('PlanForm > PlanNameField | it should work', t => {
+test('PlanNameField | it should work', t => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="PlanNameField"]')
 
@@ -53,17 +71,7 @@ test('PlanForm > PlanNameField | it should work', t => {
   t.is(expected, actual)
 })
 
-test.skip('PlanForm > PlanNameField | if NOT filled and submitted, it should NOT call handleSubmit()', t => {
-  const wrapper = setup()
-
-  wrapper.find('form').simulate('submit', mocks.ev)
-
-  t.notThrows(() => {
-    td.verify(mocks.handleSubmit(), { times: 0, ignoreExtraArgs: true })
-  })
-})
-
-test('PlanForm > PlanNameField | if changed to blank, it should show error', t => {
+test('PlanNameField | if changed to blank, it should show error', t => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="PlanNameField"]')
 
@@ -74,7 +82,17 @@ test('PlanForm > PlanNameField | if changed to blank, it should show error', t =
   t.truthy(actual)
 })
 
-test('PlanForm > PlanNameField | if NOT filled and submitted, it should show error', t => {
+test('PlanNameField | if NOT filled and submitted, it should NOT call handleSubmit()', t => {
+  const wrapper = setup()
+
+  wrapper.find('form').simulate('submit', mocks.ev)
+
+  t.notThrows(() => {
+    td.verify(mocks.handleSubmit(), { times: 0, ignoreExtraArgs: true })
+  })
+})
+
+test('PlanNameField | if NOT filled and submitted, it should show error', t => {
   const wrapper = setup()
 
   wrapper.find('form').simulate('submit', mocks.ev)
@@ -85,14 +103,14 @@ test('PlanForm > PlanNameField | if NOT filled and submitted, it should show err
   t.truthy(actual)
 })
 
-test.todo('PlanForm > PlanNameField | it should accept initial value')
-test.todo('PlanForm > PlanNameField | if initial value is provided, it should still be emptiable')
+test.todo('PlanNameField | it should accept initial value')
+test.todo('PlanNameField | if initial value is provided, it should still be emptiable')
 
 /**
  * NotesField
  */
 
-test('PlanForm > NotesField | it should work', t => {
+test('NotesField | it should work', t => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="NotesField"]')
 
@@ -105,14 +123,14 @@ test('PlanForm > NotesField | it should work', t => {
   t.is(expected, actual)
 })
 
-test.todo('PlanForm > NotesField | it should accept initial value')
-test.todo('PlanForm > NotesField | if initial value is provided, it should still be emptiable')
+test.todo('NotesField | it should accept initial value')
+test.todo('NotesField | if initial value is provided, it should still be emptiable')
 
 /**
  * Departure
  */
 
-test('PlanForm > DepartureField | it should work', t => {
+test('DepartureField | it should work', t => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="DepartureField"]')
 
@@ -125,7 +143,7 @@ test('PlanForm > DepartureField | it should work', t => {
   t.is(expected, actual)
 })
 
-test('PlanForm > DepartureField | if HomecomingField is filled, it should have maxDate equal to HomecomingField\'s value', t => {
+test('DepartureField | if HomecomingField is filled, it should have maxDate equal to HomecomingField\'s value', t => {
   const wrapper = setup()
   const getDepartureField = () => wrapper.find('[data-name="DepartureField"]')
   const getHomecomingField = () => wrapper.find('[data-name="HomecomingField"]')
@@ -139,28 +157,14 @@ test('PlanForm > DepartureField | if HomecomingField is filled, it should have m
   t.is(expected, actual)
 })
 
-test.skip('PlanForm > DepartureField | if HomecomingField is filled but it isn\'t, and submitted, it should NOT call handleSubmit()', t => {
-  const wrapper = setup()
-  const getField = () => wrapper.find('[data-name="HomecomingField"]')
-
-  const value = mocks.inOneDay
-  getField().simulate('change', null, value)
-
-  wrapper.find('form').simulate('submit', mocks.ev)
-
-  t.notThrows(() => {
-    td.verify(mocks.handleSubmit(), { times: 0, ignoreExtraArgs: true })
-  })
-})
-
-test.todo('PlanForm > DepartureField | it should accept initial value')
-test.todo('PlanForm > DepartureField | if initial value is provided, it should still be emptiable')
+test.todo('DepartureField | it should accept initial value')
+test.todo('DepartureField | if initial value is provided, it should still be emptiable')
 
 /**
  * Homecoming
  */
 
-test('PlanForm > HomecomingField | it should work', t => {
+test('HomecomingField | it should work', t => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="HomecomingField"]')
 
@@ -173,7 +177,7 @@ test('PlanForm > HomecomingField | it should work', t => {
   t.is(expected, actual)
 })
 
-test('PlanForm > HomecomingField | if DepartureField is filled, it should have minDate equal to DepartureField\'s value', t => {
+test('HomecomingField | if DepartureField is filled, it should have minDate equal to DepartureField\'s value', t => {
   const wrapper = setup()
   const getHomecomingField = () => wrapper.find('[data-name="HomecomingField"]')
   const getDepartureField = () => wrapper.find('[data-name="DepartureField"]')
@@ -187,56 +191,59 @@ test('PlanForm > HomecomingField | if DepartureField is filled, it should have m
   t.is(expected, actual)
 })
 
-test.skip('PlanForm > HomecomingField | if DepartureField is filled but it isn\'t, and submitted, it should NOT call handleSubmit()', t => {
-  const wrapper = setup()
-  const getField = () => wrapper.find('[data-name="DepartureField"]')
-
-  const value = mocks.inOneDay
-  getField().simulate('change', null, value)
-
-  wrapper.find('form').simulate('submit', mocks.ev)
-
-  t.notThrows(() => {
-    td.verify(mocks.handleSubmit(), { times: 0, ignoreExtraArgs: true })
-  })
-})
-
-test.todo('PlanForm > HomecomingField | it should accept initial value')
-test.todo('PlanForm > HomecomingField | if initial value is provided, it should still be emptiable')
+test.todo('HomecomingField | it should accept initial value')
+test.todo('HomecomingField | if initial value is provided, it should still be emptiable')
 
 /**
  * OnSubmit
  */
 
-const fillForm = (values, wrapper) => {
-  Object.entries(values).forEach(entry => {
-    const getField = () => wrapper.find(`[data-name='${entry[0]}']`)
-
-    getField().simulate('change', mock.ev, entry[1])
-  })
-}
-
-test.skip('PlanForm.OnSubmit() | if form is valid, it should call handleSubmit() with trimmed data', () => {
+test('.OnSubmit() | if form is valid, it should call handleSubmit() with trimmed data', t => {
   const values = {
     PlanNameField: '  Sample Spaceous Name  ',
-    NotesNameField: `
+    NotesField: `
       Sample Spaceous Note
     `,
     DepartureField: mocks.inOneDay,
-    Homecoming: mocks.inTenDays,
+    HomecomingField: mocks.inTenDays,
   }
   const wrapper = setup()
 
   fillForm(values, wrapper)
+  wrapper.find('form').simulate('submit', mocks.ev)
 
-  const expectedArgs = {
+  const expectedArg = I.Map({
     planName: 'Sample Spaceous Name',
     notes: 'Sample Spaceous Note',
     departure: mocks.inOneDay,
     homecoming: mocks.inTenDays,
-  }
+  })
 
   t.notThrows(() => {
-    td.verify(mocks.handleSubmit(expectedArgs), { times: 1 })
+    td.verify(mocks.handleSubmit(expectedArg), { times: 1 })
   })
+})
+
+test('.OnSubmit() | if form is valid, it should call history.push() with correct args', t => {
+  const testWithVar = countryId => {
+    const props = {
+      match: {
+        params: { countryId }
+      }
+    }
+    const wrapper = setup({ props })
+
+    fillForm({ PlanNameField: 'Sample Plan Name' }, wrapper)
+    wrapper.find('form').simulate('submit', mocks.ev)
+
+    const expectedArg = `/countries/${countryId}`
+
+    t.notThrows(() => {
+      td.verify(mocks.push(expectedArg), { times: 1 })
+    })
+  }
+
+  testWithVar('PH')
+  testWithVar('US')
+  testWithVar('JP')
 })

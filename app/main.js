@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import App from 'components/App'
 
@@ -9,9 +8,7 @@ import App from 'components/App'
 const render = Component => {
   ReactDOM.render(
     <AppContainer>
-      <MuiThemeProvider>
-        <Component />
-      </MuiThemeProvider>
+      <Component />
     </AppContainer>,
     document.getElementById('root'),
   )

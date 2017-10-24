@@ -20,8 +20,16 @@ module.exports = {
     // Location of static assets (e.g. HTML file)
     contentBase: resolve(__dirname, 'dist'),
 
-    // must be the same as output.publicPath, necessary for live editing
+    // Must be the same as output.publicPath, necessary for live editing
     publicPath: '/js/',
+  },
+
+  // Solution for request/request-promise issue
+  node: {
+    console: true,
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
   },
 
   // TODO: should be 'source-map' if prod
@@ -49,7 +57,8 @@ module.exports = {
       {
         test: /\.css$/,
         use: [ 'style-loader', 'css-loader' ]
-      }
+      },
+      { test: /\.json$/, loader: 'json-loader' },
     ]
   },
   resolve: {

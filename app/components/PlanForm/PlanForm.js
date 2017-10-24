@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import IPropTypes from 'react-immutable-proptypes'
 import PropTypes from 'prop-types'
 import requiredIf from 'react-required-if'
@@ -7,6 +8,10 @@ import * as R from 'ramda'
 
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
+import RaisedButton from 'material-ui/RaisedButton'
+
+import { trimIfString } from 'services/fpUtils'
+import CountryName from 'components/countryName'
 
 const validationRules = {
   planName: planName => !planName && 'Plan name is required'
@@ -20,7 +25,15 @@ class PlanForm extends React.Component {
       notes: PropTypes.string,
       departure: requiredIf(PropTypes.instanceOf(Date), props => !!props.homecoming),
       homecoming: requiredIf(PropTypes.instanceOf(Date), props => !!props.departure),
-    })
+    }),
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        countryId: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
   }
 
   state = {
@@ -56,7 +69,24 @@ class PlanForm extends React.Component {
       return errorsAcc
     }, {})
 
+    const isFormValid = !Object.values(errors)
+      .find(error => !!error)
+
     this.setState({ errors })
+
+    if (isFormValid) {
+      const {
+        handleSubmit,
+        history,
+        match,
+      } = this.props
+      const values = this.state.values
+      const trimmedValues = values.map(trimIfString)
+
+      handleSubmit(trimmedValues)
+      history.push(`/countries/${match.params.countryId}`)
+      // call success snackbar
+    }
   }
 
   render = () => {
@@ -64,7 +94,9 @@ class PlanForm extends React.Component {
 
     return (
       <form onSubmit={this.handleSubmit}>
+        <CountryName countryId={'ph'} />
         <TextField
+          className="field db--i"
           data-name="PlanNameField"
           floatingLabelText="Plan Name"
           onChange={this.handleChangePlanName}
@@ -72,6 +104,7 @@ class PlanForm extends React.Component {
           errorText={errors.planName || ''}
         />
         <TextField
+          className="field db--i"
           data-name="NotesField"
           floatingLabelText="Notes"
           onChange={this.handleChangeNotes}
@@ -80,6 +113,7 @@ class PlanForm extends React.Component {
           rowsMax={4}
         />
         <DatePicker
+          className="field"
           data-name="DepartureField"
           floatingLabelText="Departure Date"
           onChange={this.handleChangeDeparture}
@@ -89,12 +123,19 @@ class PlanForm extends React.Component {
           maxDate={values.get('homecoming')}
         />
         <DatePicker
+          className="field"
           data-name="HomecomingField"
           floatingLabelText="Homecoming Date"
           onChange={this.handleChangeHomecoming}
           value={values.get('homecoming')}
           errorText={errors.homecoming || ''}
           minDate={values.get('departure')}
+        />
+        <RaisedButton
+          className='mt3'
+          primary={true}
+          label="Submit"
+          type="submit"
         />
       </form>
     )

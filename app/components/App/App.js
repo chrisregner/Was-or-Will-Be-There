@@ -1,12 +1,57 @@
 import React from 'react'
+import styled from 'styled-components'
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import Paper from 'material-ui/Paper'
 
 import 'tachyons/css/tachyons.css'
+import './App.css'
+import Nav from 'components/Nav'
+import MapCmpt from 'components/MapCmpt'
 import PlanForm from 'components/PlanForm'
 
+const Wrapper = styled.div`
+  min-width: 300px;
+`
+
+const MapWrpr = styled.div`
+  z-index: -1;
+  top: 48px;
+  height: calc(100vh - 48px);
+`
+
+const Overlay = styled.div`
+  min-height: calc(100vh - 48px);
+  background-color: rgba(0, 0, 0, 0.54);
+`
+
+const muiTheme = getMuiTheme({
+  appBar: {
+    height: 48,
+  },
+})
+
 const App = () => (
-  <div>
-    <PlanForm handleSubmit={() => {}} />
-  </div>
+  <MuiThemeProvider muiTheme={muiTheme}>
+    <Wrapper className='min-vh-100'>
+      <Nav />
+      <MapWrpr className='fixed right-0 left-0 bottom-0'>
+        <MapCmpt />
+      </MapWrpr>
+      <Overlay className='pa2'>
+        <Paper className='pa2'>
+          <PlanForm
+            handleSubmit={() => {}}
+            history={{ push: () => {} }}
+            match={{
+              params: { countryId: '' }
+            }}
+          />
+        </Paper>
+      </Overlay>
+    </Wrapper>
+  </MuiThemeProvider>
 )
 
 export default App

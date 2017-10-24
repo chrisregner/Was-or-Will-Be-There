@@ -1,0 +1,6 @@
+{
+  "name:": "CountryName",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CountryName.js"
+}

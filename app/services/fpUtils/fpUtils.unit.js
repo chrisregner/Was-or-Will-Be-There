@@ -16,6 +16,62 @@ test('smartMergeDeep() | if the second arg is undefined, it should return the fi
   t.is(actual, expected)
 })
 
+/**
+ * trimIfString()
+ */
+
+const { trimIfString } = fpUtils
+
+test('trimIfString() | if the arg is string, it should trim and return it', t => {
+  const actual = trimIfString('   Spaceous String   ')
+  const expected = 'Spaceous String'
+
+  t.is(actual, expected)
+})
+
+test('smartMergeDeep() | it should deep merge reqular objects', t => {
+  const firstObj = {
+    a: 'a',
+    b: {
+      c: 'c',
+    },
+    d: 'd',
+  }
+  const secondObj = {
+    d: 4,
+    b: {
+      c: 3,
+      e: 5,
+    }
+  }
+  const actual = smartMergeDeep(firstObj, secondObj)
+  const expected = {
+    a: 'a',
+    b: {
+      c: 3,
+      e: 5,
+    },
+    d: 4
+  }
+
+  t.deepEqual(actual, expected)
+})
+
+test('trimIfString() | if the arg is NOT string, it should just return it', t => {
+  const testWithVar = (arg) => {
+    const actual = trimIfString(arg)
+    const expected = arg
+
+    // if (typeof arg === 'object')
+    //   t.deepEqual(actual, expected)
+    // else
+      t.is(actual, expected)
+  }
+
+  testWithVar(123)
+  testWithVar({ foo: 'bar' })
+  testWithVar(['a', 'b', 'c'])
+})
 
 /**
  * switchVals()
@@ -79,32 +135,4 @@ test('smartMergeDeep() | if the second arg is undefined, it should return the fi
 //   const res = myFunc('fooArg')
 
 //   t.is(res, null)
-// })
-
-// test('fpUtils.smartMergeDeep() | it should deep merge reqular objects', t => {
-//   const firstObj = {
-//     a: 'a',
-//     b: {
-//       c: 'c',
-//     },
-//     d: 'd',
-//   }
-//   const secondObj = {
-//     d: 4,
-//     b: {
-//       c: 3,
-//       e: 5,
-//     }
-//   }
-//   const actual = smartMergeDeep(firstObj, secondObj)
-//   const expected = {
-//     a: 'a',
-//     b: {
-//       c: 3,
-//       e: 5,
-//     },
-//     d: 4
-//   }
-
-//   t.deepEqual(actual, expected)
 // })
