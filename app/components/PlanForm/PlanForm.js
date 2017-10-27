@@ -9,8 +9,9 @@ import * as R from 'ramda'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import RaisedButton from 'material-ui/RaisedButton'
+import Paper from 'material-ui/Paper'
 
-import { trimIfString } from 'services/fpUtils'
+import * as FU from 'services/functionalUtils'
 import CountryName from 'components/countryName'
 
 const validationRules = {
@@ -81,7 +82,7 @@ class PlanForm extends React.Component {
         match,
       } = this.props
       const values = this.state.values
-      const trimmedValues = values.map(trimIfString)
+      const trimmedValues = values.map(FU.trimIfString)
 
       handleSubmit(trimmedValues)
       history.push(`/countries/${match.params.countryId}`)
@@ -90,15 +91,31 @@ class PlanForm extends React.Component {
   }
 
   render = () => {
+    const countryId = this.props.match.params.countryId
     const { values, errors } = this.state
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <CountryName countryId={'ph'} />
+        <div className='flex'>
+          <Paper className='self-center w2' rounded={false}>
+            <img
+              className='db'
+              src={`https://cdn.rawgit.com/hjnilsson/country-flags/master/svg/${countryId}.svg`}
+              alt='Country Flag'
+            />
+          </Paper>
+          <CountryName
+            data-name='CountryName'
+            className='flex-grow-1 ma0 pl2 f4 lh-title fw5'
+            wrapperEl='h2'
+            countryId={countryId}
+          />
+        </div>
         <TextField
           className="field db--i"
           data-name="PlanNameField"
-          floatingLabelText="Plan Name"
+          floatingLabelText="Plan Name*"
+          floatingLabelFixed={true}
           onChange={this.handleChangePlanName}
           value={values.get('planName') || ''}
           errorText={errors.planName || ''}
@@ -107,6 +124,7 @@ class PlanForm extends React.Component {
           className="field db--i"
           data-name="NotesField"
           floatingLabelText="Notes"
+          floatingLabelFixed={true}
           onChange={this.handleChangeNotes}
           value={values.get('notes') || ''}
           multiLine={true}
@@ -116,6 +134,7 @@ class PlanForm extends React.Component {
           className="field"
           data-name="DepartureField"
           floatingLabelText="Departure Date"
+          floatingLabelFixed={true}
           onChange={this.handleChangeDeparture}
           value={values.get('departure')}
           errorText={errors.departure || ''}
@@ -126,6 +145,7 @@ class PlanForm extends React.Component {
           className="field"
           data-name="HomecomingField"
           floatingLabelText="Homecoming Date"
+          floatingLabelFixed={true}
           onChange={this.handleChangeHomecoming}
           value={values.get('homecoming')}
           errorText={errors.homecoming || ''}

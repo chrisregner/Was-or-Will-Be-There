@@ -1,0 +1,6 @@
+{
+  "name:": "PlansAndJournals",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PlansAndJournals.js"
+}

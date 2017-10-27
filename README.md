@@ -1,18 +1,17 @@
 ## Current
 
-- http://rawgit.com/user/repo/branch/file.js
-- https://raw.githubusercontent.com/hjnilsson/country-flags/master/svg/ad.svg
-- https://raw.githubusercontent.com/hjnilsson/country-flags/master/countries.json
+- AddPlanForm
+- setup routes
+- make sure AddPlanForm works
 
-- CountryInfoLoader
-  - show loading
-  - load name and image url
-    - show the component
-    - OR show error
+- **now** route transition
+  - save paper heights in for each paper route
+  - use the highest paper height as paper height,
+  - animate the paper height as well
 
-- PlanForm
-  - render Name and Country Pic
-
+- snackbar component and container
+- integration test
+- configure linter
 
 ---
 
@@ -75,3 +74,4 @@
 
 - css prefixes/polyfills
 - production optimization
+- **important** change rawgit links as per rawgit.com for production

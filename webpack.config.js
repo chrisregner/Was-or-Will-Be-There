@@ -64,7 +64,9 @@ module.exports = {
   resolve: {
     alias: {
       components: resolve(__dirname, 'app/components'),
+      containers: resolve(__dirname, 'app/containers'),
       services: resolve(__dirname, 'app/services'),
+      state: resolve(__dirname, 'app/state'),
     },
   },
 }

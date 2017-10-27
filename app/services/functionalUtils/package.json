@@ -1,0 +1,6 @@
+{
+  "name:": "functionalUtils",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./functionalUtils.js"
+}

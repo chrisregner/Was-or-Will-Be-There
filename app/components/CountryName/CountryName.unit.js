@@ -1,78 +1,169 @@
-import test from 'ava'
+import test from 'tape'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { shallow, mount } from 'enzyme'
 import td from 'testdouble'
+import isSubset from 'is-subset'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
-import { smartMergeDeep } from 'services/fpUtils'
-
+import * as IU from 'services/immutablejsUtils'
 import { CountryNameShell } from './CountryName'
 
-const fakePromise = td.object(['then', 'catch'])
-const fakeRequestPromise = td.func()
+const any = td.matchers.anything()
+const fake = {
+  requestPromise: td.func(),
+  promise: {
+    then: () => fake.promise,
+    catch: () => fake.promise,
+  }
+}
 
 const setup = (args = {}) => {
-  const any = td.matchers.anything()
-
   td.reset()
-  td.when(fakeRequestPromise(any))
-    .thenReturn(fakePromise)
-  td.when(fakePromise.then(any))
-    .thenReturn(fakePromise)
-  td.when(fakePromise.catch(any))
-    .thenReturn(fakePromise)
+  td.when(fake.requestPromise(any))
+    .thenReturn(fake.promise)
 
-  const { props, deps, useMount } = args
+  const { props, deps, useMount, beforeRender } = args
 
   const defaultProps = {
     countryId: '',
   }
   const defaultDeps = {
-    requestPromise: fakeRequestPromise,
+    requestPromise: fake.requestPromise,
   }
 
-  const finalProps = smartMergeDeep(defaultProps, props)
-  const finalDeps = smartMergeDeep(defaultDeps, deps)
+  const finalProps = IU.smartMergeDeep(defaultProps, props)
+  const finalDeps = IU.smartMergeDeep(defaultDeps, deps)
   const CountryName = CountryNameShell(finalDeps)
-  const renderer = useMount ? mount : shallow
+  const theNode = (<CountryName {...finalProps} />)
+  if (beforeRender) beforeRender()
 
-  return renderer(<CountryName {...finalProps} />)
+  if (useMount)
+    return mount(theNode, {
+      context: { muiTheme: getMuiTheme() },
+      childContextTypes: { muiTheme: PropTypes.object }
+    })
+
+  return shallow(theNode)
 }
 
-test('it should render without error', t => {
+test('CountryName | it should render without error', t => {
   const wrapper = setup()
   const actual = wrapper.exists()
+  const expected = true
 
-  t.true(actual)
+  t.is(actual, expected)
+  t.end()
 })
 
-test('it should call fetch()', t => {
+test('CountryName | it should call fetch()', t => {
   const wrapper = setup({ useMount: true })
 
-  t.notThrows(() => {
-    td.verify(fakeRequestPromise(), { times: 1, ignoreExtraArgs: true })
+  t.doesNotThrow(() => {
+    td.verify(fake.requestPromise(), { times: 1, ignoreExtraArgs: true })
   })
+  t.end()
 })
 
-test('if fetch is still loading, should show loader', t => {
+test('CountryName | if fetch is still loading, should show loader', t => {
   const wrapper = setup({ useMount: true })
   const loaderWrpr = () => wrapper.find('[data-name="loader"]')
 
   const actual = loaderWrpr().exists()
+  const expected = true
 
-  t.true(actual)
+  t.is(actual, expected)
+  t.end()
 })
 
-test('if fetch is resolved, should show the country name', t => {
+test('CountryName | if fetch is resolved, should show the country name', t => {
+  t.plan(3)
+
   const testWithVars = (countryId, countryName) => {
-    const prop = { countryId }
-    const wrapper = setup({ useMount: true, prop })
+    const props = { countryId }
+    const wrapper = setup({
+      useMount: true,
+      props,
+      beforeRender: () => {
+        td.when(fake.requestPromise(any))
+          .thenResolve(`{"${countryId.toUpperCase()}":"${countryName}"}`)
+      },
+    })
 
-    // ...
-    // TRY thenCatch/thenReturn
-    // OR TRY td.matchers.captor()
+    const actual = wrapper.text().includes(countryName)
+    const expected = true
+
+    t.is(actual, expected)
   }
+
+  testWithVars('ph', 'Philippines')
+  testWithVars('us', 'United States of America')
+  testWithVars('jp', 'Japan')
 })
 
-test.todo('if fetch is rejected, should show the country code')
-test.todo('if fetch is rejected, should show a info button')
-test.todo('if info button is clicked, it should toggle the popover')
+// We have issues related with SVG, material-ui, and JSDOM. Watch out on these for he meanwhile:
+//   https://github.com/callemall/material-ui/issues/8643
+//   https://github.com/tmpvar/jsdom/pull/2011
+test.skip('CountryName | if fetch is rejected, should show the country code', t => {
+  t.plan(3)
+
+  const testWithVars = (countryId) => {
+    const props = { countryId }
+    const wrapper = setup({
+      useMount: true,
+      props,
+      beforeRender: () => {
+        td.replace(console, 'error') // silence logs from the component
+        td.when(fake.requestPromise(any))
+          .thenReject()
+      },
+    })
+
+    const actual = wrapper.text().includes(countryId.toUpperCase())
+    const expected = true
+
+    t.is(actual, expected)
+  }
+
+  testWithVars('ph')
+  testWithVars('us')
+  testWithVars('jp')
+})
+
+test.skip('CountryName | if fetch is rejected, it should show an info button')
+test.skip('CountryName | if fetch is rejected and info button is clicked, it toggle the info popover')
+test.skip('CountryName | if fetch is rejected, it should NOT fire the click handler twice on first and subsequent key presses of enter and space key')
+test.skip('CountryName | if fetch is rejected, it should render an info popover containing the error message')
+
+test('CountryName | if wrapper element is specified, it should use it', t => {
+  t.plan(3)
+
+  const testWithVar = (wrapperEl) => {
+    const props = { wrapperEl }
+    const wrapper = setup({ props })
+
+    const actual = wrapper.is(wrapperEl)
+    const expected = true
+
+    t.is(actual, expected)
+  }
+
+  testWithVar('div')
+  testWithVar('h1')
+  testWithVar('p')
+})
+
+test('CountryName | it should pass the other props to the wrapper', t => {
+  const props = {
+    id: 'sample-id',
+    'data-foo': 'bar'
+  }
+  const wrapper = setup({ props })
+  const computedProps = wrapper.props()
+
+  const actual = isSubset(computedProps, props)
+  const expected = true
+
+  t.is(actual, expected)
+  t.end()
+})

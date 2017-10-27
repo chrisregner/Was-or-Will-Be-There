@@ -1,4 +1,4 @@
-import test from 'ava'
+import test from 'tape'
 import React from 'react'
 import { shallow } from 'enzyme'
 
@@ -8,9 +8,11 @@ const setup = () => {
   return shallow(<App />)
 }
 
-test('it should render without error', t => {
+test('App | it should render without error', t => {
   const wrapper = setup()
   const actual = wrapper.exists()
+  const expected = true
 
-  t.true(actual)
+  t.is(actual, expected)
+  t.end()
 })
