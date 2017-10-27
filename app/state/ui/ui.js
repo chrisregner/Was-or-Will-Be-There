@@ -7,7 +7,7 @@ const newPlanMsg = 'We have a new plan!'
 const defaultState = I.Map({
   snackbar: {
     isVisible: false,
-    message: ''
+    message: '',
   },
   paperHeights: {},
 })
@@ -37,12 +37,12 @@ const uiReducer = handleActions({
   [fromPlans.ADD_PLAN]: (state, { payload }) =>
     state.set('snackbar', new I.Map({
       isVisible: true,
-      message: newPlanMsg
+      message: newPlanMsg,
     })),
   [HIDE_SNACKBAR]: (state, { payload }) =>
     state.setIn(['snackbar', 'isVisible'], false),
   [SET_PAPER_HEIGHT]: (state, { payload }) =>
-    state.setIn(['paperHeights', payload.paperName], payload.height)
+    state.setIn(['paperHeights', payload.paperName], payload.height),
 }, defaultState)
 
 export default uiReducer

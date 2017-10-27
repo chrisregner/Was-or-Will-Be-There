@@ -1,3 +1,5 @@
+/* eslint-disable node/no-deprecated-api */
+
 import Enzyme from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import td from 'testdouble'
@@ -40,5 +42,5 @@ copyProps(window, global)
 
 /* Configure testdouble */
 td.config({
-  promiseConstructor: SynchronousPromise
+  promiseConstructor: SynchronousPromise,
 })

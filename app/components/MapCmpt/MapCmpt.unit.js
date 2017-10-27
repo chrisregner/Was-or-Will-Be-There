@@ -1,28 +1,18 @@
 import test from 'tape'
-import React from 'react'
-import { shallow } from 'enzyme'
-import td from 'testdouble'
 
-import * as IU from 'services/immutablejsUtils'
-
+import * as Tu from 'services/testUtils'
 import MapCmpt from './MapCmpt'
 
-const setup = (args = {}) => {
-  td.reset()
+const setup = Tu.makeTestSetup({
+  Component: MapCmpt,
+})
 
-  const { props } = args
-
-  const defaultProps = {}
-  const finalProps = IU.smartMergeDeep(defaultProps, props)
-
-  return shallow(<MapCmpt {...finalProps} />)
-}
-
-test('MapCmpt | it should render without error', t => {
+test('it should render without error', t => {
   const wrapper = setup()
+
   const actual = wrapper.exists()
   const expected = true
 
-  t.is(actual, expected)
+  t.true(actual, expected)
   t.end()
 })

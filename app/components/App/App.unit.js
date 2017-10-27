@@ -1,18 +1,18 @@
 import test from 'tape'
-import React from 'react'
-import { shallow } from 'enzyme'
 
+import * as Tu from 'services/testUtils'
 import App from './App'
 
-const setup = () => {
-  return shallow(<App />)
-}
+const setup = Tu.makeTestSetup({
+  Component: App,
+})
 
-test('App | it should render without error', t => {
+test('it should render without error', t => {
   const wrapper = setup()
+
   const actual = wrapper.exists()
   const expected = true
 
-  t.is(actual, expected)
+  t.true(actual, expected)
   t.end()
 })

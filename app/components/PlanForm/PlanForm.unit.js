@@ -1,47 +1,44 @@
 import test from 'tape'
-import React from 'react'
-import { shallow } from 'enzyme'
 import td from 'testdouble'
 import I from 'immutable'
 import D from 'date-fp'
 
-import * as IU from 'services/immutablejsUtils'
+import * as Tu from 'services/testUtils'
 
-import PlanForm from './PlanForm'
+import { BarePlanForm as PlanForm } from './PlanForm'
 
-const mocks = {
+const mockFn = {
   handleSubmit: td.func(),
   push: td.func(),
+}
+
+const mockData = {
   ev: { preventDefault: () => {} },
   inOneDay: new Date(),
   inTenDays: D.add('days', 10, new Date()),
 }
 
-const setup = (args = {}) => {
-  td.reset()
-
-  const { props } = args
-
-  const defaultProps = {
-    handleSubmit: mocks.handleSubmit,
-    history: {
-      push: mocks.push,
-    },
-    match: {
-      params: { countryId: '' }
-    }
-  }
-  const finalProps = IU.smartMergeDeep(defaultProps, props)
-
-
-  return shallow(<PlanForm {...finalProps} />)
+const defaultProps = {
+  handleSubmit: mockFn.handleSubmit,
+  history: {
+    push: mockFn.push,
+  },
+  match: {
+    params: { countryId: '' },
+  },
 }
+
+const setup = Tu.makeTestSetup({
+  Component: PlanForm,
+  tools: ['mui', 'td'],
+  defaultProps,
+})
 
 const fillForm = (values, wrapper) => {
   Object.entries(values).forEach(entry => {
     const getField = () => wrapper.find(`[data-name='${entry[0]}']`)
 
-    getField().simulate('change', mocks.ev, entry[1])
+    getField().simulate('change', mockData.ev, entry[1])
   })
 }
 
@@ -64,8 +61,8 @@ test('PlanForm | it should render CountyName with correct props', t => {
   const testWithVar = countryId => {
     const props = {
       match: {
-        params: { countryId }
-      }
+        params: { countryId },
+      },
     }
     const wrapper = setup({ props })
     const countryNameWrpr = wrapper.find('[data-name="CountryName"]')
@@ -87,8 +84,8 @@ test('PlanForm | it should render the correct country flag', t => {
   const testWithVar = countryId => {
     const props = {
       match: {
-        params: { countryId }
-      }
+        params: { countryId },
+      },
     }
     const wrapper = setup({ props })
     const countryFlagWrpr = wrapper.find(`[src="https://cdn.rawgit.com/hjnilsson/country-flags/master/svg/${countryId}.svg"]`)
@@ -137,10 +134,10 @@ test('PlanForm > PlanNameField | if changed to blank, it should show error', t =
 test('PlanForm > PlanNameField | if NOT filled and submitted, it should NOT call handleSubmit()', t => {
   const wrapper = setup()
 
-  wrapper.find('form').simulate('submit', mocks.ev)
+  wrapper.find('form').simulate('submit', mockData.ev)
 
   t.doesNotThrow(() => {
-    td.verify(mocks.handleSubmit(), { times: 0, ignoreExtraArgs: true })
+    td.verify(mockFn.handleSubmit(), { times: 0, ignoreExtraArgs: true })
   })
   t.end()
 })
@@ -148,7 +145,7 @@ test('PlanForm > PlanNameField | if NOT filled and submitted, it should NOT call
 test('PlanForm > PlanNameField | if NOT filled and submitted, it should show error', t => {
   const wrapper = setup()
 
-  wrapper.find('form').simulate('submit', mocks.ev)
+  wrapper.find('form').simulate('submit', mockData.ev)
 
   const getField = () => wrapper.find('[data-name="PlanNameField"]')
   const actual = getField().prop('errorText')
@@ -189,7 +186,7 @@ test('PlanForm > DepartureField | it should work', t => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="DepartureField"]')
 
-  const value = mocks.inOneDay
+  const value = mockData.inOneDay
   getField().simulate('change', null, value)
 
   const expected = value
@@ -204,7 +201,7 @@ test('PlanForm > DepartureField | if HomecomingField is filled, it should have m
   const getDepartureField = () => wrapper.find('[data-name="DepartureField"]')
   const getHomecomingField = () => wrapper.find('[data-name="HomecomingField"]')
 
-  const value = mocks.inOneDay
+  const value = mockData.inOneDay
   getHomecomingField().simulate('change', null, value)
 
   const expected = value
@@ -225,7 +222,7 @@ test('PlanForm > HomecomingField | it should work', t => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="HomecomingField"]')
 
-  const value = mocks.inOneDay
+  const value = mockData.inOneDay
   getField().simulate('change', null, value)
 
   const expected = value
@@ -240,7 +237,7 @@ test('PlanForm > HomecomingField | if DepartureField is filled, it should have m
   const getHomecomingField = () => wrapper.find('[data-name="HomecomingField"]')
   const getDepartureField = () => wrapper.find('[data-name="DepartureField"]')
 
-  const value = mocks.inOneDay
+  const value = mockData.inOneDay
   getDepartureField().simulate('change', null, value)
 
   const expected = value
@@ -263,23 +260,23 @@ test('PlanForm > .OnSubmit() | if form is valid, it should call handleSubmit() w
     NotesField: `
       Sample Spaceous Note
     `,
-    DepartureField: mocks.inOneDay,
-    HomecomingField: mocks.inTenDays,
+    DepartureField: mockData.inOneDay,
+    HomecomingField: mockData.inTenDays,
   }
   const wrapper = setup()
 
   fillForm(values, wrapper)
-  wrapper.find('form').simulate('submit', mocks.ev)
+  wrapper.find('form').simulate('submit', mockData.ev)
 
   const expectedArg = I.Map({
     planName: 'Sample Spaceous Name',
     notes: 'Sample Spaceous Note',
-    departure: mocks.inOneDay,
-    homecoming: mocks.inTenDays,
+    departure: mockData.inOneDay,
+    homecoming: mockData.inTenDays,
   })
 
   t.doesNotThrow(() => {
-    td.verify(mocks.handleSubmit(expectedArg), { times: 1 })
+    td.verify(mockFn.handleSubmit(expectedArg), { times: 1 })
   })
   t.end()
 })
@@ -290,18 +287,18 @@ test('PlanForm > .OnSubmit() | if form is valid, it should call history.push() w
   const testWithVar = countryId => {
     const props = {
       match: {
-        params: { countryId }
-      }
+        params: { countryId },
+      },
     }
     const wrapper = setup({ props })
 
     fillForm({ PlanNameField: 'Sample Plan Name' }, wrapper)
-    wrapper.find('form').simulate('submit', mocks.ev)
+    wrapper.find('form').simulate('submit', mockData.ev)
 
     const expectedArg = `/countries/${countryId}`
 
     t.doesNotThrow(() => {
-      td.verify(mocks.push(expectedArg), { times: 1 })
+      td.verify(mockFn.push(expectedArg), { times: 1 })
     })
   }
 

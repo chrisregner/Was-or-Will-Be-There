@@ -1,22 +1,11 @@
 import test from 'tape'
-import React from 'react'
-import { shallow } from 'enzyme'
-import td from 'testdouble'
 
-import * as IU from 'services/immutablejsUtils'
-
+import * as Tu from 'services/testUtils'
 import Xxx from './Xxx'
 
-const setup = (args = {}) => {
-  td.reset()
-
-  const { props } = args
-
-  const defaultProps = {}
-  const finalProps = IU.smartMergeDeep(defaultProps, props)
-
-  return shallow(<Xxx {...finalProps} />)
-}
+const setup = Tu.makeTestSetup({
+  Component: Xxx,
+})
 
 test('it should render without error', t => {
   const wrapper = setup()

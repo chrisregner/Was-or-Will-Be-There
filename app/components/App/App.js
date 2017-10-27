@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Route } from 'react-router-dom'
-import { AnimatedSwitch } from 'react-router-transition';
+import { AnimatedSwitch } from 'react-router-transition'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
@@ -50,22 +50,22 @@ const App = () => (
         <MapCmpt />
       </MapWrpr>
 
-      <Route path="/countries/:countryId" render={() => (
+      <Route path='/countries/:countryId' render={() => (
         <Overlay className='relative z-1 pa2'>
-          <Paper className='pa2'>
+          <Paper>
             <AnimatedSwitchWrpr className='relative'>
               <AnimatedSwitch
                 atEnter={{ opacity: 0 }}
                 atLeave={{ opacity: 0 }}
                 atActive={{ opacity: 1 }}
               >
-                <Route exact path="/countries/:countryId" component={PlansAndJournals}/>
-                <Route path="/countries/:countryId/plans/new" component={AddPlanForm}/>
+                <Route exact path='/countries/:countryId' component={PlansAndJournals} />
+                <Route path='/countries/:countryId/plans/new' component={AddPlanForm} />
               </AnimatedSwitch>
             </AnimatedSwitchWrpr>
           </Paper>
         </Overlay>
-      )}/>
+      )} />
     </Wrapper>
   </MuiThemeProvider>
 )

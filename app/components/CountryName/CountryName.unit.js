@@ -1,13 +1,9 @@
 import test from 'tape'
-import React from 'react'
-import PropTypes from 'prop-types'
-import { shallow, mount } from 'enzyme'
 import td from 'testdouble'
 import isSubset from 'is-subset'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
-import * as IU from 'services/immutablejsUtils'
-import { CountryNameShell } from './CountryName'
+import * as Tu from 'services/testUtils'
+import { countryNameShell } from './CountryName'
 
 const any = td.matchers.anything()
 const fake = {
@@ -15,37 +11,29 @@ const fake = {
   promise: {
     then: () => fake.promise,
     catch: () => fake.promise,
-  }
+  },
 }
 
-const setup = (args = {}) => {
-  td.reset()
-  td.when(fake.requestPromise(any))
-    .thenReturn(fake.promise)
-
-  const { props, deps, useMount, beforeRender } = args
-
-  const defaultProps = {
-    countryId: '',
-  }
-  const defaultDeps = {
-    requestPromise: fake.requestPromise,
-  }
-
-  const finalProps = IU.smartMergeDeep(defaultProps, props)
-  const finalDeps = IU.smartMergeDeep(defaultDeps, deps)
-  const CountryName = CountryNameShell(finalDeps)
-  const theNode = (<CountryName {...finalProps} />)
-  if (beforeRender) beforeRender()
-
-  if (useMount)
-    return mount(theNode, {
-      context: { muiTheme: getMuiTheme() },
-      childContextTypes: { muiTheme: PropTypes.object }
-    })
-
-  return shallow(theNode)
+const defaultProps = {
+  countryId: '',
 }
+
+const defaultDeps = {
+  requestPromise: fake.requestPromise,
+}
+
+const setup = Tu.makeTestSetup({
+  defaultHooks: {
+    afterTdReset: () => {
+      td.when(fake.requestPromise(any))
+        .thenReturn(fake.promise)
+    },
+  },
+  shell: countryNameShell,
+  tools: ['td', 'mui'],
+  defaultProps,
+  defaultDeps,
+})
 
 test('CountryName | it should render without error', t => {
   const wrapper = setup()
@@ -57,7 +45,7 @@ test('CountryName | it should render without error', t => {
 })
 
 test('CountryName | it should call fetch()', t => {
-  const wrapper = setup({ useMount: true })
+  setup({ useMount: true })
 
   t.doesNotThrow(() => {
     td.verify(fake.requestPromise(), { times: 1, ignoreExtraArgs: true })
@@ -84,9 +72,11 @@ test('CountryName | if fetch is resolved, should show the country name', t => {
     const wrapper = setup({
       useMount: true,
       props,
-      beforeRender: () => {
-        td.when(fake.requestPromise(any))
-          .thenResolve(`{"${countryId.toUpperCase()}":"${countryName}"}`)
+      hooks: {
+        beforeRender: () => {
+          td.when(fake.requestPromise(any))
+            .thenResolve(`{"${countryId.toUpperCase()}":"${countryName}"}`)
+        },
       },
     })
 
@@ -112,10 +102,12 @@ test.skip('CountryName | if fetch is rejected, should show the country code', t 
     const wrapper = setup({
       useMount: true,
       props,
-      beforeRender: () => {
-        td.replace(console, 'error') // silence logs from the component
-        td.when(fake.requestPromise(any))
-          .thenReject()
+      hooks: {
+        beforeRender: () => {
+          td.replace(console, 'error') // silence logs from the component
+          td.when(fake.requestPromise(any))
+            .thenReject()
+        },
       },
     })
 
@@ -156,7 +148,7 @@ test('CountryName | if wrapper element is specified, it should use it', t => {
 test('CountryName | it should pass the other props to the wrapper', t => {
   const props = {
     id: 'sample-id',
-    'data-foo': 'bar'
+    'data-foo': 'bar',
   }
   const wrapper = setup({ props })
   const computedProps = wrapper.props()

@@ -9,7 +9,7 @@ const mocks = {
   initialState: I.Map({
     snackbar: null,
     paperHeights: I.Map({}),
-  })
+  }),
 }
 
 test.skip('ui | it should return the correct default state')

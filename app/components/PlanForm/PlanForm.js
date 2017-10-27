@@ -1,8 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
-import IPropTypes from 'react-immutable-proptypes'
+// import IPropTypes from 'react-immutable-proptypes'
 import PropTypes from 'prop-types'
-import requiredIf from 'react-required-if'
+// import requiredIf from 'react-required-if'
 import I from 'immutable'
 import * as R from 'ramda'
 
@@ -15,18 +14,18 @@ import * as FU from 'services/functionalUtils'
 import CountryName from 'components/countryName'
 
 const validationRules = {
-  planName: planName => !planName && 'Plan name is required'
+  planName: planName => !planName && 'Plan name is required',
 }
 
 class PlanForm extends React.Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-    initialValues: IPropTypes.contains({
-      planName: PropTypes.string.isRequired,
-      notes: PropTypes.string,
-      departure: requiredIf(PropTypes.instanceOf(Date), props => !!props.homecoming),
-      homecoming: requiredIf(PropTypes.instanceOf(Date), props => !!props.departure),
-    }),
+    // initialValues: IPropTypes.contains({
+    //   planName: PropTypes.string.isRequired,
+    //   notes: PropTypes.string,
+    //   departure: requiredIf(PropTypes.instanceOf(Date), props => !!props.homecoming),
+    //   homecoming: requiredIf(PropTypes.instanceOf(Date), props => !!props.departure),
+    // }),
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -95,7 +94,7 @@ class PlanForm extends React.Component {
     const { values, errors } = this.state
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className='pa2' onSubmit={this.handleSubmit}>
         <div className='flex'>
           <Paper className='self-center w2' rounded={false}>
             <img
@@ -112,29 +111,29 @@ class PlanForm extends React.Component {
           />
         </div>
         <TextField
-          className="field db--i"
-          data-name="PlanNameField"
-          floatingLabelText="Plan Name*"
-          floatingLabelFixed={true}
+          className='field db--i'
+          data-name='PlanNameField'
+          floatingLabelText='Plan Name*'
+          floatingLabelFixed
           onChange={this.handleChangePlanName}
           value={values.get('planName') || ''}
           errorText={errors.planName || ''}
         />
         <TextField
-          className="field db--i"
-          data-name="NotesField"
-          floatingLabelText="Notes"
-          floatingLabelFixed={true}
+          className='field db--i'
+          data-name='NotesField'
+          floatingLabelText='Notes'
+          floatingLabelFixed
           onChange={this.handleChangeNotes}
           value={values.get('notes') || ''}
-          multiLine={true}
+          multiLine
           rowsMax={4}
         />
         <DatePicker
-          className="field"
-          data-name="DepartureField"
-          floatingLabelText="Departure Date"
-          floatingLabelFixed={true}
+          className='field'
+          data-name='DepartureField'
+          floatingLabelText='Departure Date'
+          floatingLabelFixed
           onChange={this.handleChangeDeparture}
           value={values.get('departure')}
           errorText={errors.departure || ''}
@@ -142,10 +141,10 @@ class PlanForm extends React.Component {
           maxDate={values.get('homecoming')}
         />
         <DatePicker
-          className="field"
-          data-name="HomecomingField"
-          floatingLabelText="Homecoming Date"
-          floatingLabelFixed={true}
+          className='field'
+          data-name='HomecomingField'
+          floatingLabelText='Homecoming Date'
+          floatingLabelFixed
           onChange={this.handleChangeHomecoming}
           value={values.get('homecoming')}
           errorText={errors.homecoming || ''}
@@ -153,13 +152,14 @@ class PlanForm extends React.Component {
         />
         <RaisedButton
           className='mt3'
-          primary={true}
-          label="Submit"
-          type="submit"
+          primary
+          label='Submit'
+          type='submit'
         />
       </form>
     )
   }
 }
 
+export { PlanForm as BarePlanForm }
 export default PlanForm

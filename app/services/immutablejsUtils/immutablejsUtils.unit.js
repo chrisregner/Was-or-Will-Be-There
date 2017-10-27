@@ -30,7 +30,7 @@ test('immutablejsUtils.smartMergeDeep() | it should deep merge reqular objects',
     b: {
       c: 3,
       e: 5,
-    }
+    },
   }
   const actual = smartMergeDeep(firstObj, secondObj)
   const expected = {
@@ -39,7 +39,7 @@ test('immutablejsUtils.smartMergeDeep() | it should deep merge reqular objects',
       c: 3,
       e: 5,
     },
-    d: 4
+    d: 4,
   }
 
   t.deepEqual(actual, expected)

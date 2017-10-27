@@ -9,7 +9,7 @@ import Paper from 'material-ui/Paper'
 
 import * as FU from 'services/functionalUtils'
 
-const CountryNameShell = ({ requestPromise }) =>
+const countryNameShell = ({ requestPromise }) =>
   class CountryName extends React.Component {
     static propTypes = {
       countryId: PropTypes.string.isRequired,
@@ -102,9 +102,9 @@ const CountryNameShell = ({ requestPromise }) =>
     }
   }
 
-const CountryName = CountryNameShell({
+const CountryName = countryNameShell({
   requestPromise: _requestPromise,
 })
 
-export { CountryNameShell }
+export { countryNameShell }
 export default CountryName

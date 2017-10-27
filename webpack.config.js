@@ -45,21 +45,21 @@ module.exports = {
           babelrc: false,
           presets: [
             ['env', { modules: false }],
-            'react'
+            'react',
           ],
           plugins: [
             'react-hot-loader/babel',
             'transform-object-rest-spread',
             'transform-class-properties',
-          ]
-        }
+          ],
+        },
       },
       {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ]
+        use: [ 'style-loader', 'css-loader' ],
       },
       { test: /\.json$/, loader: 'json-loader' },
-    ]
+    ],
   },
   resolve: {
     alias: {

@@ -6,8 +6,8 @@ import * as fromPlans from './plans'
 
 const fake = {
   shortid: {
-    generate: td.func()
-  }
+    generate: td.func(),
+  },
 }
 
 const mocks = {
@@ -21,7 +21,7 @@ const setup = () => {
 }
 
 const plansReducer = fromPlans.plansReducerShell({
-  shortid: fake.shortid
+  shortid: fake.shortid,
 })
 
 const { addPlan } = fromPlans
@@ -37,8 +37,8 @@ test('plansReducer.ADD_PLAN | it should work', t => {
   const expected = I.List([
     I.Map({
       id: '0',
-      planName: 'Sample Plan Name'
-    })
+      planName: 'Sample Plan Name',
+    }),
   ])
 
   t.is(actual.equals(expected), true)

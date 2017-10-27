@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     // ITEST: this should add the plan
     // ITEST: this should notify as well
     // ITEST: notify | this should be hideable
-  }
+  },
 })
 
 const AddPlanForm = connect(null, mapDispatchToProps)(PlanForm)

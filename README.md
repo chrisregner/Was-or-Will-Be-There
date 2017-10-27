@@ -4,14 +4,33 @@
 - setup routes
 - make sure AddPlanForm works
 
-- **now** route transition
+
+**now**
+
+- write makeTestSetup()
+- route transition
   - save paper heights in for each paper route
   - use the highest paper height as paper height,
   - animate the paper height as well
+- move side effect (id) from reducer to action creator
 
 - snackbar component and container
 - integration test
 - configure linter
+
+---
+
+test('PlanForm | it should call setPaperHeight with correct args after mounting', t => {
+  setup({ useMount: true })
+
+  t.doesNotThrow(() => {
+    td.verify(
+      mockFn.setPaperHeight(td.matchers.isA(Number)),
+      { times: 1 }
+    )
+  })
+  t.end()
+})
 
 ---
 
