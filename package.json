@@ -50,6 +50,7 @@
     "react-immutable-proptypes": "^2.1.0",
     "react-redux": "^5.0.6",
     "react-required-if": "^1.0.2",
+    "react-resize-detector": "^1.1.0",
     "react-router-dom": "^4.2.2",
     "react-router-transition": "^1.1.1",
     "react-test-renderer": "^16.0.0",
@@ -64,6 +65,7 @@
     "styled-components": "^2.2.1",
     "synchronous-promise": "^1.0.18",
     "tachyons": "^4.8.1",
+    "tap-bail": "^1.0.0",
     "tap-nyan": "^1.1.0",
     "tap-spec": "^4.1.1",
     "tape": "^4.8.0",
@@ -86,7 +88,10 @@
     "lint": "eslint --ignore-pattern '/dist/*' --fix **/*.js",
     "test": "cross-env NODE_PATH=app tape-watch -r babel-register -r ../tools/testSetup.js **/*.unit.js -p tap-nyan",
     "test-spec": "cross-env NODE_PATH=app tape-watch -r babel-register -r ../tools/testSetup.js **/*.unit.js -p tap-spec",
-    "test-bare": "cross-env NODE_PATH=app tape-watch -r babel-register -r ../tools/testSetup.js **/*.unit.js"
+    "test-bail": "cross-env NODE_PATH=app tape-watch -r babel-register -r ../tools/testSetup.js **/*.unit.js -p tap-bail",
+    "test-bail-once": "cross-env NODE_PATH=app tape -r babel-register -r ./tools/testSetup.js **/*.unit.js | tap-bail",
+    "test-bare": "cross-env NODE_PATH=app tape-watch -r babel-register -r ../tools/testSetup.js **/*.unit.js",
+    "test-bare-once": "cross-env NODE_PATH=app tape -r babel-register -r ./tools/testSetup.js **/*.unit.js"
   },
   "dependencies": {}
 }

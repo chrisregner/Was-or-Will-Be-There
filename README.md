@@ -1,22 +1,40 @@
 ## Current
 
-- AddPlanForm
-- setup routes
-- make sure AddPlanForm works
-
-
 **now**
 
-- write makeTestSetup()
 - route transition
   - save paper heights in for each paper route
-  - use the highest paper height as paper height,
-  - animate the paper height as well
+  - use the highest paper height as paper height
+    - write HOC
+    - applyHOC
+    - animate the paper height as well
 - move side effect (id) from reducer to action creator
 
 - snackbar component and container
 - integration test
 - configure linter
+
+---
+
+## Integration test
+
+- Home/Map
+- PlansAndJournals
+  - should change route
+  - paper height should change
+- Add plan
+  - should change route
+  - should include countryId
+  - should add the plan
+  - should notify as well
+  - paper height should change
+- PlansAndJournals
+  - should change route
+  - notification
+    - should be hideable
+  - paper height should change
+- EditPlan
+- DeletePlan
 
 ---
 

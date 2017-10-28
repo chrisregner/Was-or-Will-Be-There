@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 
 import PlanForm from 'components/PlanForm'
 import { addPlan } from 'state/plans'
+import { setPaperHeight } from 'state/ui'
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   handleSubmit: (planDetails) => {
@@ -9,12 +10,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     const planWithCountryId = planDetails.set('countryId', countryId)
 
     dispatch(addPlan(planWithCountryId))
-
-    // ITEST: this should include countryId
-    // ITEST: this should add the plan
-    // ITEST: this should notify as well
-    // ITEST: notify | this should be hideable
   },
+  setPaperHeight: (paperHeight) => {
+    dispatch(setPaperHeight('PlanForm', paperHeight))
+  }
 })
 
 const AddPlanForm = connect(null, mapDispatchToProps)(PlanForm)

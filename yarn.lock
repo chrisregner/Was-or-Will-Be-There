@@ -5392,6 +5392,12 @@ react-required-if@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-required-if/-/react-required-if-1.0.2.tgz#6d7e942c1bd988f8eae1842b1783a2939725c166"
 
+react-resize-detector@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-resize-detector/-/react-resize-detector-1.1.0.tgz#4a9831fa3caad32230478dd0185cbd2aa91a5ebf"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-router-dom@^4.1.1, react-router-dom@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.2.2.tgz#c8a81df3adc58bba8a76782e946cbd4eae649b8d"
@@ -6354,6 +6360,12 @@ tachyons@^4.8.1:
   version "4.8.1"
   resolved "https://registry.yarnpkg.com/tachyons/-/tachyons-4.8.1.tgz#9a3183feecb3240c4dcefee7feecc8259acd7381"
 
+tap-bail@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tap-bail/-/tap-bail-1.0.0.tgz#c5a8cc71191f037938cd567f97bda3ca9700199a"
+  dependencies:
+    tap-parser "^5.3.3"
+
 tap-nyan@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/tap-nyan/-/tap-nyan-1.1.0.tgz#2b8d13a1f9ca51c1b3ada0c6ccdb1177d2065bb0"
@@ -6375,6 +6387,15 @@ tap-out@^1.4.1:
 tap-parser@^3.0.3:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/tap-parser/-/tap-parser-3.0.5.tgz#b947f69e0b3e53d4b92011f6cc552e16dadc7ec9"
+  dependencies:
+    events-to-array "^1.0.1"
+    js-yaml "^3.2.7"
+  optionalDependencies:
+    readable-stream "^2"
+
+tap-parser@^5.3.3:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/tap-parser/-/tap-parser-5.4.0.tgz#6907e89725d7b7fa6ae41ee2c464c3db43188aec"
   dependencies:
     events-to-array "^1.0.1"
     js-yaml "^3.2.7"

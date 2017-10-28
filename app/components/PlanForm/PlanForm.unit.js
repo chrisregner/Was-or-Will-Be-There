@@ -7,21 +7,17 @@ import * as Tu from 'services/testUtils'
 
 import { BarePlanForm as PlanForm } from './PlanForm'
 
-const mockFn = {
-  handleSubmit: td.func(),
-  push: td.func(),
-}
-
 const mockData = {
   ev: { preventDefault: () => {} },
   inOneDay: new Date(),
   inTenDays: D.add('days', 10, new Date()),
 }
 
-const defaultProps = {
-  handleSubmit: mockFn.handleSubmit,
+const defProps = {
+  handleSubmit: td.func(),
+  setPaperHeight: td.func(),
   history: {
-    push: mockFn.push,
+    push: td.func(),
   },
   match: {
     params: { countryId: '' },
@@ -31,7 +27,10 @@ const defaultProps = {
 const setup = Tu.makeTestSetup({
   Component: PlanForm,
   tools: ['mui', 'td'],
-  defaultProps,
+  defaultProps: defProps,
+  defaultEnzymeOpts: {
+    disableLifecycleMethods: true,
+  }
 })
 
 const fillForm = (values, wrapper) => {
@@ -56,8 +55,6 @@ test('PlanForm | it should render without error', t => {
 })
 
 test('PlanForm | it should render CountyName with correct props', t => {
-  t.plan(3)
-
   const testWithVar = countryId => {
     const props = {
       match: {
@@ -73,14 +70,13 @@ test('PlanForm | it should render CountyName with correct props', t => {
     t.is(actual, expected)
   }
 
+  t.plan(3)
   testWithVar('PH')
   testWithVar('US')
   testWithVar('JP')
 })
 
 test('PlanForm | it should render the correct country flag', t => {
-  t.plan(3)
-
   const testWithVar = countryId => {
     const props = {
       match: {
@@ -96,10 +92,120 @@ test('PlanForm | it should render the correct country flag', t => {
     t.is(actual, expected)
   }
 
+  t.plan(3)
   testWithVar('PH')
   testWithVar('US')
   testWithVar('JP')
 })
+
+// test('PlanForm | when mounted, it should call setPaperHeight() with correct arg', t => {
+//   setup({ useMount: true })
+
+//   t.doesNotThrow(() => {
+//     td.verify(
+//       defProps.setPaperHeight(0), // Enzyme sets to the DOM>offsetHeight to 0
+//       { times: 1 }
+//     )
+//   })
+//   t.end()
+// })
+
+// test('PlanForm | when mounted, it should add updatePaperHeight() to resize event listeners', t => {
+//   let fakeAddEventListener
+//   const wrapper = setup({
+//     hooks: {
+//       beforeRender: () => {
+//         fakeAddEventListener = td.replace(window, 'addEventListener')
+//       }
+//     },
+//     useMount: true
+//   })
+//   const updatePaperHeight = wrapper.instance().updatePaperHeight
+
+//   t.doesNotThrow(() => {
+//     td.verify(
+//       fakeAddEventListener('resize', updatePaperHeight),
+//       { times: 1 }
+//     )
+//   })
+//   t.end()
+// })
+
+// test('PlanForm | when updated and the height has changed, it should call setPaperHeight() with correct arg', t => {
+//   const wrapper = setup({ useMount: true })
+
+//   wrapper.instance().rootEl = { offsetHeight: 143 }
+//   wrapper.instance().componentDidUpdate()
+
+//   t.doesNotThrow(() => {
+//     td.verify(
+//       defProps.setPaperHeight(143),
+//       { times: 1 }
+//     )
+
+//     td.verify(
+//       defProps.setPaperHeight(),
+//       { times: 2, ignoreExtraArgs: true } // once on mount + once on update = 2 calls
+//     )
+//   })
+//   t.end()
+// })
+
+// test('PlanForm | when updated and the height has NOT changed, it should NOT call setPaperHeight()', t => {
+//   const wrapper = setup({ useMount: true })
+
+//   wrapper.instance().componentDidUpdate()
+
+//   t.doesNotThrow(() => {
+//     td.verify(
+//       defProps.setPaperHeight(),
+//       { times: 1, ignoreExtraArgs: true } // once on mount = 1 call
+//     )
+//   })
+//   t.end()
+// })
+
+// test('PlanForm | when unmounted, it should call setPaperHeight() with zero', t => {
+//   const wrapper = setup({ useMount: true })
+
+//   wrapper.unmount()
+
+//   t.doesNotThrow(() => {
+//     td.verify(
+//       defProps.setPaperHeight(0),
+//       { times: 2 } // once on mount + once on unmount = 2 calls
+//     )
+
+//     td.verify(
+//       defProps.setPaperHeight(),
+//       { times: 2, ignoreExtraArgs: true } // once on mount + once on unmount = 2 calls
+//     )
+//   })
+//   t.end()
+// })
+
+// test('PlanForm | when unmounted, it should remove the updatePaperHeight() from resize event listeners', t => {
+//   let fakeRemoveEventListener
+//   const wrapper = setup({
+//     hooks: {
+//       beforeRender: () => {
+//         fakeRemoveEventListener = td.replace(window, 'removeEventListener')
+//       }
+//     },
+//     useMount: true
+//   })
+//   const updatePaperHeight = wrapper.instance().updatePaperHeight
+
+//   wrapper.unmount()
+
+//   t.doesNotThrow(() => {
+//     td.verify(
+//       fakeRemoveEventListener('resize', updatePaperHeight),
+//       { times: 1 }
+//     )
+//   })
+//   t.end()
+// })
 
 /**
  * PlanNameField
@@ -136,9 +242,7 @@ test('PlanForm > PlanNameField | if NOT filled and submitted, it should NOT call
 
   wrapper.find('form').simulate('submit', mockData.ev)
 
-  t.doesNotThrow(() => {
-    td.verify(mockFn.handleSubmit(), { times: 0, ignoreExtraArgs: true })
-  })
+  td.verify(defProps.handleSubmit(), { times: 0, ignoreExtraArgs: true })
   t.end()
 })
 
@@ -275,15 +379,11 @@ test('PlanForm > .OnSubmit() | if form is valid, it should call handleSubmit() w
     homecoming: mockData.inTenDays,
   })
 
-  t.doesNotThrow(() => {
-    td.verify(mockFn.handleSubmit(expectedArg), { times: 1 })
-  })
+  td.verify(defProps.handleSubmit(expectedArg), { times: 1 })
   t.end()
 })
 
 test('PlanForm > .OnSubmit() | if form is valid, it should call history.push() with correct args', t => {
-  t.plan(3)
-
   const testWithVar = countryId => {
     const props = {
       match: {
@@ -297,12 +397,11 @@ test('PlanForm > .OnSubmit() | if form is valid, it should call history.push() w
 
     const expectedArg = `/countries/${countryId}`
 
-    t.doesNotThrow(() => {
-      td.verify(mockFn.push(expectedArg), { times: 1 })
-    })
+    td.verify(defProps.history.push(expectedArg), { times: 1 })
   }
 
   testWithVar('PH')
   testWithVar('US')
   testWithVar('JP')
+  t.end()
 })

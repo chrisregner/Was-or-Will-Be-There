@@ -11,17 +11,21 @@ export const makeTestSetup = (args1 = {}) => {
     defaultHooks = {},
     defaultProps,
     defaultDeps,
+    defaultEnzymeOpts,
     tools = [],
-    Component,
+    Component: DefaultComponent,
     shell,
   } = args1
 
-  let FinalComponent
-
-  if (!shell)
-    FinalComponent = Component
-
   return (args2 = {}) => {
+    const {
+      hooks = {},
+      props,
+      deps,
+      useMount,
+      Component,
+    } = args2
+
     if (tools.includes('td')) {
       td.reset()
 
@@ -29,21 +33,17 @@ export const makeTestSetup = (args1 = {}) => {
         defaultHooks.afterTdReset()
     }
 
-    const {
-      hooks = {},
-      props,
-      deps,
-      useMount,
-    } = args2
-
-    const finalProps = Iu.smartMergeDeep(defaultProps, props)
+    let FinalComponent
 
     if (shell) {
       const finalDeps = Iu.smartMergeDeep(defaultDeps, deps)
 
       FinalComponent = shell(finalDeps)
+    } else {
+      FinalComponent = Component || DefaultComponent
     }
 
+    const finalProps = Iu.smartMergeDeep(defaultProps, props)
     const theNode = (<FinalComponent {...finalProps} />)
 
     if (hooks.beforeRender)
@@ -56,9 +56,9 @@ export const makeTestSetup = (args1 = {}) => {
           childContextTypes: { muiTheme: PropTypes.object },
         })
 
-      return mount(theNode)
+      return mount(theNode, defaultEnzymeOpts)
     }
 
-    return shallow(theNode)
+    return shallow(theNode, defaultEnzymeOpts)
   }
 }

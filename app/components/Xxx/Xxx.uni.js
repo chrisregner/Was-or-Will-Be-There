@@ -1,9 +1,9 @@
 import test from 'tape'
 
-import * as Tu from 'services/testUtils'
+import * as tu from 'services/testUtils'
 import Xxx from './Xxx'
 
-const setup = Tu.makeTestSetup({
+const setup = tu.makeTestSetup({
   Component: Xxx,
 })
 

@@ -9,7 +9,7 @@ const defaultState = I.Map({
     isVisible: false,
     message: '',
   },
-  paperHeights: {},
+  paperHeights: I.Map({}),
 })
 
 /**

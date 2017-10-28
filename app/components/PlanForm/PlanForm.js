@@ -17,7 +17,7 @@ const validationRules = {
   planName: planName => !planName && 'Plan name is required',
 }
 
-class PlanForm extends React.Component {
+class PlanForm extends React.PureComponent {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     // initialValues: IPropTypes.contains({
@@ -85,8 +85,11 @@ class PlanForm extends React.Component {
 
       handleSubmit(trimmedValues)
       history.push(`/countries/${match.params.countryId}`)
-      // call success snackbar
     }
+  }
+
+  rootElRef = (rootEl) => {
+    this.rootEl = rootEl
   }
 
   render = () => {
@@ -94,7 +97,11 @@ class PlanForm extends React.Component {
     const { values, errors } = this.state
 
     return (
-      <form className='pa2' onSubmit={this.handleSubmit}>
+      <form
+        className='pa2'
+        ref={this.rootElRef}
+        onSubmit={this.handleSubmit}
+      >
         <div className='flex'>
           <Paper className='self-center w2' rounded={false}>
             <img

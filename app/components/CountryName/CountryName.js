@@ -10,7 +10,7 @@ import Paper from 'material-ui/Paper'
 import * as FU from 'services/functionalUtils'
 
 const countryNameShell = ({ requestPromise }) =>
-  class CountryName extends React.Component {
+  class CountryName extends React.PureComponent {
     static propTypes = {
       countryId: PropTypes.string.isRequired,
       wrapperEl: PropTypes.string,

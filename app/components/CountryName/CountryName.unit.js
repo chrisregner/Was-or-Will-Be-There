@@ -45,16 +45,14 @@ test('CountryName | it should render without error', t => {
 })
 
 test('CountryName | it should call fetch()', t => {
-  setup({ useMount: true })
+  setup()
 
-  t.doesNotThrow(() => {
-    td.verify(fake.requestPromise(), { times: 1, ignoreExtraArgs: true })
-  })
+  td.verify(fake.requestPromise(), { times: 1, ignoreExtraArgs: true })
   t.end()
 })
 
 test('CountryName | if fetch is still loading, should show loader', t => {
-  const wrapper = setup({ useMount: true })
+  const wrapper = setup()
   const loaderWrpr = () => wrapper.find('[data-name="loader"]')
 
   const actual = loaderWrpr().exists()
@@ -70,7 +68,6 @@ test('CountryName | if fetch is resolved, should show the country name', t => {
   const testWithVars = (countryId, countryName) => {
     const props = { countryId }
     const wrapper = setup({
-      useMount: true,
       props,
       hooks: {
         beforeRender: () => {
@@ -100,7 +97,6 @@ test.skip('CountryName | if fetch is rejected, should show the country code', t 
   const testWithVars = (countryId) => {
     const props = { countryId }
     const wrapper = setup({
-      useMount: true,
       props,
       hooks: {
         beforeRender: () => {
