@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import PlanForm from 'components/PlanForm'
 import { addPlan } from 'state/plans'
-import { setPaperHeight } from 'state/ui'
+import withHeightWatcher from 'services/withHeightWatcher'
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   handleSubmit: (planDetails) => {
@@ -11,11 +11,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
     dispatch(addPlan(planWithCountryId))
   },
-  setPaperHeight: (paperHeight) => {
-    dispatch(setPaperHeight('PlanForm', paperHeight))
-  }
 })
 
-const AddPlanForm = connect(null, mapDispatchToProps)(PlanForm)
+const PlanFormWithHtWatcher = withHeightWatcher(PlanForm, 'AddPlanForm')
+const AddPlanForm = connect(null, mapDispatchToProps)(PlanFormWithHtWatcher)
 
 export default AddPlanForm

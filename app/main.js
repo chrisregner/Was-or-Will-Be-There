@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { AppContainer } from 'react-hot-loader'
 
-import { configureStore } from 'state/store'
+import { configureStore, history } from 'state/store'
 
 import App from 'components/App'
 
@@ -13,11 +13,11 @@ const store = configureStore()
 const render = Component => {
   ReactDOM.render(
     <AppContainer>
-      <BrowserRouter>
-        <Provider store={store}>
+      <Provider store={store}>
+        <BrowserRouter>
           <Component />
-        </Provider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </Provider>
     </AppContainer>,
     document.getElementById('root'),
   )

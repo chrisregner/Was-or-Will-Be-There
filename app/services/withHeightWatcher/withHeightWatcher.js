@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import ResizeDetector from 'react-resize-detector'
 
 import { setPaperHeight } from 'state/ui'
+// import { routeGetters } from 'state'
 
 export default (WrappedCmpt, componentName) => {
   class HeightWatcher extends React.Component {
@@ -13,34 +14,62 @@ export default (WrappedCmpt, componentName) => {
 
     static propTypes = {
       setPaperHeight: PropTypes.func.isRequired,
+      willUnmount: PropTypes.bool.isRequired,
     }
+
+
+    componentDidMount = () => {
+      console.log('>>> mounted ' + componentName)
+      this.props.setPaperHeight(this.rootEl.offsetHeight)
+    }
+
+    componentDidUpdate = () => {
+      console.log('>>> did update ' + componentName)
+      const { willUnmount, setPaperHeight } = this.props
+
+      if (willUnmount) {
+        setPaperHeight(this.rootEl.offsetHeight)
+        console.log('>>> will unmount' + componentName)
+      }
+    }
+
+    // componentWillUnmount = () => {
+    //   console.log('>>> will unmount ' + componentName)
+    //   this.props.setPaperHeight(0)
+    // }
 
     handleResize = (width, height) => {
       this.props.setPaperHeight(height)
     }
 
-    // updatePaperHeight = () => {
-    //   const rootElHeight = this.rootEl.offsetHeight
+    rootElRef = rootEl => {
+      this.rootEl = rootEl
+    }
 
-    //   if (rootElHeight !== this.lastRootElHeight) {
-    //     this.props.setPaperHeight(rootElHeight)
-    //     this.lastRootElHeight = rootElHeight
-    //   }
-    // }
+    render = () => {
+      const { setPaperHeight, ...props } = this.props
+      console.log('>>> rendered ' + componentName)
 
-    render = () => (
-      <div>
-        <WrappedCmpt />
-        <ResizeDetector handleHeight onResize={this.handleResize} />
-      </div>
-    )
+      return (
+        <div className='' ref={this.rootElRef}>
+          <WrappedCmpt {...props} />
+          <ResizeDetector handleHeight onResize={this.handleResize} />
+        </div>
+      )
+    }
   }
 
-  const mapDispatchToProps = (dispatch) => ({
-    setPaperHeight: (height) => {
+  const mapDispatchToProps = dispatch => ({
+    setPaperHeight: height => {
       dispatch(setPaperHeight(componentName, height))
     }
   })
 
-  return connect(null, mapDispatchToProps)(HeightWatcher)
+  const mapStateToProps = (state, ownProps) => ({
+    willUnmount: false/*routeGetters.isRouteCurrent(ownProps.location.pathName)*/
+  })
+
+  const ConnectedHeightWatcher = connect(mapStateToProps, mapDispatchToProps)(HeightWatcher)
+
+  return ConnectedHeightWatcher
 }

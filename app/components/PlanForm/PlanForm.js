@@ -168,5 +168,4 @@ class PlanForm extends React.PureComponent {
   }
 }
 
-export { PlanForm as BarePlanForm }
 export default PlanForm

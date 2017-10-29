@@ -5,15 +5,15 @@ import { AnimatedSwitch } from 'react-router-transition'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import Paper from 'material-ui/Paper'
 
 import 'tachyons/css/tachyons.css'
 import 'animate.css/animate.css'
 import './App.css'
 import Nav from 'components/Nav'
 import MapCmpt from 'components/MapCmpt'
+import PopulatedPlansAndJournals from 'containers/PopulatedPlansAndJournals'
 import AddPlanForm from 'containers/AddPlanForm'
-import PlansAndJournals from 'components/PlansAndJournals'
+import PaperWithHeight from 'containers/PaperWithHeight'
 
 const Wrapper = styled.div`
   min-width: 300px;
@@ -50,20 +50,21 @@ const App = () => (
         <MapCmpt />
       </MapWrpr>
 
+      {/* FIXME: USE AnimatedRoute instead */}
       <Route path='/countries/:countryId' render={() => (
         <Overlay className='relative z-1 pa2'>
-          <Paper>
+          <PaperWithHeight>
             <AnimatedSwitchWrpr className='relative'>
               <AnimatedSwitch
                 atEnter={{ opacity: 0 }}
                 atLeave={{ opacity: 0 }}
                 atActive={{ opacity: 1 }}
               >
-                <Route exact path='/countries/:countryId' component={PlansAndJournals} />
+                <Route exact path='/countries/:countryId' component={PopulatedPlansAndJournals} />
                 <Route path='/countries/:countryId/plans/new' component={AddPlanForm} />
               </AnimatedSwitch>
             </AnimatedSwitchWrpr>
-          </Paper>
+          </PaperWithHeight>
         </Overlay>
       )} />
     </Wrapper>

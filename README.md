@@ -3,11 +3,8 @@
 **now**
 
 - route transition
-  - save paper heights in for each paper route
-  - use the highest paper height as paper height
-    - write HOC
-    - applyHOC
-    - animate the paper height as well
+  - add RouteWatcher component
+  - update withHeightWatcher to refer to ui.realRoute state for unmounting
 - move side effect (id) from reducer to action creator
 
 - snackbar component and container
@@ -16,7 +13,7 @@
 
 ---
 
-## Integration test
+## Integration/feature test
 
 - Home/Map
 - PlansAndJournals
@@ -112,3 +109,7 @@ test('PlanForm | it should call setPaperHeight with correct args after mounting'
 - css prefixes/polyfills
 - production optimization
 - **important** change rawgit links as per rawgit.com for production
+
+## Possible trash
+
+- withHeightWatcher test file

@@ -5,7 +5,7 @@ import D from 'date-fp'
 
 import * as Tu from 'services/testUtils'
 
-import { BarePlanForm as PlanForm } from './PlanForm'
+import PlanForm from './PlanForm'
 
 const mockData = {
   ev: { preventDefault: () => {} },
