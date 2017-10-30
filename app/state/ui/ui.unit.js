@@ -13,7 +13,7 @@ test.skip('ui | it should return the correct default state')
 
 test('ui.ADD_PLAN | it should work', t => {
   const initialState = I.Map({ snackbar: null })
-  const action = fromPlans.addPlan()
+  const action = fromPlans.addPlan(I.Map())
 
   const actual = uiReducer(initialState, action).get('snackbar').toJS()
   const expected = Joi.object().keys({
@@ -131,6 +131,21 @@ test('ui.SET_REAL_ROUTE', t => {
  */
 
 const { uiGetters } = fromUi
+
+test('ui.getSnackbarInfo() | it should work', t => {
+  const state = I.Map({
+    snackbar: {
+      isVisible: true,
+      message: 'All hail Cthulhu!',
+    },
+  })
+
+  const actual = uiGetters.getSnackbarInfo(state)
+  const expected = state.get('snackbar')
+
+  t.is(actual, expected)
+  t.end()
+})
 
 test('ui.getHighestHeight() | it should work', t => {
   const state = I.fromJS({

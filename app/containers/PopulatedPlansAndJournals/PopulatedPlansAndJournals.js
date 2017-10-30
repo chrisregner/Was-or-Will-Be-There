@@ -1,5 +1,5 @@
 import PlansAndJournals from 'components/PlansAndJournals'
-import withHeightWatcher from 'services/withHeightWatcher'
+import withHeightWatcher from 'containers/withHeightWatcher'
 
 const PopulatedPlansAndJournals = withHeightWatcher(PlansAndJournals, 'PopulatedPlansAndJournals')
 

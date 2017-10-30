@@ -99,8 +99,97 @@ test('functionalUtils.makePropNegator() | it should return a function', makeProp
 test('functionalUtils.makePropNegator()() | it should, for each first gen args, negate the prop of the same key of the second gen arg', makePropNegatorSharedTest1)
 
 /**
- * switchVals()
+ * isObjSubset
  */
+
+const { isObjSubset } = functionalUtils
+
+test('functionalUtils.isObjSubset() | When secondArg is subset of firstArg, it should return true', t => {
+  const testVariation1 = () => {
+    const superset = {
+      a: 1,
+      b: 2,
+      c: 3,
+      d: 4,
+    }
+
+    const subset = {
+      b: 2,
+      c: 3,
+    }
+
+    const actual = isObjSubset(superset, subset)
+    const expected = true
+
+    t.is(actual, expected)
+  }
+
+  const testVariation2 = () => {
+    const superset = {
+      a: 1,
+      b: 2,
+    }
+
+    const subset = {
+      a: 1,
+      b: 2,
+    }
+
+    const actual = isObjSubset(superset, subset)
+    const expected = true
+
+    t.is(actual, expected)
+  }
+
+  t.plan(2)
+  testVariation1()
+  testVariation2()
+})
+
+test('functionalUtils.isObjSubset() | When secondArg is NOT subset of firstArg, it should return false', t => {
+  const testVariation1 = () => {
+    const superset = {
+      a: 1,
+      d: 4,
+    }
+
+    const subset = {
+      b: 2,
+      c: 3,
+    }
+
+    const actual = isObjSubset(superset, subset)
+    const expected = false
+
+    t.is(actual, expected)
+  }
+
+  const testVariation2 = () => {
+    const superset = {
+      a: 1,
+      c: 3,
+    }
+
+    const subset = {
+      a: 1,
+      b: 2,
+    }
+
+    const actual = isObjSubset(superset, subset)
+    const expected = false
+
+    t.is(actual, expected)
+  }
+
+  t.plan(2)
+  testVariation1()
+  testVariation2()
+})
+
+
+// /**
+//  * switchVals()
+//  */
 
 // const { switchVals } = functionalUtils
 // const switchValsSharedTest1 = t => {
@@ -128,9 +217,9 @@ test('functionalUtils.makePropNegator()() | it should, for each first gen args, 
 //   t.is(res, 'fooVal')
 // })
 
-/**
- * switchFuncs()
- */
+// /**
+//  * switchFuncs()
+//  */
 
 // const { switchFuncs } = functionalUtils
 // const switchFuncsSharedTest1 = t => {

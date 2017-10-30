@@ -6,14 +6,16 @@ import { AnimatedSwitch } from 'react-router-transition'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
+// import 'animate.css/animate.css'
 import 'tachyons/css/tachyons.css'
-import 'animate.css/animate.css'
 import './App.css'
 import Nav from 'components/Nav'
 import MapCmpt from 'components/MapCmpt'
 import PopulatedPlansAndJournals from 'containers/PopulatedPlansAndJournals'
 import AddPlanForm from 'containers/AddPlanForm'
 import PaperWithHeight from 'containers/PaperWithHeight'
+import NotifSnackbar from 'containers/NotifSnackbar'
+import RealRouteWatcher from 'containers/RealRouteWatcher'
 
 const Wrapper = styled.div`
   min-width: 300px;
@@ -67,6 +69,9 @@ const App = () => (
           </PaperWithHeight>
         </Overlay>
       )} />
+
+      <NotifSnackbar />
+      <RealRouteWatcher />
     </Wrapper>
   </MuiThemeProvider>
 )

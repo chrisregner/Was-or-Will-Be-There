@@ -4,7 +4,7 @@ import I from 'immutable'
 import * as fromPlans from 'state/plans'
 
 const newPlanMsg = 'We have a new plan!'
-const defaultState = I.Map({
+const defaultState = I.fromJS({
   snackbar: {
     isVisible: false,
     message: '',
@@ -54,6 +54,7 @@ const uiReducer = handleActions({
  */
 
 export const uiGetters = {
+  getSnackbarInfo: state => state.get('snackbar'),
   getHighestHeight: state =>
     state.get('paperHeights')
       .reduce((highestHeight, currentHeight) =>

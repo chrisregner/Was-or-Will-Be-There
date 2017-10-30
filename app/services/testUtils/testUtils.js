@@ -24,6 +24,7 @@ export const makeTestSetup = (args1 = {}) => {
       deps,
       useMount,
       Component,
+      childNode
     } = args2
 
     if (tools.includes('td')) {
@@ -44,7 +45,11 @@ export const makeTestSetup = (args1 = {}) => {
     }
 
     const finalProps = Iu.smartMergeDeep(defaultProps, props)
-    const theNode = (<FinalComponent {...finalProps} />)
+    const theNode = (
+      <FinalComponent {...finalProps}>
+        {childNode}
+      </FinalComponent>
+    )
 
     if (hooks.beforeRender)
       hooks.beforeRender()

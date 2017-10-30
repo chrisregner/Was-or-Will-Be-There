@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import ResizeDetector from 'react-resize-detector'
 
 import { setPaperHeight } from 'state/ui'
-// import { routeGetters } from 'state'
+import { uiGetters } from 'state'
 
 export default (WrappedCmpt, componentName) => {
   class HeightWatcher extends React.Component {
@@ -14,29 +15,25 @@ export default (WrappedCmpt, componentName) => {
 
     static propTypes = {
       setPaperHeight: PropTypes.func.isRequired,
-      willUnmount: PropTypes.bool.isRequired,
+      isRouteCurrent: PropTypes.func.isRequired,
+      location: PropTypes.shape({
+        pathname: PropTypes.string.isRequired,
+      }).isRequired,
     }
 
 
     componentDidMount = () => {
-      console.log('>>> mounted ' + componentName)
       this.props.setPaperHeight(this.rootEl.offsetHeight)
     }
 
     componentDidUpdate = () => {
-      console.log('>>> did update ' + componentName)
-      const { willUnmount, setPaperHeight } = this.props
+      const { isRouteCurrent, setPaperHeight, location } = this.props
 
-      if (willUnmount) {
+      if (isRouteCurrent(location.pathname))
         setPaperHeight(this.rootEl.offsetHeight)
-        console.log('>>> will unmount' + componentName)
-      }
+      else
+        setPaperHeight(0)
     }
-
-    // componentWillUnmount = () => {
-    //   console.log('>>> will unmount ' + componentName)
-    //   this.props.setPaperHeight(0)
-    // }
 
     handleResize = (width, height) => {
       this.props.setPaperHeight(height)
@@ -48,7 +45,6 @@ export default (WrappedCmpt, componentName) => {
 
     render = () => {
       const { setPaperHeight, ...props } = this.props
-      console.log('>>> rendered ' + componentName)
 
       return (
         <div className='' ref={this.rootElRef}>
@@ -66,10 +62,10 @@ export default (WrappedCmpt, componentName) => {
   })
 
   const mapStateToProps = (state, ownProps) => ({
-    willUnmount: false/*routeGetters.isRouteCurrent(ownProps.location.pathName)*/
+    isRouteCurrent: (newRoute) => uiGetters.isRouteCurrent(state, newRoute)
   })
 
-  const ConnectedHeightWatcher = connect(mapStateToProps, mapDispatchToProps)(HeightWatcher)
+  const ConnectedHeightWatcher = withRouter(connect(mapStateToProps, mapDispatchToProps)(HeightWatcher))
 
   return ConnectedHeightWatcher
 }

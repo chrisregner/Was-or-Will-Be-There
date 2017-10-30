@@ -11,6 +11,10 @@ export const makePropNegator = (...keys) => (obj) =>
     obj,
   )
 
+export const isObjSubset = (superset, subset) =>
+  !Object.entries(subset)
+    .find(([k, v]) => !superset[k] || superset[k] !== v)
+
 // export const switchVals = (cases) => (theCase) => cases[theCase] || null
 // export const switchFuncs = (cases) => (theCase) => (...args) =>
 //   cases[theCase]

@@ -1,13 +1,7 @@
 ## Current
 
 **now**
-
-- route transition
-  - add RouteWatcher component
-  - update withHeightWatcher to refer to ui.realRoute state for unmounting
-- move side effect (id) from reducer to action creator
-
-- snackbar component and container
+- PlansAndJournals
 - integration test
 - configure linter
 

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import PlanForm from 'components/PlanForm'
 import { addPlan } from 'state/plans'
-import withHeightWatcher from 'services/withHeightWatcher'
+import withHeightWatcher from 'containers/withHeightWatcher'
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   handleSubmit: (planDetails) => {
