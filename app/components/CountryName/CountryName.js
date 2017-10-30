@@ -67,7 +67,7 @@ const countryNameShell = ({ requestPromise }) =>
       else if (error)
         content = (
           <div className='flex'>
-            <div className='flex-grow-1 f4 self-center'>County Code: {countryId.toUpperCase()}</div>
+            <div className='flex-grow-1 f4'>County Code: {countryId.toUpperCase()}</div>
             <div className='relative'>
               <IconButton
                 aria-label='Show error'
@@ -89,7 +89,7 @@ const countryNameShell = ({ requestPromise }) =>
                 style={{ width: '12rem' }}
                 zDepth={2}
               >
-                <p className='mt0 mb2'>Sorry... there was an error while getting the country name. But we can try refreshing the page!</p>
+                <p className='mt0 mb2'>Sorry, there was an error while getting the country name. But we can try refreshing the page!</p>
                 <p className='ma0 silver'><em>{error.message}</em></p>
               </Paper>
             </div>

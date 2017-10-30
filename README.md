@@ -1,7 +1,10 @@
 ## Current
 
 **now**
-- PlansAndJournals
+- issues
+  - AddPlanForm and PlansAndJournal's width
+  - z-index of CountryName's error message blocks input, even after disappearing
+  - the specs
 - integration test
 - configure linter
 

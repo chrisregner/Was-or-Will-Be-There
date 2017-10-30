@@ -21,12 +21,16 @@ const setup = () => {
     .thenReturn('0', '1', '2', '3', '4')
 }
 
-test.skip('plansReducer | it should return the correct default state')
+/**
+ * Reducer
+ */
+
+test.skip('plans | it should return the correct default state')
 
 const { addPlanShell } = fromPlans
 const addPlan = addPlanShell({ shortid: fake.shortid })
 
-test('plansReducer.ADD_PLAN | it should work', () => {
+test('plans.ADD_PLAN | it should work', () => {
   setup()
 
   const action = addPlan(I.Map({ planName: 'Sample Plan Name' }))
@@ -38,6 +42,21 @@ test('plansReducer.ADD_PLAN | it should work', () => {
       planName: 'Sample Plan Name',
     }),
   ])
+
+  assert.isTrue(actual.equals(expected))
+})
+
+/**
+ * Getter
+ */
+
+const { plansGetters } = fromPlans
+
+test('plans.getPlans() | it should work', () => {
+  const state = I.List(['Most', 'Random', 'List', 'Ever'])
+
+  const actual = plansGetters.getPlans(state)
+  const expected = state
 
   assert.isTrue(actual.equals(expected))
 })

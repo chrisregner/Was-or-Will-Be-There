@@ -1,7 +1,6 @@
 import React from 'react'
 // import IPropTypes from 'react-immutable-proptypes'
 import PropTypes from 'prop-types'
-// import requiredIf from 'react-required-if'
 import I from 'immutable'
 import * as R from 'ramda'
 
@@ -23,8 +22,8 @@ class PlanForm extends React.PureComponent {
     // initialValues: IPropTypes.contains({
     //   planName: PropTypes.string.isRequired,
     //   notes: PropTypes.string,
-    //   departure: requiredIf(PropTypes.instanceOf(Date), props => !!props.homecoming),
-    //   homecoming: requiredIf(PropTypes.instanceOf(Date), props => !!props.departure),
+    //   departure: PropTypes.instanceOf(Date),
+    //   homecoming: PropTypes.instanceOf(Date),
     // }),
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
@@ -102,8 +101,8 @@ class PlanForm extends React.PureComponent {
         ref={this.rootElRef}
         onSubmit={this.handleSubmit}
       >
-        <div className='flex'>
-          <Paper className='self-center w2' rounded={false}>
+        <div className='flex items-center'>
+          <Paper className='w2' rounded={false}>
             <img
               className='db'
               src={`https://cdn.rawgit.com/hjnilsson/country-flags/master/svg/${countryId}.svg`}

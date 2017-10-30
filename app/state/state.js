@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux-immutable'
 import * as R from 'ramda'
 
-import plansReducer from './plans'
+import plansReducer, { plansGetters as _plansGetters } from './plans'
 import uiReducer, { uiGetters as _uiGetters } from './ui'
 
 // // Delegate default values to child reducers (https://github.com/gajus/redux-immutable#usage)
@@ -22,6 +22,7 @@ const rootReducer = combineReducers({
 
 export const gettersShell = ({
   uiGetters,
+  plansGetters,
 }) => ({
   uiGetters: Object.entries(uiGetters)
     .reduce(
@@ -33,14 +34,22 @@ export const gettersShell = ({
         ),
       {}
     ),
+  plansGetters: Object.entries(plansGetters)
+    .reduce(
+      (newGetters, [oldGetterName, oldGetterFn]) =>
+        R.set(
+          R.lensProp(oldGetterName),
+          (state, ...args) => oldGetterFn(state.get('plans'), ...args),
+          newGetters,
+        ),
+      {}
+    ),
 })
 
-const { uiGetters } = gettersShell({
+const { uiGetters, plansGetters } = gettersShell({
   uiGetters: _uiGetters,
+  plansGetters: _plansGetters,
 })
 
-export {
-  uiGetters,
-}
-
+export { uiGetters, plansGetters }
 export default rootReducer

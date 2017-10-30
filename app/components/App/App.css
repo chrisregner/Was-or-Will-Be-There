@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
 
-/* .animated {
-  -webkit-animation-duration: 3s !important;
-  animation-duration: 3s !important;
-} */
+.animated {
+  -webkit-animation-duration: .25s !important;
+  animation-duration: .25s !important;
+}
 
 .flex-grow-1 { flex-grow: 1; }
 

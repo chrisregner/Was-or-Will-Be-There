@@ -13,7 +13,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
 })
 
-const PlanFormWithHtWatcher = withHeightWatcher(PlanForm, 'AddPlanForm')
-const AddPlanForm = connect(null, mapDispatchToProps)(PlanFormWithHtWatcher)
+const AddPlanForm = connect(null, mapDispatchToProps)(
+  withHeightWatcher(PlanForm, 'AddPlanForm')
+)
 
 export default AddPlanForm

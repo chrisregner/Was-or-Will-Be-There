@@ -6,7 +6,7 @@ import { AnimatedSwitch } from 'react-router-transition'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
-// import 'animate.css/animate.css'
+import 'animate.css/animate.css'
 import 'tachyons/css/tachyons.css'
 import './App.css'
 import Nav from 'components/Nav'

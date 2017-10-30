@@ -27,3 +27,11 @@ const plansReducer = handleActions({
 }, defaultState)
 
 export default plansReducer
+
+/**
+ * Getters
+ */
+
+export const plansGetters = {
+  getPlans: plans => plans
+}
