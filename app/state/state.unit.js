@@ -1,4 +1,5 @@
-import test from 'tape'
+import { test } from 'mocha'
+import { assert } from 'chai'
 import td from 'testdouble'
 import * as I from 'immutable'
 
@@ -20,7 +21,7 @@ const setup = () => {
 
 const { uiGetters } = gettersShell(deps)
 
-test('state.getHightestPaperHeight | it should return the ', (t) => {
+test('state.getHightestPaperHeight | it should return the ', () => {
   setup()
 
   const expectedArg = 'expected result for getHightestPaperHeight()'
@@ -35,6 +36,5 @@ test('state.getHightestPaperHeight | it should return the ', (t) => {
   const actual = uiGetters.getHightestPaperHeight(passedState)
   const expected = expectedRes
 
-  t.is(actual, expected)
-  t.end()
+  assert.equal(actual, expected)
 })

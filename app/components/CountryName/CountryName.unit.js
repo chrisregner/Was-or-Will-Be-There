@@ -1,4 +1,5 @@
-import test from 'tape'
+import { test } from 'mocha'
+import { assert } from 'chai'
 import td from 'testdouble'
 import isSubset from 'is-subset'
 
@@ -35,36 +36,29 @@ const setup = Tu.makeTestSetup({
   defaultDeps,
 })
 
-test('CountryName | it should render without error', (t) => {
+test('CountryName | it should render without error', () => {
   const wrapper = setup()
   const actual = wrapper.exists()
-  const expected = true
 
-  t.is(actual, expected)
-  t.end()
+  assert.isTrue(actual)
 })
 
-test('CountryName | it should call fetch()', (t) => {
+test('CountryName | it should call fetch()', () => {
   setup()
 
   td.verify(fake.requestPromise(), { times: 1, ignoreExtraArgs: true })
-  t.end()
 })
 
-test('CountryName | if fetch is still loading, should show loader', (t) => {
+test('CountryName | if fetch is still loading, should show loader', () => {
   const wrapper = setup()
   const loaderWrpr = () => wrapper.find('[data-name="loader"]')
 
   const actual = loaderWrpr().exists()
-  const expected = true
 
-  t.is(actual, expected)
-  t.end()
+  assert.isTrue(actual)
 })
 
-test('CountryName | if fetch is resolved, should show the country name', (t) => {
-  t.plan(3)
-
+test('CountryName | if fetch is resolved, should show the country name', () => {
   const testWithVars = (countryId, countryName) => {
     const props = { countryId }
     const wrapper = setup({
@@ -78,9 +72,8 @@ test('CountryName | if fetch is resolved, should show the country name', (t) => 
     })
 
     const actual = wrapper.text().includes(countryName)
-    const expected = true
 
-    t.is(actual, expected)
+    assert.isTrue(actual)
   }
 
   testWithVars('ph', 'Philippines')
@@ -91,9 +84,7 @@ test('CountryName | if fetch is resolved, should show the country name', (t) => 
 // We have issues related with SVG, material-ui, and JSDOM. Watch out on these for he meanwhile:
 //   https://github.com/callemall/material-ui/issues/8643
 //   https://github.com/tmpvar/jsdom/pull/2011
-test.skip('CountryName | if fetch is rejected, should show the country code', (t) => {
-  t.plan(3)
-
+test.skip('CountryName | if fetch is rejected, should show the country code', () => {
   const testWithVars = (countryId) => {
     const props = { countryId }
     const wrapper = setup({
@@ -108,9 +99,8 @@ test.skip('CountryName | if fetch is rejected, should show the country code', (t
     })
 
     const actual = wrapper.text().includes(countryId.toUpperCase())
-    const expected = true
 
-    t.is(actual, expected)
+    assert.isTrue(actual)
   }
 
   testWithVars('ph')
@@ -123,17 +113,14 @@ test.skip('CountryName | if fetch is rejected and info button is clicked, it tog
 test.skip('CountryName | if fetch is rejected, it should NOT fire the click handler twice on first and subsequent key presses of enter and space key')
 test.skip('CountryName | if fetch is rejected, it should render an info popover containing the error message')
 
-test('CountryName | if wrapper element is specified, it should use it', (t) => {
-  t.plan(3)
-
+test('CountryName | if wrapper element is specified, it should use it', () => {
   const testWithVar = (wrapperEl) => {
     const props = { wrapperEl }
     const wrapper = setup({ props })
 
     const actual = wrapper.is(wrapperEl)
-    const expected = true
 
-    t.is(actual, expected)
+    assert.isTrue(actual)
   }
 
   testWithVar('div')
@@ -141,7 +128,7 @@ test('CountryName | if wrapper element is specified, it should use it', (t) => {
   testWithVar('p')
 })
 
-test('CountryName | it should pass the other props to the wrapper', (t) => {
+test('CountryName | it should pass the other props to the wrapper', () => {
   const props = {
     id: 'sample-id',
     'data-foo': 'bar',
@@ -150,8 +137,6 @@ test('CountryName | it should pass the other props to the wrapper', (t) => {
   const computedProps = wrapper.props()
 
   const actual = isSubset(computedProps, props)
-  const expected = true
 
-  t.is(actual, expected)
-  t.end()
+  assert.isTrue(actual)
 })

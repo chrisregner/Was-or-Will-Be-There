@@ -1,4 +1,5 @@
-import test from 'tape'
+import { test } from 'mocha'
+import { assert } from 'chai'
 import td from 'testdouble'
 import I from 'immutable'
 import D from 'date-fp'
@@ -45,16 +46,14 @@ const fillForm = (values, wrapper) => {
  * Self
  */
 
-test('PlanForm | it should render without error', (t) => {
+test('PlanForm | it should render without error', () => {
   const wrapper = setup()
   const actual = wrapper.exists()
-  const expected = true
 
-  t.is(actual, expected)
-  t.end()
+  assert.isTrue(actual)
 })
 
-test('PlanForm | it should render CountyName with correct props', (t) => {
+test('PlanForm | it should render CountyName with correct props', () => {
   const testWithVar = (countryId) => {
     const props = {
       match: {
@@ -67,16 +66,15 @@ test('PlanForm | it should render CountyName with correct props', (t) => {
     const actual = countryNameWrpr.prop('countryId')
     const expected = countryId
 
-    t.is(actual, expected)
+    assert.equal(actual, expected)
   }
 
-  t.plan(3)
   testWithVar('PH')
   testWithVar('US')
   testWithVar('JP')
 })
 
-test('PlanForm | it should render the correct country flag', (t) => {
+test('PlanForm | it should render the correct country flag', () => {
   const testWithVar = (countryId) => {
     const props = {
       match: {
@@ -87,131 +85,20 @@ test('PlanForm | it should render the correct country flag', (t) => {
     const countryFlagWrpr = wrapper.find(`[src="https://cdn.rawgit.com/hjnilsson/country-flags/master/svg/${countryId}.svg"]`)
 
     const actual = countryFlagWrpr.exists()
-    const expected = true
 
-    t.is(actual, expected)
+    assert.isTrue(actual)
   }
 
-  t.plan(3)
   testWithVar('PH')
   testWithVar('US')
   testWithVar('JP')
 })
 
-// test('PlanForm | when mounted, it should call setPaperHeight() with correct arg', t => {
-//   setup({ useMount: true })
-
-//   t.doesNotThrow(() => {
-//     td.verify(
-//       defProps.setPaperHeight(0), // Enzyme sets to the DOM>offsetHeight to 0
-//       { times: 1 }
-//     )
-//   })
-//   t.end()
-// })
-
-// test('PlanForm | when mounted, it should add updatePaperHeight() to resize event listeners', t => {
-//   let fakeAddEventListener
-//   const wrapper = setup({
-//     hooks: {
-//       beforeRender: () => {
-//         fakeAddEventListener = td.replace(window, 'addEventListener')
-//       }
-//     },
-//     useMount: true
-//   })
-//   const updatePaperHeight = wrapper.instance().updatePaperHeight
-
-//   t.doesNotThrow(() => {
-//     td.verify(
-//       fakeAddEventListener('resize', updatePaperHeight),
-//       { times: 1 }
-//     )
-//   })
-//   t.end()
-// })
-
-// test('PlanForm | when updated and the height has changed, it should call setPaperHeight() with correct arg', t => {
-//   const wrapper = setup({ useMount: true })
-
-//   wrapper.instance().rootEl = { offsetHeight: 143 }
-//   wrapper.instance().componentDidUpdate()
-
-//   t.doesNotThrow(() => {
-//     td.verify(
-//       defProps.setPaperHeight(143),
-//       { times: 1 }
-//     )
-
-//     td.verify(
-//       defProps.setPaperHeight(),
-//       { times: 2, ignoreExtraArgs: true } // once on mount + once on update = 2 calls
-//     )
-//   })
-//   t.end()
-// })
-
-// test('PlanForm | when updated and the height has NOT changed, it should NOT call setPaperHeight()', t => {
-//   const wrapper = setup({ useMount: true })
-
-//   wrapper.instance().componentDidUpdate()
-
-//   t.doesNotThrow(() => {
-//     td.verify(
-//       defProps.setPaperHeight(),
-//       { times: 1, ignoreExtraArgs: true } // once on mount = 1 call
-//     )
-//   })
-//   t.end()
-// })
-
-// test('PlanForm | when unmounted, it should call setPaperHeight() with zero', t => {
-//   const wrapper = setup({ useMount: true })
-
-//   wrapper.unmount()
-
-//   t.doesNotThrow(() => {
-//     td.verify(
-//       defProps.setPaperHeight(0),
-//       { times: 2 } // once on mount + once on unmount = 2 calls
-//     )
-
-//     td.verify(
-//       defProps.setPaperHeight(),
-//       { times: 2, ignoreExtraArgs: true } // once on mount + once on unmount = 2 calls
-//     )
-//   })
-//   t.end()
-// })
-
-// test('PlanForm | when unmounted, it should remove the updatePaperHeight() from resize event listeners', t => {
-//   let fakeRemoveEventListener
-//   const wrapper = setup({
-//     hooks: {
-//       beforeRender: () => {
-//         fakeRemoveEventListener = td.replace(window, 'removeEventListener')
-//       }
-//     },
-//     useMount: true
-//   })
-//   const updatePaperHeight = wrapper.instance().updatePaperHeight
-
-//   wrapper.unmount()
-
-//   t.doesNotThrow(() => {
-//     td.verify(
-//       fakeRemoveEventListener('resize', updatePaperHeight),
-//       { times: 1 }
-//     )
-//   })
-//   t.end()
-// })
-
 /**
  * PlanNameField
  */
 
-test('PlanForm > PlanNameField | it should work', (t) => {
+test('PlanForm > PlanNameField | it should work', () => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="PlanNameField"]')
 
@@ -221,11 +108,10 @@ test('PlanForm > PlanNameField | it should work', (t) => {
   const expected = value
   const actual = getField().prop('value')
 
-  t.is(expected, actual)
-  t.end()
+  assert.equal(expected, actual)
 })
 
-test('PlanForm > PlanNameField | if changed to blank, it should show error', (t) => {
+test('PlanForm > PlanNameField | if changed to blank, it should show error', () => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="PlanNameField"]')
 
@@ -233,20 +119,18 @@ test('PlanForm > PlanNameField | if changed to blank, it should show error', (t)
 
   const actual = getField().prop('errorText')
 
-  t.ok(actual)
-  t.end()
+  assert.ok(actual)
 })
 
-test('PlanForm > PlanNameField | if NOT filled and submitted, it should NOT call handleSubmit()', (t) => {
+test('PlanForm > PlanNameField | if NOT filled and submitted, it should NOT call handleSubmit()', () => {
   const wrapper = setup()
 
   wrapper.find('form').simulate('submit', mockData.ev)
 
   td.verify(defProps.handleSubmit(), { times: 0, ignoreExtraArgs: true })
-  t.end()
 })
 
-test('PlanForm > PlanNameField | if NOT filled and submitted, it should show error', (t) => {
+test('PlanForm > PlanNameField | if NOT filled and submitted, it should show error', () => {
   const wrapper = setup()
 
   wrapper.find('form').simulate('submit', mockData.ev)
@@ -254,18 +138,17 @@ test('PlanForm > PlanNameField | if NOT filled and submitted, it should show err
   const getField = () => wrapper.find('[data-name="PlanNameField"]')
   const actual = getField().prop('errorText')
 
-  t.ok(actual)
-  t.end()
+  assert.ok(actual)
 })
 
-test.skip('PlanNameField | it should accept initial value', (t) => {})
-test.skip('PlanNameField | if initial value is provided, it should still be emptiable', (t) => {})
+test.skip('PlanNameField | it should accept initial value', () => {})
+test.skip('PlanNameField | if initial value is provided, it should still be emptiable', () => {})
 
 /**
  * NotesField
  */
 
-test('PlanForm > NotesField | it should work', (t) => {
+test('PlanForm > NotesField | it should work', () => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="NotesField"]')
 
@@ -275,18 +158,17 @@ test('PlanForm > NotesField | it should work', (t) => {
   const expected = value
   const actual = getField().prop('value')
 
-  t.is(expected, actual)
-  t.end()
+  assert.equal(expected, actual)
 })
 
-test.skip('NotesField | it should accept initial value', (t) => {})
-test.skip('NotesField | if initial value is provided, it should still be emptiable', (t) => {})
+test.skip('NotesField | it should accept initial value', () => {})
+test.skip('NotesField | if initial value is provided, it should still be emptiable', () => {})
 
 /**
  * Departure
  */
 
-test('PlanForm > DepartureField | it should work', (t) => {
+test('PlanForm > DepartureField | it should work', () => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="DepartureField"]')
 
@@ -296,11 +178,10 @@ test('PlanForm > DepartureField | it should work', (t) => {
   const expected = value
   const actual = getField().prop('value')
 
-  t.is(expected, actual)
-  t.end()
+  assert.equal(expected, actual)
 })
 
-test('PlanForm > DepartureField | if HomecomingField is filled, it should have maxDate equal to HomecomingField\'s value', (t) => {
+test('PlanForm > DepartureField | if HomecomingField is filled, it should have maxDate equal to HomecomingField\'s value', () => {
   const wrapper = setup()
   const getDepartureField = () => wrapper.find('[data-name="DepartureField"]')
   const getHomecomingField = () => wrapper.find('[data-name="HomecomingField"]')
@@ -311,18 +192,17 @@ test('PlanForm > DepartureField | if HomecomingField is filled, it should have m
   const expected = value
   const actual = getDepartureField().prop('maxDate')
 
-  t.is(expected, actual)
-  t.end()
+  assert.equal(expected, actual)
 })
 
-test.skip('DepartureField | it should accept initial value', (t) => {})
-test.skip('DepartureField | if initial value is provided, it should still be emptiable', (t) => {})
+test.skip('DepartureField | it should accept initial value', () => {})
+test.skip('DepartureField | if initial value is provided, it should still be emptiable', () => {})
 
 /**
  * Homecoming
  */
 
-test('PlanForm > HomecomingField | it should work', (t) => {
+test('PlanForm > HomecomingField | it should work', () => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="HomecomingField"]')
 
@@ -332,11 +212,10 @@ test('PlanForm > HomecomingField | it should work', (t) => {
   const expected = value
   const actual = getField().prop('value')
 
-  t.is(expected, actual)
-  t.end()
+  assert.equal(expected, actual)
 })
 
-test('PlanForm > HomecomingField | if DepartureField is filled, it should have minDate equal to DepartureField\'s value', (t) => {
+test('PlanForm > HomecomingField | if DepartureField is filled, it should have minDate equal to DepartureField\'s value', () => {
   const wrapper = setup()
   const getHomecomingField = () => wrapper.find('[data-name="HomecomingField"]')
   const getDepartureField = () => wrapper.find('[data-name="DepartureField"]')
@@ -347,18 +226,17 @@ test('PlanForm > HomecomingField | if DepartureField is filled, it should have m
   const expected = value
   const actual = getHomecomingField().prop('minDate')
 
-  t.is(expected, actual)
-  t.end()
+  assert.equal(expected, actual)
 })
 
-test.skip('HomecomingField | it should accept initial value', (t) => {})
-test.skip('HomecomingField | if initial value is provided, it should still be emptiable', (t) => {})
+test.skip('HomecomingField | it should accept initial value', () => {})
+test.skip('HomecomingField | if initial value is provided, it should still be emptiable', () => {})
 
 /**
  * OnSubmit
  */
 
-test('PlanForm > .OnSubmit() | if form is valid, it should call handleSubmit() with trimmed data', (t) => {
+test('PlanForm > .OnSubmit() | if form is valid, it should call handleSubmit() with trimmed data', () => {
   const values = {
     PlanNameField: '  Sample Spaceous Name  ',
     NotesField: `
@@ -380,10 +258,9 @@ test('PlanForm > .OnSubmit() | if form is valid, it should call handleSubmit() w
   })
 
   td.verify(defProps.handleSubmit(expectedArg), { times: 1 })
-  t.end()
 })
 
-test('PlanForm > .OnSubmit() | if form is valid, it should call history.push() with correct args', (t) => {
+test('PlanForm > .OnSubmit() | if form is valid, it should call history.push() with correct args', () => {
   const testWithVar = (countryId) => {
     const props = {
       match: {
@@ -403,5 +280,4 @@ test('PlanForm > .OnSubmit() | if form is valid, it should call history.push() w
   testWithVar('PH')
   testWithVar('US')
   testWithVar('JP')
-  t.end()
 })

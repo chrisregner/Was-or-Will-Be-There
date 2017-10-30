@@ -91,7 +91,7 @@
   "scripts": {
     "start": "webpack-dev-server --hot",
     "lint": "eslint --ignore-pattern '/dist/*' --fix **/*.js",
-    "test": "mocha --require tools/testSetup.js --reporter nyan --watch --globals test,assert"
+    "test": "cross-env NODE_PATH=app mocha --require babel-register --require ./tools/testSetup.js --reporter nyan --watch **/*.unit.js"
   },
   "dependencies": {}
 }

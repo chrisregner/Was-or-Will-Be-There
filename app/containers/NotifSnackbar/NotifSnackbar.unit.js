@@ -1,4 +1,5 @@
-import test from 'tape'
+import { test } from 'mocha'
+import { assert } from 'chai'
 import td from 'testdouble'
 
 import * as TU from 'services/testUtils'
@@ -16,17 +17,14 @@ const setup = TU.makeTestSetup({
   defaultProps: defProps,
 })
 
-test('NotifSnackbar | it should render without error', (t) => {
+test('NotifSnackbar | it should render without error', () => {
   const wrapper = setup()
-
   const actual = wrapper.exists()
-  const expected = true
 
-  t.is(actual, expected)
-  t.end()
+  assert.isTrue(actual)
 })
 
-test('NotifSnackbar | it should pass the props correctly', (t) => {
+test('NotifSnackbar | it should pass the props correctly', () => {
   const hideSnackbar = () => {}
   const props = {
     open: true,
@@ -43,8 +41,6 @@ test('NotifSnackbar | it should pass the props correctly', (t) => {
   }
 
   const actual = Object.keys(computedProps).length && FU.isObjSubset(computedProps, expectedProps)
-  const expected = true
 
-  t.is(actual, expected)
-  t.end()
+  assert.isTrue(actual)
 })

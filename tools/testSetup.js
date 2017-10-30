@@ -5,12 +5,6 @@ import Adapter from 'enzyme-adapter-react-16'
 import td from 'testdouble'
 import { JSDOM } from 'jsdom'
 import { SynchronousPromise } from 'synchronous-promise'
-import { test } from 'mocha'
-import { assert } from 'chai'
-
-// Add testing globals
-global.test = test
-global.assert = assert
 
 // https://github.com/airbnb/enzyme#upgrading-from-enzyme-2x-or-react--16
 Enzyme.configure({ adapter: new Adapter() })
@@ -50,3 +44,6 @@ copyProps(window, global)
 td.config({
   promiseConstructor: SynchronousPromise,
 })
+
+// https://github.com/chaijs/type-detect/issues/98#issuecomment-294254114
+global.HTMLElement = window.HTMLElement

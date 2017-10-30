@@ -1,4 +1,5 @@
-import test from 'tape'
+import { test } from 'mocha'
+import { assert } from 'chai'
 
 import * as functionalUtils from './functionalUtils'
 
@@ -8,22 +9,19 @@ import * as functionalUtils from './functionalUtils'
 
 const { trimIfString } = functionalUtils
 
-test('functionalUtils.trimIfString() | if the arg is string, it should trim and return it', (t) => {
+test('functionalUtils.trimIfString() | if the arg is string, it should trim and return it', () => {
   const actual = trimIfString('   Spaceous String   ')
   const expected = 'Spaceous String'
 
-  t.is(actual, expected)
-  t.end()
+  assert.equal(actual, expected)
 })
 
-test('functionalUtils.trimIfString() | if the arg is NOT string, it should just return it', (t) => {
-  t.plan(3)
-
+test('functionalUtils.trimIfString() | if the arg is NOT string, it should just return it', () => {
   const testWithVar = (arg) => {
     const actual = trimIfString(arg)
     const expected = arg
 
-    t.is(actual, expected)
+    assert.equal(actual, expected)
   }
 
   testWithVar(123)
@@ -36,7 +34,7 @@ test('functionalUtils.trimIfString() | if the arg is NOT string, it should just 
  */
 
 const { makePropNegator } = functionalUtils
-const makePropNegatorSharedTest1 = (t) => {
+const makePropNegatorSharedTest1 = () => {
   const testVariation1 = () => {
     const propNegator = makePropNegator('alpha', 'beta', 'delta')
     const obj = {
@@ -54,7 +52,7 @@ const makePropNegatorSharedTest1 = (t) => {
       delta: true,
     }
 
-    t.deepEqual(actual, expected)
+    assert.deepEqual(actual, expected)
   }
 
   const testVariation2 = () => {
@@ -72,7 +70,7 @@ const makePropNegatorSharedTest1 = (t) => {
       gamma: 'gamma',
     }
 
-    t.deepEqual(actual, expected)
+    assert.deepEqual(actual, expected)
   }
 
   const testVariation3 = () => {
@@ -86,10 +84,9 @@ const makePropNegatorSharedTest1 = (t) => {
     const actual = propNegator(obj)
     const expected = obj
 
-    t.deepEqual(actual, expected)
+    assert.deepEqual(actual, expected)
   }
 
-  t.plan(3)
   testVariation1()
   testVariation2()
   testVariation3()
@@ -104,7 +101,7 @@ test('functionalUtils.makePropNegator()() | it should, for each first gen args, 
 
 const { isObjSubset } = functionalUtils
 
-test('functionalUtils.isObjSubset() | When secondArg is subset of firstArg, it should return true', (t) => {
+test('functionalUtils.isObjSubset() | When secondArg is subset of firstArg, it should return true', () => {
   const testVariation1 = () => {
     const superset = {
       a: 1,
@@ -119,9 +116,8 @@ test('functionalUtils.isObjSubset() | When secondArg is subset of firstArg, it s
     }
 
     const actual = isObjSubset(superset, subset)
-    const expected = true
 
-    t.is(actual, expected)
+    assert.isTrue(actual)
   }
 
   const testVariation2 = () => {
@@ -136,17 +132,15 @@ test('functionalUtils.isObjSubset() | When secondArg is subset of firstArg, it s
     }
 
     const actual = isObjSubset(superset, subset)
-    const expected = true
 
-    t.is(actual, expected)
+    assert.isTrue(actual)
   }
 
-  t.plan(2)
   testVariation1()
   testVariation2()
 })
 
-test('functionalUtils.isObjSubset() | When secondArg is NOT subset of firstArg, it should return false', (t) => {
+test('functionalUtils.isObjSubset() | When secondArg is NOT subset of firstArg, it should return false', () => {
   const testVariation1 = () => {
     const superset = {
       a: 1,
@@ -159,9 +153,8 @@ test('functionalUtils.isObjSubset() | When secondArg is NOT subset of firstArg, 
     }
 
     const actual = isObjSubset(superset, subset)
-    const expected = false
 
-    t.is(actual, expected)
+    assert.isFalse(actual)
   }
 
   const testVariation2 = () => {
@@ -176,12 +169,10 @@ test('functionalUtils.isObjSubset() | When secondArg is NOT subset of firstArg, 
     }
 
     const actual = isObjSubset(superset, subset)
-    const expected = false
 
-    t.is(actual, expected)
+    assert.isFalse(actual)
   }
 
-  t.plan(2)
   testVariation1()
   testVariation2()
 })
@@ -199,7 +190,7 @@ test('functionalUtils.isObjSubset() | When secondArg is NOT subset of firstArg, 
 //   const switchMyCases = switchVals(myCases)
 //   const res = switchMyCases('baz')
 
-//   t.is(res, null)
+//   assert.equal(res, null)
 // }
 
 // test('functionalUtils.switchVals() | when called with an object, it should return a function', switchValsSharedTest1)
@@ -213,7 +204,7 @@ test('functionalUtils.isObjSubset() | When secondArg is NOT subset of firstArg, 
 //   const switchMyCases = switchVals(myCases)
 //   const res = switchMyCases('foo')
 
-//   t.is(res, 'fooVal')
+//   assert.equal(res, 'fooVal')
 // })
 
 // /**
@@ -230,7 +221,7 @@ test('functionalUtils.isObjSubset() | When secondArg is NOT subset of firstArg, 
 //   const myFunc = switchMyFuncs('foo')
 //   const res = myFunc('fooArg')
 
-//   t.is(res, 'fooRes')
+//   assert.equal(res, 'fooRes')
 // }
 
 // test('functionalUtils.switchFuncs() | when called with an object, it should return a function', switchFuncsSharedTest1)
@@ -247,5 +238,5 @@ test('functionalUtils.isObjSubset() | When secondArg is NOT subset of firstArg, 
 //   const myFunc = switchMyFuncs('baz')
 //   const res = myFunc('fooArg')
 
-//   t.is(res, null)
+//   assert.equal(res, null)
 // })

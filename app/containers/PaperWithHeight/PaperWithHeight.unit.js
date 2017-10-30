@@ -1,44 +1,39 @@
-import test from 'tape'
+import { test } from 'mocha'
+import { assert } from 'chai'
 import React from 'react'
 
-import * as tu from 'services/testUtils'
+import * as TU from 'services/testUtils'
 import { BarePaperWithHeight as PaperWithHeight } from './PaperWithHeight'
 
 const defProps = { height: 0 }
 
-const setup = tu.makeTestSetup({
+const setup = TU.makeTestSetup({
   Component: PaperWithHeight,
   defaultProps: defProps,
 })
 
-test('PaperWithHeight | it should render without error', (t) => {
+test('PaperWithHeight | it should render without error', () => {
   const wrapper = setup()
-
   const actual = wrapper.exists()
-  const expected = true
 
-  t.is(actual, expected)
-  t.end()
+  assert.isTrue(actual)
 })
 
-test('PaperWithHeight | it should use the height prop as style', (t) => {
+test('PaperWithHeight | it should use the height prop as style', () => {
   const props = { height: 143 }
   const wrapper = setup({ props })
 
   const actual = wrapper.prop('style')
   const expected = props
 
-  t.deepEqual(actual, expected)
-  t.end()
+  assert.deepEqual(actual, expected)
 })
 
-test('PaperWithHeight | it should render its children', (t) => {
+test('PaperWithHeight | it should render its children', () => {
   const childNode = <div id='foo'>Bar</div>
   const wrapper = setup({ childNode })
 
   const actual = wrapper.contains(childNode)
-  const expected = true
 
-  t.is(actual, expected)
-  t.end()
+  assert.isTrue(actual)
 })

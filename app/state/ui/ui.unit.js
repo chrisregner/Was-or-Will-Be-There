@@ -1,4 +1,5 @@
-import test from 'tape'
+import { test } from 'mocha'
+import { assert } from 'chai'
 import I from 'immutable'
 import Joi from 'joi-browser'
 
@@ -11,7 +12,7 @@ import uiReducer, * as fromUi from './ui'
 
 test.skip('ui | it should return the correct default state')
 
-test('ui.ADD_PLAN | it should work', (t) => {
+test('ui.ADD_PLAN | it should work', () => {
   const initialState = I.Map({ snackbar: null })
   const action = fromPlans.addPlan(I.Map())
 
@@ -21,11 +22,10 @@ test('ui.ADD_PLAN | it should work', (t) => {
     message: Joi.string().required(),
   })
 
-  t.is(expected.validate(actual).error, null)
-  t.end()
+  assert.isNull(expected.validate(actual).error)
 })
 
-test('ui.HIDE_SNACKBAR | it should work', (t) => {
+test('ui.HIDE_SNACKBAR | it should work', () => {
   const action = fromUi.hideSnackbar()
   const initialState = I.fromJS({
     snackbar: {
@@ -40,11 +40,10 @@ test('ui.HIDE_SNACKBAR | it should work', (t) => {
     message: 'Some message',
   })
 
-  t.is(actual.equals(expected), true)
-  t.end()
+  assert.isTrue(actual.equals(expected))
 })
 
-test('ui.SET_PAPER_HEIGHT | it should work', (t) => {
+test('ui.SET_PAPER_HEIGHT | it should work', () => {
   const tryAddingToEmptyHeights = () => {
     const initialState = I.fromJS({
       paperHeights: {},
@@ -54,7 +53,7 @@ test('ui.SET_PAPER_HEIGHT | it should work', (t) => {
     const actual = uiReducer(initialState, action).get('paperHeights')
     const expected = I.Map({ somePaper: 143 })
 
-    t.is(actual.equals(expected), true)
+    assert.isTrue(actual.equals(expected))
   }
 
   const tryAddingToNonEmptyHeights = () => {
@@ -73,7 +72,7 @@ test('ui.SET_PAPER_HEIGHT | it should work', (t) => {
       },
     })
 
-    t.is(actual.equals(expected), true)
+    assert.isTrue(actual.equals(expected))
   }
 
   const tryUpdatingAHeight = () => {
@@ -91,16 +90,15 @@ test('ui.SET_PAPER_HEIGHT | it should work', (t) => {
       },
     })
 
-    t.is(actual.equals(expected), true)
+    assert.isTrue(actual.equals(expected))
   }
 
-  t.plan(3)
   tryAddingToEmptyHeights()
   tryAddingToNonEmptyHeights()
   tryUpdatingAHeight()
 })
 
-test('ui.SET_REAL_ROUTE', (t) => {
+test('ui.SET_REAL_ROUTE', () => {
   const tryUpdatingANull = () => {
     const initialState = I.fromJS({ realRoute: null })
     const action = fromUi.setRealRoute('new/route')
@@ -108,7 +106,7 @@ test('ui.SET_REAL_ROUTE', (t) => {
     const actual = uiReducer(initialState, action)
     const expected = I.Map({ realRoute: 'new/route' })
 
-    t.is(actual.equals(expected), true)
+    assert.isTrue(actual.equals(expected))
   }
 
   const tryUpdatingAnOldRoute = () => {
@@ -118,10 +116,9 @@ test('ui.SET_REAL_ROUTE', (t) => {
     const actual = uiReducer(initialState, action)
     const expected = I.Map({ realRoute: 'new/route' })
 
-    t.is(actual.equals(expected), true)
+    assert.isTrue(actual.equals(expected))
   }
 
-  t.plan(2)
   tryUpdatingANull()
   tryUpdatingAnOldRoute()
 })
@@ -132,7 +129,7 @@ test('ui.SET_REAL_ROUTE', (t) => {
 
 const { uiGetters } = fromUi
 
-test('ui.getSnackbarInfo() | it should work', (t) => {
+test('ui.getSnackbarInfo() | it should work', () => {
   const state = I.Map({
     snackbar: {
       isVisible: true,
@@ -143,11 +140,10 @@ test('ui.getSnackbarInfo() | it should work', (t) => {
   const actual = uiGetters.getSnackbarInfo(state)
   const expected = state.get('snackbar')
 
-  t.is(actual, expected)
-  t.end()
+  assert.equal(actual, expected)
 })
 
-test('ui.getHighestHeight() | it should work', (t) => {
+test('ui.getHighestHeight() | it should work', () => {
   const state = I.fromJS({
     paperHeights: {
       firstPaper: 0,
@@ -159,30 +155,25 @@ test('ui.getHighestHeight() | it should work', (t) => {
   const actual = uiGetters.getHighestHeight(state)
   const expected = 999
 
-  t.is(actual, expected)
-  t.end()
+  assert.equal(actual, expected)
 })
 
-test('ui.isRouteCurrent() | when passed route is current, it should return true', (t) => {
+test('ui.isRouteCurrent() | when passed route is current, it should return true', () => {
   const state = I.fromJS({
     realRoute: 'current/route',
   })
 
   const actual = uiGetters.isRouteCurrent(state, 'current/route')
-  const expected = true
 
-  t.is(actual, expected)
-  t.end()
+  assert.isTrue(actual)
 })
 
-test('ui.isRouteCurrent() | when passed route is NOT current, it should return false', (t) => {
+test('ui.isRouteCurrent() | when passed route is NOT current, it should return false', () => {
   const state = I.fromJS({
     realRoute: 'current/route',
   })
 
   const actual = uiGetters.isRouteCurrent(state, 'not-current/route')
-  const expected = false
 
-  t.is(actual, expected)
-  t.end()
+  assert.isFalse(actual)
 })

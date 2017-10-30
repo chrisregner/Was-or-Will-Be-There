@@ -1,4 +1,5 @@
-import test from 'tape'
+import { test } from 'mocha'
+import { assert } from 'chai'
 import * as I from 'immutable'
 
 import * as TU from 'services/testUtils'
@@ -18,19 +19,16 @@ const setup = TU.makeTestSetup({
   defaultProps: defProps,
 })
 
-test('PlansAndJournals | it should render without error', (t) => {
+test('PlansAndJournals | it should render without error', () => {
   const wrapper = setup()
-
   const actual = wrapper.exists()
-  const expected = true
 
-  t.is(actual, expected)
-  t.end()
+  assert.isTrue(actual)
 })
 
 test.skip('PlansAndJournals | it should render a link to add a journal')
 
-test('PlansAndJournals | it should render a link to add a plan', (t) => {
+test.skip('PlansAndJournals | it should render a link to add a plan', () => {
   const props = {
     match: {
       params: {
@@ -44,8 +42,7 @@ test('PlansAndJournals | it should render a link to add a plan', (t) => {
   const actual = linkWrpr.length
   const expected = 1
 
-  t.is(actual, expected)
-  t.end()
+  assert.equal(actual, expected)
 })
 
 test.skip('PlansAndJournals | if there is no plans nor journals, it should render a message')
@@ -56,7 +53,7 @@ test.skip('PlansAndJournals | if there is journal(s) but no plan, it should NOT 
 test.skip('PlansAndJournals | if there is plan(s) but no journal, it should render a message for lacking journals')
 test.skip('PlansAndJournals | if there is plan(s) but no journal, it should NOT render a message for lacking BOTH plans and journals')
 
-test.skip('PlansAndJournals | if there is any plan, it should render it', (t) => {
+test.skip('PlansAndJournals | if there is any plan, it should render it', () => {
 
 })
 

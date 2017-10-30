@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux-immutable'
-import * as I from 'immutable'
 import * as R from 'ramda'
 
 import plansReducer from './plans'

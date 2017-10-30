@@ -1,4 +1,5 @@
-import test from 'tape'
+import { test } from 'mocha'
+import { assert } from 'chai'
 
 import * as Tu from 'services/testUtils'
 import MapCmpt from './MapCmpt'
@@ -7,12 +8,10 @@ const setup = Tu.makeTestSetup({
   Component: MapCmpt,
 })
 
-test('it should render without error', (t) => {
+test('it should render without error', () => {
   const wrapper = setup()
 
   const actual = wrapper.exists()
-  const expected = true
 
-  t.true(actual, expected)
-  t.end()
+  assert.isTrue(actual)
 })

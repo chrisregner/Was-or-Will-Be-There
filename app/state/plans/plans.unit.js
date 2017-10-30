@@ -1,4 +1,5 @@
-import test from 'tape'
+import { test } from 'mocha'
+import { assert } from 'chai'
 import td from 'testdouble'
 import I from 'immutable'
 
@@ -25,7 +26,7 @@ test.skip('plansReducer | it should return the correct default state')
 const { addPlanShell } = fromPlans
 const addPlan = addPlanShell({ shortid: fake.shortid })
 
-test('plansReducer.ADD_PLAN | it should work', (t) => {
+test('plansReducer.ADD_PLAN | it should work', () => {
   setup()
 
   const action = addPlan(I.Map({ planName: 'Sample Plan Name' }))
@@ -38,6 +39,5 @@ test('plansReducer.ADD_PLAN | it should work', (t) => {
     }),
   ])
 
-  t.is(actual.equals(expected), true)
-  t.end()
+  assert.isTrue(actual.equals(expected))
 })

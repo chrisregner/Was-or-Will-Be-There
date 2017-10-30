@@ -1,6 +1,6 @@
-import test from 'tape'
+import { test } from 'mocha'
+import { assert } from 'chai'
 import * as I from 'immutable'
-import * as R from 'ramda'
 
 import * as immutablejsUtils from './immutablejsUtils'
 
@@ -10,16 +10,15 @@ import * as immutablejsUtils from './immutablejsUtils'
 
 const { smartMergeDeep } = immutablejsUtils
 
-test('immutablejsUtils.smartMergeDeep() | if the second arg is undefined, it should return the first arg', (t) => {
+test('immutablejsUtils.smartMergeDeep() | if the second arg is undefined, it should return the first arg', () => {
   const firstArg = 'first arg'
   const actual = smartMergeDeep(firstArg)
   const expected = firstArg
 
-  t.is(actual, expected)
-  t.end()
+  assert.equal(actual, expected)
 })
 
-test('immutablejsUtils.smartMergeDeep() | it should deep merge reqular objects', (t) => {
+test('immutablejsUtils.smartMergeDeep() | it should deep merge reqular objects', () => {
   const baseObj = {
     a: 'a',
     b: {
@@ -44,13 +43,12 @@ test('immutablejsUtils.smartMergeDeep() | it should deep merge reqular objects',
     d: 4,
   }
 
-  t.deepEqual(actual, expected)
-  t.end()
+  assert.deepEqual(actual, expected)
 })
 
 // NOTE: based on logging the output, the following spec should pass, we just don't have a tool
 //   that can assert it so skip it for now
-test.skip('immutablejsUtils.smartMergeDeep() | if the source\'s and corresponding base\'s property is both Immutable data structure, it should mergeDeep it properly', (t) => {
+test.skip('immutablejsUtils.smartMergeDeep() | if the source\'s and corresponding base\'s property is both Immutable data structure, it should mergeDeep it properly', () => {
   const baseObj = {
     a: 'a',
     b: {
@@ -103,15 +101,14 @@ test.skip('immutablejsUtils.smartMergeDeep() | if the source\'s and correspondin
     f: 'f',
   }
 
-  console.log('expected >>>', expected)
-  console.log('actual >>>', actual)
-  t.is(I.Map(actual).equals(I.Map(expected)), true)
-  t.end()
+  // console.log('expected >>>', expected)
+  // console.log('actual >>>', actual)
+  assert.equal(I.Map(actual).equals(I.Map(expected)), true)
 })
 
 // NOTE: based on logging the output, the following spec should pass, we just don't have a tool
 //   that can assert it so skip it for now
-test.skip('immutablejsUtils.smartMergeDeep() | if the source\'s and corresponding base\'s NESTED property both an Immutable data structure, it should mergeDeep it properly', (t) => {
+test.skip('immutablejsUtils.smartMergeDeep() | if the source\'s and corresponding base\'s NESTED property both an Immutable data structure, it should mergeDeep it properly', () => {
   const baseObj = {
     a: 'a',
     b: {
@@ -170,8 +167,7 @@ test.skip('immutablejsUtils.smartMergeDeep() | if the source\'s and correspondin
     f: 'f',
   }
 
-  console.log('expected >>>', expected)
-  console.log('actual >>>', actual)
-  t.is(I.Map(actual).equals(I.Map(expected)), true)
-  t.end()
+  // console.log('expected >>>', expected)
+  // console.log('actual >>>', actual)
+  assert.equal(I.Map(actual).equals(I.Map(expected)), true)
 })

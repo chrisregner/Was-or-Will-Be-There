@@ -1,4 +1,5 @@
-import test from 'tape'
+import { test } from 'mocha'
+import { assert } from 'chai'
 
 import * as TU from 'services/testUtils'
 import Xxx from './Xxx'
@@ -7,12 +8,9 @@ const setup = TU.makeTestSetup({
   Component: Xxx,
 })
 
-test('Xxx | it should render without error', (t) => {
+test('Xxx | it should render without error', () => {
   const wrapper = setup()
-
   const actual = wrapper.exists()
-  const expected = true
 
-  t.is(actual, expected)
-  t.end()
+  assert.isTrue(actual)
 })

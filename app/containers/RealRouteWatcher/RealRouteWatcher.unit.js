@@ -1,4 +1,5 @@
-import test from 'tape'
+import { test } from 'mocha'
+import { assert } from 'chai'
 import td from 'testdouble'
 
 import * as TU from 'services/testUtils'
@@ -17,17 +18,14 @@ const setup = TU.makeTestSetup({
   tools: ['td'],
 })
 
-test('RealRouteWatcher | it should render without error', (t) => {
+test('RealRouteWatcher | it should render without error', () => {
   const wrapper = setup()
-
   const actual = wrapper.exists()
-  const expected = true
 
-  t.is(actual, expected)
-  t.end()
+  assert.isTrue(actual)
 })
 
-test('RealRouteWatcher | it should call setRealRoute() with correct props on mount', (t) => {
+test('RealRouteWatcher | it should call setRealRoute() with correct props on mount', () => {
   const props = {
     location: {
       pathname: 'pathname/on/mount',
@@ -37,10 +35,9 @@ test('RealRouteWatcher | it should call setRealRoute() with correct props on mou
   setup({ props })
 
   td.verify(defProps.setRealRoute('pathname/on/mount'), { times: 1 })
-  t.end()
 })
 
-test('RealRouteWatcher | it should call setRealRoute() with correct props on update', (t) => {
+test('RealRouteWatcher | it should call setRealRoute() with correct props on update', () => {
   const wrapper = setup()
 
   wrapper.setProps({
@@ -50,5 +47,4 @@ test('RealRouteWatcher | it should call setRealRoute() with correct props on upd
   })
 
   td.verify(defProps.setRealRoute('pathname/on/update'), { times: 1 })
-  t.end()
 })
