@@ -31,13 +31,13 @@ const countryNameShell = ({ requestPromise }) =>
       const countriesUrl = 'https://cdn.rawgit.com/hjnilsson/country-flags/master/countries.json'
 
       requestPromise(countriesUrl)
-        .then(countryNamesJson => {
+        .then((countryNamesJson) => {
           const countryNames = JSON.parse(countryNamesJson)
           const countryName = countryNames[countryId]
 
           this.setState({ countryName })
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('Error upon retrieving country name: ', error)
 
           this.setState({ error })

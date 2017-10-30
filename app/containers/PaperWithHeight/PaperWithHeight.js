@@ -17,7 +17,7 @@ BarePaperWithHeight.propTypes = {
   children: PropTypes.node,
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   height: uiGetters.getHighestHeight(state),
 })
 

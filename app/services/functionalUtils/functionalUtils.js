@@ -1,11 +1,11 @@
 import * as R from 'ramda'
 
-export const trimIfString = (arg) =>
+export const trimIfString = arg =>
   typeof arg === 'string'
     ? R.trim(arg)
     : arg
 
-export const makePropNegator = (...keys) => (obj) =>
+export const makePropNegator = (...keys) => obj =>
   R.mapObjIndexed(
     (v, k) => keys.includes(k) ? !v : v,
     obj,

@@ -8,7 +8,7 @@ import { BareNotifSnackbar as NotifSnackbar } from './NotifSnackbar'
 const defProps = {
   open: false,
   message: '',
-  hideSnackbar: td.func()
+  hideSnackbar: td.func(),
 }
 
 const setup = TU.makeTestSetup({
@@ -16,7 +16,7 @@ const setup = TU.makeTestSetup({
   defaultProps: defProps,
 })
 
-test('NotifSnackbar | it should render without error', t => {
+test('NotifSnackbar | it should render without error', (t) => {
   const wrapper = setup()
 
   const actual = wrapper.exists()
@@ -26,12 +26,12 @@ test('NotifSnackbar | it should render without error', t => {
   t.end()
 })
 
-test('NotifSnackbar | it should pass the props correctly', t => {
+test('NotifSnackbar | it should pass the props correctly', (t) => {
   const hideSnackbar = () => {}
   const props = {
     open: true,
     message: 'Some snackbar message',
-    hideSnackbar
+    hideSnackbar,
   }
   const wrapper = setup({ props })
   const computedProps = wrapper.props()

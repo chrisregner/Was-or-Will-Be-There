@@ -24,7 +24,7 @@ export const makeTestSetup = (args1 = {}) => {
       deps,
       useMount,
       Component,
-      childNode
+      childNode,
     } = args2
 
     if (tools.includes('td')) {

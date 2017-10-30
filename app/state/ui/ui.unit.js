@@ -11,7 +11,7 @@ import uiReducer, * as fromUi from './ui'
 
 test.skip('ui | it should return the correct default state')
 
-test('ui.ADD_PLAN | it should work', t => {
+test('ui.ADD_PLAN | it should work', (t) => {
   const initialState = I.Map({ snackbar: null })
   const action = fromPlans.addPlan(I.Map())
 
@@ -25,7 +25,7 @@ test('ui.ADD_PLAN | it should work', t => {
   t.end()
 })
 
-test('ui.HIDE_SNACKBAR | it should work', t => {
+test('ui.HIDE_SNACKBAR | it should work', (t) => {
   const action = fromUi.hideSnackbar()
   const initialState = I.fromJS({
     snackbar: {
@@ -44,10 +44,10 @@ test('ui.HIDE_SNACKBAR | it should work', t => {
   t.end()
 })
 
-test('ui.SET_PAPER_HEIGHT | it should work', t => {
+test('ui.SET_PAPER_HEIGHT | it should work', (t) => {
   const tryAddingToEmptyHeights = () => {
     const initialState = I.fromJS({
-      paperHeights: {}
+      paperHeights: {},
     })
     const action = fromUi.setPaperHeight('somePaper', 143)
 
@@ -61,7 +61,7 @@ test('ui.SET_PAPER_HEIGHT | it should work', t => {
     const initialState = I.fromJS({
       paperHeights: {
         firstPaper: 111,
-      }
+      },
     })
     const action = fromUi.setPaperHeight('secondPaper', 222)
 
@@ -70,7 +70,7 @@ test('ui.SET_PAPER_HEIGHT | it should work', t => {
       paperHeights: {
         firstPaper: 111,
         secondPaper: 222,
-      }
+      },
     })
 
     t.is(actual.equals(expected), true)
@@ -80,15 +80,15 @@ test('ui.SET_PAPER_HEIGHT | it should work', t => {
     const initialState = I.fromJS({
       paperHeights: {
         somePaper: 666,
-      }
+      },
     })
     const action = fromUi.setPaperHeight('somePaper', 143)
 
     const actual = uiReducer(initialState, action)
     const expected = I.fromJS({
       paperHeights: {
-        somePaper: 143
-      }
+        somePaper: 143,
+      },
     })
 
     t.is(actual.equals(expected), true)
@@ -100,7 +100,7 @@ test('ui.SET_PAPER_HEIGHT | it should work', t => {
   tryUpdatingAHeight()
 })
 
-test('ui.SET_REAL_ROUTE', t => {
+test('ui.SET_REAL_ROUTE', (t) => {
   const tryUpdatingANull = () => {
     const initialState = I.fromJS({ realRoute: null })
     const action = fromUi.setRealRoute('new/route')
@@ -132,7 +132,7 @@ test('ui.SET_REAL_ROUTE', t => {
 
 const { uiGetters } = fromUi
 
-test('ui.getSnackbarInfo() | it should work', t => {
+test('ui.getSnackbarInfo() | it should work', (t) => {
   const state = I.Map({
     snackbar: {
       isVisible: true,
@@ -147,13 +147,13 @@ test('ui.getSnackbarInfo() | it should work', t => {
   t.end()
 })
 
-test('ui.getHighestHeight() | it should work', t => {
+test('ui.getHighestHeight() | it should work', (t) => {
   const state = I.fromJS({
     paperHeights: {
       firstPaper: 0,
       secondPaper: 999,
       thirdPaper: 143,
-    }
+    },
   })
 
   const actual = uiGetters.getHighestHeight(state)
@@ -163,9 +163,9 @@ test('ui.getHighestHeight() | it should work', t => {
   t.end()
 })
 
-test('ui.isRouteCurrent() | when passed route is current, it should return true', t => {
+test('ui.isRouteCurrent() | when passed route is current, it should return true', (t) => {
   const state = I.fromJS({
-    realRoute: 'current/route'
+    realRoute: 'current/route',
   })
 
   const actual = uiGetters.isRouteCurrent(state, 'current/route')
@@ -175,9 +175,9 @@ test('ui.isRouteCurrent() | when passed route is current, it should return true'
   t.end()
 })
 
-test('ui.isRouteCurrent() | when passed route is NOT current, it should return false', t => {
+test('ui.isRouteCurrent() | when passed route is NOT current, it should return false', (t) => {
   const state = I.fromJS({
-    realRoute: 'current/route'
+    realRoute: 'current/route',
   })
 
   const actual = uiGetters.isRouteCurrent(state, 'not-current/route')

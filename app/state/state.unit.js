@@ -6,8 +6,8 @@ import { gettersShell } from './state'
 
 const deps = {
   uiGetters: {
-    getHightestPaperHeight: td.func()
-  }
+    getHightestPaperHeight: td.func(),
+  },
 }
 
 const setup = () => {
@@ -20,13 +20,13 @@ const setup = () => {
 
 const { uiGetters } = gettersShell(deps)
 
-test('state.getHightestPaperHeight | it should return the ', t => {
+test('state.getHightestPaperHeight | it should return the ', (t) => {
   setup()
 
   const expectedArg = 'expected result for getHightestPaperHeight()'
   const expectedRes = 'expected result of getHightestPaperHeight()'
   const passedState = I.Map({
-    ui: expectedArg
+    ui: expectedArg,
   })
 
   td.when(deps.uiGetters.getHightestPaperHeight(expectedArg))

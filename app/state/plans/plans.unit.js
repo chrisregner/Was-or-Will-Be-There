@@ -25,7 +25,7 @@ test.skip('plansReducer | it should return the correct default state')
 const { addPlanShell } = fromPlans
 const addPlan = addPlanShell({ shortid: fake.shortid })
 
-test('plansReducer.ADD_PLAN | it should work', t => {
+test('plansReducer.ADD_PLAN | it should work', (t) => {
   setup()
 
   const action = addPlan(I.Map({ planName: 'Sample Plan Name' }))

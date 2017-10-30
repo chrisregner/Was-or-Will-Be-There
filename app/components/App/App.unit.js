@@ -7,7 +7,7 @@ const setup = Tu.makeTestSetup({
   Component: App,
 })
 
-test('it should render without error', t => {
+test('it should render without error', (t) => {
   const wrapper = setup()
 
   const actual = wrapper.exists()

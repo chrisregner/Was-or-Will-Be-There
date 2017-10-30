@@ -46,7 +46,7 @@ const uiReducer = handleActions({
   [SET_PAPER_HEIGHT]: (state, { payload }) =>
     state.setIn(['paperHeights', payload.paperName], payload.height),
   [SET_REAL_ROUTE]: (state, { payload }) =>
-    state.set('realRoute', payload)
+    state.set('realRoute', payload),
 }, defaultState)
 
 /**
@@ -60,7 +60,7 @@ export const uiGetters = {
       .reduce((highestHeight, currentHeight) =>
         currentHeight > highestHeight ? currentHeight : highestHeight,
       0),
-  isRouteCurrent: (state, route) => state.get('realRoute') === route
+  isRouteCurrent: (state, route) => state.get('realRoute') === route,
 }
 
 export default uiReducer

@@ -21,7 +21,6 @@ export default (WrappedCmpt, componentName) => {
       }).isRequired,
     }
 
-
     componentDidMount = () => {
       this.props.setPaperHeight(this.rootEl.offsetHeight)
     }
@@ -39,7 +38,7 @@ export default (WrappedCmpt, componentName) => {
       this.props.setPaperHeight(height)
     }
 
-    rootElRef = rootEl => {
+    rootElRef = (rootEl) => {
       this.rootEl = rootEl
     }
 
@@ -56,13 +55,13 @@ export default (WrappedCmpt, componentName) => {
   }
 
   const mapDispatchToProps = dispatch => ({
-    setPaperHeight: height => {
+    setPaperHeight: (height) => {
       dispatch(setPaperHeight(componentName, height))
-    }
+    },
   })
 
   const mapStateToProps = (state, ownProps) => ({
-    isRouteCurrent: (newRoute) => uiGetters.isRouteCurrent(state, newRoute)
+    isRouteCurrent: newRoute => uiGetters.isRouteCurrent(state, newRoute),
   })
 
   const ConnectedHeightWatcher = withRouter(connect(mapStateToProps, mapDispatchToProps)(HeightWatcher))

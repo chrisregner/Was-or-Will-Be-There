@@ -8,7 +8,7 @@ import * as functionalUtils from './functionalUtils'
 
 const { trimIfString } = functionalUtils
 
-test('functionalUtils.trimIfString() | if the arg is string, it should trim and return it', t => {
+test('functionalUtils.trimIfString() | if the arg is string, it should trim and return it', (t) => {
   const actual = trimIfString('   Spaceous String   ')
   const expected = 'Spaceous String'
 
@@ -16,7 +16,7 @@ test('functionalUtils.trimIfString() | if the arg is string, it should trim and 
   t.end()
 })
 
-test('functionalUtils.trimIfString() | if the arg is NOT string, it should just return it', t => {
+test('functionalUtils.trimIfString() | if the arg is NOT string, it should just return it', (t) => {
   t.plan(3)
 
   const testWithVar = (arg) => {
@@ -36,7 +36,7 @@ test('functionalUtils.trimIfString() | if the arg is NOT string, it should just 
  */
 
 const { makePropNegator } = functionalUtils
-const makePropNegatorSharedTest1 = t => {
+const makePropNegatorSharedTest1 = (t) => {
   const testVariation1 = () => {
     const propNegator = makePropNegator('alpha', 'beta', 'delta')
     const obj = {
@@ -104,7 +104,7 @@ test('functionalUtils.makePropNegator()() | it should, for each first gen args, 
 
 const { isObjSubset } = functionalUtils
 
-test('functionalUtils.isObjSubset() | When secondArg is subset of firstArg, it should return true', t => {
+test('functionalUtils.isObjSubset() | When secondArg is subset of firstArg, it should return true', (t) => {
   const testVariation1 = () => {
     const superset = {
       a: 1,
@@ -146,7 +146,7 @@ test('functionalUtils.isObjSubset() | When secondArg is subset of firstArg, it s
   testVariation2()
 })
 
-test('functionalUtils.isObjSubset() | When secondArg is NOT subset of firstArg, it should return false', t => {
+test('functionalUtils.isObjSubset() | When secondArg is NOT subset of firstArg, it should return false', (t) => {
   const testVariation1 = () => {
     const superset = {
       a: 1,
@@ -185,7 +185,6 @@ test('functionalUtils.isObjSubset() | When secondArg is NOT subset of firstArg, 
   testVariation1()
   testVariation2()
 })
-
 
 // /**
 //  * switchVals()

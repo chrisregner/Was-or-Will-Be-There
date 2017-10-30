@@ -21,6 +21,7 @@
     "babel-register": "^6.26.0",
     "bluebird": "^3.5.1",
     "browser-env": "^3.2.1",
+    "chai": "^4.1.2",
     "classnames": "^2.2.5",
     "cross-env": "^5.1.0",
     "css-loader": "^0.28.7",
@@ -42,6 +43,7 @@
     "json-loader": "^0.5.7",
     "lolex": "^2.1.3",
     "material-ui": "^0.19.4",
+    "mocha": "^4.0.1",
     "promise": "^8.0.1",
     "prop-types": "^15.6.0",
     "ramda": "^0.25.0",
@@ -89,12 +91,7 @@
   "scripts": {
     "start": "webpack-dev-server --hot",
     "lint": "eslint --ignore-pattern '/dist/*' --fix **/*.js",
-    "test": "cross-env NODE_PATH=app tape-watch -r babel-register -r ../tools/testSetup.js **/*.unit.js -p tap-nyan",
-    "test-spec": "cross-env NODE_PATH=app tape-watch -r babel-register -r ../tools/testSetup.js **/*.unit.js -p tap-spec",
-    "test-bail": "cross-env NODE_PATH=app tape-watch -r babel-register -r ../tools/testSetup.js **/*.unit.js -p tap-bail",
-    "test-bail-once": "cross-env NODE_PATH=app tape -r babel-register -r ./tools/testSetup.js **/*.unit.js | tap-bail",
-    "test-bare": "cross-env NODE_PATH=app tape-watch -r babel-register -r ../tools/testSetup.js **/*.unit.js",
-    "test-bare-once": "cross-env NODE_PATH=app tape -r babel-register -r ./tools/testSetup.js **/*.unit.js"
+    "test": "mocha --require tools/testSetup.js --reporter nyan --watch --globals test,assert"
   },
   "dependencies": {}
 }

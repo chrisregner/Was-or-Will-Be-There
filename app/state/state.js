@@ -33,13 +33,12 @@ export const gettersShell = ({
           newGetters,
         ),
       {}
-    )
+    ),
 })
 
 const { uiGetters } = gettersShell({
-  uiGetters: _uiGetters
+  uiGetters: _uiGetters,
 })
-
 
 export {
   uiGetters,

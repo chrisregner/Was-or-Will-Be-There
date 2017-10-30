@@ -22,7 +22,6 @@ export const addPlan = addPlanShell({ shortid: _shortid })
  * Reducer
  */
 
-
 const plansReducer = handleActions({
   [ADD_PLAN]: (state, { payload }) => state.push(payload),
 }, defaultState)

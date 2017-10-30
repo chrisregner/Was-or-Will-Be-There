@@ -30,11 +30,11 @@ const setup = Tu.makeTestSetup({
   defaultProps: defProps,
   defaultEnzymeOpts: {
     disableLifecycleMethods: true,
-  }
+  },
 })
 
 const fillForm = (values, wrapper) => {
-  Object.entries(values).forEach(entry => {
+  Object.entries(values).forEach((entry) => {
     const getField = () => wrapper.find(`[data-name='${entry[0]}']`)
 
     getField().simulate('change', mockData.ev, entry[1])
@@ -45,7 +45,7 @@ const fillForm = (values, wrapper) => {
  * Self
  */
 
-test('PlanForm | it should render without error', t => {
+test('PlanForm | it should render without error', (t) => {
   const wrapper = setup()
   const actual = wrapper.exists()
   const expected = true
@@ -54,8 +54,8 @@ test('PlanForm | it should render without error', t => {
   t.end()
 })
 
-test('PlanForm | it should render CountyName with correct props', t => {
-  const testWithVar = countryId => {
+test('PlanForm | it should render CountyName with correct props', (t) => {
+  const testWithVar = (countryId) => {
     const props = {
       match: {
         params: { countryId },
@@ -76,8 +76,8 @@ test('PlanForm | it should render CountyName with correct props', t => {
   testWithVar('JP')
 })
 
-test('PlanForm | it should render the correct country flag', t => {
-  const testWithVar = countryId => {
+test('PlanForm | it should render the correct country flag', (t) => {
+  const testWithVar = (countryId) => {
     const props = {
       match: {
         params: { countryId },
@@ -211,7 +211,7 @@ test('PlanForm | it should render the correct country flag', t => {
  * PlanNameField
  */
 
-test('PlanForm > PlanNameField | it should work', t => {
+test('PlanForm > PlanNameField | it should work', (t) => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="PlanNameField"]')
 
@@ -225,7 +225,7 @@ test('PlanForm > PlanNameField | it should work', t => {
   t.end()
 })
 
-test('PlanForm > PlanNameField | if changed to blank, it should show error', t => {
+test('PlanForm > PlanNameField | if changed to blank, it should show error', (t) => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="PlanNameField"]')
 
@@ -237,7 +237,7 @@ test('PlanForm > PlanNameField | if changed to blank, it should show error', t =
   t.end()
 })
 
-test('PlanForm > PlanNameField | if NOT filled and submitted, it should NOT call handleSubmit()', t => {
+test('PlanForm > PlanNameField | if NOT filled and submitted, it should NOT call handleSubmit()', (t) => {
   const wrapper = setup()
 
   wrapper.find('form').simulate('submit', mockData.ev)
@@ -246,7 +246,7 @@ test('PlanForm > PlanNameField | if NOT filled and submitted, it should NOT call
   t.end()
 })
 
-test('PlanForm > PlanNameField | if NOT filled and submitted, it should show error', t => {
+test('PlanForm > PlanNameField | if NOT filled and submitted, it should show error', (t) => {
   const wrapper = setup()
 
   wrapper.find('form').simulate('submit', mockData.ev)
@@ -258,14 +258,14 @@ test('PlanForm > PlanNameField | if NOT filled and submitted, it should show err
   t.end()
 })
 
-test.skip('PlanNameField | it should accept initial value', t => {})
-test.skip('PlanNameField | if initial value is provided, it should still be emptiable', t => {})
+test.skip('PlanNameField | it should accept initial value', (t) => {})
+test.skip('PlanNameField | if initial value is provided, it should still be emptiable', (t) => {})
 
 /**
  * NotesField
  */
 
-test('PlanForm > NotesField | it should work', t => {
+test('PlanForm > NotesField | it should work', (t) => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="NotesField"]')
 
@@ -279,14 +279,14 @@ test('PlanForm > NotesField | it should work', t => {
   t.end()
 })
 
-test.skip('NotesField | it should accept initial value', t => {})
-test.skip('NotesField | if initial value is provided, it should still be emptiable', t => {})
+test.skip('NotesField | it should accept initial value', (t) => {})
+test.skip('NotesField | if initial value is provided, it should still be emptiable', (t) => {})
 
 /**
  * Departure
  */
 
-test('PlanForm > DepartureField | it should work', t => {
+test('PlanForm > DepartureField | it should work', (t) => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="DepartureField"]')
 
@@ -300,7 +300,7 @@ test('PlanForm > DepartureField | it should work', t => {
   t.end()
 })
 
-test('PlanForm > DepartureField | if HomecomingField is filled, it should have maxDate equal to HomecomingField\'s value', t => {
+test('PlanForm > DepartureField | if HomecomingField is filled, it should have maxDate equal to HomecomingField\'s value', (t) => {
   const wrapper = setup()
   const getDepartureField = () => wrapper.find('[data-name="DepartureField"]')
   const getHomecomingField = () => wrapper.find('[data-name="HomecomingField"]')
@@ -315,14 +315,14 @@ test('PlanForm > DepartureField | if HomecomingField is filled, it should have m
   t.end()
 })
 
-test.skip('DepartureField | it should accept initial value', t => {})
-test.skip('DepartureField | if initial value is provided, it should still be emptiable', t => {})
+test.skip('DepartureField | it should accept initial value', (t) => {})
+test.skip('DepartureField | if initial value is provided, it should still be emptiable', (t) => {})
 
 /**
  * Homecoming
  */
 
-test('PlanForm > HomecomingField | it should work', t => {
+test('PlanForm > HomecomingField | it should work', (t) => {
   const wrapper = setup()
   const getField = () => wrapper.find('[data-name="HomecomingField"]')
 
@@ -336,7 +336,7 @@ test('PlanForm > HomecomingField | it should work', t => {
   t.end()
 })
 
-test('PlanForm > HomecomingField | if DepartureField is filled, it should have minDate equal to DepartureField\'s value', t => {
+test('PlanForm > HomecomingField | if DepartureField is filled, it should have minDate equal to DepartureField\'s value', (t) => {
   const wrapper = setup()
   const getHomecomingField = () => wrapper.find('[data-name="HomecomingField"]')
   const getDepartureField = () => wrapper.find('[data-name="DepartureField"]')
@@ -351,14 +351,14 @@ test('PlanForm > HomecomingField | if DepartureField is filled, it should have m
   t.end()
 })
 
-test.skip('HomecomingField | it should accept initial value', t => {})
-test.skip('HomecomingField | if initial value is provided, it should still be emptiable', t => {})
+test.skip('HomecomingField | it should accept initial value', (t) => {})
+test.skip('HomecomingField | if initial value is provided, it should still be emptiable', (t) => {})
 
 /**
  * OnSubmit
  */
 
-test('PlanForm > .OnSubmit() | if form is valid, it should call handleSubmit() with trimmed data', t => {
+test('PlanForm > .OnSubmit() | if form is valid, it should call handleSubmit() with trimmed data', (t) => {
   const values = {
     PlanNameField: '  Sample Spaceous Name  ',
     NotesField: `
@@ -383,8 +383,8 @@ test('PlanForm > .OnSubmit() | if form is valid, it should call handleSubmit() w
   t.end()
 })
 
-test('PlanForm > .OnSubmit() | if form is valid, it should call history.push() with correct args', t => {
-  const testWithVar = countryId => {
+test('PlanForm > .OnSubmit() | if form is valid, it should call history.push() with correct args', (t) => {
+  const testWithVar = (countryId) => {
     const props = {
       match: {
         params: { countryId },

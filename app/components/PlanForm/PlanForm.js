@@ -41,7 +41,7 @@ class PlanForm extends React.PureComponent {
     errors: {},
   }
 
-  makeHandleChange = (fieldName) => (ev, newVal) => {
+  makeHandleChange = fieldName => (ev, newVal) => {
     const error = validationRules[fieldName]
       ? validationRules[fieldName](newVal, this.state.values)
       : ''

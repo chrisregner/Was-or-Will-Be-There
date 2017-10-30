@@ -11,17 +11,17 @@ const setup = tu.makeTestSetup({
   defaultProps: defProps,
 })
 
-test('PaperWithHeight | it should render without error', t => {
+test('PaperWithHeight | it should render without error', (t) => {
   const wrapper = setup()
 
   const actual = wrapper.exists()
   const expected = true
 
-  t.is(actual, true)
+  t.is(actual, expected)
   t.end()
 })
 
-test('PaperWithHeight | it should use the height prop as style', t => {
+test('PaperWithHeight | it should use the height prop as style', (t) => {
   const props = { height: 143 }
   const wrapper = setup({ props })
 
@@ -32,7 +32,7 @@ test('PaperWithHeight | it should use the height prop as style', t => {
   t.end()
 })
 
-test('PaperWithHeight | it should render its children', t => {
+test('PaperWithHeight | it should render its children', (t) => {
   const childNode = <div id='foo'>Bar</div>
   const wrapper = setup({ childNode })
 

@@ -33,8 +33,8 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  hideSnackbar: () => { dispatch(hideSnackbar()) }
+const mapDispatchToProps = dispatch => ({
+  hideSnackbar: () => { dispatch(hideSnackbar()) },
 })
 
 const NotifSnackbar = connect(mapStateToProps, mapDispatchToProps)(BareNotifSnackbar)

@@ -35,7 +35,7 @@ const setup = Tu.makeTestSetup({
   defaultDeps,
 })
 
-test('CountryName | it should render without error', t => {
+test('CountryName | it should render without error', (t) => {
   const wrapper = setup()
   const actual = wrapper.exists()
   const expected = true
@@ -44,14 +44,14 @@ test('CountryName | it should render without error', t => {
   t.end()
 })
 
-test('CountryName | it should call fetch()', t => {
+test('CountryName | it should call fetch()', (t) => {
   setup()
 
   td.verify(fake.requestPromise(), { times: 1, ignoreExtraArgs: true })
   t.end()
 })
 
-test('CountryName | if fetch is still loading, should show loader', t => {
+test('CountryName | if fetch is still loading, should show loader', (t) => {
   const wrapper = setup()
   const loaderWrpr = () => wrapper.find('[data-name="loader"]')
 
@@ -62,7 +62,7 @@ test('CountryName | if fetch is still loading, should show loader', t => {
   t.end()
 })
 
-test('CountryName | if fetch is resolved, should show the country name', t => {
+test('CountryName | if fetch is resolved, should show the country name', (t) => {
   t.plan(3)
 
   const testWithVars = (countryId, countryName) => {
@@ -91,7 +91,7 @@ test('CountryName | if fetch is resolved, should show the country name', t => {
 // We have issues related with SVG, material-ui, and JSDOM. Watch out on these for he meanwhile:
 //   https://github.com/callemall/material-ui/issues/8643
 //   https://github.com/tmpvar/jsdom/pull/2011
-test.skip('CountryName | if fetch is rejected, should show the country code', t => {
+test.skip('CountryName | if fetch is rejected, should show the country code', (t) => {
   t.plan(3)
 
   const testWithVars = (countryId) => {
@@ -123,7 +123,7 @@ test.skip('CountryName | if fetch is rejected and info button is clicked, it tog
 test.skip('CountryName | if fetch is rejected, it should NOT fire the click handler twice on first and subsequent key presses of enter and space key')
 test.skip('CountryName | if fetch is rejected, it should render an info popover containing the error message')
 
-test('CountryName | if wrapper element is specified, it should use it', t => {
+test('CountryName | if wrapper element is specified, it should use it', (t) => {
   t.plan(3)
 
   const testWithVar = (wrapperEl) => {
@@ -141,7 +141,7 @@ test('CountryName | if wrapper element is specified, it should use it', t => {
   testWithVar('p')
 })
 
-test('CountryName | it should pass the other props to the wrapper', t => {
+test('CountryName | it should pass the other props to the wrapper', (t) => {
   const props = {
     id: 'sample-id',
     'data-foo': 'bar',

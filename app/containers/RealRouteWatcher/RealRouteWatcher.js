@@ -9,8 +9,8 @@ class BareRealRouteWatcher extends React.Component {
   static propTypes = {
     setRealRoute: PropTypes.func.isRequired,
     location: PropTypes.shape({
-      pathname: PropTypes.string.isRequired
-    }).isRequired
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
   }
 
   componentDidMount = () => {
@@ -25,10 +25,10 @@ class BareRealRouteWatcher extends React.Component {
   render = () => null
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   setRealRoute: (newRoute) => {
     dispatch(setRealRoute(newRoute))
-  }
+  },
 })
 
 const RealRouteWatcher = withRouter(connect(null, mapDispatchToProps)(BareRealRouteWatcher))
