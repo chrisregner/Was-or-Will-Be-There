@@ -5633,6 +5633,15 @@ react-router-redux@^5.0.0-alpha.8:
     prop-types "^15.6.0"
     react-router "^4.2.0"
 
+"react-router-transition@C:\\dev\\open-source\\react-router-transition":
+  version "1.1.1"
+  dependencies:
+    prop-types "^15.5.10"
+    react "^15.6.1"
+    react-dom "^15.6.1"
+    react-motion "^0.5.0"
+    react-router-dom "^4.1.1"
+
 react-router-transition@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-router-transition/-/react-router-transition-1.1.1.tgz#35e8f6d385d6df5fd995acee837c0e8810f92ed6"

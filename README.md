@@ -101,6 +101,10 @@ test('PlanForm | it should call setPaperHeight with correct args after mounting'
 
 ## Misc todo
 
+- styles
+  - animate.css duration
+  - material-ui Paper height transition duration
+  - react-router-transition fading duration
 - css prefixes/polyfills
 - production optimization
 - **important** change rawgit links as per rawgit.com for production
