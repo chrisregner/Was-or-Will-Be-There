@@ -66,7 +66,7 @@ const countryNameShell = ({ requestPromise }) =>
         content = this.state.countryName
       else if (error)
         content = (
-          <div className='flex'>
+          <div className='flex items-center'>
             <div className='flex-grow-1 f4'>County Code: {countryId.toUpperCase()}</div>
             <div className='relative'>
               <IconButton

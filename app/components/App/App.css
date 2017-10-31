@@ -1,12 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
 
-.animated {
-  -webkit-animation-duration: .25s !important;
-  animation-duration: .25s !important;
-}
+/**
+ * Tachyons-style Utility classes
+ */
 
 .flex-grow-1 { flex-grow: 1; }
-
 .top-100 { top: 100%; }
 .bottom-100 { bottom: 100%; }
 .left-100 { left: 100%; }
@@ -17,15 +15,35 @@
 .right-50 { right: 50%; }
 
 /**
-  spacing scale for reference:
-    - 0
-    - 25rem
-    - 5rem
-    - 1rem
-    - 2rem
-    - 4rem
-    - 8rem
-    - 16rem
+ * Tachyons-style classes with !important
+ *
+ * spacing scale for reference:
+ *   - 0
+ *   - 25rem
+ *   - 5rem
+ *   - 1rem
+ *   - 2rem
+ *   - 4rem
+ *   - 8rem
+ *   - 16rem
  */
 
+.flex--i { display: flex !important; }
 .db--i { display: block !important; }
+
+/**
+ * Animate.css overrides
+ */
+
+@keyframes disappearLastly {
+  100% { visibility: hidden; }
+}
+
+.animated {
+  -webkit-animation-duration: .25s !important;
+  animation-duration: .25s !important;
+}
+
+.fadeOut {
+  animation-name: fadeOut, disappearLastly !important;
+}

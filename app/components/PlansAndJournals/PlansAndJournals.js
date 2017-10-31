@@ -25,6 +25,7 @@ const PlansAndJournals = ({
       {
         plans.map(plan => (
           <Link
+            className='no-underline'
             data-name='PlanItem'
             data-plan-id={plan.get('id')}
             to={`/countries/${countryId}/plans/${plan.get('id')}`}
@@ -34,8 +35,8 @@ const PlansAndJournals = ({
               primaryText={plan.get('planName')}
               rightIconButton={
                 plan.get('departure')
-                ? <div data-name='TimeBadge' date={plan.get('departure')} />
-                : <div className='h-100 flex items-center'><div>TimeBadge</div></div>
+                && <div data-name='TimeBadge' date={plan.get('departure')} />
+                /*: <div style={{ paddingRight: 16 }} className='h-100 flex--i items-center'><div>TimeBadge</div></div>*/
               } />
           </Link>
         )).toJS()

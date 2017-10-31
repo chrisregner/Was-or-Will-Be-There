@@ -1,12 +1,10 @@
 ## Current
 
 **now**
+- TimeBadge
+- TimeBadge + PlanItem + PlansAndJournals
 - issues
-  - AddPlanForm and PlansAndJournal's width
-  - z-index of CountryName's error message blocks input, even after disappearing
-  - the specs
-- integration test
-- configure linter
+  - Warning: Unknown event handler property `onKeyboardFocus`. It will be ignored.
 
 ---
 

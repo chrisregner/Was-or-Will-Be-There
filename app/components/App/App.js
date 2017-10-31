@@ -17,24 +17,11 @@ import PaperWithHeight from 'containers/PaperWithHeight'
 import NotifSnackbar from 'containers/NotifSnackbar'
 import RealRouteWatcher from 'containers/RealRouteWatcher'
 
-const Wrapper = styled.div`
-  min-width: 300px;
-`
-
-const MapWrpr = styled.div`
-  top: 48px;
-  height: calc(100vh - 48px);
-`
-
-const Overlay = styled.div`
-  min-height: calc(100vh - 48px);
-  background-color: rgba(0, 0, 0, 0.54);
-`
-
 const AnimatedSwitchWrpr = styled.div`
   & > div > div,
   & > div > form {
     position: absolute;
+    width: 100%;
   }
 `
 
@@ -46,15 +33,27 @@ const muiTheme = getMuiTheme({
 
 const App = () => (
   <MuiThemeProvider muiTheme={muiTheme}>
-    <Wrapper className='min-vh-100'>
+    <div style={{ minWidth: 300 }} className='min-vh-100'>
       <Nav />
-      <MapWrpr className='fixed right-0 left-0 bottom-0'>
+      <div
+        className='fixed right-0 left-0 bottom-0'
+        style={{
+          top: 48,
+          height: 'calc(100vh - 48px)',
+        }}
+      >
         <MapCmpt />
-      </MapWrpr>
+      </div>
 
       {/* FIXME: USE AnimatedRoute instead */}
       <Route path='/countries/:countryId' render={() => (
-        <Overlay className='relative z-1 pa2'>
+        <div
+          style={{
+            minHeight: 'calc(100vh - 48px)',
+            backgroundColor: 'rgba(0, 0, 0, 0.54)',
+          }}
+          className='relative z-1 pa2'
+        >
           <PaperWithHeight>
             <AnimatedSwitchWrpr className='relative'>
               <AnimatedSwitch
@@ -67,12 +66,12 @@ const App = () => (
               </AnimatedSwitch>
             </AnimatedSwitchWrpr>
           </PaperWithHeight>
-        </Overlay>
+        </div>
       )} />
 
       <NotifSnackbar />
       <RealRouteWatcher />
-    </Wrapper>
+    </div>
   </MuiThemeProvider>
 )
 

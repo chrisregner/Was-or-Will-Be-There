@@ -64,7 +64,7 @@ export default (WrappedCmpt, componentName) => {
     isRouteCurrent: newRoute => uiGetters.isRouteCurrent(state, newRoute),
   })
 
-  const ConnectedHeightWatcher = withRouter(connect(mapStateToProps, mapDispatchToProps)(HeightWatcher))
+  const ConnectedHeightWatcher = connect(mapStateToProps, mapDispatchToProps)(HeightWatcher)
 
   return ConnectedHeightWatcher
 }

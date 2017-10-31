@@ -14,7 +14,7 @@ const BareNotifSnackbar = ({ open, message, hideSnackbar }) => (
     onRequestClose={hideSnackbar}
     onActionTouchTap={hideSnackbar}
     action='Okay'
-    autoHideDuration={4444000}
+    autoHideDuration={4000}
   />
 )
 

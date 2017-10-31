@@ -46,9 +46,9 @@ test('immutablejsUtils.smartMergeDeep() | it should deep merge reqular objects',
   assert.deepEqual(actual, expected)
 })
 
-// NOTE: based on logging the output, the following spec should pass, we just don't have a tool
-//   that can assert it so skip it for now
-test.skip('immutablejsUtils.smartMergeDeep() | if the source\'s and corresponding base\'s property is both Immutable data structure, it should mergeDeep it properly', () => {
+// NOTE: this asserts the actual and expected objects that are CONVERTED with Immutable.fromJS(),
+//   INSTEAD of asserting their original ImmutableJS-and-native-JS hybrid object form
+test('immutablejsUtils.smartMergeDeep() | if the source\'s and corresponding base\'s property is both Immutable data structure, it should mergeDeep it properly', () => {
   const baseObj = {
     a: 'a',
     b: {
@@ -101,14 +101,12 @@ test.skip('immutablejsUtils.smartMergeDeep() | if the source\'s and correspondin
     f: 'f',
   }
 
-  // console.log('expected >>>', expected)
-  // console.log('actual >>>', actual)
-  assert.equal(I.Map(actual).equals(I.Map(expected)), true)
+  assert.isTrue(I.fromJS(actual).equals(I.fromJS(expected)))
 })
 
-// NOTE: based on logging the output, the following spec should pass, we just don't have a tool
-//   that can assert it so skip it for now
-test.skip('immutablejsUtils.smartMergeDeep() | if the source\'s and corresponding base\'s NESTED property both an Immutable data structure, it should mergeDeep it properly', () => {
+// NOTE: this asserts the actual and expected objects that are CONVERTED with Immutable.fromJS(),
+//   INSTEAD of asserting their original ImmutableJS-and-native-JS hybrid object form
+test('immutablejsUtils.smartMergeDeep() | if the source\'s and corresponding base\'s NESTED property both an Immutable data structure, it should mergeDeep it properly', () => {
   const baseObj = {
     a: 'a',
     b: {
@@ -167,7 +165,5 @@ test.skip('immutablejsUtils.smartMergeDeep() | if the source\'s and correspondin
     f: 'f',
   }
 
-  // console.log('expected >>>', expected)
-  // console.log('actual >>>', actual)
-  assert.equal(I.Map(actual).equals(I.Map(expected)), true)
+  assert.isTrue(I.fromJS(actual).equals(I.fromJS(expected)))
 })
