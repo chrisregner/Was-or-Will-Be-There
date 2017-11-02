@@ -93,7 +93,8 @@
     "start": "webpack-dev-server --hot",
     "lint": "eslint --ignore-pattern '/dist/*' --fix **/*.js",
     "test": "cross-env NODE_PATH=app mocha --require babel-register --require ./tools/testSetup.js --reporter nyan --watch **/*.unit.js",
-    "test-spec": "cross-env NODE_PATH=app mocha --require babel-register --require ./tools/testSetup.js --reporter spec --watch **/*.unit.js"
+    "test-spec": "cross-env NODE_PATH=app mocha --require babel-register --require ./tools/testSetup.js --reporter spec --watch **/*.unit.js",
+    "mocha": "cross-env NODE_PATH=app mocha --require babel-register --require ./tools/testSetup.js"
   },
   "dependencies": {}
 }

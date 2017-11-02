@@ -4,8 +4,8 @@ import PlansAndJournals from 'components/PlansAndJournals'
 import withHeightWatcher from 'containers/withHeightWatcher'
 import { plansGetters } from 'state'
 
-const mapStateToProps = (state) => ({
-  plans: plansGetters.getPlans(state),
+const mapStateToProps = (state, { match }) => ({
+  plans: plansGetters.getPlansByCountryId(state, match.params.countryId),
 })
 
 const PopulatedPlansAndJournals = connect(mapStateToProps)(

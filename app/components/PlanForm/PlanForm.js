@@ -1,5 +1,5 @@
 import React from 'react'
-// import IPropTypes from 'react-immutable-proptypes'
+import IPropTypes from 'react-immutable-proptypes'
 import PropTypes from 'prop-types'
 import I from 'immutable'
 import * as R from 'ramda'
@@ -19,12 +19,13 @@ const validationRules = {
 class PlanForm extends React.PureComponent {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-    // initialValues: IPropTypes.contains({
-    //   planName: PropTypes.string.isRequired,
-    //   notes: PropTypes.string,
-    //   departure: PropTypes.instanceOf(Date),
-    //   homecoming: PropTypes.instanceOf(Date),
-    // }),
+    initialValues: IPropTypes.contains({
+      id: PropTypes.string.isRequired,
+      planName: PropTypes.string.isRequired,
+      notes: PropTypes.string,
+      departure: PropTypes.instanceOf(Date),
+      homecoming: PropTypes.instanceOf(Date),
+    }),
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -38,6 +39,8 @@ class PlanForm extends React.PureComponent {
   state = {
     values: I.Map(),
     errors: {},
+    dirtyFields: [],
+    initialValues: this.props.initialValues,
   }
 
   makeHandleChange = fieldName => (ev, newVal) => {
@@ -45,10 +48,22 @@ class PlanForm extends React.PureComponent {
       ? validationRules[fieldName](newVal, this.state.values)
       : ''
 
-    this.setState(prevState => ({
-      values: prevState.values.set(fieldName, newVal),
-      errors: R.merge(prevState.errors, { [fieldName]: error }),
+    this.setState(({initialValues, values, errors}) => ({
+      initialValues: initialValues && initialValues.filter((v, k) =>
+        k !== fieldName
+      ),
+      values: values.set(fieldName, newVal),
+      errors: R.merge(errors, { [fieldName]: error }),
     }))
+  }
+
+  getFinalProp = (fieldName) => {
+    const { values, initialValues } = this.state
+
+    if (values.get(fieldName))
+      return values.get(fieldName)
+    else if (initialValues && initialValues.get(fieldName))
+      return initialValues.get(fieldName)
   }
 
   handleChangePlanName = this.makeHandleChange('planName')
@@ -58,10 +73,14 @@ class PlanForm extends React.PureComponent {
   handleSubmit = (ev) => {
     ev.preventDefault()
 
-    /* validate all fields */
+    // Merge values with final initial values, if any
+    const finalValues = this.state.initialValues
+      ? this.state.initialValues.merge(this.state.values)
+      : this.state.values
+
+    // Validate all fields
     const errors = Object.keys(validationRules).reduce((errorsAcc, fieldName) => {
-      const values = this.state.values
-      const error = validationRules[fieldName](values.get(fieldName), values)
+      const error = validationRules[fieldName](finalValues.get(fieldName), finalValues)
 
       errorsAcc[fieldName] = error
 
@@ -79,8 +98,7 @@ class PlanForm extends React.PureComponent {
         history,
         match,
       } = this.props
-      const values = this.state.values
-      const trimmedValues = values.map(FU.trimIfString)
+      const trimmedValues = finalValues.map(FU.trimIfString)
 
       handleSubmit(trimmedValues)
       history.push(`/countries/${match.params.countryId}`)
@@ -93,7 +111,7 @@ class PlanForm extends React.PureComponent {
 
   render = () => {
     const countryId = this.props.match.params.countryId
-    const { values, errors } = this.state
+    const { values, errors, initialValues } = this.state
 
     return (
       <form
@@ -122,8 +140,8 @@ class PlanForm extends React.PureComponent {
           floatingLabelText='Plan Name*'
           floatingLabelFixed
           onChange={this.handleChangePlanName}
-          value={values.get('planName') || ''}
           errorText={errors.planName || ''}
+          value={this.getFinalProp('planName') || ''}
         />
         <TextField
           className='field db--i'
@@ -131,9 +149,9 @@ class PlanForm extends React.PureComponent {
           floatingLabelText='Notes'
           floatingLabelFixed
           onChange={this.handleChangeNotes}
-          value={values.get('notes') || ''}
           multiLine
           rowsMax={4}
+          value={this.getFinalProp('notes') || ''}
         />
         <DatePicker
           className='field'
@@ -141,10 +159,10 @@ class PlanForm extends React.PureComponent {
           floatingLabelText='Departure Date'
           floatingLabelFixed
           onChange={this.handleChangeDeparture}
-          value={values.get('departure')}
           errorText={errors.departure || ''}
           minDate={new Date()}
           maxDate={values.get('homecoming')}
+          value={this.getFinalProp('departure') || null}
         />
         <DatePicker
           className='field'
@@ -152,14 +170,14 @@ class PlanForm extends React.PureComponent {
           floatingLabelText='Homecoming Date'
           floatingLabelFixed
           onChange={this.handleChangeHomecoming}
-          value={values.get('homecoming')}
           errorText={errors.homecoming || ''}
           minDate={values.get('departure') || new Date()}
+          value={this.getFinalProp('homecoming') || null}
         />
         <RaisedButton
           className='mt3'
           primary
-          label='Submit'
+          label='Save'
           type='submit'
         />
       </form>

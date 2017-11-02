@@ -2,41 +2,12 @@
 
 **now**
 
----
-
-## Integration/feature test
-
-- Home/Map
-- PlansAndJournals
-  - should change route
-  - paper height should change
-- Add plan
-  - should change route
-  - should include countryId
-  - should add the plan
-  - should notify as well
-  - paper height should change
-- PlansAndJournals
-  - should change route
-  - notification
-    - should be hideable
-  - paper height should change
-- EditPlan
-- DeletePlan
-
----
-
-test('PlanForm | it should call setPaperHeight with correct args after mounting', t => {
-  setup({ useMount: true })
-
-  t.doesNotThrow(() => {
-    td.verify(
-      mockFn.setPaperHeight(td.matchers.isA(Number)),
-      { times: 1 }
-    )
-  })
-  t.end()
-})
+- delete plan
+  - PlanForm
+    - if id is provided, it should the render delete button
+    - if delete button is clicked, it should handleDelete with id
+  - EditForm, handleDelete
+- eslint, arrow func, don't require result paren
 
 ---
 
