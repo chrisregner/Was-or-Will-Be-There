@@ -101,7 +101,7 @@ test('functionalUtils.makePropNegator()() | it should, for each first gen args, 
 
 const { isObjSubset } = functionalUtils
 
-test('functionalUtils.isObjSubset() | When secondArg is subset of firstArg, it should return true', () => {
+test('functionalUtils.isObjSubset() | when secondArg is subset of firstArg, it should return true', () => {
   const testVariation1 = () => {
     const superset = {
       a: 1,
@@ -140,7 +140,7 @@ test('functionalUtils.isObjSubset() | When secondArg is subset of firstArg, it s
   testVariation2()
 })
 
-test('functionalUtils.isObjSubset() | When secondArg is NOT subset of firstArg, it should return false', () => {
+test('functionalUtils.isObjSubset() | when secondArg is NOT subset of firstArg, it should return false', () => {
   const testVariation1 = () => {
     const superset = {
       a: 1,

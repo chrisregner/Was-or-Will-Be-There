@@ -2,12 +2,12 @@ import { test } from 'mocha'
 import { assert } from 'chai'
 import { shallow } from 'enzyme'
 import * as I from 'immutable'
-import D from 'date-fp'
+import D from 'date-fns'
 import * as TU from 'services/testUtils'
 import PlansAndJournals from './PlansAndJournals'
 
 const mocks = {
-  inTenDays: D.add('days', 10, new Date()),
+  inTenDays: D.addDays(new Date(), 10),
 }
 
 const defProps = {
@@ -58,12 +58,12 @@ test.skip('PlansAndJournals | if there is journal(s) but no plan, it should NOT 
 test.skip('PlansAndJournals | if there is plan(s) but no journal, it should render a message for lacking journals')
 test.skip('PlansAndJournals | if there is plan(s) but no journal, it should NOT render a message for lacking BOTH plans and journals')
 
-test('PlansAndJournals | if there is any plan, it should render it', () => {
+test('PlansAndJournals | if plans are provided, it should render each', () => {
   const testWithVars = (plans, quantity) => {
     const props = { plans }
 
     const wrapper = setup({ props })
-    const planItemsWrpr = wrapper.find('[data-name="PlanItem"]')
+    const planItemsWrpr = wrapper.find('.plans-and-journals-plan-item')
 
     const actual = planItemsWrpr.length
     const expected = quantity
@@ -110,4 +110,53 @@ test('PlansAndJournals | if there is any plan, it should render it', () => {
   ]), 5)
 })
 
-test.skip('PlansAndJournals | when plans are provided, it should render the PlanItem with correct props for each')
+test('PlansAndJournals | if plans are provided, it should render the the plan items with correct props', () => {
+  const props = {
+    match: {
+      params: {
+        countryId: 'de',
+      },
+    },
+    plans: I.fromJS([
+      {
+        id: '1',
+        planName: 'First Plan',
+      },
+      {
+        id: '2',
+        planName: 'Second Plan',
+      },
+      {
+        id: '3',
+        planName: 'Third Plan',
+      },
+      {
+        id: '4',
+        planName: 'Blah',
+      },
+      {
+        id: '5',
+        planName: 'Bleh',
+      }
+    ])
+  }
+
+  const samplePlanItemWrpr = setup({ props })
+    .find('.plans-and-journals-plan-item')
+    .at(2)
+
+  const actual = I.fromJS({
+    countryId: samplePlanItemWrpr.prop('countryId'),
+    plan: samplePlanItemWrpr.prop('plan'),
+  })
+
+  const expected = I.fromJS({
+    countryId: 'de',
+    plan: {
+      id: '3',
+      planName: 'Third Plan',
+    },
+  })
+
+  assert.isTrue(actual.equals(expected))
+})

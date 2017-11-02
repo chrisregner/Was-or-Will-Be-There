@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import IPropTypes from 'react-immutable-proptypes'
 import { Link } from 'react-router-dom'
-// import { TimeBadge } from 'components/TimeBadge'
+import PlanItem from 'components/PlanItem'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import Subheader from 'material-ui/Subheader'
@@ -24,21 +24,12 @@ const PlansAndJournals = ({
       <Subheader>Plans</Subheader>
       {
         plans.map(plan => (
-          <Link
-            className='no-underline'
-            data-name='PlanItem'
-            data-plan-id={plan.get('id')}
-            to={`/countries/${countryId}/plans/${plan.get('id')}`}
+          <PlanItem
+            className='plans-and-journals-plan-item'
             key={plan.get('id')}
-          >
-            <ListItem
-              primaryText={plan.get('planName')}
-              rightIconButton={
-                plan.get('departure')
-                && <div data-name='TimeBadge' date={plan.get('departure')} />
-                /*: <div style={{ paddingRight: 16 }} className='h-100 flex--i items-center'><div>TimeBadge</div></div>*/
-              } />
-          </Link>
+            countryId={countryId}
+            plan={plan}
+          />
         )).toJS()
       }
     </List>

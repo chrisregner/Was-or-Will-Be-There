@@ -27,11 +27,20 @@ export const makeTestSetup = (args1 = {}) => {
       childNode,
     } = args2
 
+    if (defaultHooks.reset)
+      defaultHooks.reset()
+
+    if (hooks.afterReset)
+      hooks.afterReset()
+
     if (tools.includes('td')) {
       td.reset()
 
       if (defaultHooks.afterTdReset)
         defaultHooks.afterTdReset()
+
+      if (hooks.afterTdReset)
+        hooks.afterTdReset()
     }
 
     let FinalComponent

@@ -3,7 +3,7 @@ import { assert } from 'chai'
 import td from 'testdouble'
 import isSubset from 'is-subset'
 
-import * as Tu from 'services/testUtils'
+import * as TU from 'services/testUtils'
 import { countryNameShell } from './CountryName'
 
 const any = td.matchers.anything()
@@ -23,7 +23,7 @@ const defaultDeps = {
   requestPromise: fake.requestPromise,
 }
 
-const setup = Tu.makeTestSetup({
+const setup = TU.makeTestSetup({
   defaultHooks: {
     afterTdReset: () => {
       td.when(fake.requestPromise(any))

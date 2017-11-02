@@ -154,7 +154,7 @@ class PlanForm extends React.PureComponent {
           onChange={this.handleChangeHomecoming}
           value={values.get('homecoming')}
           errorText={errors.homecoming || ''}
-          minDate={values.get('departure')}
+          minDate={values.get('departure') || new Date()}
         />
         <RaisedButton
           className='mt3'

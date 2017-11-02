@@ -1,10 +1,6 @@
 ## Current
 
 **now**
-- TimeBadge
-- TimeBadge + PlanItem + PlansAndJournals
-- issues
-  - Warning: Unknown event handler property `onKeyboardFocus`. It will be ignored.
 
 ---
 
@@ -104,7 +100,8 @@ test('PlanForm | it should call setPaperHeight with correct args after mounting'
 - styles
   - animate.css duration
   - material-ui Paper height transition duration
-  - react-router-transition fading duration
+  - react-router-transition animation
+    - add shrinking/expanding animation alongside the fading
 - css prefixes/polyfills
 - production optimization
 - **important** change rawgit links as per rawgit.com for production

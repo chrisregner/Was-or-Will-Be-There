@@ -2,7 +2,7 @@ import { test } from 'mocha'
 import { assert } from 'chai'
 import td from 'testdouble'
 import I from 'immutable'
-import D from 'date-fp'
+import D from 'date-fns'
 
 import * as Tu from 'services/testUtils'
 
@@ -11,7 +11,7 @@ import PlanForm from './PlanForm'
 const mockData = {
   ev: { preventDefault: () => {} },
   inOneDay: new Date(),
-  inTenDays: D.add('days', 10, new Date()),
+  inTenDays: D.addDays(new Date(), 10),
 }
 
 const defProps = {

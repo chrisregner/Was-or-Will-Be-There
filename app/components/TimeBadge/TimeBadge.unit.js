@@ -1,16 +1,26 @@
-import { test } from 'mocha'
+import { test, after } from 'mocha'
 import { assert } from 'chai'
-import D from 'date-fp'
+import D from 'date-fns'
+import lolex from 'lolex'
 
 import * as TU from 'services/testUtils'
 import TimeBadge from './TimeBadge'
 
+const todayMidnight = new Date(2001, 0, 1)
+const todayNoon = new Date(2001, 0, 1, 12)
+const fakeClock = lolex.install({ now: todayNoon })
+
+const createMidnightDate = (noOfDays) =>
+  D.addDays(todayMidnight, noOfDays)
+
 const mocks = {
-  today: new Date(),
+  todayMidnight,
+  todayNoon,
 }
 
 const defProps = {
-  today: new Date(),
+  countryId: 'countryDefaultId',
+  id: 'defaultId',
 }
 
 const setup = TU.makeTestSetup({
@@ -18,25 +28,81 @@ const setup = TU.makeTestSetup({
   defaultProps: defProps,
 })
 
+after(() => {
+  fakeClock.uninstall()
+})
 
-// HOW DO YOU IMPLY "WITHOUT ACCOUNTING TIME" IN CODE?
-test.skip('TimeBadge | if the date is in 2 to 30 days, without accounting the time, it should say "in x days"', () => {
-  const testWithVars = (date, relativeDate) => {
-    const props = { date }
-    const dateText = setup({ props })
-      .find('.time-badge-date')
-      .text()
+test('TimeBadge | if homecoming is yesterday or earlier, regardless of departure, it should render the "Journalize" link', () => {
+  const testWithVars = (id, countryId, homecomingNoOfDays, departureNoOfDays) => {
+    const homecoming = createMidnightDate(homecomingNoOfDays)
+    const departure = createMidnightDate(departureNoOfDays)
 
-    const actual = dateText
-    const expected = relativeDate
+    const props = { id, countryId, homecoming, departure }
+    const expectedLink = `/countries/${countryId}/plans/${id}/journalize`
+    const linkWrpr = setup({ props })
+      .find(`[to="${expectedLink}"]`)
+
+    const actual = linkWrpr.exists()
+
+    assert.isTrue(actual)
+  }
+
+  testWithVars('firstId', 'jp', -1, -2)
+  testWithVars('secondId', 'us', -15, -30)
+  testWithVars('thirdId', 'de', -100, -200)
+})
+
+test('TimeBadge | if departure is later than 30 days, it should not render', () => {
+  const testWithVars = (noOfDays) => {
+    const departure = createMidnightDate(noOfDays)
+    const props = { departure }
+    const wrapper = setup({ props })
+
+    const actual = wrapper.getElement()
+
+    assert.isNull(actual)
+  }
+
+  testWithVars(31)
+  testWithVars(666)
+})
+
+test('TimeBadge | if departure is in 2 to 30 days, it should say "in x days"', () => {
+  const testWithVars = (noOfDays) => {
+    const departure = createMidnightDate(noOfDays)
+    const props = { departure }
+
+    const wrapper = setup({ props })
+
+    const actual = wrapper.find('.time-badge-text').text()
+    const expected = `in ${noOfDays} days`
 
     assert.include(actual, expected)
   }
 
-  // testWithVars()
-  // testWithVars()
-  // testWithVars()
+  testWithVars(2)
+  testWithVars(15)
+  testWithVars(30)
 })
-test.skip('TimeBadge | if the date is tomorrow, without accounting the time, it should say "tomorrow"')
-test.skip('TimeBadge | if the date is today, without accounting the time, it should say "now!"')
-test.skip('TimeBadge | if the date is yesterday or earlier, it should render the "Journalize" link')
+
+test('TimeBadge | if departure is tomorrow, it should say "tomorrow"', () => {
+  const departure = createMidnightDate(1)
+  const props = { departure }
+  const wrapper = setup({ props })
+
+  const actual = wrapper.find('.time-badge-text').text()
+  const expected = 'tomorrow'
+
+  assert.include(actual, expected)
+})
+
+test('TimeBadge | if departure is today, it should say "today"', () => {
+  const departure = mocks.todayMidnight
+  const props = { departure }
+  const wrapper = setup({ props })
+
+  const actual = wrapper.find('.time-badge-text').text()
+  const expected = 'today'
+
+  assert.include(actual, expected)
+})
