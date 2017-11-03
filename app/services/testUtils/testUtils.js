@@ -4,7 +4,7 @@ import { shallow, mount } from 'enzyme'
 import td from 'testdouble'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
-import * as Iu from 'services/immutablejsUtils'
+import * as IU from 'services/immutablejsUtils'
 
 export const makeTestSetup = (args1 = {}) => {
   const {
@@ -46,14 +46,14 @@ export const makeTestSetup = (args1 = {}) => {
     let FinalComponent
 
     if (shell) {
-      const finalDeps = Iu.smartMergeDeep(defaultDeps, deps)
+      const finalDeps = IU.smartMergeDeep(defaultDeps, deps)
 
       FinalComponent = shell(finalDeps)
     } else {
       FinalComponent = Component || DefaultComponent
     }
 
-    const finalProps = Iu.smartMergeDeep(defaultProps, props)
+    const finalProps = IU.smartMergeDeep(defaultProps, props)
     const theNode = (
       <FinalComponent {...finalProps}>
         {childNode}
@@ -76,3 +76,5 @@ export const makeTestSetup = (args1 = {}) => {
     return shallow(theNode, defaultEnzymeOpts)
   }
 }
+
+export const getArgs = (tdFn, nthCall) => td.explain(tdFn).calls[nthCall].args

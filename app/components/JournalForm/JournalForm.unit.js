@@ -7,11 +7,13 @@ import D from 'date-fns'
 import * as TU from 'services/testUtils'
 import { JournalFormShell } from './JournalForm'
 
-const fakeCloudinary = {
-  openUploadWidget: td.func()
+const deps = {
+  theCloudinary: {
+    openUploadWidget: td.func()
+  }
 }
 
-const JournalForm = JournalFormShell({ theCloudinary: fakeCloudinary })
+const JournalForm = JournalFormShell(deps)
 
 const mockData = {
   ev: { preventDefault: () => {} },
@@ -486,13 +488,133 @@ test('JournalForm > .onSubmit() | if form is valid, it should call history.push(
  */
 
 test.skip('JournalForm.state.photos | it should accept initial values')
-test.skip('JournalForm > PhotoFieldSet | it should render it with correct props foreach photo data in state')
-test.skip('JournalForm > UploadPhotoBtn | when clicked, it should call openUploadWidget()')
-test.skip('JournalForm > UploadPhotoBtn | when openUploadWidget() succeeds and photo state has existing data, it should add the correct photo details to the state')
-test.skip('JournalForm > UploadPhotoBtn | when openUploadWidget() succeeds and photo state has NO existing data, it should add the correct photo data to the state')
-test.skip('JournalForm.handlePhotoDelete() | if there is some existing data, it should add the correct photo deletion data for each invocation')
-test.skip('JournalForm.handlePhotoDelete() | if there is NO existing data, it should add the correct photo deletion data for each invocation')
-test.skip('JournalForm > .onSubmit() | if form is valid, it should call it with correct photo and photo deletion data')
+test.skip('JournalForm > PhotoFieldSet | it should render it with correct props for each photo data in state')
+
+test('JournalForm > UploadPhotoBtn | when clicked, it should call openUploadWidget()', () => {
+  const uploadBtnWrpr = setup().find('.journal-form-upload-btn')
+  uploadBtnWrpr.simulate('click')
+  td.verify(deps.theCloudinary.openUploadWidget(), { times: 1, ignoreExtraArgs: true })
+})
+
+test('JournalForm > UploadPhotoBtn | when openUploadWidget() succeeds and photo state has existing data, it should add the correct photo details to the state', () => {
+  const wrapper = setup()
+
+  wrapper.find('.journal-form-upload-btn')
+    .simulate('click')
+
+  const successHandler = TU.getArgs(deps.theCloudinary.openUploadWidget, 0)[1]
+  const fakeRes = [{
+    path:"fake/first/path",
+    public_id:"fakeFirstPubId",
+  }, {
+    path:"fake/second/path",
+    public_id:"fakeSecondPubId",
+  }]
+  const predefPhotoData = I.List([
+    I.Map({
+      id:"fakeFirstPredefinedPubId",
+      path:"fake/first/predefined/path",
+    }),
+    I.Map({
+      id:"fakeFirstPredefinedPubId",
+      path:"fake/first/predefined/path",
+    })
+  ])
+
+  wrapper.setState({ photos: predefPhotoData })
+  successHandler(null, fakeRes)
+
+  const actual = wrapper.state('photos')
+  const expected = I.List([
+    I.Map({
+      id:"fakeFirstPredefinedPubId",
+      path:"fake/first/predefined/path",
+    }),
+    I.Map({
+      id:"fakeFirstPredefinedPubId",
+      path:"fake/first/predefined/path",
+    }),
+    I.Map({
+      id:"fakeFirstPubId",
+      path:"fake/first/path",
+    }),
+    I.Map({
+      id:"fakeSecondPubId",
+      path:"fake/second/path",
+    }),
+  ])
+
+  assert.isTrue(actual.equals(expected))
+})
+
+test('JournalForm > UploadPhotoBtn | when openUploadWidget() succeeds and photo state has NO existing data, it should add the correct photo data to the state', () => {
+  const wrapper = setup()
+
+  wrapper.find('.journal-form-upload-btn')
+    .simulate('click')
+
+  const successHandler = TU.getArgs(deps.theCloudinary.openUploadWidget, 0)[1]
+  const fakeRes = [{
+    path:"fake/first/path",
+    public_id:"fakeFirstPubId",
+  }, {
+    path:"fake/second/path",
+    public_id:"fakeSecondPubId",
+  }]
+
+  successHandler(null, fakeRes)
+
+  const actual = wrapper.state('photos')
+  const expected = I.List([
+    I.Map({
+      id:"fakeFirstPubId",
+      path:"fake/first/path",
+    }),
+    I.Map({
+      id:"fakeSecondPubId",
+      path:"fake/second/path",
+    }),
+  ])
+
+  assert.isTrue(actual.equals(expected))
+})
+
+test('JournalForm.handlePhotoDelete() | if there is some existing data, it should add the correct photo deletion data for each invocation', () => {
+  const wrapper = setup()
+  const predefDelData = ['firstPredefId', 'secondPredefId']
+
+  wrapper.setState({ photosDeleted: predefDelData })
+
+  wrapper.instance().handlePhotoDelete('firstId')
+  wrapper.instance().handlePhotoDelete('secondId')
+
+  const actual = wrapper.state('photosDeleted')
+  const expected = [
+    'firstPredefId',
+    'secondPredefId',
+    'firstId',
+    'secondId',
+  ]
+
+  assert.sameMembers(actual, expected)
+})
+
+test('JournalForm.handlePhotoDelete() | if there is NO existing data, it should add the correct photo deletion data for each invocation', () => {
+  const wrapper = setup()
+
+  wrapper.instance().handlePhotoDelete('firstId')
+  wrapper.instance().handlePhotoDelete('secondId')
+
+  const actual = wrapper.state('photosDeleted')
+  const expected = [
+    'firstId',
+    'secondId',
+  ]
+
+  assert.sameMembers(actual, expected)
+})
+
+test.skip('JournalForm > .onSubmit() | if form is valid, it should call handleSubmit with correct photo and photo deletion data')
 test.skip('JournalForm | when unmounted and journal is NOT saved and there is photo deletion data, it should call deletePhotos() with correct args')
 test.skip('JournalForm | when unmounted and journal is saved, it should NOT call deletePhotos()')
 test.skip('JournalForm | when unmounted and journal is NOT saved and there is NO photo deletion data, it should NOT call deletePhotos()')

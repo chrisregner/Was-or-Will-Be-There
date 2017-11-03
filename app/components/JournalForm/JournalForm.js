@@ -44,6 +44,8 @@ const JournalFormShell = ({ theCloudinary }) =>
       errors: {},
       dirtyFields: [],
       initialValues: this.props.initialValues,
+      photos: I.List([]),
+      photosDeleted: [],
     }
 
     makeHandleChange = fieldName => (ev, newVal) => {
@@ -118,8 +120,24 @@ const JournalFormShell = ({ theCloudinary }) =>
     handleOpenUploadWidget = () => {
       theCloudinary.openUploadWidget(
         { cloud_name: 'chrisregner', upload_preset: 'h64hlt8w'},
-        (error, result) => { console.log(error, result) },
+        (err, res) => {
+          if (err) console.error('Error upon uploading:', err)
+
+          const photosData = res.map(photoData => I.Map({
+            id: photoData.public_id,
+            path: photoData.path,
+          }))
+
+          this.setState(prevState => ({
+            photos: prevState.photos.concat(photosData)
+          }))
+        },
       )
+    }
+    handlePhotoDelete = photoId => {
+      this.setState(prevState => ({
+        photosDeleted: R.append(photoId, prevState.photosDeleted)
+      }))
     }
 
     rootElRef = (rootEl) => {
