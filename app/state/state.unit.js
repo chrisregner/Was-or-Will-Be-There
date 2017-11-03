@@ -21,4 +21,4 @@ import { test } from 'mocha'
 
 // const { ??? } = gettersShell(deps)
 
-test.skip('state.getHightestPaperHeight | it should automatically delegate the getters')
+test.skip('state | it should automatically delegate the getters')

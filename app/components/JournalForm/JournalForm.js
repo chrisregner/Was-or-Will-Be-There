@@ -13,17 +13,17 @@ import * as FU from 'services/functionalUtils'
 import CountryName from 'components/countryName'
 
 const validationRules = {
-  planName: planName => !planName && 'Plan name is required',
+  title: title => !title && 'title is required',
 }
 
-class PlanForm extends React.PureComponent {
+class JournalForm extends React.PureComponent {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     handleDelete: PropTypes.func,
     initialValues: IPropTypes.contains({
       id: PropTypes.string.isRequired,
-      planName: PropTypes.string.isRequired,
-      notes: PropTypes.string,
+      title: PropTypes.string.isRequired,
+      textContent: PropTypes.string,
       departure: PropTypes.instanceOf(Date),
       homecoming: PropTypes.instanceOf(Date),
     }),
@@ -67,8 +67,8 @@ class PlanForm extends React.PureComponent {
       return initialValues.get(fieldName)
   }
 
-  handleChangePlanName = this.makeHandleChange('planName')
-  handleChangeNotes = this.makeHandleChange('notes')
+  handleChangeTitle = this.makeHandleChange('title')
+  handleChangeTextContent = this.makeHandleChange('textContent')
   handleChangeDeparture = this.makeHandleChange('departure')
   handleChangeHomecoming = this.makeHandleChange('homecoming')
   handleDelete = () => {
@@ -128,32 +128,29 @@ class PlanForm extends React.PureComponent {
         onSubmit={this.handleSubmit}
       >
         <CountryName
-          className='plan-form-country-name ma0'
+          className='journal-form-country-name ma0'
           wrapperEl='h2'
           countryId={countryId}
         />
         <TextField
-          className='field db--i'
-          data-name='PlanNameField'
-          floatingLabelText='Plan Name*'
+          className='journal-form-title-field field db--i'
+          floatingLabelText='Title*'
           floatingLabelFixed
-          onChange={this.handleChangePlanName}
-          errorText={errors.planName || ''}
-          value={this.getFinalProp('planName') || ''}
+          onChange={this.handleChangeTitle}
+          errorText={errors.title || ''}
+          value={this.getFinalProp('title') || ''}
         />
         <TextField
-          className='field db--i'
-          data-name='NotesField'
-          floatingLabelText='Notes'
+          className='journal-form-text-content-field field db--i'
+          floatingLabelText='Text Content'
           floatingLabelFixed
-          onChange={this.handleChangeNotes}
+          onChange={this.handleChangeTextContent}
           multiLine
           rowsMax={4}
-          value={this.getFinalProp('notes') || ''}
+          value={this.getFinalProp('textContent') || ''}
         />
         <DatePicker
-          className='field'
-          data-name='DepartureField'
+          className='journal-form-departure-field field'
           floatingLabelText='Departure Date'
           floatingLabelFixed
           onChange={this.handleChangeDeparture}
@@ -163,8 +160,7 @@ class PlanForm extends React.PureComponent {
           value={this.getFinalProp('departure') || null}
         />
         <DatePicker
-          className='field'
-          data-name='HomecomingField'
+          className='journal-form-homecoming-field field'
           floatingLabelText='Homecoming Date'
           floatingLabelFixed
           onChange={this.handleChangeHomecoming}
@@ -184,7 +180,7 @@ class PlanForm extends React.PureComponent {
           (initialValues && initialValues.get('id')) &&
           <RaisedButton
             onClick={this.handleDelete}
-            className='plan-form-delete-btn mt3'
+            className='journal-form-delete-btn mt3'
             secondary
             label='Delete'
           />
@@ -194,4 +190,4 @@ class PlanForm extends React.PureComponent {
   }
 }
 
-export default PlanForm
+export default JournalForm

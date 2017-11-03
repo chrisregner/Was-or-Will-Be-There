@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
-import R from 'ramda'
+import * as R from 'ramda'
 
 class BareNonALink extends React.Component {
   static propTypes = {

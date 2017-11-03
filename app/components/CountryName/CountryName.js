@@ -98,7 +98,20 @@ const countryNameShell = ({ requestPromise }) =>
       else
         content = (<span data-name='loader'>&hellip;</span>)
 
-      return (<WrapperEl {...otherProps}>{content}</WrapperEl>)
+      return (<WrapperEl {...otherProps}>
+        <div className='flex items-center'>
+          <Paper className='w2' rounded={false}>
+            <img
+              className='db'
+              src={`https://cdn.rawgit.com/hjnilsson/country-flags/master/svg/${countryId}.svg`}
+              alt='Country Flag'
+            />
+          </Paper>
+          <div className='flex-grow-1 ma0 pl2 f4 lh-title fw5'>
+            {content}
+          </div>
+        </div>
+      </WrapperEl>)
     }
   }
 

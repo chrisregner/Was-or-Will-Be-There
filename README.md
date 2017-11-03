@@ -3,7 +3,10 @@
 **now**
 
 - journal
-  - JournalForm
+  - integrate to PlansAndJournals
+  - manual test
+  - integrate image upload api
+  - manual test
 
 ---
 

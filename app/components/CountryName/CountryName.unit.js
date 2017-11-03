@@ -113,6 +113,22 @@ test.skip('CountryName | if fetch is rejected and info button is clicked, it tog
 test.skip('CountryName | if fetch is rejected, it should NOT fire the click handler twice on first and subsequent key presses of enter and space key')
 test.skip('CountryName | if fetch is rejected, it should render an info popover containing the error message')
 
+test('CountryName | it should render the correct country flag', () => {
+  const testWithVar = (countryId) => {
+    const props = { countryId }
+    const wrapper = setup({ props })
+    const countryFlagWrpr = wrapper.find(`[src="https://cdn.rawgit.com/hjnilsson/country-flags/master/svg/${countryId}.svg"]`)
+
+    const actual = countryFlagWrpr.exists()
+
+    assert.isTrue(actual)
+  }
+
+  testWithVar('PH')
+  testWithVar('US')
+  testWithVar('JP')
+})
+
 test('CountryName | if wrapper element is specified, it should use it', () => {
   const testWithVar = (wrapperEl) => {
     const props = { wrapperEl }
