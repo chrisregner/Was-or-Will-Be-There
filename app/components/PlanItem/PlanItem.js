@@ -4,7 +4,7 @@ import IPropTypes from 'react-immutable-proptypes'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import { List, ListItem } from 'material-ui/List'
+import { ListItem } from 'material-ui/List'
 
 import TimeBadge from 'components/TimeBadge'
 
@@ -13,9 +13,9 @@ const smartFormatDate = date =>
     ? formatDate(date, 'MM/DD/YY')
     : '(TBD)'
 
-const createDateRange = (plan) =>
-  (plan.get('homecoming') || plan.get('departure'))
-  && `${smartFormatDate(plan.get('departure'))} – ${smartFormatDate(plan.get('homecoming'))}`
+const createDateRange = plan =>
+  (plan.get('homecoming') || plan.get('departure')) &&
+  `${smartFormatDate(plan.get('departure'))} – ${smartFormatDate(plan.get('homecoming'))}`
 
 const PlanItem = ({ countryId, plan }) => (
   <Link
@@ -27,8 +27,7 @@ const PlanItem = ({ countryId, plan }) => (
         <div className='flex-grow-1 pr2 truncate'>
           {plan.get('planName')}
           {
-            (plan.get('homecoming') || plan.get('departure'))
-            &&
+            (plan.get('homecoming') || plan.get('departure')) &&
             <div className='pt1 f6 gray'>{createDateRange(plan)}</div>
           }
         </div>
@@ -53,9 +52,9 @@ PlanItem.propTypes = {
     planName: PropTypes.string.isRequired,
     departure: PropTypes.instanceOf(Date),
     homecoming: PropTypes.instanceOf(Date),
-  }).isRequired
+  }).isRequired,
 }
 
-/*: <div style={{ paddingRight: 16 }} className='h-100 flex--i items-center'><div>TimeBadge</div></div>*/
+/*: <div style={{ paddingRight: 16 }} className='h-100 flex--i items-center'><div>TimeBadge</div></div> */
 
 export default PlanItem

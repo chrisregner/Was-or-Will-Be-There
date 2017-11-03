@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
+import R from 'ramda'
 
 class BareNonALink extends React.Component {
   static propTypes = {
@@ -25,10 +26,14 @@ class BareNonALink extends React.Component {
 
   render = () => {
     const {
-      children, to, beforePush, afterPush,
-      match, location, history, staticContext,
-      ...otherProps
+      children, to, ...otherProps
     } = this.props
+
+    const unnecessaryProps = [
+      'beforePush', 'afterPush',
+      'match', 'location', 'history', 'staticContext',
+    ]
+    const finalOtherProps = R.omit(unnecessaryProps, otherProps)
 
     return (
       <div
@@ -36,7 +41,7 @@ class BareNonALink extends React.Component {
         tabIndex='0'
         role='link'
         onClick={this.handleClick}
-        {...otherProps}
+        {...finalOtherProps}
       >
         {children}
       </div>

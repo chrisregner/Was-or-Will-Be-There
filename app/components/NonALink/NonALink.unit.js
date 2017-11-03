@@ -9,14 +9,14 @@ import { BareNonALink as NonALink } from './NonALink'
 const mocks = {
   ev: {
     preventDefault: td.func(),
-  }
+  },
 }
 
 const defProps = {
   to: '',
   history: {
-    push: td.func()
-  }
+    push: td.func(),
+  },
 }
 
 const setup = TU.makeTestSetup({
@@ -34,7 +34,7 @@ test('NonALink | it should render without error', () => {
 
 test('NonALink | when clicked, it should call push with correct arg', () => {
   const props = {
-    to: '/some/random/link'
+    to: '/some/random/link',
   }
   const wrapper = setup({ props })
 
@@ -65,9 +65,9 @@ test('NonALink | when clicked, it should call push and hooks in correct order, w
           .thenDo(() => { callsInOrder.push('beforePush') })
         td.when(fakeAfterPush(td.matchers.anything()))
           .thenDo(() => { callsInOrder.push('afterPush') })
-      }
+      },
     },
-    props
+    props,
   })
 
   wrapper.simulate('click', mocks.ev)
@@ -82,7 +82,7 @@ test('NonALink | when clicked, it should call push and hooks in correct order, w
 
 test('NonALink | it should pass "to" prop as "href"', () => {
   const props = {
-    to: 'some/random/link'
+    to: 'some/random/link',
   }
   const wrapper = setup({ props })
 
@@ -95,7 +95,7 @@ test('NonALink | it should pass "to" prop as "href"', () => {
 test('NonALink | it should pass other props', () => {
   const props = {
     id: 'some-random-id',
-    className: 'some random className,'
+    className: 'some random className,',
   }
   const wrapper = setup({ props })
 
@@ -110,7 +110,7 @@ test('NonALink | it should pass other props', () => {
 
 test('NonALink | it should render children', () => {
   const wrapper = setup({
-    childNode: (<div id='random-child'></div>)
+    childNode: (<div id='random-child' />),
   })
 
   const actual = wrapper.find('#random-child')

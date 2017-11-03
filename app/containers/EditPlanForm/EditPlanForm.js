@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 
 import PlanForm from 'components/PlanForm'
-import { editPlan } from 'state/plans'
+import { editPlan, deletePlan } from 'state/plans'
 import { plansGetters } from 'state'
 import withHeightWatcher from 'containers/withHeightWatcher'
 
 const mapStateToProps = (state, { match }) => ({
-  initialValues: plansGetters.getPlan(state, match.params.id)
+  initialValues: plansGetters.getPlan(state, match.params.id),
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     const planWithCountryId = planDetails.set('countryId', countryId)
 
     dispatch(editPlan(planWithCountryId))
+  },
+  handleDelete: (id) => {
+    dispatch(deletePlan(id))
   },
 })
 

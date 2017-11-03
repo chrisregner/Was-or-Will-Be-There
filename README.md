@@ -2,12 +2,8 @@
 
 **now**
 
-- delete plan
-  - PlanForm
-    - if id is provided, it should the render delete button
-    - if delete button is clicked, it should handleDelete with id
-  - EditForm, handleDelete
-- eslint, arrow func, don't require result paren
+- journal
+  - JournalForm
 
 ---
 
@@ -15,19 +11,7 @@
 
 - features
   - core
-    - planner
-      - add a plan to a country
-        - data shape
-          - plan name
-          - notes
-          - departure
-          - homecoming
-      - edit a plan for a country
-        - show country name + flag
-      - delete a plan for a country
-      - NOTES
-        - show country name + flag
-        - snackbar after deleting/adding/editing a plan
+    - **done** planner
     - journal
       - add a journal to a country
         - data shape
@@ -51,14 +35,17 @@
       - NOTES
         - show country name + flag for each
       - pan map to location of any selected entry
-  - plan turning into journal
-    - notify to suggest adding photos to new journal entry
-  - notify when...
-    - 30 days before an departure/homecoming
-    - 7 days before an departure/homecoming
-    - 1 day before an departure/homecoming
-    - 2 hours before an departure/homecoming
-    - the time of departure/homecoming
+  - notification
+    - plan turning into journal
+      - notify to suggest adding photos to new journal entry
+    - notify when...
+      - 30 days before an departure/homecoming
+      - 7 days before an departure/homecoming
+      - 1 day before an departure/homecoming
+      - 2 hours before an departure/homecoming
+      - the time of departure/homecoming
+    - navbar
+  - the map
 - additional features
   - sort
     - chronologically

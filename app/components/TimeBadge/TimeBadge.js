@@ -1,15 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import differenceInDays from 'date-fns/difference_in_days'
-import formatDate from 'date-fns/format'
 import getYear from 'date-fns/get_year'
 import getMonth from 'date-fns/get_month'
 import getDate from 'date-fns/get_date'
 
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit'
 import CalendarIcon from 'material-ui/svg-icons/action/today'
-import Chip from 'material-ui/Chip'
-import Avatar from 'material-ui/Avatar'
 
 import Link from 'components/NonALink'
 
@@ -44,7 +41,7 @@ const TimeBadge = ({ id, countryId, departure, homecoming }) => {
         to={`/countries/${countryId}/plans/${id}/journalize`}
         beforePush={beforePush}
       >
-      <div className='dib'>
+        <div className='dib'>
           <div style={timeBadgePadding} className='flex items-center br1 bg-yellow blue f7 ttu' >
             <EditIcon style={{ width: 16, height: 16 }} viewBox='0 0 24 24' />
             <div className='time-badge-text pl1'>Journalize!</div>

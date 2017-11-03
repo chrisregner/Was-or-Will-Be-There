@@ -11,8 +11,8 @@ const fallbackInitialState = I.Map({
       countryId: 'de',
       id: 'foo',
       planName: 'The Foo Plan',
-    })
-  ])
+    }),
+  ]),
 })
 
 export const configureStore = initialState =>

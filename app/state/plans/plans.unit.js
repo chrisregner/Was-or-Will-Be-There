@@ -63,14 +63,14 @@ test('plans.EDIT_PLAN | it should work', () => {
     I.Map({
       id: '3',
       planName: 'Third Plan',
-    })
+    }),
   ])
 
   const action = fromPlans.editPlan(I.Map({
     id: '2',
     planName: 'Edited Name',
     notes: 'Edited Note',
-    departure: new Date(2010, 9 ,10),
+    departure: new Date(2010, 9, 10),
   }))
 
   const actual = plansReducer(initialState, action)
@@ -83,13 +83,13 @@ test('plans.EDIT_PLAN | it should work', () => {
       id: '2',
       planName: 'Edited Name',
       notes: 'Edited Note',
-      departure: new Date(2010, 9 ,10),
+      departure: new Date(2010, 9, 10),
       homecoming: new Date(2001, 0, 10),
     }),
     I.Map({
       id: '3',
       planName: 'Third Plan',
-    })
+    }),
   ])
 
   assert.isTrue(actual.equals(expected))
@@ -112,7 +112,7 @@ test('plans.DELETE_PLAN | it should work', () => {
     I.Map({
       id: '3',
       planName: 'Third Plan',
-    })
+    }),
   ])
 
   const action = fromPlans.deletePlan('2')
@@ -126,7 +126,7 @@ test('plans.DELETE_PLAN | it should work', () => {
     I.Map({
       id: '3',
       planName: 'Third Plan',
-    })
+    }),
   ])
 
   assert.isTrue(actual.equals(expected))
@@ -156,7 +156,7 @@ test('plans.getPlansByCountryId() | it should work', () => {
       countryId: 'ph',
       id: '3',
       planName: 'Third Plan',
-    })
+    }),
   ])
 
   const actual = plansGetters.getPlansByCountryId(state, 'ph')
@@ -172,7 +172,7 @@ test('plans.getPlansByCountryId() | it should work', () => {
       countryId: 'ph',
       id: '3',
       planName: 'Third Plan',
-    })
+    }),
   ])
 
   assert.isTrue(actual.equals(expected))
@@ -193,7 +193,7 @@ test('plans.getPlan() | it should work', () => {
     I.Map({
       id: '3',
       planName: 'Third Plan',
-    })
+    }),
   ])
 
   const actual = plansGetters.getPlan(state, '2')

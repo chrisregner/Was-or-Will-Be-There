@@ -4,6 +4,8 @@ import I from 'immutable'
 import * as fromPlans from 'state/plans'
 
 const newPlanMsg = 'We have a new plan!'
+const updatedPlanMsg = 'We’ve updated a plan!'
+const deletedPlanMsg = 'Bye-bye, plan...'
 const defaultState = I.fromJS({
   snackbar: {
     isVisible: false,
@@ -40,6 +42,16 @@ const uiReducer = handleActions({
     state.set('snackbar', new I.Map({
       isVisible: true,
       message: newPlanMsg,
+    })),
+  [fromPlans.EDIT_PLAN]: (state, { payload }) =>
+    state.set('snackbar', new I.Map({
+      isVisible: true,
+      message: updatedPlanMsg,
+    })),
+  [fromPlans.DELETE_PLAN]: (state, { payload }) =>
+    state.set('snackbar', new I.Map({
+      isVisible: true,
+      message: deletedPlanMsg,
     })),
   [HIDE_SNACKBAR]: (state, { payload }) =>
     state.setIn(['snackbar', 'isVisible'], false),

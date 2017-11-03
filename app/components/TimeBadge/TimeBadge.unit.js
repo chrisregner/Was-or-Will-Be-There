@@ -10,7 +10,7 @@ const todayMidnight = new Date(2001, 0, 1)
 const todayNoon = new Date(2001, 0, 1, 12)
 const fakeClock = lolex.install({ now: todayNoon })
 
-const createMidnightDate = (noOfDays) =>
+const createMidnightDate = noOfDays =>
   D.addDays(todayMidnight, noOfDays)
 
 const mocks = {

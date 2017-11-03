@@ -13,8 +13,49 @@ import uiReducer, * as fromUi from './ui'
 test.skip('ui | it should return the correct default state')
 
 test('ui.ADD_PLAN | it should work', () => {
-  const initialState = I.Map({ snackbar: null })
+  const initialState = I.Map({
+    snackbar: {
+      isVisible: false,
+      message: '',
+    },
+  })
   const action = fromPlans.addPlan(I.Map())
+
+  const actual = uiReducer(initialState, action).get('snackbar').toJS()
+  const expected = Joi.object().keys({
+    isVisible: Joi.any().only(true).required(),
+    message: Joi.string().required(),
+  })
+
+  assert.isNull(expected.validate(actual).error)
+})
+
+test('ui.EDIT_PLAN | it should work', () => {
+  const initialState = I.Map({
+    snackbar: {
+      isVisible: false,
+      message: '',
+    },
+  })
+  const action = fromPlans.editPlan(I.Map())
+
+  const actual = uiReducer(initialState, action).get('snackbar').toJS()
+  const expected = Joi.object().keys({
+    isVisible: Joi.any().only(true).required(),
+    message: Joi.string().required(),
+  })
+
+  assert.isNull(expected.validate(actual).error)
+})
+
+test('ui.DELETE_PLAN | it should work', () => {
+  const initialState = I.Map({
+    snackbar: {
+      isVisible: false,
+      message: '',
+    },
+  })
+  const action = fromPlans.deletePlan('randomId')
 
   const actual = uiReducer(initialState, action).get('snackbar').toJS()
   const expected = Joi.object().keys({

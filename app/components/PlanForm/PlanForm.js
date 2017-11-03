@@ -19,6 +19,7 @@ const validationRules = {
 class PlanForm extends React.PureComponent {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func,
     initialValues: IPropTypes.contains({
       id: PropTypes.string.isRequired,
       planName: PropTypes.string.isRequired,
@@ -70,6 +71,13 @@ class PlanForm extends React.PureComponent {
   handleChangeNotes = this.makeHandleChange('notes')
   handleChangeDeparture = this.makeHandleChange('departure')
   handleChangeHomecoming = this.makeHandleChange('homecoming')
+  handleDelete = () => {
+    const { match, history, initialValues } = this.props
+    const id = initialValues.get('id')
+    this.props.handleDelete(id)
+
+    history.push(`/countries/${match.params.countryId}`)
+  }
   handleSubmit = (ev) => {
     ev.preventDefault()
 
@@ -174,12 +182,23 @@ class PlanForm extends React.PureComponent {
           minDate={values.get('departure') || new Date()}
           value={this.getFinalProp('homecoming') || null}
         />
+
         <RaisedButton
-          className='mt3'
+          className='mt3 mr3'
           primary
           label='Save'
           type='submit'
         />
+
+        {
+          (initialValues && initialValues.get('id')) &&
+          <RaisedButton
+            onClick={this.handleDelete}
+            className='plan-form-delete-btn mt3'
+            secondary
+            label='Delete'
+          />
+        }
       </form>
     )
   }

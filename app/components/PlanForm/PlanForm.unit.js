@@ -146,7 +146,7 @@ test('PlanForm > PlanNameField | it should accept initial value', () => {
     initialValues: I.Map({
       id: 'randomId',
       planName: 'Random Initial Plan',
-    })
+    }),
   }
 
   const planNameWrpr = setup({ props })
@@ -163,7 +163,7 @@ test('PlanForm > PlanNameField | if initial value is provided, it should still b
     initialValues: I.Map({
       id: 'randomId',
       planName: 'Random Initial Plan',
-    })
+    }),
   }
 
   const wrapper = setup({ props })
@@ -200,7 +200,7 @@ test('PlanForm > NotesField | it should accept initial value', () => {
       id: 'randomId',
       planName: '',
       notes: 'Random Initial Notes',
-    })
+    }),
   }
 
   const notesWrpr = setup({ props })
@@ -218,7 +218,7 @@ test('PlanForm > NotesField | if initial value is provided, it should still be e
       id: 'randomId',
       planName: '',
       notes: 'Random Initial Notes',
-    })
+    }),
   }
 
   const wrapper = setup({ props })
@@ -269,7 +269,7 @@ test('PlanForm > DepartureField | it should accept initial value', () => {
       id: 'randomId',
       planName: '',
       departure: mockData.inOneDay,
-    })
+    }),
   }
   const fieldWrpr = setup({ props }).find('[data-name="DepartureField"]')
 
@@ -316,7 +316,7 @@ test('PlanForm > HomecomingField | it should accept initial value', () => {
       id: 'randomId',
       planName: '',
       homecoming: mockData.inOneDay,
-    })
+    }),
   }
   const fieldWrpr = setup({ props }).find('[data-name="HomecomingField"]')
 
@@ -324,6 +324,70 @@ test('PlanForm > HomecomingField | it should accept initial value', () => {
   const expected = mockData.inOneDay
 
   assert.deepEqual(actual, expected)
+})
+
+/**
+ * Delete
+ */
+
+test('PlanForm > DeleteBtn | if id is provided, it should the render a delete button', () => {
+  const props = {
+    initialValues: I.Map({
+      id: 'randomId',
+      planName: '',
+    }),
+  }
+  const deleteBtnWrpr = setup({ props })
+    .find('.plan-form-delete-btn')
+
+  const actual = deleteBtnWrpr.exists()
+
+  assert.isTrue(actual)
+})
+
+test('PlanForm > DeleteBtn | if delete button is clicked, it should handleDelete with id', () => {
+  const fakeHandleDelete = td.func()
+  const props = {
+    initialValues: I.Map({
+      id: 'randomId',
+      planName: '',
+    }),
+    handleDelete: fakeHandleDelete,
+  }
+  const deleteBtnWrpr = setup({ props })
+    .find('.plan-form-delete-btn')
+
+  deleteBtnWrpr.simulate('click')
+
+  td.verify(fakeHandleDelete('randomId'), { times: 1 })
+})
+
+test('PlanForm > DeleteBtn | if delete button is clicked, it should call history.push() with correct args', () => {
+  const testWithVar = (countryId) => {
+    const props = {
+      match: {
+        params: { countryId },
+      },
+      initialValues: I.Map({
+        id: 'randomId',
+        planName: '',
+      }),
+      handleDelete: () => {},
+    }
+
+    const deleteBtnWrpr = setup({ props })
+      .find('.plan-form-delete-btn')
+
+    deleteBtnWrpr.simulate('click')
+
+    const expectedArg = `/countries/${countryId}`
+
+    td.verify(defProps.history.push(expectedArg), { times: 1 })
+  }
+
+  testWithVar('PH')
+  testWithVar('US')
+  testWithVar('JP')
 })
 
 /**
@@ -361,7 +425,7 @@ test('PlanForm > .onSubmit() | if form is valid and initial values were provided
         id: 'randomId',
         planName: 'Random Initial Plan',
         homecoming: mockData.inOneDay,
-      })
+      }),
     }
     const values = {
       NotesField: `
@@ -392,7 +456,7 @@ test('PlanForm > .onSubmit() | if form is valid and initial values were provided
         id: 'randomId',
         planName: 'Random Initial Plan',
         homecoming: mockData.inOneDay,
-      })
+      }),
     }
     const wrapper = setup({ props })
 
@@ -416,7 +480,7 @@ test('PlanForm > .onSubmit() | if form is valid and initial values were provided
           Sample Spaceous Note
         `,
         homecoming: mockData.inOneDay,
-      })
+      }),
     }
     const wrapper = setup({ props })
     const values = {

@@ -1,14 +1,8 @@
 import { test } from 'mocha'
 import { assert } from 'chai'
-import { shallow } from 'enzyme'
 import * as I from 'immutable'
-import D from 'date-fns'
 import * as TU from 'services/testUtils'
 import PlansAndJournals from './PlansAndJournals'
-
-const mocks = {
-  inTenDays: D.addDays(new Date(), 10),
-}
 
 const defProps = {
   match: {
@@ -83,7 +77,7 @@ test('PlansAndJournals | if plans are provided, it should render each', () => {
     {
       id: '3',
       planName: 'Third Plan',
-    }
+    },
   ]), 3)
 
   testWithVars(I.fromJS([
@@ -106,7 +100,7 @@ test('PlansAndJournals | if plans are provided, it should render each', () => {
     {
       id: '5',
       planName: 'Bleh',
-    }
+    },
   ]), 5)
 })
 
@@ -137,8 +131,8 @@ test('PlansAndJournals | if plans are provided, it should render the the plan it
       {
         id: '5',
         planName: 'Bleh',
-      }
-    ])
+      },
+    ]),
   }
 
   const samplePlanItemWrpr = setup({ props })

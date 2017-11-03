@@ -6,18 +6,18 @@ import PlanItem from 'components/PlanItem'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import Subheader from 'material-ui/Subheader'
-import { List, ListItem } from 'material-ui/List'
+import { List } from 'material-ui/List'
 
 const PlansAndJournals = ({
   plans,
   match: {
-    params: { countryId }
-  }
+    params: { countryId },
+  },
 }) => (
   <div>
     <div className='pa2'>
       <Link to={`/countries/${countryId}/plans/new`}>
-        <RaisedButton primary={true} label='Add New Plan' />
+        <RaisedButton primary label='Add New Plan' />
       </Link>
     </div>
     <List>

@@ -1,6 +1,5 @@
 import { test } from 'mocha'
 import { assert } from 'chai'
-import { shallow } from 'enzyme'
 import I from 'immutable'
 import D from 'date-fns'
 
@@ -12,7 +11,7 @@ const defProps = {
   plan: I.Map({
     id: 'defaultId',
     planName: 'Default Plan Name',
-  })
+  }),
 }
 
 const nextYr = D.getYear(new Date()) + 1
@@ -25,7 +24,7 @@ const mocks = {
 
 const setup = TU.makeTestSetup({
   Component: PlanItem,
-  defaultProps: defProps
+  defaultProps: defProps,
 })
 
 test('PlanItem | it should render without error', () => {
@@ -40,7 +39,7 @@ test('PlanItem | it should be a link with correct url', () => {
     countryId: 'ph',
     plan: I.Map({
       id: '143',
-    })
+    }),
   }
   const wrapper = setup({ props })
 
@@ -53,8 +52,8 @@ test('PlanItem | it should be a link with correct url', () => {
 test('PlanItem | it should show the plan name', () => {
   const props = {
     plan: I.Map({
-      planName: 'Most Unique Plan Name Ever'
-    })
+      planName: 'Most Unique Plan Name Ever',
+    }),
   }
   const wrapper = setup({ props })
 
@@ -69,7 +68,7 @@ test('PlanItem | when both departure and homecoming is provided, it should show 
     plan: I.Map({
       departure: mocks.Jun05NextYr,
       homecoming: mocks.Aug25NexYr,
-    })
+    }),
   }
   const wrapper = setup({ props })
 
@@ -84,7 +83,7 @@ test('PlanItem | when either departure or homecoming is missing, it should show 
     const props = {
       plan: I.Map({
         homecoming: mocks.Aug25NexYr,
-      })
+      }),
     }
     const wrapper = setup({ props })
 
@@ -98,7 +97,7 @@ test('PlanItem | when either departure or homecoming is missing, it should show 
     const props = {
       plan: I.Map({
         departure: mocks.Jun05NextYr,
-      })
+      }),
     }
     const wrapper = setup({ props })
 
@@ -109,13 +108,13 @@ test('PlanItem | when either departure or homecoming is missing, it should show 
   }
 
   testWhereDepartureIsMissing()
-  testWhereHomecomingIsMissing
+  testWhereHomecomingIsMissing()
 })
 
 test('PlanItem | when no date is provided, it should NOT show a range', () => {
   const wrapper = setup()
   const range = wrapper.find('.plan-item-date-range')
-      .prop('secondaryText')
+    .prop('secondaryText')
 
   const actual = range
 

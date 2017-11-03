@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import I from 'immutable'
 
-const isImmutable = (obj) => I.Iterable.isIterable(obj)
+const isImmutable = obj => I.Iterable.isIterable(obj)
 const isObject = arg => typeof arg === 'object'
 
 const smartGet = (obj, k) =>
@@ -20,9 +20,9 @@ const smartSet = (obj, k, v) => {
 
 const recursiveSmartReducer = (newObj, v, k) =>
   (
-    isImmutable(v) && isImmutable(smartGet(newObj, k)))
-    || (isObject(v) && isObject(smartGet(newObj, k))
-  )
+    isImmutable(v) && isImmutable(smartGet(newObj, k))) ||
+    (isObject(v) && isObject(smartGet(newObj, k))
+    )
     ? smartSet(newObj, k, smartMergeDeep(smartGet(newObj, k), v))
     : smartSet(newObj, k, v)
 

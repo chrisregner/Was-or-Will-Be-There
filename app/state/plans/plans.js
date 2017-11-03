@@ -29,13 +29,13 @@ export const deletePlan = createAction(DELETE_PLAN)
 const plansReducer = handleActions({
   [ADD_PLAN]: (state, { payload }) => state.push(payload),
   [EDIT_PLAN]: (state, { payload }) =>
-    state.map((plan) =>
+    state.map(plan =>
       plan.get('id') === payload.get('id')
         ? plan.merge(payload)
         : plan
     ),
   [DELETE_PLAN]: (state, { payload }) =>
-    state.filter((plan) => plan.get('id') !== payload)
+    state.filter(plan => plan.get('id') !== payload),
 }, defaultState)
 
 export default plansReducer
@@ -46,5 +46,5 @@ export default plansReducer
 
 export const plansGetters = {
   getPlansByCountryId: (plans, countryId) => plans.filter(plan => plan.get('countryId') === countryId),
-  getPlan: (plans, id) => plans.find(plan => plan.get('id') === id)
+  getPlan: (plans, id) => plans.find(plan => plan.get('id') === id),
 }
