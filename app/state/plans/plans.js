@@ -38,7 +38,6 @@ const plansReducer = handleActions({
     state.filter(plan => plan.get('id') !== payload),
 }, defaultState)
 
-export default plansReducer
 
 /**
  * Getters
@@ -48,3 +47,5 @@ export const plansGetters = {
   getPlansByCountryId: (plans, countryId) => plans.filter(plan => plan.get('countryId') === countryId),
   getPlan: (plans, id) => plans.find(plan => plan.get('id') === id),
 }
+
+export default plansReducer

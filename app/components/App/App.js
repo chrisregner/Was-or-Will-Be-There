@@ -14,6 +14,8 @@ import MapCmpt from 'components/MapCmpt'
 import PopulatedPlansAndJournals from 'containers/PopulatedPlansAndJournals'
 import AddPlanForm from 'containers/AddPlanForm'
 import EditPlanForm from 'containers/EditPlanForm'
+import AddJournalForm from 'containers/AddJournalForm'
+import EditJournalForm from 'containers/EditJournalForm'
 import PaperWithHeight from 'containers/PaperWithHeight'
 import NotifSnackbar from 'containers/NotifSnackbar'
 import RealRouteWatcher from 'containers/RealRouteWatcher'
@@ -65,6 +67,8 @@ const App = () => (
                 <Route exact path='/countries/:countryId' component={PopulatedPlansAndJournals} />
                 <Route path='/countries/:countryId/plans/new' component={AddPlanForm} />
                 <Route path='/countries/:countryId/plans/:id' component={EditPlanForm} />
+                <Route path='/countries/:countryId/journals/new' component={AddJournalForm} />
+                <Route path='/countries/:countryId/journals/:id' component={EditJournalForm} />
               </AnimatedSwitch>
             </AnimatedSwitchWrpr>
           </PaperWithHeight>

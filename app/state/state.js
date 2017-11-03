@@ -15,48 +15,28 @@ const rootReducer = combineReducers({
  * Getters
  */
 
-export const gettersShell = ({
-  uiGetters,
-  plansGetters,
-  journalsGetters,
-}) => ({
-  uiGetters: Object.entries(uiGetters)
-    .reduce(
-      (newGetters, [oldGetterName, oldGetterFn]) =>
-        R.set(
-          R.lensProp(oldGetterName),
-          (state, ...args) => oldGetterFn(state.get('ui'), ...args),
-          newGetters,
-        ),
-      {}
-    ),
-  plansGetters: Object.entries(plansGetters)
-    .reduce(
-      (newGetters, [oldGetterName, oldGetterFn]) =>
-        R.set(
-          R.lensProp(oldGetterName),
-          (state, ...args) => oldGetterFn(state.get('plans'), ...args),
-          newGetters,
-        ),
-      {}
-    ),
-  journalsGetters: Object.entries(plansGetters)
-    .reduce(
-      (newGetters, [oldGetterName, oldGetterFn]) =>
-        R.set(
-          R.lensProp(oldGetterName),
-          (state, ...args) => oldGetterFn(state.get('journals'), ...args),
-          newGetters,
-        ),
-      {}
-    ),
+export const gettersShell = (stateToGetters) =>
+  R.mapObjIndexed(
+    (getters, stateKey) =>
+      R.mapObjIndexed(
+        (getter, getterName) =>
+          (state, ...getterArgs) => getter(state.get(stateKey), ...getterArgs),
+        getters
+      ),
+    stateToGetters
+  )
+
+const allGetters = gettersShell({
+  ui: _uiGetters,
+  plans: _plansGetters,
+  journals: _journalsGetters,
 })
 
-const { uiGetters, plansGetters, journalsGetters } = gettersShell({
-  uiGetters: _uiGetters,
-  plansGetters: _plansGetters,
-  journalsGetters: _journalsGetters,
-})
+const {
+  ui: uiGetters,
+  plans: plansGetters,
+  journals: journalsGetters
+} = allGetters
 
 export { uiGetters, plansGetters, journalsGetters }
 export default rootReducer

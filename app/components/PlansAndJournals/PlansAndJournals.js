@@ -10,20 +10,16 @@ import { List } from 'material-ui/List'
 
 const PlansAndJournals = ({
   plans,
+  journals,
   match: {
     params: { countryId },
   },
 }) => (
   <div>
-    <div className='pa2'>
-      <Link to={`/countries/${countryId}/plans/new`}>
-        <RaisedButton primary label='Add New Plan' />
-      </Link>
-    </div>
     <List>
       <Subheader>Plans</Subheader>
       {
-        plans.map(plan => (
+        plans && plans.map(plan => (
           <PlanItem
             className='plans-and-journals-plan-item'
             key={plan.get('id')}
@@ -33,6 +29,29 @@ const PlansAndJournals = ({
         )).toJS()
       }
     </List>
+    <div className='pa2 tr'>
+      <Link to={`/countries/${countryId}/plans/new`}>
+        <RaisedButton primary label='Add New Plan' />
+      </Link>
+    </div>
+    <List>
+      <Subheader>Journals</Subheader>
+      {
+        journals && journals.map(journal => (
+          <div
+            className='plans-and-journals-journal-item'
+            key={journal.get('id')}
+            countryId={countryId}
+            journal={journal}
+          />
+        )).toJS()
+      }
+    </List>
+    <div className='pa2 tr'>
+      <Link to={`/countries/${countryId}/journals/new`}>
+        <RaisedButton primary label='Add New Journal' />
+      </Link>
+    </div>
   </div>
 )
 
@@ -46,7 +65,12 @@ PlansAndJournals.propTypes = {
     IPropTypes.contains({
       id: PropTypes.string.isRequired,
       planName: PropTypes.string.isRequired,
-      departure: PropTypes.instanceOf(Date),
+    }),
+  ),
+  journals: IPropTypes.listOf(
+    IPropTypes.contains({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
     }),
   ),
 }

@@ -123,7 +123,7 @@ class PlanForm extends React.PureComponent {
 
     return (
       <form
-        className='pa2'
+        className='pt2 pb3 pr2 pl2'
         ref={this.rootElRef}
         onSubmit={this.handleSubmit}
       >
@@ -133,7 +133,7 @@ class PlanForm extends React.PureComponent {
           countryId={countryId}
         />
         <TextField
-          className='field db--i'
+          className='w-100--i db--i'
           data-name='PlanNameField'
           floatingLabelText='Plan Name*'
           floatingLabelFixed
@@ -142,7 +142,7 @@ class PlanForm extends React.PureComponent {
           value={this.getFinalProp('planName') || ''}
         />
         <TextField
-          className='field db--i'
+          className='w-100--i db--i'
           data-name='NotesField'
           floatingLabelText='Notes'
           floatingLabelFixed
@@ -152,7 +152,7 @@ class PlanForm extends React.PureComponent {
           value={this.getFinalProp('notes') || ''}
         />
         <DatePicker
-          className='field'
+          textFieldStyle={{ width: '100%' }}
           data-name='DepartureField'
           floatingLabelText='Departure Date'
           floatingLabelFixed
@@ -163,7 +163,7 @@ class PlanForm extends React.PureComponent {
           value={this.getFinalProp('departure') || null}
         />
         <DatePicker
-          className='field'
+          textFieldStyle={{ width: '100%' }}
           data-name='HomecomingField'
           floatingLabelText='Homecoming Date'
           floatingLabelFixed
@@ -173,22 +173,24 @@ class PlanForm extends React.PureComponent {
           value={this.getFinalProp('homecoming') || null}
         />
 
-        <RaisedButton
-          className='mt3 mr3'
-          primary
-          label='Save'
-          type='submit'
-        />
+        <div className='tr'>
+          {
+            (initialValues && initialValues.get('id')) &&
+            <RaisedButton
+              onClick={this.handleDelete}
+              className='plan-form-delete-btn mt3 mr3'
+              secondary
+              label='Delete'
+            />
+          }
 
-        {
-          (initialValues && initialValues.get('id')) &&
           <RaisedButton
-            onClick={this.handleDelete}
-            className='plan-form-delete-btn mt3'
-            secondary
-            label='Delete'
+            className='mt3'
+            primary
+            label='Save'
+            type='submit'
           />
-        }
+        </div>
       </form>
     )
   }

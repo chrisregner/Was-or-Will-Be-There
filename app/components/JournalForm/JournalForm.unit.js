@@ -5,7 +5,13 @@ import I from 'immutable'
 import D from 'date-fns'
 
 import * as TU from 'services/testUtils'
-import JournalForm from './JournalForm'
+import { JournalFormShell } from './JournalForm'
+
+const fakeCloudinary = {
+  openUploadWidget: td.func()
+}
+
+const JournalForm = JournalFormShell({ theCloudinary: fakeCloudinary })
 
 const mockData = {
   ev: { preventDefault: () => {} },
@@ -21,6 +27,7 @@ const defProps = {
   match: {
     params: { countryId: '' },
   },
+  id: '',
 }
 
 const setup = TU.makeTestSetup({
@@ -365,30 +372,6 @@ test('JournalForm > DeleteBtn | if delete button is clicked, it should call hist
  * onSubmit
  */
 
-test('JournalForm > .onSubmit() | if form is valid, it should call handleSubmit() with trimmed data', () => {
-  const values = {
-    'title-field': '  Sample Spaceous Title  ',
-    'text-content-field': `
-      Sample Spaceous Text Content
-    `,
-    'departure-field': mockData.inOneDay,
-    'homecoming-field': mockData.inTenDays,
-  }
-  const wrapper = setup()
-
-  fillForm(values, wrapper)
-  wrapper.find('form').simulate('submit', mockData.ev)
-
-  const expectedArg = I.Map({
-    title: 'Sample Spaceous Title',
-    textContent: 'Sample Spaceous Text Content',
-    departure: mockData.inOneDay,
-    homecoming: mockData.inTenDays,
-  })
-
-  td.verify(defProps.handleSubmit(expectedArg), { times: 1 })
-})
-
 test('JournalForm > .onSubmit() | if form is valid and initial values were provided, it should call handleSubmit() with correct data including the id', () => {
   const testWithChangingSomeField = () => {
     const props = {
@@ -498,6 +481,22 @@ test('JournalForm > .onSubmit() | if form is valid, it should call history.push(
   testWithVar('JP')
 })
 
-test.skip('JournalForm > PhotosField | ???')
-test.skip('JournalForm > PhotosField > PhotoField | ???')
-test.skip('JournalForm > PhotosField > DescriptionField | ???')
+/**
+ * Image Upload
+ */
+
+test.skip('JournalForm.state.photos | it should accept initial values')
+test.skip('JournalForm > PhotoFieldSet | it should render it with correct props foreach photo data in state')
+test.skip('JournalForm > UploadPhotoBtn | when clicked, it should call openUploadWidget()')
+test.skip('JournalForm > UploadPhotoBtn | when openUploadWidget() succeeds and photo state has existing data, it should add the correct photo details to the state')
+test.skip('JournalForm > UploadPhotoBtn | when openUploadWidget() succeeds and photo state has NO existing data, it should add the correct photo data to the state')
+test.skip('JournalForm.handlePhotoDelete() | if there is some existing data, it should add the correct photo deletion data for each invocation')
+test.skip('JournalForm.handlePhotoDelete() | if there is NO existing data, it should add the correct photo deletion data for each invocation')
+test.skip('JournalForm > .onSubmit() | if form is valid, it should call it with correct photo and photo deletion data')
+test.skip('JournalForm | when unmounted and journal is NOT saved and there is photo deletion data, it should call deletePhotos() with correct args')
+test.skip('JournalForm | when unmounted and journal is saved, it should NOT call deletePhotos()')
+test.skip('JournalForm | when unmounted and journal is NOT saved and there is NO photo deletion data, it should NOT call deletePhotos()')
+
+test.skip('PhotoFieldSet | it should display a photo')
+test.skip('PhotoFieldSet | it should display a working description text area')
+test.skip('PhotoFieldSet | it should display a working delete photo button for')

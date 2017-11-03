@@ -1,12 +1,67 @@
 ## Current
 
 **now**
+- review current
+- review pending specs of JournalForm
 
-- journal
-  - integrate to PlansAndJournals
-  - manual test
-  - integrate image upload api
-  - manual test
+- JournalForm specs
+
+- redux
+  - addJournal()
+    - accept predefined id instead
+    - add photos
+    - delete photos
+    - delete photos in Cloudinary
+  - editJournal()
+    - accept predefined id instead
+    - add photos
+    - delete photos
+    - delete photos in Cloudinary
+  - deletePhotos()
+
+- containers
+  - AddJournalForm
+    - add predefined id in initialValues
+
+- share countryId on countryModal
+- journal items
+- no plan/journal/both message
+- country/plan/journal 404
+- automatic image deleting (when certain limit is met, delete in the next midnight)
+
+- manual test
+  - adding journal
+  - editing journal
+  - deleting journal
+  - adding photo
+  - deleting photo of saved journals
+  - deleting photo of unsaved journals
+
+---
+
+cThumbUrlFormat: http://res.cloudinary.com/chrisregner/image/upload/c_limit,h_60,w_90/${urlPart}
+cUrlFormat: http://res.cloudinary.com/chrisregner/image/upload/${urlPart}
+imgPathPart: v1509689468/wowbt/u1ghlbn5nvcrwfjnabvr.png
+
+---
+
+Map/Countries
+  Overview
+  Journals
+    Journal
+      EditJournal
+    EditJournals
+      EditPlan
+
+---
+
+√ PlanItem | it should render without error
+√ PlanItem | it should be a link with correct url
+√ PlanItem | it should show the plan name
+√ PlanItem | when both departure and homecoming is provided, it should show a range
+√ PlanItem | when either departure or homecoming is missing, it should show a range with "TBD" as filler
+√ PlanItem | when no date is provided, it should NOT show a range
+√ PlanItem | it should render the time badge with correct props
 
 ---
 
@@ -47,9 +102,11 @@
       - 1 day before an departure/homecoming
       - 2 hours before an departure/homecoming
       - the time of departure/homecoming
-    - navbar
+  - navbar
   - the map
 - additional features
+  - **important** world overview page?
+  - **important** country overview page?
   - sort
     - chronologically
     - geographically

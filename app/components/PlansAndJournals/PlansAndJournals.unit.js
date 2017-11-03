@@ -44,6 +44,23 @@ test('PlansAndJournals | it should render a link to add a plan', () => {
   assert.equal(actual, expected)
 })
 
+test('PlansAndJournals | it should render a link to add a journal', () => {
+  const props = {
+    match: {
+      params: {
+        countryId: 'ph',
+      },
+    },
+  }
+  const wrapper = setup({ props })
+  const linkWrpr = wrapper.find('[to="/countries/ph/journals/new"]')
+
+  const actual = linkWrpr.length
+  const expected = 1
+
+  assert.equal(actual, expected)
+})
+
 test.skip('PlansAndJournals | if there is no plans nor journals, it should render a message')
 test.skip('PlansAndJournals | if there is no plans nor journals, it should NOT render the message for lacking plans alone')
 test.skip('PlansAndJournals | if there is no plans nor journals, it should NOT render the message for lacking journals alone')
@@ -149,6 +166,109 @@ test('PlansAndJournals | if plans are provided, it should render the the plan it
     plan: {
       id: '3',
       planName: 'Third Plan',
+    },
+  })
+
+  assert.isTrue(actual.equals(expected))
+})
+
+test('PlansAndJournals | if journals are provided, it should render each', () => {
+  const testWithVars = (journals, quantity) => {
+    const props = { journals }
+
+    const wrapper = setup({ props })
+    const journalItemsWrpr = wrapper.find('.plans-and-journals-journal-item')
+
+    const actual = journalItemsWrpr.length
+    const expected = quantity
+
+    assert.equal(actual, expected)
+  }
+
+  testWithVars(I.fromJS([
+    {
+      id: '1',
+      title: 'First Journal',
+    },
+    {
+      id: '2',
+      title: 'Second Journal',
+    },
+    {
+      id: '3',
+      title: 'Third Journal',
+    },
+  ]), 3)
+
+  testWithVars(I.fromJS([
+    {
+      id: '1',
+      title: 'First Journal',
+    },
+    {
+      id: '2',
+      title: 'Second Journal',
+    },
+    {
+      id: '3',
+      title: 'Third Journal',
+    },
+    {
+      id: '4',
+      title: 'Blah',
+    },
+    {
+      id: '5',
+      title: 'Bleh',
+    },
+  ]), 5)
+})
+
+test('PlansAndJournals | if journals are provided, it should render the the journal items with correct props', () => {
+  const props = {
+    match: {
+      params: {
+        countryId: 'de',
+      },
+    },
+    journals: I.fromJS([
+      {
+        id: '1',
+        title: 'First Journal',
+      },
+      {
+        id: '2',
+        title: 'Second Journal',
+      },
+      {
+        id: '3',
+        title: 'Third Journal',
+      },
+      {
+        id: '4',
+        title: 'Blah',
+      },
+      {
+        id: '5',
+        title: 'Bleh',
+      },
+    ]),
+  }
+
+  const sampleJournalItemWrpr = setup({ props })
+    .find('.plans-and-journals-journal-item')
+    .at(2)
+
+  const actual = I.fromJS({
+    countryId: sampleJournalItemWrpr.prop('countryId'),
+    journal: sampleJournalItemWrpr.prop('journal'),
+  })
+
+  const expected = I.fromJS({
+    countryId: 'de',
+    journal: {
+      id: '3',
+      title: 'Third Journal',
     },
   })
 

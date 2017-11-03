@@ -370,7 +370,7 @@ test('PlanForm > DeleteBtn | if delete button is clicked, it should call history
  * onSubmit
  */
 
-test('PlanForm > .onSubmit() | if form is valid, it should call handleSubmit() with trimmed data', () => {
+test('PlanForm.onSubmit() | if form is valid, it should call handleSubmit() with trimmed data', () => {
   const values = {
     PlanNameField: '  Sample Spaceous Name  ',
     NotesField: `
@@ -394,7 +394,7 @@ test('PlanForm > .onSubmit() | if form is valid, it should call handleSubmit() w
   td.verify(defProps.handleSubmit(expectedArg), { times: 1 })
 })
 
-test('PlanForm > .onSubmit() | if form is valid and initial values were provided, it should call handleSubmit() with correct data including the id', () => {
+test('PlanForm.onSubmit() | if form is valid and initial values were provided, it should call handleSubmit() with correct data including the id', () => {
   const testWithChangingSomeField = () => {
     const props = {
       initialValues: I.Map({
@@ -481,7 +481,7 @@ test('PlanForm > .onSubmit() | if form is valid and initial values were provided
   testWithEmptiyingAField()
 })
 
-test('PlanForm > .onSubmit() | if form is valid, it should call history.push() with correct args', () => {
+test('PlanForm.onSubmit() | if form is valid, it should call history.push() with correct args', () => {
   const testWithVar = (countryId) => {
     const props = {
       match: {
