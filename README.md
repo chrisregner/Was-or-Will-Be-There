@@ -1,41 +1,98 @@
-## Current
+## Todos
 
-**now**
-- review current
-- review pending specs of JournalForm
+- HOW TO MANAGE JOURNALS AND PHOTOS???
 
-- JournalForm specs
+- JournalForm
+  - separate photos and form values?
+  - don't delete uploaded photos that are deleted immediately
+    - just blur it
+    - allow restoring it
+  - combine photosDeleted and photos
 
 - redux
   - addJournal()
-    - accept predefined id instead
-    - add photos
-    - delete photos
-    - delete photos in Cloudinary
+    - save journal
+      - photos: ids only
+      - don't include deleted photos
+    - snackbar
   - editJournal()
-    - accept predefined id instead
-    - add photos
-    - delete photos
-    - delete photos in Cloudinary
-  - deletePhotos()
-
-- containers
-  - AddJournalForm
-    - add predefined id in initialValues
-
-- share countryId on countryModal
-- journal items
-- no plan/journal/both message
-- country/plan/journal 404
-- automatic image deleting (when certain limit is met, delete in the next midnight)
+    - save journal
+      - photos: ids only
+      - remove deleted photos
+      - add new photos
+      - retain untouched old photos
+    - snackbar
+  - deleteJournal()
+    - delete journal
+    - snackbar
+  - add photos
+    - don't include deleted photos
+    - remove deleted photos in cloud
+  - update photos
+    - add new photos
+    - retain untouched old photos
+    - update changed photo descriptions
+    - remove deleted photos
+    - remove deleted photos in cloud
+  - delete photos
+    - delete all old photos in cloud
+    - delete all newly-uploaded photos in cloud
+    - delete all photos in redux
+  - getJournalByIdWithPhotos()
+    - get photos as well
 
 - manual test
   - adding journal
+    - deleting deleted photos upon save on cloud
+    - deleting all photos upon cancel on cloud
+    - adding details of journal
+    - snackbar
   - editing journal
+    - deleting old-and-deleted photos upon save on cloud
+    - deleting newly-uploaded-but-deleted photos upon save on cloud
+    - deleting all newly-uploaded photos upon cancel on cloud
+    - deleting correct photos in redux (old-and-deleted only)
+    - updating photo descriptions
+    - adding new photos
+    - updating other details of journal
+    - snackbar
   - deleting journal
-  - adding photo
-  - deleting photo of saved journals
-  - deleting photo of unsaved journals
+    - deleting all newly-uploaded photos upon delete on cloud
+    - deleting all images upon delete on cloud
+    - deleting all images upon delete in redux
+    - deleting the journal itself
+    - snackbar
+
+- share CountryName on /countries/* pages
+- no plan/journal message
+- country/plan/journal 404
+- automatic image deleting (when certain limit is met, delete in the next midnight)
+
+- journal items
+- countries overview
+  - no of journals
+  - no of countries traveled
+  - no of plans
+  - plans only, collapsible if has notes
+  - journals only, with photos, collapsible if has notes/photos
+- country overview
+  - plans only, collapsible if has notes
+  - journals only, with photos, collapsible if has notes/photos
+
+- notification
+  - plan turning into journal
+    - notify to suggest adding photos to new journal entry
+  - notify when...
+    - 30 days before an departure/homecoming
+    - 7 days before an departure/homecoming
+    - 1 day before an departure/homecoming
+    - on the day of departure/homecoming
+- navbar
+- the map
+  - if has plan, destination icon
+  - if has journal, flag icon
+
+- redux-persist
 
 ---
 
@@ -45,68 +102,9 @@ imgPathPart: v1509689468/wowbt/u1ghlbn5nvcrwfjnabvr.png
 
 ---
 
-Map/Countries
-  Overview
-  Journals
-    Journal
-      EditJournal
-    EditJournals
-      EditPlan
+## Additional features
 
----
-
-√ PlanItem | it should render without error
-√ PlanItem | it should be a link with correct url
-√ PlanItem | it should show the plan name
-√ PlanItem | when both departure and homecoming is provided, it should show a range
-√ PlanItem | when either departure or homecoming is missing, it should show a range with "TBD" as filler
-√ PlanItem | when no date is provided, it should NOT show a range
-√ PlanItem | it should render the time badge with correct props
-
----
-
-## Features (todo)
-
-- features
-  - core
-    - **done** planner
-    - journal
-      - add a journal to a country
-        - data shape
-          - title
-          - date
-            - start
-            - end
-          - journal text
-          - photos ???
-            - date
-            - description
-      - edit a journal
-      - delete a journal
-      - NOTES
-        - show country name + flag
-        - snackbar after deleting/adding/editing a plan
-    - show plans and journals
-      - NOTES
-        - show country name + flag
-    - list all plans and journals
-      - NOTES
-        - show country name + flag for each
-      - pan map to location of any selected entry
-  - notification
-    - plan turning into journal
-      - notify to suggest adding photos to new journal entry
-    - notify when...
-      - 30 days before an departure/homecoming
-      - 7 days before an departure/homecoming
-      - 1 day before an departure/homecoming
-      - 2 hours before an departure/homecoming
-      - the time of departure/homecoming
-  - navbar
-  - the map
 - additional features
-  - **important** world overview page?
-  - **important** country overview page?
   - sort
     - chronologically
     - geographically

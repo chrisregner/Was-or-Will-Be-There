@@ -37,7 +37,9 @@ const muiTheme = getMuiTheme({
 const App = () => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <div style={{ minWidth: 300 }} className='min-vh-100'>
-      <Nav />
+      <div className='fixed top-0 right-0 left-0 z-2'>
+        <Nav />
+      </div>
       <div
         className='fixed right-0 left-0 bottom-0'
         style={{
@@ -52,6 +54,7 @@ const App = () => (
       <Route path='/countries/:countryId' render={() => (
         <div
           style={{
+            top: 48,
             minHeight: 'calc(100vh - 48px)',
             backgroundColor: 'rgba(0, 0, 0, 0.54)',
           }}

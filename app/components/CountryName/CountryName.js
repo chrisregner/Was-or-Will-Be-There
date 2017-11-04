@@ -7,6 +7,7 @@ import ErrorIcon from 'material-ui/svg-icons/alert/error'
 import IconButton from 'material-ui/IconButton'
 import Paper from 'material-ui/Paper'
 
+import { COUNTRIES_JSON_URL, createFlagUrl } from 'constants/'
 import * as FU from 'services/functionalUtils'
 
 const countryNameShell = ({ requestPromise }) =>
@@ -28,9 +29,8 @@ const countryNameShell = ({ requestPromise }) =>
 
     componentDidMount = () => {
       const countryId = this.props.countryId.toUpperCase()
-      const countriesUrl = 'https://cdn.rawgit.com/hjnilsson/country-flags/master/countries.json'
 
-      requestPromise(countriesUrl)
+      requestPromise(COUNTRIES_JSON_URL)
         .then((countryNamesJson) => {
           const countryNames = JSON.parse(countryNamesJson)
           const countryName = countryNames[countryId]
@@ -103,7 +103,7 @@ const countryNameShell = ({ requestPromise }) =>
           <Paper className='w2' rounded={false}>
             <img
               className='db'
-              src={`https://cdn.rawgit.com/hjnilsson/country-flags/master/svg/${countryId}.svg`}
+              src={createFlagUrl(countryId)}
               alt='Country Flag'
             />
           </Paper>

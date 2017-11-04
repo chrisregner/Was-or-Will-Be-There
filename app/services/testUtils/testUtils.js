@@ -77,4 +77,4 @@ export const makeTestSetup = (args1 = {}) => {
   }
 }
 
-export const getArgs = (tdFn, nthCall) => td.explain(tdFn).calls[nthCall].args
+export const getArgs = (tdFn, nthCall = 0) => td.explain(tdFn).calls[nthCall].args

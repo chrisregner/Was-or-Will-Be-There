@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
  * Getters
  */
 
-export const gettersShell = (stateToGetters) =>
+export const gettersShell = stateToGetters =>
   R.mapObjIndexed(
     (getters, stateKey) =>
       R.mapObjIndexed(
@@ -35,7 +35,7 @@ const allGetters = gettersShell({
 const {
   ui: uiGetters,
   plans: plansGetters,
-  journals: journalsGetters
+  journals: journalsGetters,
 } = allGetters
 
 export { uiGetters, plansGetters, journalsGetters }

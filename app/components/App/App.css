@@ -32,6 +32,9 @@
 .flex--i { display: flex !important; }
 .db--i { display: block !important; }
 .pa0--i { padding: 0 !important; }
+.pt3--i { padding-top: 1rem !important; }
+.pb2--i { padding-bottom: .5rem !important; }
+.pl0--i { padding-left: 0 !important; }
 
 /**
  * Animate.css overrides

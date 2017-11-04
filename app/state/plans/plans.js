@@ -38,7 +38,6 @@ const plansReducer = handleActions({
     state.filter(plan => plan.get('id') !== payload),
 }, defaultState)
 
-
 /**
  * Getters
  */

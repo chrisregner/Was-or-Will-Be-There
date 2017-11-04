@@ -66,6 +66,10 @@ test('ui.DELETE_PLAN | it should work', () => {
   assert.isNull(expected.validate(actual).error)
 })
 
+test.skip('ui.ADD_JOURNAL | it should work')
+test.skip('ui.EDIT_JOURNAL | it should work')
+test.skip('ui.DELETE_JOURNAL | it should work')
+
 test('ui.HIDE_SNACKBAR | it should work', () => {
   const action = fromUi.hideSnackbar()
   const initialState = I.fromJS({

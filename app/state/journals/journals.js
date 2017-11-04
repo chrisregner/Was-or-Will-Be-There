@@ -16,9 +16,7 @@ export const DELETE_JOURNAL = 'journals/DELETE_JOURNAL'
  * Action Creators
  */
 
-export const addJournalShell = ({ shortid }) =>
-  createAction(ADD_JOURNAL, journalDetails => journalDetails.set('id', shortid.generate()))
-export const addJournal = addJournalShell({ shortid: _shortid })
+export const addJournal = createAction(ADD_JOURNAL)
 export const editJournal = createAction(EDIT_JOURNAL)
 export const deleteJournal = createAction(DELETE_JOURNAL)
 
@@ -27,7 +25,14 @@ export const deleteJournal = createAction(DELETE_JOURNAL)
  */
 
 const journalsReducer = handleActions({
-  [ADD_JOURNAL]: (state, { payload }) => state.push(payload),
+  [ADD_JOURNAL]: (state, { payload }) =>
+    state.push(
+      payload.get('photos')
+        ? payload.update('photos', photos =>
+            photos.map(photo => photo.get('id'))
+          )
+        : payload
+    ),
   [EDIT_JOURNAL]: (state, { payload }) =>
     state.map(journal =>
       journal.get('id') === payload.get('id')

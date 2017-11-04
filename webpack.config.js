@@ -67,6 +67,7 @@ module.exports = {
       containers: resolve(__dirname, 'app/containers'),
       services: resolve(__dirname, 'app/services'),
       state: resolve(__dirname, 'app/state'),
+      constants: resolve(__dirname, 'app/constants'),
     },
   },
 }

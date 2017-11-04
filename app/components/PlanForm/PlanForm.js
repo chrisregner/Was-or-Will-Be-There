@@ -7,7 +7,6 @@ import * as R from 'ramda'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import RaisedButton from 'material-ui/RaisedButton'
-import Paper from 'material-ui/Paper'
 
 import * as FU from 'services/functionalUtils'
 import CountryName from 'components/countryName'

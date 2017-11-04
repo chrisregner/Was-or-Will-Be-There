@@ -7,11 +7,12 @@ import * as R from 'ramda'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import RaisedButton from 'material-ui/RaisedButton'
-import Paper from 'material-ui/Paper'
 import Subheader from 'material-ui/Subheader'
 
+import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from 'constants/'
 import * as FU from 'services/functionalUtils'
 import CountryName from 'components/countryName'
+import PhotoFieldSet from 'components/PhotoFieldSet'
 
 const validationRules = {
   title: title => !title && 'title is required',
@@ -28,7 +29,12 @@ const JournalFormShell = ({ theCloudinary }) =>
         textContent: PropTypes.string,
         departure: PropTypes.instanceOf(Date),
         homecoming: PropTypes.instanceOf(Date),
-      }),
+        photos: IPropTypes.listOf(IPropTypes.contains({
+          id: PropTypes.string.isRequired,
+          path: PropTypes.string.isRequired,
+          description: PropTypes.string,
+        })),
+      }).isRequired,
       history: PropTypes.shape({
         push: PropTypes.func.isRequired,
       }).isRequired,
@@ -37,15 +43,20 @@ const JournalFormShell = ({ theCloudinary }) =>
           countryId: PropTypes.string.isRequired,
         }).isRequired,
       }).isRequired,
+      handleDeletePhotos: PropTypes.func.isRequired,
     }
 
     state = {
-      values: I.Map(),
+      values: I.Map({
+        photos: this.props.initialValues.get('photos') || I.List([]),
+      }),
       errors: {},
-      dirtyFields: [],
-      initialValues: this.props.initialValues,
-      photos: I.List([]),
+      initialValues: this.props.initialValues.delete('photos'),
       photosDeleted: [],
+    }
+
+    componentWillUnmount = () => {
+      this.props.handleDeletePhotos(this.state.photosDeleted)
     }
 
     makeHandleChange = fieldName => (ev, newVal) => {
@@ -78,6 +89,7 @@ const JournalFormShell = ({ theCloudinary }) =>
     handleDelete = () => {
       const { match, history, initialValues } = this.props
       const id = initialValues.get('id')
+
       this.props.handleDelete(id)
 
       history.push(`/countries/${match.params.countryId}`)
@@ -109,17 +121,19 @@ const JournalFormShell = ({ theCloudinary }) =>
           handleSubmit,
           history,
           match,
-          id,
         } = this.props
         const trimmedValues = mergedValues.map(FU.trimIfString)
 
-        handleSubmit(trimmedValues)
+        handleSubmit(trimmedValues, this.state.photosDeleted)
         history.push(`/countries/${match.params.countryId}`)
       }
     }
     handleOpenUploadWidget = () => {
       theCloudinary.openUploadWidget(
-        { cloud_name: 'chrisregner', upload_preset: 'h64hlt8w'},
+        {
+          cloud_name: CLOUDINARY_CLOUD_NAME,
+          upload_preset: CLOUDINARY_UPLOAD_PRESET,
+        },
         (err, res) => {
           if (err) console.error('Error upon uploading:', err)
 
@@ -129,14 +143,32 @@ const JournalFormShell = ({ theCloudinary }) =>
           }))
 
           this.setState(prevState => ({
-            photos: prevState.photos.concat(photosData)
+            values: prevState.values.set('photos', prevState.values.get('photos').concat(photosData)),
           }))
         },
       )
     }
-    handlePhotoDelete = photoId => {
-      this.setState(prevState => ({
-        photosDeleted: R.append(photoId, prevState.photosDeleted)
+    handleDeletePhoto = (photoId) => {
+      this.setState(({ photosDeleted, values }) => ({
+        photosDeleted: R.append(photoId, photosDeleted),
+        values: values.set(
+          'photos',
+          values.get('photos')
+            .filter(photo => photo.get('id') !== photoId)
+        ),
+      }))
+    }
+    handleSetPhotoDesc = (photoId, description) => {
+      this.setState(({ values }) => ({
+        values: values.set(
+          'photos',
+          values
+            .get('photos')
+            .map(photo => photo.get('id') === photoId
+              ? photo.set('description', description)
+              : photo
+            )
+        ),
       }))
     }
 
@@ -150,7 +182,7 @@ const JournalFormShell = ({ theCloudinary }) =>
 
       return (
         <form
-          className='pa2'
+          className='journal-form-form pt2 pb3 pr2 pl2'
           ref={this.rootElRef}
           onSubmit={this.handleSubmit}
         >
@@ -197,22 +229,42 @@ const JournalFormShell = ({ theCloudinary }) =>
             minDate={values.get('departure') || new Date()}
             value={this.getFinalProp('homecoming') || null}
           />
-          <Subheader className='pa0--i'>Photos</Subheader>
-          <RaisedButton
-            onClick={this.handleOpenUploadWidget}
-            className='journal-form-upload-btn'
-            label='Upload Photos'
-          />
+          <div>
+            <Subheader style={{ lineHeight: '24px !important' }} className='pt3--i pb2--i pl0--i'>
+              Photos
+            </Subheader>
+
+            {
+              values.get('photos').map(photo => (
+                <PhotoFieldSet
+                  key={photo.get('id')}
+                  id={photo.get('id')}
+                  path={photo.get('path')}
+                  className='journal-form-photo-field-set'
+                  description={photo.get('description') || ''}
+                  handleDeletePhoto={this.handleDeletePhoto}
+                  handleSetPhotoDesc={this.handleSetPhotoDesc}
+                />
+              )).toJS()
+            }
+
+            <RaisedButton
+              onClick={this.handleOpenUploadWidget}
+              className='journal-form-upload-btn mt3'
+              label='Upload Photos'
+            />
+          </div>
 
           <div className='tr'>
             {
-              (initialValues && initialValues.get('id')) &&
-              <RaisedButton
-                onClick={this.handleDelete}
-                className='journal-form-delete-btn mt3 mr3'
-                secondary
-                label='Delete'
-              />
+              (initialValues
+              && initialValues.get('title'))
+              && <RaisedButton
+                  onClick={this.handleDelete}
+                  className='journal-form-delete-btn mt3 mr3'
+                  secondary
+                  label='Delete'
+                />
             }
 
             <RaisedButton

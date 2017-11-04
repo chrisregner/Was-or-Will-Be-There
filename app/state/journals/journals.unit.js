@@ -27,19 +27,83 @@ const setup = () => {
 
 test.skip('journals | it should return the correct default state')
 
-const { addJournalShell } = fromJournals
-const addJournal = addJournalShell({ shortid: fake.shortid })
+const { addJournal } = fromJournals
 
 test('journals.ADD_JOURNAL | it should work', () => {
   setup()
+  const initialState = I.List([
+    I.Map({
+      id: 'firstExistingId',
+      title: 'First Existing Id',
+    }),
+    I.Map({
+      id: 'secondExistingId',
+      title: 'Second Existing Id',
+    }),
+  ])
+  const action = addJournal(I.Map({ id: 'randomId', title: 'Sample Journal Name' }))
 
-  const action = addJournal(I.Map({ title: 'Sample Journal Name' }))
-
-  const actual = journalsReducer(mocks.initialState, action)
+  const actual = journalsReducer(initialState, action)
   const expected = I.List([
     I.Map({
-      id: '0',
+      id: 'firstExistingId',
+      title: 'First Existing Id',
+    }),
+    I.Map({
+      id: 'secondExistingId',
+      title: 'Second Existing Id',
+    }),
+    I.Map({
+      id: 'randomId',
+      title: 'Sample Journal Name'
+    }),
+  ])
+
+  assert.isTrue(actual.equals(expected))
+})
+
+test('journals.ADD_JOURNAL | it should reduce photos to list of ids', () => {
+  setup()
+  const initialState = I.List([
+    I.Map({
+      id: 'firstExistingId',
+      title: 'First Existing Id',
+    }),
+    I.Map({
+      id: 'secondExistingId',
+      title: 'Second Existing Id',
+    }),
+  ])
+  const action = addJournal(I.Map({
+    id: 'randomId',
+    title: 'Sample Journal Name',
+    photos: I.List([
+      I.Map({
+        id: 'firstPhotoId',
+        path: 'first/photo/path',
+      }),
+      I.Map({
+        id: 'secondPhotoId',
+        path: 'second/photo/path',
+        description: 'The Second Photo Description',
+      }),
+    ])
+  }))
+
+  const actual = journalsReducer(initialState, action)
+  const expected = I.List([
+    I.Map({
+      id: 'firstExistingId',
+      title: 'First Existing Id',
+    }),
+    I.Map({
+      id: 'secondExistingId',
+      title: 'Second Existing Id',
+    }),
+    I.Map({
+      id: 'randomId',
       title: 'Sample Journal Name',
+      photos: I.List(['firstPhotoId', 'secondPhotoId'])
     }),
   ])
 
