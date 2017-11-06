@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
     dispatch(addJournal(journalWithCountryId))
   },
-  handleDeletePhotos: () => {}
+  handleDeletePhotos: () => {},
 })
 
 const AddJournalForm = connect(mapStateToProps, mapDispatchToProps)(

@@ -9,7 +9,7 @@ import * as TU from 'services/testUtils'
 import { JournalFormShell } from './JournalForm'
 
 const deps = {
-  theCloudinary: {
+  cloudinaryUploadWidget: {
     openUploadWidget: td.func(),
   },
 }
@@ -314,7 +314,7 @@ test('JournalForm > HomecomingField | it should accept initial value', () => {
  * Delete
  */
 
-test('JournalForm > DeleteBtn | if journal title is provided, it should the render a delete button', () => {
+test('JournalForm > DeleteBtn | if initial journal title is provided, it should the render a delete button', () => {
   const props = {
     initialValues: I.Map({
       title: 'The Title',
@@ -328,13 +328,13 @@ test('JournalForm > DeleteBtn | if journal title is provided, it should the rend
   assert.isTrue(actual)
 })
 
-test('JournalForm > DeleteBtn | if journal title is NOT provided, it should NOT the render a delete button', () => {
+test('JournalForm > DeleteBtn | if initial journal title is NOT provided, it should NOT the render a delete button', () => {
   const deleteBtnWrpr = setup().find('.journal-form-delete-btn')
   const actual = deleteBtnWrpr.exists()
   assert.isFalse(actual)
 })
 
-test('JournalForm > DeleteBtn | if delete button is clicked, it should call handleDelete with id', () => {
+test('JournalForm > DeleteBtn | if delete button is clicked, it should call handleDelete() with id', () => {
   const fakeHandleDelete = td.func()
   const props = {
     initialValues: I.Map({
@@ -350,6 +350,8 @@ test('JournalForm > DeleteBtn | if delete button is clicked, it should call hand
 
   td.verify(fakeHandleDelete('randomId'), { times: 1 })
 })
+
+test.skip('JournalForm > DeleteBtn | if delete button is clicked, it should add isNotSaved property to all photos in state')
 
 test('JournalForm > DeleteBtn | if delete button is clicked, it should call history.push() with correct args', () => {
   const testWithVar = (countryId) => {
@@ -514,8 +516,8 @@ test('JournalForm[imageUpload].state.values.photos | it should accept initial va
           id: 'fakeSecondPredefinedPubId',
           path: 'fake/second/predefined/path',
         }),
-      ])
-    })
+      ]),
+    }),
   }
   const wrapper = setup({ props })
 
@@ -539,15 +541,15 @@ test('JournalForm[imageUpload].state.initialValues.photos | it should remove the
           id: 'fakeSecondPredefinedPubId',
           path: 'fake/second/predefined/path',
         }),
-      ])
-    })
+      ]),
+    }),
   }
   const wrapper = setup({ props })
 
   const actual = wrapper.state('initialValues')
   const expected = I.Map({
     id: 'initialId',
-    title: 'The Initial Title'
+    title: 'The Initial Title',
   })
 
   assert.isTrue(actual.equals(expected))
@@ -559,16 +561,17 @@ test('JournalForm[imageUpload] > PhotoFieldSet | it should render it with correc
     I.Map({
       id: 'fakeFirstPredefinedPubId',
       path: 'fake/first/predefined/path',
+      isDeleted: true,
     }),
     I.Map({
       id: 'fakeSecondPredefinedPubId',
       path: 'fake/second/predefined/path',
-      description: 'The Description of Second Photo'
+      description: 'The Description of Second Photo',
     }),
   ])
 
   wrapper.setState(prevState => ({
-    values: prevState.values.set('photos', photos)
+    values: prevState.values.set('photos', photos),
   }))
 
   const photoFieldSetWrpr = () => wrapper.find('.journal-form-photo-field-set')
@@ -583,7 +586,7 @@ test('JournalForm[imageUpload] > PhotoFieldSet | it should render it with correc
   const testFirstPhotoFieldSet = () => {
     const allProps = photoFieldSetWrpr().at(0).props()
     const actual = R.pick(
-      ['id', 'path', 'description', 'handleDeletePhoto', 'handleSetPhotoDesc'],
+      ['id', 'path', 'description', 'isDeleted', 'handleDeletePhoto', 'handleSetPhotoDesc'],
       allProps
     )
     const expected = {
@@ -592,6 +595,7 @@ test('JournalForm[imageUpload] > PhotoFieldSet | it should render it with correc
       description: '',
       handleDeletePhoto: wrapper.instance().handleDeletePhoto,
       handleSetPhotoDesc: wrapper.instance().handleSetPhotoDesc,
+      isDeleted: true,
     }
 
     assert.deepEqual(actual, expected)
@@ -600,7 +604,7 @@ test('JournalForm[imageUpload] > PhotoFieldSet | it should render it with correc
   const testSecondPhotoFieldSet = () => {
     const allProps = photoFieldSetWrpr().at(1).props()
     const actual = R.pick(
-      ['id', 'path', 'description', 'handleDeletePhoto', 'handleSetPhotoDesc'],
+      ['id', 'path', 'description', 'isDeleted', 'handleDeletePhoto', 'handleSetPhotoDesc'],
       allProps
     )
     const expected = {
@@ -609,6 +613,7 @@ test('JournalForm[imageUpload] > PhotoFieldSet | it should render it with correc
       description: 'The Description of Second Photo',
       handleDeletePhoto: wrapper.instance().handleDeletePhoto,
       handleSetPhotoDesc: wrapper.instance().handleSetPhotoDesc,
+      isDeleted: undefined,
     }
 
     assert.deepEqual(actual, expected)
@@ -622,10 +627,10 @@ test('JournalForm[imageUpload] > PhotoFieldSet | it should render it with correc
 test('JournalForm[imageUpload] > UploadPhotoBtn | when clicked, it should call openUploadWidget()', () => {
   const uploadBtnWrpr = setup().find('.journal-form-upload-btn')
   uploadBtnWrpr.simulate('click')
-  td.verify(deps.theCloudinary.openUploadWidget(), { times: 1, ignoreExtraArgs: true })
+  td.verify(deps.cloudinaryUploadWidget.openUploadWidget(), { times: 1, ignoreExtraArgs: true })
 })
 
-test('JournalForm[imageUpload] > UploadPhotoBtn | when openUploadWidget() succeeds and photo state has existing data, it should add the correct photo details to the state', () => {
+test.skip('JournalForm[imageUpload] > UploadPhotoBtn | when openUploadWidget() succeeds and photo state has existing data, it should add the correct photo details to the state', () => {
   const wrapper = setup()
   const predefPhotos = I.List([
     I.Map({
@@ -639,12 +644,12 @@ test('JournalForm[imageUpload] > UploadPhotoBtn | when openUploadWidget() succee
   ])
 
   wrapper.setState(prevState => ({
-    values: prevState.values.set('photos', predefPhotos)
+    values: prevState.values.set('photos', predefPhotos),
   }))
   wrapper.find('.journal-form-upload-btn')
     .simulate('click')
 
-  const successHandler = TU.getArgs(deps.theCloudinary.openUploadWidget)[1]
+  const successHandler = TU.getArgs(deps.cloudinaryUploadWidget.openUploadWidget)[1]
   const fakeRes = [{
     path: 'fake/first/path',
     public_id: 'fakeFirstPubId',
@@ -668,23 +673,25 @@ test('JournalForm[imageUpload] > UploadPhotoBtn | when openUploadWidget() succee
     I.Map({
       id: 'fakeFirstPubId',
       path: 'fake/first/path',
+      isNotSaved: true,
     }),
     I.Map({
       id: 'fakeSecondPubId',
       path: 'fake/second/path',
+      isNotSaved: true,
     }),
   ])
 
   assert.isTrue(actual.equals(expected))
 })
 
-test('JournalForm[imageUpload] > UploadPhotoBtn | when openUploadWidget() succeeds and photo state has NO existing data, it should add the correct photo data to the state', () => {
+test.skip('JournalForm[imageUpload] > UploadPhotoBtn | when openUploadWidget() succeeds and photo state has NO existing data, it should add the correct photo data to the state', () => {
   const wrapper = setup()
 
   wrapper.find('.journal-form-upload-btn')
     .simulate('click')
 
-  const successHandler = TU.getArgs(deps.theCloudinary.openUploadWidget)[1]
+  const successHandler = TU.getArgs(deps.cloudinaryUploadWidget.openUploadWidget)[1]
   const fakeRes = [{
     path: 'fake/first/path',
     public_id: 'fakeFirstPubId',
@@ -700,52 +707,19 @@ test('JournalForm[imageUpload] > UploadPhotoBtn | when openUploadWidget() succee
     I.Map({
       id: 'fakeFirstPubId',
       path: 'fake/first/path',
+      isNotSaved: true,
     }),
     I.Map({
       id: 'fakeSecondPubId',
       path: 'fake/second/path',
+      isNotSaved: true,
     }),
   ])
 
   assert.isTrue(actual.equals(expected))
 })
 
-test('JournalForm[imageUpload].handleDeletePhoto() | if there is some existing deletion data, it should add the correct photo deletion data', () => {
-  const wrapper = setup()
-  const predefDelData = ['firstPredefId', 'secondPredefId']
-
-  wrapper.setState({ photosDeleted: predefDelData })
-
-  wrapper.instance().handleDeletePhoto('firstId')
-  wrapper.instance().handleDeletePhoto('secondId')
-
-  const actual = wrapper.state('photosDeleted')
-  const expected = [
-    'firstPredefId',
-    'secondPredefId',
-    'firstId',
-    'secondId',
-  ]
-
-  assert.sameMembers(actual, expected)
-})
-
-test('JournalForm[imageUpload].handleDeletePhoto() | if there is NO existing deletion data, it should add the correct photo deletion data', () => {
-  const wrapper = setup()
-
-  wrapper.instance().handleDeletePhoto('firstId')
-  wrapper.instance().handleDeletePhoto('secondId')
-
-  const actual = wrapper.state('photosDeleted')
-  const expected = [
-    'firstId',
-    'secondId',
-  ]
-
-  assert.sameMembers(actual, expected)
-})
-
-test('JournalForm[imageUpload].handleDeletePhoto() | it should delete the correct photo data in state', () => {
+test.skip('JournalForm[imageUpload].handleDeletePhoto() | it should add isDeleted property to the correct photo', () => {
   const wrapper = setup()
   const predefPhotos = I.List([
     I.Map({
@@ -763,7 +737,7 @@ test('JournalForm[imageUpload].handleDeletePhoto() | it should delete the correc
   ])
 
   wrapper.setState(prevState => ({
-    values: prevState.values.set('photos', predefPhotos)
+    values: prevState.values.set('photos', predefPhotos),
   }))
 
   wrapper.instance().handleDeletePhoto('secondPredefinedPhotoId')
@@ -775,6 +749,11 @@ test('JournalForm[imageUpload].handleDeletePhoto() | it should delete the correc
       path: 'first/predefined/path',
     }),
     I.Map({
+      id: 'secondPredefinedPhotoId',
+      path: 'second/predefined/path',
+      isDeleted: true,
+    }),
+    I.Map({
       id: 'thirdPredefinedPhotoId',
       path: 'third/predefined/path',
     }),
@@ -782,6 +761,8 @@ test('JournalForm[imageUpload].handleDeletePhoto() | it should delete the correc
 
   assert.isTrue(actual.equals(expected))
 })
+
+test.skip('JournalForm[imageUpload].handleRestorePhoto() | ???')
 
 test('JournalForm[imageUpload].handleSetPhotoDesc() | it should work', () => {
   const wrapper = setup()
@@ -793,6 +774,7 @@ test('JournalForm[imageUpload].handleSetPhotoDesc() | it should work', () => {
     I.Map({
       id: 'fakeSecondPredefinedPubId',
       path: 'fake/second/predefined/path',
+      description: 'The second photo\'s old description',
     }),
     I.Map({
       id: 'fakeThirdPredefinedPubId',
@@ -801,10 +783,10 @@ test('JournalForm[imageUpload].handleSetPhotoDesc() | it should work', () => {
   ])
 
   wrapper.setState(({ values }) => ({
-    values: values.set('photos', photos)
+    values: values.set('photos', photos),
   }))
-  wrapper.instance().handleSetPhotoDesc('fakeSecondPredefinedPubId', 'The First Photo\'s description')
-  wrapper.instance().handleSetPhotoDesc('fakeThirdPredefinedPubId', 'The Second Photo\'s description')
+  wrapper.instance().handleSetPhotoDesc('fakeSecondPredefinedPubId', 'The second photo\'s new description')
+  wrapper.instance().handleSetPhotoDesc('fakeThirdPredefinedPubId', 'The third photo\'s new description')
 
   const actual = wrapper.state('values').get('photos')
   const expected = I.List([
@@ -815,24 +797,24 @@ test('JournalForm[imageUpload].handleSetPhotoDesc() | it should work', () => {
     I.Map({
       id: 'fakeSecondPredefinedPubId',
       path: 'fake/second/predefined/path',
-      description: 'The First Photo\'s description',
+      description: 'The second photo\'s new description',
     }),
     I.Map({
       id: 'fakeThirdPredefinedPubId',
       path: 'fake/third/predefined/path',
-      description: 'The Second Photo\'s description',
+      description: 'The third photo\'s new description',
     }),
   ])
 
   assert.isTrue(actual.equals(expected))
 })
 
-test('JournalForm[imageUpload].onSubmit() | if form is valid, it should call handleSubmit with correct photo and photo deletion data', () => {
+test('JournalForm[imageUpload].onSubmit() | if form is valid, it should call handleSubmit with correct photo data', () => {
   const props = {
     initialValues: I.Map({
       id: 'initialId',
       title: 'The Initial Title',
-    })
+    }),
   }
   const wrapper = setup({ props })
   const photos = I.List([
@@ -843,62 +825,73 @@ test('JournalForm[imageUpload].onSubmit() | if form is valid, it should call han
     I.Map({
       id: 'secondPhotoId',
       path: 'second/photo/path',
-      description: 'The First Photo\'s description',
+      description: 'The second photo\'s description',
+      isDeleted: true,
     }),
     I.Map({
       id: 'thirdPhotoId',
       path: 'third/photo/path',
-      description: 'The Second Photo\'s description',
+      description: 'The third photo\'s description',
     }),
   ])
-  const photosDeleted = [
-    'firstPhotoId',
-    'secondPhotoId',
-  ]
 
   wrapper.setState(prevState => ({
     values: prevState.values.set('photos', photos),
-    photosDeleted,
   }))
   wrapper.find('.journal-form-form').simulate('submit', mockData.ev)
 
-  const actual = I.fromJS(TU.getArgs(defProps.handleSubmit))
-  const expected = I.fromJS([
-    I.Map({
-      id: 'initialId',
-      title: 'The Initial Title',
-      photos: I.List([
-        I.Map({
-          id: 'firstPhotoId',
-          path: 'first/photo/path',
-        }),
-        I.Map({
-          id: 'secondPhotoId',
-          path: 'second/photo/path',
-          description: 'The First Photo\'s description',
-        }),
-        I.Map({
-          id: 'thirdPhotoId',
-          path: 'third/photo/path',
-          description: 'The Second Photo\'s description',
-        }),
-      ])
-    }),
-    photosDeleted
-  ])
+  const actual = TU.getArgs(defProps.handleSubmit)[0]
+  const expected = I.fromJS({
+    id: 'initialId',
+    title: 'The Initial Title',
+    photos: [
+      {
+        id: 'firstPhotoId',
+        path: 'first/photo/path',
+      },
+      {
+        id: 'secondPhotoId',
+        path: 'second/photo/path',
+        description: 'The second photo\'s description',
+        isDeleted: true,
+      },
+      {
+        id: 'thirdPhotoId',
+        path: 'third/photo/path',
+        description: 'The third photo\'s description',
+      },
+    ],
+  })
 
   assert.isTrue(actual.equals(expected))
 })
 
-test('JournalForm[imageUpload] | when unmounted, it should call deletePhotos() with correct args', () => {
-  const wrapper = setup()
-  const photosDeleted = [
-    'firstPhotoId',
-    'secondPhotoId',
-  ]
+test.skip('JournalForm.onSubmit() | if form is valid and initial values were provided, it should remove isNotSaved() property from all photos in the state')
 
-  wrapper.setState(prevState => ({ photosDeleted }))
+test.skip('JournalForm[imageUpload] | when unmounted, it should call handleDeletePhotos() with correct args', () => {
+  const wrapper = setup()
+  const photos = I.fromJS([
+    {
+      id: 'firstPhotoId',
+      path: 'first/photo/path',
+    },
+    {
+      id: 'secondPhotoId',
+      path: 'second/photo/path',
+      description: 'The second photo\'s description',
+      isDeleted: true,
+    },
+    {
+      id: 'thirdPhotoId',
+      path: 'third/photo/path',
+      description: 'The third photo\'s description',
+    },
+  ])
+
+  wrapper.setState(({ values }) => ({
+    values: values.set('photos', photos)
+  }))
   wrapper.unmount()
 
-  td.verify(defProps.handleDeletePhotos(photosDeleted), { times: 1 })
+  td.verify(defProps.handleDeletePhotos(photos))
 })

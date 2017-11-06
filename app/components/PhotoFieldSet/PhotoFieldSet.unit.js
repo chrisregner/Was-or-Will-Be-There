@@ -9,8 +9,8 @@ import { createJournalThumbUrl, createJournalPhotoUrl } from 'constants/'
 
 const mocks = {
   ev: {
-    preventDefault: td.func()
-  }
+    preventDefault: td.func(),
+  },
 }
 
 const defProps = {
@@ -56,7 +56,7 @@ test('PhotoFieldSet > Photo | it should be hidden by default', () => {
 
 test('PhotoFieldSet > Photo | it should use description as alt', () => {
   const props = {
-    description: 'The Random Description'
+    description: 'The Random Description',
   }
   const photoWrpr = setup({ props }).find('.photo-field-set-photo')
 
@@ -78,7 +78,7 @@ test('PhotoFieldSet > ThumbPhoto | it should render', () => {
 
 test('PhotoFieldSet > ThumbPhoto | it should use description as alt', () => {
   const props = {
-    description: 'The Random Description'
+    description: 'The Random Description',
   }
   const thumbWrpr = setup({ props }).find('.photo-field-set-thumb-photo')
 
@@ -144,7 +144,7 @@ test('PhotoFieldSet > DescriptionField | it should render', () => {
 
 test('PhotoFieldSet > DescriptionField | it should call show the value', () => {
   const props = {
-    description: 'The Random Description'
+    description: 'The Random Description',
   }
   const descFieldWrpr = setup({ props }).find('.photo-field-set-description-field')
 

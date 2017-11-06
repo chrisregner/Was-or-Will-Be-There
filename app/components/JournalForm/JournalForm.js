@@ -10,6 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import Subheader from 'material-ui/Subheader'
 
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from 'constants/'
+import { cloudinaryUploadWidget as _cloudinaryUploadWidget } from 'services/cloudinary'
 import * as FU from 'services/functionalUtils'
 import CountryName from 'components/countryName'
 import PhotoFieldSet from 'components/PhotoFieldSet'
@@ -18,7 +19,7 @@ const validationRules = {
   title: title => !title && 'title is required',
 }
 
-const JournalFormShell = ({ theCloudinary }) =>
+const JournalFormShell = ({ cloudinaryUploadWidget }) =>
   class JournalForm extends React.PureComponent {
     static propTypes = {
       handleSubmit: PropTypes.func.isRequired,
@@ -56,7 +57,10 @@ const JournalFormShell = ({ theCloudinary }) =>
     }
 
     componentWillUnmount = () => {
-      this.props.handleDeletePhotos(this.state.photosDeleted)
+      const { handleDeletePhotos } = this.props
+      const { values } = this.state
+
+      handleDeletePhotos(values.get('photos'))
     }
 
     makeHandleChange = fieldName => (ev, newVal) => {
@@ -114,7 +118,9 @@ const JournalFormShell = ({ theCloudinary }) =>
       const isFormValid = !Object.values(errors)
         .find(error => !!error)
 
-      this.setState({ errors })
+      this.setState({
+        errors
+      })
 
       if (isFormValid) {
         const {
@@ -129,7 +135,7 @@ const JournalFormShell = ({ theCloudinary }) =>
       }
     }
     handleOpenUploadWidget = () => {
-      theCloudinary.openUploadWidget(
+      cloudinaryUploadWidget.openUploadWidget(
         {
           cloud_name: CLOUDINARY_CLOUD_NAME,
           upload_preset: CLOUDINARY_UPLOAD_PRESET,
@@ -140,6 +146,7 @@ const JournalFormShell = ({ theCloudinary }) =>
           const photosData = res.map(photoData => I.Map({
             id: photoData.public_id,
             path: photoData.path,
+            isNew: true,
           }))
 
           this.setState(prevState => ({
@@ -149,13 +156,12 @@ const JournalFormShell = ({ theCloudinary }) =>
       )
     }
     handleDeletePhoto = (photoId) => {
-      this.setState(({ photosDeleted, values }) => ({
-        photosDeleted: R.append(photoId, photosDeleted),
-        values: values.set(
-          'photos',
-          values.get('photos')
-            .filter(photo => photo.get('id') !== photoId)
-        ),
+      this.setState(({ values }) => ({
+          values: values.update('photos', photos =>
+            photos.map(photo =>
+              photo.get('id') === photoId
+                ? photo.set('isDeleted', true)
+                : photo))
       }))
     }
     handleSetPhotoDesc = (photoId, description) => {
@@ -242,6 +248,7 @@ const JournalFormShell = ({ theCloudinary }) =>
                   path={photo.get('path')}
                   className='journal-form-photo-field-set'
                   description={photo.get('description') || ''}
+                  isDeleted={photo.get('isDeleted')}
                   handleDeletePhoto={this.handleDeletePhoto}
                   handleSetPhotoDesc={this.handleSetPhotoDesc}
                 />
@@ -257,14 +264,14 @@ const JournalFormShell = ({ theCloudinary }) =>
 
           <div className='tr'>
             {
-              (initialValues
-              && initialValues.get('title'))
-              && <RaisedButton
-                  onClick={this.handleDelete}
-                  className='journal-form-delete-btn mt3 mr3'
-                  secondary
-                  label='Delete'
-                />
+              (initialValues &&
+              initialValues.get('title')) &&
+              <RaisedButton
+                onClick={this.handleDelete}
+                className='journal-form-delete-btn mt3 mr3'
+                secondary
+                label='Delete'
+              />
             }
 
             <RaisedButton
@@ -279,7 +286,7 @@ const JournalFormShell = ({ theCloudinary }) =>
     }
   }
 
-const JournalForm = JournalFormShell({ theCloudinary: global.cloudinary })
+const JournalForm = JournalFormShell({ cloudinaryUploadWidget: _cloudinaryUploadWidget })
 
 export { JournalFormShell }
 export default JournalForm

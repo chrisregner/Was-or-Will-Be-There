@@ -25,8 +25,6 @@ test('PlansAndJournals | it should render without error', () => {
   assert.isTrue(actual)
 })
 
-test.skip('PlansAndJournals | it should render a link to add a journal')
-
 test('PlansAndJournals | it should render a link to add a plan', () => {
   const props = {
     match: {

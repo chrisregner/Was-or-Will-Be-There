@@ -24,7 +24,7 @@ class PhotoFieldSet extends React.PureComponent {
   }
 
   state = {
-    fullSizedPhotoVisiblity: 'clean'
+    fullSizedPhotoVisiblity: 'clean',
   }
 
   handleShowFullSizedPhoto = () => {
@@ -63,7 +63,7 @@ class PhotoFieldSet extends React.PureComponent {
               <IconButton
                 onClick={this.handleHideFullSizedPhoto}
                 className='photo-field-set-hide-full-sized-photo'
-                tooltip="SVG Icon"
+                tooltip='SVG Icon'
               >
                 <CloseIcon />
               </IconButton>
@@ -99,7 +99,7 @@ class PhotoFieldSet extends React.PureComponent {
             <IconButton
               onClick={this.handleDeletePhoto}
               className='photo-field-set-delete-photo-btn'
-              tooltip="SVG Icon"
+              tooltip='SVG Icon'
             >
               <DeleteIcon />
             </IconButton>

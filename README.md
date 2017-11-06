@@ -3,7 +3,6 @@
 - HOW TO MANAGE JOURNALS AND PHOTOS???
 
 - JournalForm
-  - separate photos and form values?
   - don't delete uploaded photos that are deleted immediately
     - just blur it
     - allow restoring it
@@ -12,7 +11,7 @@
 - redux
   - addJournal()
     - save journal
-      - photos: ids only
+      - photos: all photos
       - don't include deleted photos
     - snackbar
   - editJournal()
@@ -96,9 +95,55 @@
 
 ---
 
+DELETE PHOTOS WHEN
+  - ADDED, ADDED PHOTO_NEW, DISCARDED
+    - DELETE BY isNotSaved
+  - ADDED, ADDED PHOTO_NEW, DELETED PHOTO_NEW, SAVED
+    - DELETE BY isNotSaved and isDeleted
+  - EDITED, ADDED PHOTO_NEW, DISCARDED
+    - DELETE BY isNotSaved
+  - EDITED, ADDED PHOTO_NEW, DELETED PHOTO_NEW, SAVED
+    -  DELETE BY isNotSaved and isDeleted
+  - EDITED, DELETED PHOTO_EXISTING, SAVED
+    -  DELETE BY isNotSaved and isDeleted
+  - DELETED JOURNAL
+    -  DELETE BY all
+
+---
+
+DELETE PHOTOS WHEN
+  - ADDED, ADDED PHOTO_NEW, DISCARDED
+    - DELETE BY isNotSaved deleteNotSavedPhotosInCloud()
+  - ADDED, ADDED PHOTO_NEW, DELETED PHOTO_NEW, SAVED
+    - DELETE BY isDeleted in addJournal
+  - EDITED, ADDED PHOTO_NEW, DISCARDED
+    - DELETE BY isNotSaved deleteNotSavedPhotosInCloud()
+  - EDITED, ADDED PHOTO_NEW, DELETED PHOTO_NEW, SAVED
+    -  DELETE BY isDeleted IN editJournal()
+  - EDITED, DELETED PHOTO_EXISTING, SAVED
+    -  DELETE BY isDeleted IN editJournal()
+  - DELETED JOURNAL
+    -  DELETE ALL IN deleteJournal()
+
+---
+
 cThumbUrlFormat: http://res.cloudinary.com/chrisregner/image/upload/c_limit,h_60,w_90/${urlPart}
 cUrlFormat: http://res.cloudinary.com/chrisregner/image/upload/${urlPart}
 imgPathPart: v1509689468/wowbt/u1ghlbn5nvcrwfjnabvr.png
+
+---
+
+DAY 1
+  JOURNAL FORM
+  SNACKBAR
+DAY 2
+  OVERVIEWS
+DAY 3
+  NOTIF
+DAY 4
+  MAP
+DAY 5
+  POLISH???
 
 ---
 
