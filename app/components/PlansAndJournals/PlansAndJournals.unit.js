@@ -18,14 +18,14 @@ const setup = TU.makeTestSetup({
   defaultProps: defProps,
 })
 
-test('PlansAndJournals | it should render without error', () => {
+test('components.PlansAndJournals | it should render without error', () => {
   const wrapper = setup()
   const actual = wrapper.exists()
 
   assert.isTrue(actual)
 })
 
-test('PlansAndJournals | it should render a link to add a plan', () => {
+test('components.PlansAndJournals | it should render a link to add a plan', () => {
   const props = {
     match: {
       params: {
@@ -42,7 +42,7 @@ test('PlansAndJournals | it should render a link to add a plan', () => {
   assert.equal(actual, expected)
 })
 
-test('PlansAndJournals | it should render a link to add a journal', () => {
+test('components.PlansAndJournals | it should render a link to add a journal', () => {
   const props = {
     match: {
       params: {
@@ -59,10 +59,10 @@ test('PlansAndJournals | it should render a link to add a journal', () => {
   assert.equal(actual, expected)
 })
 
-test.skip('PlansAndJournals | if there is no plan, it should render a message for lacking plans')
-test.skip('PlansAndJournals | if there is no journal, it should render a message for lacking journals')
+test.skip('components.PlansAndJournals | if there is no plan, it should render a message for lacking plans')
+test.skip('components.PlansAndJournals | if there is no journal, it should render a message for lacking journals')
 
-test('PlansAndJournals | if plans are provided, it should render each', () => {
+test('components.PlansAndJournals | if plans are provided, it should render each', () => {
   const testWithVars = (plans, quantity) => {
     const props = { plans }
 
@@ -114,7 +114,7 @@ test('PlansAndJournals | if plans are provided, it should render each', () => {
   ]), 5)
 })
 
-test('PlansAndJournals | if plans are provided, it should render the the plan items with correct props', () => {
+test('components.PlansAndJournals | if plans are provided, it should render the the plan items with correct props', () => {
   const props = {
     match: {
       params: {
@@ -165,7 +165,7 @@ test('PlansAndJournals | if plans are provided, it should render the the plan it
   assert.isTrue(actual.equals(expected))
 })
 
-test('PlansAndJournals | if journals are provided, it should render each', () => {
+test('components.PlansAndJournals | if journals are provided, it should render each', () => {
   const testWithVars = (journals, quantity) => {
     const props = { journals }
 
@@ -217,7 +217,7 @@ test('PlansAndJournals | if journals are provided, it should render each', () =>
   ]), 5)
 })
 
-test('PlansAndJournals | if journals are provided, it should render the the journal items with correct props', () => {
+test('components.PlansAndJournals | if journals are provided, it should render the the journal items with correct props', () => {
   const props = {
     match: {
       params: {

@@ -9,14 +9,14 @@ import * as functionalUtils from './functionalUtils'
 
 const { trimIfString } = functionalUtils
 
-test('functionalUtils.trimIfString() | if the arg is string, it should trim and return it', () => {
+test('services.functionalUtils.trimIfString() | if the arg is string, it should trim and return it', () => {
   const actual = trimIfString('   Spaceous String   ')
   const expected = 'Spaceous String'
 
   assert.equal(actual, expected)
 })
 
-test('functionalUtils.trimIfString() | if the arg is NOT string, it should just return it', () => {
+test('services.functionalUtils.trimIfString() | if the arg is NOT string, it should just return it', () => {
   const testWithVar = (arg) => {
     const actual = trimIfString(arg)
     const expected = arg
@@ -92,8 +92,8 @@ const makePropNegatorSharedTest1 = () => {
   testVariation3()
 }
 
-test('functionalUtils.makePropNegator() | it should return a function', makePropNegatorSharedTest1)
-test('functionalUtils.makePropNegator()() | it should, for each first gen args, negate the prop of the same key of the second gen arg', makePropNegatorSharedTest1)
+test('services.functionalUtils.makePropNegator() | it should return a function', makePropNegatorSharedTest1)
+test('services.functionalUtils.makePropNegator()() | it should, for each first gen args, negate the prop of the same key of the second gen arg', makePropNegatorSharedTest1)
 
 /**
  * isObjSubset
@@ -101,7 +101,7 @@ test('functionalUtils.makePropNegator()() | it should, for each first gen args, 
 
 const { isObjSubset } = functionalUtils
 
-test('functionalUtils.isObjSubset() | when secondArg is subset of firstArg, it should return true', () => {
+test('services.functionalUtils.isObjSubset() | when secondArg is subset of firstArg, it should return true', () => {
   const testVariation1 = () => {
     const superset = {
       a: 1,
@@ -140,7 +140,7 @@ test('functionalUtils.isObjSubset() | when secondArg is subset of firstArg, it s
   testVariation2()
 })
 
-test('functionalUtils.isObjSubset() | when secondArg is NOT subset of firstArg, it should return false', () => {
+test('services.functionalUtils.isObjSubset() | when secondArg is NOT subset of firstArg, it should return false', () => {
   const testVariation1 = () => {
     const superset = {
       a: 1,
@@ -193,10 +193,10 @@ test('functionalUtils.isObjSubset() | when secondArg is NOT subset of firstArg, 
 //   assert.equal(res, null)
 // }
 
-// test('functionalUtils.switchVals() | when called with an object, it should return a function', switchValsSharedTest1)
-// test('functionalUtils.switchVals()::switchVals()() | when second arg is NOT one of the first arg\'s keys, it should return null', switchValsSharedTest1)
+// test('services.functionalUtils.switchVals() | when called with an object, it should return a function', switchValsSharedTest1)
+// test('services.functionalUtils.switchVals()::switchVals()() | when second arg is NOT one of the first arg\'s keys, it should return null', switchValsSharedTest1)
 
-// test('functionalUtils.switchVals()::switchVals()() | when second arg is one of the first arg\'s keys, it should return the first arg\'s value with that key', t => {
+// test('services.functionalUtils.switchVals()::switchVals()() | when second arg is one of the first arg\'s keys, it should return the first arg\'s value with that key', t => {
 //   const myCases = {
 //     foo: 'fooVal',
 //     bar: 'barVal',
@@ -224,12 +224,12 @@ test('functionalUtils.isObjSubset() | when secondArg is NOT subset of firstArg, 
 //   assert.equal(res, 'fooRes')
 // }
 
-// test('functionalUtils.switchFuncs() | when called with an object, it should return a function', switchFuncsSharedTest1)
-// test('functionalUtils.switchFuncs()() | when called with a string, it should return a function', switchFuncsSharedTest1)
-// test('functionalUtils.switchFuncs()()() | when second arg is one of the first arg\'s keys, it should call the first arg\'s value, whose key matches the second arg, with the third arg', switchFuncsSharedTest1)
-// test('functionalUtils.switchFuncs()()() | when second arg is one of the first arg\'s keys, it return the result of the first arg\'s value, whose key matches the second arg, called with the third arg', switchFuncsSharedTest1)
+// test('services.functionalUtils.switchFuncs() | when called with an object, it should return a function', switchFuncsSharedTest1)
+// test('services.functionalUtils.switchFuncs()() | when called with a string, it should return a function', switchFuncsSharedTest1)
+// test('services.functionalUtils.switchFuncs()()() | when second arg is one of the first arg\'s keys, it should call the first arg\'s value, whose key matches the second arg, with the third arg', switchFuncsSharedTest1)
+// test('services.functionalUtils.switchFuncs()()() | when second arg is one of the first arg\'s keys, it return the result of the first arg\'s value, whose key matches the second arg, called with the third arg', switchFuncsSharedTest1)
 
-// test('functionalUtils.switchFuncs()::switchFuncs()()::switchFuncs()()() | when second arg is NOT one of the first arg\'s keys, it should return null', t => {
+// test('services.functionalUtils.switchFuncs()::switchFuncs()()::switchFuncs()()() | when second arg is NOT one of the first arg\'s keys, it should return null', t => {
 //   const myFuncs = {
 //     foo: (arg) => (arg === 'fooArg') && 'fooRes',
 //     bar: () => {},

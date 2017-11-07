@@ -8,7 +8,7 @@ const setup = Tu.makeTestSetup({
   Component: MapCmpt,
 })
 
-test('it should render without error', () => {
+test('components.MapCmpt | it should render without error', () => {
   const wrapper = setup()
 
   const actual = wrapper.exists()

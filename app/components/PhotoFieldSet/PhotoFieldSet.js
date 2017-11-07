@@ -119,7 +119,7 @@ class PhotoFieldSet extends React.PureComponent {
                 ? <IconButton
                   onClick={this.handleRestorePhoto}
                   className='photo-field-set-restore-photo-btn'
-                  tooltip='restore photohoto'
+                  tooltip='restore photo'
                   tooltipPosition='bottom-left'
                 >
                   <RestoreIcon />

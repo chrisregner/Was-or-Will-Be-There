@@ -32,7 +32,7 @@ after(() => {
   fakeClock.uninstall()
 })
 
-test('TimeBadge | if homecoming is yesterday or earlier, regardless of departure, it should render the "Journalize" link', () => {
+test('components.TimeBadge | if homecoming is yesterday or earlier, regardless of departure, it should render the "Journalize" link', () => {
   const testWithVars = (id, countryId, homecomingNoOfDays, departureNoOfDays) => {
     const homecoming = createMidnightDate(homecomingNoOfDays)
     const departure = createMidnightDate(departureNoOfDays)
@@ -52,7 +52,7 @@ test('TimeBadge | if homecoming is yesterday or earlier, regardless of departure
   testWithVars('thirdId', 'de', -100, -200)
 })
 
-test('TimeBadge | if departure is later than 30 days, it should not render', () => {
+test('components.TimeBadge | if departure is later than 30 days, it should not render', () => {
   const testWithVars = (noOfDays) => {
     const departure = createMidnightDate(noOfDays)
     const props = { departure }
@@ -67,7 +67,7 @@ test('TimeBadge | if departure is later than 30 days, it should not render', () 
   testWithVars(666)
 })
 
-test('TimeBadge | if departure is in 2 to 30 days, it should say "in x days"', () => {
+test('components.TimeBadge | if departure is in 2 to 30 days, it should say "in x days"', () => {
   const testWithVars = (noOfDays) => {
     const departure = createMidnightDate(noOfDays)
     const props = { departure }
@@ -85,7 +85,7 @@ test('TimeBadge | if departure is in 2 to 30 days, it should say "in x days"', (
   testWithVars(30)
 })
 
-test('TimeBadge | if departure is tomorrow, it should say "tomorrow"', () => {
+test('components.TimeBadge | if departure is tomorrow, it should say "tomorrow"', () => {
   const departure = createMidnightDate(1)
   const props = { departure }
   const wrapper = setup({ props })
@@ -96,7 +96,7 @@ test('TimeBadge | if departure is tomorrow, it should say "tomorrow"', () => {
   assert.include(actual, expected)
 })
 
-test('TimeBadge | if departure is today, it should say "today"', () => {
+test('components.TimeBadge | if departure is today, it should say "today"', () => {
   const departure = mocks.todayMidnight
   const props = { departure }
   const wrapper = setup({ props })

@@ -1,9 +1,5 @@
 ## Todos
 
-- debug height issue on long forms
-- snackbars
-  - plans crud
-  - journals crud
 - share CountryName on /countries/* pages
 - no plan/journal message
 - country/plan/journal 404
@@ -76,6 +72,7 @@ DAY 5
 - css prefixes/polyfills
 - production optimization
 - **important** change rawgit links as per rawgit.com for production
+- remove excess deps
 
 ## Manual testing
 - plans crud

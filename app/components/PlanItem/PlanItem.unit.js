@@ -27,14 +27,14 @@ const setup = TU.makeTestSetup({
   defaultProps: defProps,
 })
 
-test('PlanItem | it should render without error', () => {
+test('components.PlanItem | it should render without error', () => {
   const wrapper = setup()
   const actual = wrapper.exists()
 
   assert.isTrue(actual)
 })
 
-test('PlanItem | it should be a link with correct url', () => {
+test('components.PlanItem | it should be a link with correct url', () => {
   const props = {
     countryId: 'ph',
     plan: I.Map({
@@ -49,7 +49,7 @@ test('PlanItem | it should be a link with correct url', () => {
   assert.equal(actual, expected)
 })
 
-test('PlanItem | it should show the plan name', () => {
+test('components.PlanItem | it should show the plan name', () => {
   const props = {
     plan: I.Map({
       planName: 'Most Unique Plan Name Ever',
@@ -63,7 +63,7 @@ test('PlanItem | it should show the plan name', () => {
   assert.isTrue(actual)
 })
 
-test('PlanItem | when both departure and homecoming is provided, it should show a range', () => {
+test('components.PlanItem | when both departure and homecoming is provided, it should show a range', () => {
   const props = {
     plan: I.Map({
       departure: mocks.Jun05NextYr,
@@ -78,7 +78,7 @@ test('PlanItem | when both departure and homecoming is provided, it should show 
   assert.isTrue(actual)
 })
 
-test('PlanItem | when either departure or homecoming is missing, it should show a range with "TBD" as filler', () => {
+test('components.PlanItem | when either departure or homecoming is missing, it should show a range with "TBD" as filler', () => {
   const testWhereDepartureIsMissing = () => {
     const props = {
       plan: I.Map({
@@ -111,7 +111,7 @@ test('PlanItem | when either departure or homecoming is missing, it should show 
   testWhereHomecomingIsMissing()
 })
 
-test('PlanItem | when no date is provided, it should NOT show a range', () => {
+test('components.PlanItem | when no date is provided, it should NOT show a range', () => {
   const wrapper = setup()
   const range = wrapper.find('.plan-item-date-range')
     .prop('secondaryText')
@@ -121,7 +121,7 @@ test('PlanItem | when no date is provided, it should NOT show a range', () => {
   assert.isNotOk(actual)
 })
 
-test('PlanItem | it should render the time badge with correct props', () => {
+test('components.PlanItem | it should render the time badge with correct props', () => {
   const testWithVars = (id, countryId, departure, homecoming) => {
     const props = {
       countryId,

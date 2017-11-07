@@ -50,14 +50,14 @@ const fillForm = (values, wrapper) => {
   })
 }
 
-test('JournalForm | it should render without error', () => {
+test('components.JournalForm | it should render without error', () => {
   const wrapper = setup()
   const actual = wrapper.exists()
 
   assert.isTrue(actual)
 })
 
-test('JournalForm | it should render CountryName with correct props', () => {
+test('components.JournalForm | it should render CountryName with correct props', () => {
   const testWithVar = (countryId) => {
     const props = {
       match: {
@@ -82,7 +82,7 @@ test('JournalForm | it should render CountryName with correct props', () => {
  * TitleField
  */
 
-test('JournalForm > TitleField | it should work', () => {
+test('components.JournalForm > TitleField | it should work', () => {
   const wrapper = setup()
   const getField = () => wrapper.find('.journal-form-title-field')
 
@@ -95,7 +95,7 @@ test('JournalForm > TitleField | it should work', () => {
   assert.equal(actual, expected)
 })
 
-test('JournalForm > TitleField | if changed to blank, it should show error', () => {
+test('components.JournalForm > TitleField | if changed to blank, it should show error', () => {
   const wrapper = setup()
   const getField = () => wrapper.find('.journal-form-title-field')
 
@@ -106,7 +106,7 @@ test('JournalForm > TitleField | if changed to blank, it should show error', () 
   assert.ok(actual)
 })
 
-test('JournalForm > TitleField | if NOT filled and submitted, it should NOT call handleSubmit()', () => {
+test('components.JournalForm > TitleField | if NOT filled and submitted, it should NOT call handleSubmit()', () => {
   const wrapper = setup()
 
   wrapper.find('form').simulate('submit', mockData.ev)
@@ -114,7 +114,7 @@ test('JournalForm > TitleField | if NOT filled and submitted, it should NOT call
   td.verify(defProps.handleSubmit(), { times: 0, ignoreExtraArgs: true })
 })
 
-test('JournalForm > TitleField | if NOT filled and submitted, it should show error', () => {
+test('components.JournalForm > TitleField | if NOT filled and submitted, it should show error', () => {
   const wrapper = setup()
 
   wrapper.find('form').simulate('submit', mockData.ev)
@@ -125,7 +125,7 @@ test('JournalForm > TitleField | if NOT filled and submitted, it should show err
   assert.ok(actual)
 })
 
-test('JournalForm > TitleField | it should accept initial value', () => {
+test('components.JournalForm > TitleField | it should accept initial value', () => {
   const props = {
     initialValues: I.Map({
       id: 'randomId',
@@ -142,7 +142,7 @@ test('JournalForm > TitleField | it should accept initial value', () => {
   assert.equal(actual, expected)
 })
 
-test('JournalForm > TitleField | if initial value is provided, it should still be emptiable', () => {
+test('components.JournalForm > TitleField | if initial value is provided, it should still be emptiable', () => {
   const props = {
     initialValues: I.Map({
       id: 'randomId',
@@ -165,7 +165,7 @@ test('JournalForm > TitleField | if initial value is provided, it should still b
  * TextContentField
  */
 
-test('JournalForm > TextContentField | it should work', () => {
+test('components.JournalForm > TextContentField | it should work', () => {
   const wrapper = setup()
   const getField = () => wrapper.find('.journal-form-text-content-field')
 
@@ -178,7 +178,7 @@ test('JournalForm > TextContentField | it should work', () => {
   assert.equal(actual, expected)
 })
 
-test('JournalForm > TextContentField | it should accept initial value', () => {
+test('components.JournalForm > TextContentField | it should accept initial value', () => {
   const props = {
     initialValues: I.Map({
       id: 'randomId',
@@ -196,7 +196,7 @@ test('JournalForm > TextContentField | it should accept initial value', () => {
   assert.equal(actual, expected)
 })
 
-test('JournalForm > TextContentField | if initial value is provided, it should still be emptiable', () => {
+test('components.JournalForm > TextContentField | if initial value is provided, it should still be emptiable', () => {
   const props = {
     initialValues: I.Map({
       id: 'randomId',
@@ -220,7 +220,7 @@ test('JournalForm > TextContentField | if initial value is provided, it should s
  * Departure
  */
 
-test('JournalForm > DepartureField | it should work', () => {
+test('components.JournalForm > DepartureField | it should work', () => {
   const wrapper = setup()
   const getField = () => wrapper.find('.journal-form-departure-field')
 
@@ -233,7 +233,7 @@ test('JournalForm > DepartureField | it should work', () => {
   assert.equal(actual, expected)
 })
 
-test('JournalForm > DepartureField | if HomecomingField is filled, it should have maxDate equal to HomecomingField\'s value', () => {
+test('components.JournalForm > DepartureField | if HomecomingField is filled, it should have maxDate equal to HomecomingField\'s value', () => {
   const wrapper = setup()
   const getDepartureField = () => wrapper.find('.journal-form-departure-field')
   const getHomecomingField = () => wrapper.find('.journal-form-homecoming-field')
@@ -247,7 +247,7 @@ test('JournalForm > DepartureField | if HomecomingField is filled, it should hav
   assert.equal(actual, expected)
 })
 
-test('JournalForm > DepartureField | it should accept initial value', () => {
+test('components.JournalForm > DepartureField | it should accept initial value', () => {
   const props = {
     initialValues: I.Map({
       id: 'randomId',
@@ -267,7 +267,7 @@ test('JournalForm > DepartureField | it should accept initial value', () => {
  * Homecoming
  */
 
-test('JournalForm > HomecomingField | it should work', () => {
+test('components.JournalForm > HomecomingField | it should work', () => {
   const wrapper = setup()
   const getField = () => wrapper.find('.journal-form-homecoming-field')
 
@@ -280,7 +280,7 @@ test('JournalForm > HomecomingField | it should work', () => {
   assert.equal(actual, expected)
 })
 
-test('JournalForm > HomecomingField | if DepartureField is filled, it should have minDate equal to DepartureField\'s value', () => {
+test('components.JournalForm > HomecomingField | if DepartureField is filled, it should have minDate equal to DepartureField\'s value', () => {
   const wrapper = setup()
   const getHomecomingField = () => wrapper.find('.journal-form-homecoming-field')
   const getDepartureField = () => wrapper.find('.journal-form-departure-field')
@@ -294,7 +294,7 @@ test('JournalForm > HomecomingField | if DepartureField is filled, it should hav
   assert.equal(actual, expected)
 })
 
-test('JournalForm > HomecomingField | it should accept initial value', () => {
+test('components.JournalForm > HomecomingField | it should accept initial value', () => {
   const props = {
     initialValues: I.Map({
       id: 'randomId',
@@ -314,7 +314,7 @@ test('JournalForm > HomecomingField | it should accept initial value', () => {
  * Delete
  */
 
-test('JournalForm > DeleteBtn | if initial journal title is provided, it should the render a delete button', () => {
+test('components.JournalForm > DeleteBtn | if initial journal title is provided, it should the render a delete button', () => {
   const props = {
     initialValues: I.Map({
       title: 'The Title',
@@ -328,13 +328,13 @@ test('JournalForm > DeleteBtn | if initial journal title is provided, it should 
   assert.isTrue(actual)
 })
 
-test('JournalForm > DeleteBtn | if initial journal title is NOT provided, it should NOT the render a delete button', () => {
+test('components.JournalForm > DeleteBtn | if initial journal title is NOT provided, it should NOT the render a delete button', () => {
   const deleteBtnWrpr = setup().find('.journal-form-delete-btn')
   const actual = deleteBtnWrpr.exists()
   assert.isFalse(actual)
 })
 
-test('JournalForm > DeleteBtn | if delete button is clicked, it should call handleDelete() with id', () => {
+test('components.JournalForm > DeleteBtn | if delete button is clicked, it should call handleDelete() with id', () => {
   const fakeHandleDelete = td.func()
   const props = {
     initialValues: I.Map({
@@ -351,7 +351,7 @@ test('JournalForm > DeleteBtn | if delete button is clicked, it should call hand
   td.verify(fakeHandleDelete('randomId'), { times: 1 })
 })
 
-test('JournalForm > DeleteBtn | if delete button is clicked, it should call history.push() with correct args', () => {
+test('components.JournalForm > DeleteBtn | if delete button is clicked, it should call history.push() with correct args', () => {
   const testWithVar = (countryId) => {
     const props = {
       match: {
@@ -383,7 +383,7 @@ test('JournalForm > DeleteBtn | if delete button is clicked, it should call hist
  * onSubmit
  */
 
-test('JournalForm.onSubmit() | if form is valid and initial values were provided, it should call handleSubmit() with correct data including the id', () => {
+test('components.JournalForm.onSubmit() | if form is valid and initial values were provided, it should call handleSubmit() with correct data including the id', () => {
   const testWithChangingSomeField = () => {
     const props = {
       initialValues: I.Map({
@@ -476,7 +476,7 @@ test('JournalForm.onSubmit() | if form is valid and initial values were provided
   testWithEmptiyingAField()
 })
 
-test('JournalForm.onSubmit() | if form is valid, it should call history.push() with correct args', () => {
+test('components.JournalForm.onSubmit() | if form is valid, it should call history.push() with correct args', () => {
   const testWithVar = (countryId) => {
     const props = {
       match: {
@@ -502,7 +502,7 @@ test('JournalForm.onSubmit() | if form is valid, it should call history.push() w
  * Image Upload
  */
 
-test('JournalForm[imageUpload].state.values.photos | it should accept initial values', () => {
+test('components.JournalForm[imageUpload].state.values.photos | it should accept initial values', () => {
   const props = {
     initialValues: I.Map({
       photos: I.List([
@@ -525,7 +525,7 @@ test('JournalForm[imageUpload].state.values.photos | it should accept initial va
   assert.isTrue(actual.equals(expected))
 })
 
-test('JournalForm[imageUpload].state.initialValues.photos | it should remove the photos property', () => {
+test('components.JournalForm[imageUpload].state.initialValues.photos | it should remove the photos property', () => {
   const props = {
     initialValues: I.Map({
       id: 'initialId',
@@ -553,7 +553,7 @@ test('JournalForm[imageUpload].state.initialValues.photos | it should remove the
   assert.isTrue(actual.equals(expected))
 })
 
-test('JournalForm[imageUpload] > PhotoFieldSet | it should render it with correct props for each photo data in state', () => {
+test('components.JournalForm[imageUpload] > PhotoFieldSet | it should render it with correct props for each photo data in state', () => {
   const wrapper = setup()
   const photos = I.List([
     I.Map({
@@ -630,13 +630,13 @@ test('JournalForm[imageUpload] > PhotoFieldSet | it should render it with correc
   testSecondPhotoFieldSet()
 })
 
-test('JournalForm[imageUpload] > UploadPhotoBtn | when clicked, it should call openUploadWidget()', () => {
+test('components.JournalForm[imageUpload] > UploadPhotoBtn | when clicked, it should call openUploadWidget()', () => {
   const uploadBtnWrpr = setup().find('.journal-form-upload-btn')
   uploadBtnWrpr.simulate('click')
   td.verify(deps.cloudinaryUploadWidget.openUploadWidget(), { times: 1, ignoreExtraArgs: true })
 })
 
-test('JournalForm[imageUpload] > UploadPhotoBtn | when openUploadWidget() succeeds and photo state has existing data, it should add correct photo details to the state', () => {
+test('components.JournalForm[imageUpload] > UploadPhotoBtn | when openUploadWidget() succeeds and photo state has existing data, it should add correct photo details to the state', () => {
   const wrapper = setup()
   const predefPhotos = I.List([
     I.Map({
@@ -691,7 +691,7 @@ test('JournalForm[imageUpload] > UploadPhotoBtn | when openUploadWidget() succee
   assert.isTrue(actual.equals(expected))
 })
 
-test('JournalForm[imageUpload] > UploadPhotoBtn | when openUploadWidget() succeeds and photo state has NO existing data, it should add correct photo data to the state', () => {
+test('components.JournalForm[imageUpload] > UploadPhotoBtn | when openUploadWidget() succeeds and photo state has NO existing data, it should add correct photo data to the state', () => {
   const wrapper = setup()
 
   wrapper.find('.journal-form-upload-btn')
@@ -725,7 +725,7 @@ test('JournalForm[imageUpload] > UploadPhotoBtn | when openUploadWidget() succee
   assert.isTrue(actual.equals(expected))
 })
 
-test('JournalForm[imageUpload] > DeleteBtn | if delete button is clicked, it should set the status state to "deleted"', () => {
+test('components.JournalForm[imageUpload] > DeleteBtn | if delete button is clicked, it should set the status state to "deleted"', () => {
   const props = {
     initialValues: I.Map({
       id: 'randomId',
@@ -745,7 +745,7 @@ test('JournalForm[imageUpload] > DeleteBtn | if delete button is clicked, it sho
   assert.equal(actual, expected)
 })
 
-test('JournalForm[imageUpload].handleDeletePhoto() | it should add isDeleted property to the correct photo', () => {
+test('components.JournalForm[imageUpload].handleDeletePhoto() | it should add isDeleted property to the correct photo', () => {
   const wrapper = setup()
   const predefPhotos = I.List([
     I.Map({
@@ -788,7 +788,7 @@ test('JournalForm[imageUpload].handleDeletePhoto() | it should add isDeleted pro
   assert.isTrue(actual.equals(expected))
 })
 
-test('JournalForm[imageUpload].handleRestorePhoto() | it should remove isDeleted property to the correct photo', () => {
+test('components.JournalForm[imageUpload].handleRestorePhoto() | it should remove isDeleted property to the correct photo', () => {
   const wrapper = setup()
   const predefPhotos = I.List([
     I.Map({
@@ -833,7 +833,7 @@ test('JournalForm[imageUpload].handleRestorePhoto() | it should remove isDeleted
   assert.isTrue(actual.equals(expected))
 })
 
-test('JournalForm[imageUpload].handleSetPhotoDesc() | it should work', () => {
+test('components.JournalForm[imageUpload].handleSetPhotoDesc() | it should work', () => {
   const wrapper = setup()
   const photos = I.List([
     I.Map({
@@ -878,7 +878,7 @@ test('JournalForm[imageUpload].handleSetPhotoDesc() | it should work', () => {
   assert.isTrue(actual.equals(expected))
 })
 
-test('JournalForm[imageUpload].onSubmit() | if form is valid, it should call handleSubmit with correct photo data', () => {
+test('components.JournalForm[imageUpload].onSubmit() | if form is valid, it should call handleSubmit with correct photo data', () => {
   const props = {
     initialValues: I.Map({
       id: 'initialId',
@@ -935,7 +935,7 @@ test('JournalForm[imageUpload].onSubmit() | if form is valid, it should call han
   assert.isTrue(actual.equals(expected))
 })
 
-test('JournalForm[imageUpload].onSubmit() | if form is valid, it should set the status state to "saved"', () => {
+test('components.JournalForm[imageUpload].onSubmit() | if form is valid, it should set the status state to "saved"', () => {
   const props = {
     initialValues: I.Map({
       id: 'initialId',
@@ -952,7 +952,7 @@ test('JournalForm[imageUpload].onSubmit() | if form is valid, it should set the 
   assert.equal(actual, expected)
 })
 
-test('JournalForm[imageUpload] | when unmounted and status is the default of "not-saved", it should call handleDeletePhotos() with photos and "not-saved"', () => {
+test('components.JournalForm[imageUpload] | when unmounted and status is the default of "not-saved", it should call handleDeletePhotos() with photos and "not-saved"', () => {
   const wrapper = setup()
   const photos = I.fromJS([
     {
@@ -986,7 +986,7 @@ test('JournalForm[imageUpload] | when unmounted and status is the default of "no
   )
 })
 
-test('JournalForm[imageUpload] | when unmounted and status is "saved", it should call handleDeletePhotos() with photos and "deleted"', () => {
+test('components.JournalForm[imageUpload] | when unmounted and status is "saved", it should call handleDeletePhotos() with photos and "deleted"', () => {
   const wrapper = setup()
   const photos = I.fromJS([
     {
@@ -1021,7 +1021,7 @@ test('JournalForm[imageUpload] | when unmounted and status is "saved", it should
   )
 })
 
-test('JournalForm[imageUpload] | when unmounted and status is "deleted", it should call handleDeletePhotos() with photos and "all"', () => {
+test('components.JournalForm[imageUpload] | when unmounted and status is "deleted", it should call handleDeletePhotos() with photos and "all"', () => {
   const wrapper = setup()
   const photos = I.fromJS([
     {

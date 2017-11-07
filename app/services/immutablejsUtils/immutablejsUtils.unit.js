@@ -10,7 +10,7 @@ import * as immutablejsUtils from './immutablejsUtils'
 
 const { smartMergeDeep } = immutablejsUtils
 
-test('immutablejsUtils.smartMergeDeep() | if the second arg is undefined, it should return the first arg', () => {
+test('services.immutablejsUtils.smartMergeDeep() | if the second arg is undefined, it should return the first arg', () => {
   const firstArg = 'first arg'
   const actual = smartMergeDeep(firstArg)
   const expected = firstArg
@@ -18,7 +18,7 @@ test('immutablejsUtils.smartMergeDeep() | if the second arg is undefined, it sho
   assert.equal(actual, expected)
 })
 
-test('immutablejsUtils.smartMergeDeep() | it should deep merge reqular objects', () => {
+test('services.immutablejsUtils.smartMergeDeep() | it should deep merge reqular objects', () => {
   const baseObj = {
     a: 'a',
     b: {
@@ -48,7 +48,7 @@ test('immutablejsUtils.smartMergeDeep() | it should deep merge reqular objects',
 
 // NOTE: this asserts the actual and expected objects that are CONVERTED with Immutable.fromJS(),
 //   INSTEAD of asserting their original ImmutableJS-and-native-JS hybrid object form
-test('immutablejsUtils.smartMergeDeep() | if the source\'s and corresponding base\'s property is both Immutable data structure, it should mergeDeep it properly', () => {
+test('services.immutablejsUtils.smartMergeDeep() | if the source\'s and corresponding base\'s property is both Immutable data structure, it should mergeDeep it properly', () => {
   const baseObj = {
     a: 'a',
     b: {
@@ -106,7 +106,7 @@ test('immutablejsUtils.smartMergeDeep() | if the source\'s and corresponding bas
 
 // NOTE: this asserts the actual and expected objects that are CONVERTED with Immutable.fromJS(),
 //   INSTEAD of asserting their original ImmutableJS-and-native-JS hybrid object form
-test('immutablejsUtils.smartMergeDeep() | if the source\'s and corresponding base\'s NESTED property both an Immutable data structure, it should mergeDeep it properly', () => {
+test('services.immutablejsUtils.smartMergeDeep() | if the source\'s and corresponding base\'s NESTED property both an Immutable data structure, it should mergeDeep it properly', () => {
   const baseObj = {
     a: 'a',
     b: {

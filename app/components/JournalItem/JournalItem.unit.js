@@ -27,14 +27,14 @@ const setup = TU.makeTestSetup({
   defaultProps: defProps,
 })
 
-test('JournalItem | it should render without error', () => {
+test('components.JournalItem | it should render without error', () => {
   const wrapper = setup()
   const actual = wrapper.exists()
 
   assert.isTrue(actual)
 })
 
-test('JournalItem | it should be a link with correct url', () => {
+test('components.JournalItem | it should be a link with correct url', () => {
   const props = {
     countryId: 'ph',
     journal: I.Map({
@@ -49,7 +49,7 @@ test('JournalItem | it should be a link with correct url', () => {
   assert.equal(actual, expected)
 })
 
-test('JournalItem | it should show the journal name', () => {
+test('components.JournalItem | it should show the journal name', () => {
   const props = {
     journal: I.Map({
       title: 'Most Unique Journal Name Ever',
@@ -63,7 +63,7 @@ test('JournalItem | it should show the journal name', () => {
   assert.isTrue(actual)
 })
 
-test('JournalItem | when both departure and homecoming is provided, it should show a range', () => {
+test('components.JournalItem | when both departure and homecoming is provided, it should show a range', () => {
   const props = {
     journal: I.Map({
       departure: mocks.Jun05NextYr,
@@ -78,7 +78,7 @@ test('JournalItem | when both departure and homecoming is provided, it should sh
   assert.isTrue(actual)
 })
 
-test('JournalItem | when either departure or homecoming is missing, it should show a range with "TBD" as filler', () => {
+test('components.JournalItem | when either departure or homecoming is missing, it should show a range with "TBD" as filler', () => {
   const testWhereDepartureIsMissing = () => {
     const props = {
       journal: I.Map({
@@ -111,7 +111,7 @@ test('JournalItem | when either departure or homecoming is missing, it should sh
   testWhereHomecomingIsMissing()
 })
 
-test('JournalItem | when no date is provided, it should NOT show a range', () => {
+test('components.JournalItem | when no date is provided, it should NOT show a range', () => {
   const wrapper = setup()
   const range = wrapper.find('.journal-item-date-range')
     .prop('secondaryText')

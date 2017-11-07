@@ -17,14 +17,14 @@ const setup = TU.makeTestSetup({
   defaultProps: defProps,
 })
 
-test('NotifSnackbar | it should render without error', () => {
+test('containers.NotifSnackbar | it should render without error', () => {
   const wrapper = setup()
   const actual = wrapper.exists()
 
   assert.isTrue(actual)
 })
 
-test('NotifSnackbar | it should pass the props correctly', () => {
+test('containers.NotifSnackbar | it should pass the props correctly', () => {
   const hideSnackbar = () => {}
   const props = {
     open: true,

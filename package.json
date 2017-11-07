@@ -64,6 +64,7 @@
     "reduce-reducers": "^0.1.2",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
+    "redux-batched-actions": "^0.1.6",
     "redux-immutable": "^4.0.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",

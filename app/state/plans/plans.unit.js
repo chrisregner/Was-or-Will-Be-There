@@ -25,12 +25,12 @@ const setup = () => {
  * Reducer
  */
 
-test.skip('plans | it should return the correct default state')
+test.skip('state.plans | it should return the correct default state')
 
 const { addPlanShell } = fromPlans
 const addPlan = addPlanShell({ shortid: fake.shortid })
 
-test('plans.ADD_PLAN | it should work', () => {
+test('state.plans.ADD_PLAN | it should work', () => {
   setup()
 
   const action = addPlan(I.Map({ planName: 'Sample Plan Name' }))
@@ -46,7 +46,7 @@ test('plans.ADD_PLAN | it should work', () => {
   assert.isTrue(actual.equals(expected))
 })
 
-test('plans.EDIT_PLAN | it should work', () => {
+test('state.plans.EDIT_PLAN | it should work', () => {
   setup()
 
   const initialState = I.List([
@@ -95,7 +95,7 @@ test('plans.EDIT_PLAN | it should work', () => {
   assert.isTrue(actual.equals(expected))
 })
 
-test('plans.DELETE_PLAN | it should work', () => {
+test('state.plans.DELETE_PLAN | it should work', () => {
   setup()
 
   const initialState = I.List([
@@ -138,7 +138,7 @@ test('plans.DELETE_PLAN | it should work', () => {
 
 const { plansGetters } = fromPlans
 
-test('plans.getPlansByCountryId() | it should work', () => {
+test('state.plans.getPlansByCountryId() | it should work', () => {
   const state = I.List([
     I.Map({
       countryId: 'jp',
@@ -178,7 +178,7 @@ test('plans.getPlansByCountryId() | it should work', () => {
   assert.isTrue(actual.equals(expected))
 })
 
-test('plans.getPlan() | it should work', () => {
+test('state.plans.getPlan() | it should work', () => {
   const state = I.List([
     I.Map({
       id: '1',

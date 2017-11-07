@@ -12,14 +12,14 @@ const setup = TU.makeTestSetup({
   defaultProps: defProps,
 })
 
-test('PaperWithHeight | it should render without error', () => {
+test('containers.PaperWithHeight | it should render without error', () => {
   const wrapper = setup()
   const actual = wrapper.exists()
 
   assert.isTrue(actual)
 })
 
-test('PaperWithHeight | it should use the height prop as height', () => {
+test('containers.PaperWithHeight | it should use the height prop as height', () => {
   const props = { height: 143 }
   const wrapper = setup({ props })
 
@@ -32,7 +32,7 @@ test('PaperWithHeight | it should use the height prop as height', () => {
   assert.equal(actual, expected)
 })
 
-test('PaperWithHeight > ghost | it should use the ghostHeight as height', () => {
+test('containers.PaperWithHeight > ghost | it should use the ghostHeight as height', () => {
   const props = { ghostHeight: 666 }
   const wrapper = setup({ props })
 
@@ -45,7 +45,7 @@ test('PaperWithHeight > ghost | it should use the ghostHeight as height', () => 
   assert.equal(actual, expected)
 })
 
-test('PaperWithHeight | it should render its children', () => {
+test('containers.PaperWithHeight | it should render its children', () => {
   const childNode = <div id='foo'>Bar</div>
   const wrapper = setup({ childNode })
 

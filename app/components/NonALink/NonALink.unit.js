@@ -25,14 +25,14 @@ const setup = TU.makeTestSetup({
   tools: ['td'],
 })
 
-test('NonALink | it should render without error', () => {
+test('components.NonALink | it should render without error', () => {
   const wrapper = setup()
   const actual = wrapper.exists()
 
   assert.isTrue(actual)
 })
 
-test('NonALink | when clicked, it should call push with correct arg', () => {
+test('components.NonALink | when clicked, it should call push with correct arg', () => {
   const props = {
     to: '/some/random/link',
   }
@@ -43,7 +43,7 @@ test('NonALink | when clicked, it should call push with correct arg', () => {
   td.verify(defProps.history.push('/some/random/link'), { times: 1 })
 })
 
-test('NonALink | when clicked, it should call push and hooks in correct order, with correct props', () => {
+test('components.NonALink | when clicked, it should call push and hooks in correct order, with correct props', () => {
   const callsInOrder = []
   const fakePush = () => { callsInOrder.push('push') }
   const fakeBeforePush = td.func()
@@ -80,7 +80,7 @@ test('NonALink | when clicked, it should call push and hooks in correct order, w
   td.verify(fakeBeforePush(mocks.ev))
 })
 
-test('NonALink | it should pass "to" prop as "href"', () => {
+test('components.NonALink | it should pass "to" prop as "href"', () => {
   const props = {
     to: 'some/random/link',
   }
@@ -92,7 +92,7 @@ test('NonALink | it should pass "to" prop as "href"', () => {
   assert.equal(actual, expected)
 })
 
-test('NonALink | it should pass other props', () => {
+test('components.NonALink | it should pass other props', () => {
   const props = {
     id: 'some-random-id',
     className: 'some random className,',
@@ -108,7 +108,7 @@ test('NonALink | it should pass other props', () => {
   assert.deepEqual(actual, expected)
 })
 
-test('NonALink | it should render children', () => {
+test('components.NonALink | it should render children', () => {
   const wrapper = setup({
     childNode: (<div id='random-child' />),
   })

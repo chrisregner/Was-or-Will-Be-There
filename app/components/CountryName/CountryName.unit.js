@@ -36,20 +36,20 @@ const setup = TU.makeTestSetup({
   defaultDeps,
 })
 
-test('CountryName | it should render without error', () => {
+test('components.CountryName | it should render without error', () => {
   const wrapper = setup()
   const actual = wrapper.exists()
 
   assert.isTrue(actual)
 })
 
-test('CountryName | it should call fetch()', () => {
+test('components.CountryName | it should call fetch()', () => {
   setup()
 
   td.verify(fake.requestPromise(), { times: 1, ignoreExtraArgs: true })
 })
 
-test('CountryName | if fetch is still loading, should show loader', () => {
+test('components.CountryName | if fetch is still loading, should show loader', () => {
   const wrapper = setup()
   const loaderWrpr = () => wrapper.find('[data-name="loader"]')
 
@@ -58,7 +58,7 @@ test('CountryName | if fetch is still loading, should show loader', () => {
   assert.isTrue(actual)
 })
 
-test('CountryName | if fetch is resolved, should show the country name', () => {
+test('components.CountryName | if fetch is resolved, should show the country name', () => {
   const testWithVars = (countryId, countryName) => {
     const props = { countryId }
     const wrapper = setup({
@@ -84,7 +84,7 @@ test('CountryName | if fetch is resolved, should show the country name', () => {
 // We have issues related with SVG, material-ui, and JSDOM. Watch out on these for he meanwhile:
 //   https://github.com/callemall/material-ui/issues/8643
 //   https://github.com/tmpvar/jsdom/pull/2011
-test.skip('CountryName | if fetch is rejected, should show the country code', () => {
+test.skip('components.CountryName | if fetch is rejected, should show the country code', () => {
   const testWithVars = (countryId) => {
     const props = { countryId }
     const wrapper = setup({
@@ -108,12 +108,12 @@ test.skip('CountryName | if fetch is rejected, should show the country code', ()
   testWithVars('jp')
 })
 
-test.skip('CountryName | if fetch is rejected, it should show an info button')
-test.skip('CountryName | if fetch is rejected and info button is clicked, it toggle the info popover')
-test.skip('CountryName | if fetch is rejected, it should NOT fire the click handler twice on first and subsequent key presses of enter and space key')
-test.skip('CountryName | if fetch is rejected, it should render an info popover containing the error message')
+test.skip('components.CountryName | if fetch is rejected, it should show an info button')
+test.skip('components.CountryName | if fetch is rejected and info button is clicked, it toggle the info popover')
+test.skip('components.CountryName | if fetch is rejected, it should NOT fire the click handler twice on first and subsequent key presses of enter and space key')
+test.skip('components.CountryName | if fetch is rejected, it should render an info popover containing the error message')
 
-test('CountryName | it should render the correct country flag', () => {
+test('components.CountryName | it should render the correct country flag', () => {
   const testWithVar = (countryId) => {
     const props = { countryId }
     const wrapper = setup({ props })
@@ -129,7 +129,7 @@ test('CountryName | it should render the correct country flag', () => {
   testWithVar('JP')
 })
 
-test('CountryName | if wrapper element is specified, it should use it', () => {
+test('components.CountryName | if wrapper element is specified, it should use it', () => {
   const testWithVar = (wrapperEl) => {
     const props = { wrapperEl }
     const wrapper = setup({ props })
@@ -144,7 +144,7 @@ test('CountryName | if wrapper element is specified, it should use it', () => {
   testWithVar('p')
 })
 
-test('CountryName | it should pass the other props to the wrapper', () => {
+test('components.CountryName | it should pass the other props to the wrapper', () => {
   const props = {
     id: 'sample-id',
     'data-foo': 'bar',

@@ -6,7 +6,7 @@ import * as R from 'ramda'
 
 import journalsReducer, * as fromJournals from './journals'
 
-test.skip('journals | it should return the correct default state')
+test.skip('state.journals | it should return the correct default state')
 
 /**
  * Action creators
@@ -14,7 +14,7 @@ test.skip('journals | it should return the correct default state')
 
 const { addJournal } = fromJournals
 
-test('journals.addJournal() | it should remove all photos with isDeleted property from photos', () => {
+test('state.journals.addJournal() | it should remove all photos with isDeleted property from photos', () => {
   const action = addJournal(I.Map({
     id: 'randomId',
     title: 'Sample Journal Name',
@@ -54,7 +54,7 @@ test('journals.addJournal() | it should remove all photos with isDeleted propert
   assert.isTrue(actual.equals(expected))
 })
 
-test('journals.addJournal() | it should remove isNotSaved property from all photos', () => {
+test('state.journals.addJournal() | it should remove isNotSaved property from all photos', () => {
   const action = addJournal(I.Map({
     id: 'randomId',
     title: 'Sample Journal Name',
@@ -105,7 +105,7 @@ test('journals.addJournal() | it should remove isNotSaved property from all phot
 
 const { editJournal } = fromJournals
 
-test('journals.editJournal() | it should remove all photos with isDeleted property from photos', () => {
+test('state.journals.editJournal() | it should remove all photos with isDeleted property from photos', () => {
   const action = editJournal(I.Map({
     id: 'randomId',
     title: 'Sample Journal Name',
@@ -145,7 +145,7 @@ test('journals.editJournal() | it should remove all photos with isDeleted proper
   assert.isTrue(actual.equals(expected))
 })
 
-test('journals.editJournal() | it should remove isNotSaved property from all photos', () => {
+test('state.journals.editJournal() | it should remove isNotSaved property from all photos', () => {
   const action = editJournal(I.Map({
     id: 'randomId',
     title: 'Sample Journal Name',
@@ -207,7 +207,7 @@ const deps = R.set(
 const fakeDeleteResources = R.view(deleteResourcesLens, deps)
 const deletePhotos = fromJournals.deletePhotosShell(deps)
 
-test.skip('journals.deletePhotos() | When toDelete arg includes "not-saved", it should delete passed photos with isNotSaved prop in cloud', () => {
+test.skip('state.journals.deletePhotos() | When toDelete arg includes "not-saved", it should delete passed photos with isNotSaved prop in cloud', () => {
   const photos = I.List([
     I.Map({
       id: 'firstPhotoId',
@@ -243,7 +243,7 @@ test.skip('journals.deletePhotos() | When toDelete arg includes "not-saved", it 
   td.reset()
 })
 
-test.skip('journals.deletePhotos() | When toDelete arg includes "deleted", it should delete passed photos with isDeleted prop in cloud', () => {
+test.skip('state.journals.deletePhotos() | When toDelete arg includes "deleted", it should delete passed photos with isDeleted prop in cloud', () => {
   const photos = I.List([
     I.Map({
       id: 'firstPhotoId',
@@ -279,7 +279,7 @@ test.skip('journals.deletePhotos() | When toDelete arg includes "deleted", it sh
   td.reset()
 })
 
-test.skip('journals.deletePhotos() | When toDelete arg includes "all", it should delete all passed photos in cloud', () => {
+test.skip('state.journals.deletePhotos() | When toDelete arg includes "all", it should delete all passed photos in cloud', () => {
   const photos = I.List([
     I.Map({
       id: 'firstPhotoId',
@@ -315,14 +315,14 @@ test.skip('journals.deletePhotos() | When toDelete arg includes "all", it should
   td.reset()
 })
 
-test.skip('journals | when photo deletion fails in cloud, it should repeat the process every 5 seconds until it succeeds')
-test.skip('journals | when photo deletion fails in cloud, but only because the photo doesn\'t exist, it should not repeat the process')
+test.skip('state.journals | when photo deletion fails in cloud, it should repeat the process every 5 seconds until it succeeds')
+test.skip('state.journals | when photo deletion fails in cloud, but only because the photo doesn\'t exist, it should not repeat the process')
 
 /**
  * Reducer
  */
 
-test('journals.ADD_JOURNAL | it should work', () => {
+test('state.journals.ADD_JOURNAL | it should work', () => {
   const initialState = I.List([
     I.Map({
       id: 'firstExistingId',
@@ -379,7 +379,7 @@ test('journals.ADD_JOURNAL | it should work', () => {
   assert.isTrue(actual.equals(expected))
 })
 
-test('journals.EDIT_JOURNAL | it should work', () => {
+test('state.journals.EDIT_JOURNAL | it should work', () => {
   const initialState = I.List([
     I.Map({
       id: '1',
@@ -451,7 +451,7 @@ test('journals.EDIT_JOURNAL | it should work', () => {
   assert.isTrue(actual.equals(expected))
 })
 
-test('journals.DELETE_JOURNAL | it should work', () => {
+test('state.journals.DELETE_JOURNAL | it should work', () => {
   const initialState = I.List([
     I.Map({
       id: '1',
@@ -492,7 +492,7 @@ test('journals.DELETE_JOURNAL | it should work', () => {
 
 const { journalsGetters } = fromJournals
 
-test('journals.getJournalsByCountryId() | it should work', () => {
+test('state.journals.getJournalsByCountryId() | it should work', () => {
   const state = I.List([
     I.Map({
       countryId: 'jp',
@@ -532,7 +532,7 @@ test('journals.getJournalsByCountryId() | it should work', () => {
   assert.isTrue(actual.equals(expected))
 })
 
-test('journals.getJournal() | it should work', () => {
+test('state.journals.getJournal() | it should work', () => {
   const state = I.List([
     I.Map({
       id: '1',

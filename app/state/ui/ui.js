@@ -3,9 +3,6 @@ import I from 'immutable'
 
 import * as fromPlans from 'state/plans'
 
-const newPlanMsg = 'We have a new plan!'
-const updatedPlanMsg = 'We’ve updated a plan!'
-const deletedPlanMsg = 'Bye-bye, plan...'
 const defaultState = I.fromJS({
   snackbar: {
     isVisible: false,
@@ -19,6 +16,7 @@ const defaultState = I.fromJS({
  * Constants
  */
 
+export const SET_SNACKBAR = 'ui/SET_SNACKBAR'
 export const HIDE_SNACKBAR = 'ui/HIDE_SNACKBAR'
 export const SET_PAPER_HEIGHT = 'ui/SET_PAPER_HEIGHT'
 export const SET_GHOST_HEIGHT = 'ui/SET_GHOST_HEIGHT'
@@ -28,6 +26,7 @@ export const SET_REAL_ROUTE = 'ui/SET_REAL_ROUTE'
  * Action Creators
  */
 
+export const setSnackbar = createAction(SET_SNACKBAR)
 export const hideSnackbar = createAction(HIDE_SNACKBAR)
 export const setPaperHeight = createAction(
   SET_PAPER_HEIGHT,
@@ -44,20 +43,10 @@ export const setRealRoute = createAction(SET_REAL_ROUTE)
  */
 
 const uiReducer = handleActions({
-  [fromPlans.ADD_PLAN]: (state, { payload }) =>
+  [SET_SNACKBAR]: (state, { payload }) =>
     state.set('snackbar', new I.Map({
       isVisible: true,
-      message: newPlanMsg,
-    })),
-  [fromPlans.EDIT_PLAN]: (state, { payload }) =>
-    state.set('snackbar', new I.Map({
-      isVisible: true,
-      message: updatedPlanMsg,
-    })),
-  [fromPlans.DELETE_PLAN]: (state, { payload }) =>
-    state.set('snackbar', new I.Map({
-      isVisible: true,
-      message: deletedPlanMsg,
+      message: payload,
     })),
   [HIDE_SNACKBAR]: (state, { payload }) =>
     state.setIn(['snackbar', 'isVisible'], false),

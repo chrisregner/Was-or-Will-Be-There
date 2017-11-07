@@ -10,67 +10,39 @@ import uiReducer, * as fromUi from './ui'
  * Reducers
  */
 
-test.skip('ui | it should return the correct default state')
+test.skip('state.ui | it should return the correct default state')
 
-test('ui.ADD_PLAN | it should work', () => {
-  const initialState = I.Map({
+test('state.ui.SET_SNACKBAR | it should work when there is initial snackbar', () => {
+  const action = fromUi.setSnackbar('Some new snackbar message')
+  const initialState = I.fromJS({
     snackbar: {
-      isVisible: false,
-      message: '',
+      isVisible: true,
+      message: 'Some initial snackbar message',
     },
   })
-  const action = fromPlans.addPlan(I.Map())
 
-  const actual = uiReducer(initialState, action).get('snackbar').toJS()
-  const expected = Joi.object().keys({
-    isVisible: Joi.any().only(true).required(),
-    message: Joi.string().required(),
+  const actual = uiReducer(initialState, action).get('snackbar')
+  const expected = I.Map({
+    isVisible: true,
+    message: 'Some new snackbar message',
   })
 
-  assert.isNull(expected.validate(actual).error)
+  assert.isTrue(actual.equals(expected))
 })
 
-test('ui.EDIT_PLAN | it should work', () => {
-  const initialState = I.Map({
-    snackbar: {
-      isVisible: false,
-      message: '',
-    },
-  })
-  const action = fromPlans.editPlan(I.Map())
+test('state.ui.SET_SNACKBAR | it should work when there is NO initial snackbar', () => {
+  const action = fromUi.setSnackbar('Some new snackbar message')
 
-  const actual = uiReducer(initialState, action).get('snackbar').toJS()
-  const expected = Joi.object().keys({
-    isVisible: Joi.any().only(true).required(),
-    message: Joi.string().required(),
+  const actual = uiReducer(undefined, action).get('snackbar')
+  const expected = I.Map({
+    isVisible: true,
+    message: 'Some new snackbar message',
   })
 
-  assert.isNull(expected.validate(actual).error)
+  assert.isTrue(actual.equals(expected))
 })
 
-test('ui.DELETE_PLAN | it should work', () => {
-  const initialState = I.Map({
-    snackbar: {
-      isVisible: false,
-      message: '',
-    },
-  })
-  const action = fromPlans.deletePlan('randomId')
-
-  const actual = uiReducer(initialState, action).get('snackbar').toJS()
-  const expected = Joi.object().keys({
-    isVisible: Joi.any().only(true).required(),
-    message: Joi.string().required(),
-  })
-
-  assert.isNull(expected.validate(actual).error)
-})
-
-test.skip('ui.ADD_JOURNAL | it should work')
-test.skip('ui.EDIT_JOURNAL | it should work')
-test.skip('ui.DELETE_JOURNAL | it should work')
-
-test('ui.HIDE_SNACKBAR | it should work', () => {
+test('state.ui.HIDE_SNACKBAR | it should work', () => {
   const action = fromUi.hideSnackbar()
   const initialState = I.fromJS({
     snackbar: {
@@ -88,7 +60,7 @@ test('ui.HIDE_SNACKBAR | it should work', () => {
   assert.isTrue(actual.equals(expected))
 })
 
-test('ui.SET_PAPER_HEIGHT | it should work', () => {
+test('state.ui.SET_PAPER_HEIGHT | it should work', () => {
   const tryAddingToEmptyHeights = () => {
     const initialState = I.fromJS({
       paperHeights: {},
@@ -143,7 +115,7 @@ test('ui.SET_PAPER_HEIGHT | it should work', () => {
   tryUpdatingAHeight()
 })
 
-test('ui.SET_GHOST_HEIGHT | it should work', () => {
+test('state.ui.SET_GHOST_HEIGHT | it should work', () => {
   const tryAddingToEmptyHeights = () => {
     const initialState = I.fromJS({
       ghostHeights: {},
@@ -198,7 +170,7 @@ test('ui.SET_GHOST_HEIGHT | it should work', () => {
   tryUpdatingAHeight()
 })
 
-test('ui.SET_REAL_ROUTE', () => {
+test('state.ui.SET_REAL_ROUTE', () => {
   const tryUpdatingANull = () => {
     const initialState = I.fromJS({ realRoute: null })
     const action = fromUi.setRealRoute('new/route')
@@ -229,7 +201,7 @@ test('ui.SET_REAL_ROUTE', () => {
 
 const { uiGetters } = fromUi
 
-test('ui.getSnackbarInfo() | it should work', () => {
+test('state.ui.getSnackbarInfo() | it should work', () => {
   const state = I.Map({
     snackbar: {
       isVisible: true,
@@ -243,7 +215,7 @@ test('ui.getSnackbarInfo() | it should work', () => {
   assert.equal(actual, expected)
 })
 
-test('ui.getHighestHeight() | it should work', () => {
+test('state.ui.getHighestHeight() | it should work', () => {
   const state = I.fromJS({
     paperHeights: {
       firstPaper: 0,
@@ -258,7 +230,7 @@ test('ui.getHighestHeight() | it should work', () => {
   assert.equal(actual, expected)
 })
 
-test('ui.getHighestGhostHeight() | it should work', () => {
+test('state.ui.getHighestGhostHeight() | it should work', () => {
   const state = I.fromJS({
     ghostHeights: {
       firstPaper: 0,
@@ -273,7 +245,7 @@ test('ui.getHighestGhostHeight() | it should work', () => {
   assert.equal(actual, expected)
 })
 
-test('ui.isRouteCurrent() | when passed route is current, it should return true', () => {
+test('state.ui.isRouteCurrent() | when passed route is current, it should return true', () => {
   const state = I.fromJS({
     realRoute: 'current/route',
   })
@@ -283,7 +255,7 @@ test('ui.isRouteCurrent() | when passed route is current, it should return true'
   assert.isTrue(actual)
 })
 
-test('ui.isRouteCurrent() | when passed route is NOT current, it should return false', () => {
+test('state.ui.isRouteCurrent() | when passed route is NOT current, it should return false', () => {
   const state = I.fromJS({
     realRoute: 'current/route',
   })

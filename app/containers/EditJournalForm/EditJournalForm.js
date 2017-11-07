@@ -1,7 +1,9 @@
 import { connect } from 'react-redux'
+import { batchActions } from 'redux-batched-actions'
 
 import JournalForm from 'components/JournalForm'
 import { editJournal, deleteJournal, deletePhotos } from 'state/journals'
+import { setSnackbar } from 'state/ui'
 import { journalsGetters } from 'state'
 import withHeightWatcher from 'containers/withHeightWatcher'
 
@@ -13,11 +15,20 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   handleSubmit: (journalDetails) => {
     const countryId = ownProps.match.params.countryId
     const journalWithCountryId = journalDetails.set('countryId', countryId)
+    const editJournalNotifMsg = 'Updated a journal entry!'
 
-    dispatch(editJournal(journalWithCountryId))
+    dispatch(batchActions([
+      editJournal(journalWithCountryId),
+      setSnackbar(editJournalNotifMsg),
+    ]))
   },
   handleDelete: (id) => {
-    dispatch(deleteJournal(id))
+    const deleteJournalNotifMsg = 'Deleted a journal entry'
+
+    dispatch(batchActions([
+      dispatch(deleteJournal(id)),
+      setSnackbar(deleteJournalNotifMsg),
+    ]))
   },
   handleDeletePhotos: deletePhotos,
 })

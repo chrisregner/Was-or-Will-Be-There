@@ -18,14 +18,14 @@ const setup = TU.makeTestSetup({
   tools: ['td'],
 })
 
-test('RealRouteWatcher | it should render without error', () => {
+test('containers.RealRouteWatcher | it should render without error', () => {
   const wrapper = setup()
   const actual = wrapper.exists()
 
   assert.isTrue(actual)
 })
 
-test('RealRouteWatcher | it should call setRealRoute() with correct props on mount', () => {
+test('containers.RealRouteWatcher | it should call setRealRoute() with correct props on mount', () => {
   const props = {
     location: {
       pathname: 'pathname/on/mount',
@@ -37,7 +37,7 @@ test('RealRouteWatcher | it should call setRealRoute() with correct props on mou
   td.verify(defProps.setRealRoute('pathname/on/mount'), { times: 1 })
 })
 
-test('RealRouteWatcher | it should call setRealRoute() with correct props on update', () => {
+test('containers.RealRouteWatcher | it should call setRealRoute() with correct props on update', () => {
   const wrapper = setup()
 
   wrapper.setProps({
