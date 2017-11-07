@@ -57,27 +57,6 @@ test('components.JournalForm | it should render without error', () => {
   assert.isTrue(actual)
 })
 
-test('components.JournalForm | it should render CountryName with correct props', () => {
-  const testWithVar = (countryId) => {
-    const props = {
-      match: {
-        params: { countryId },
-      },
-    }
-    const wrapper = setup({ props })
-    const countryNameWrpr = wrapper.find('.journal-form-country-name')
-
-    const actual = countryNameWrpr.prop('countryId')
-    const expected = countryId
-
-    assert.equal(actual, expected)
-  }
-
-  testWithVar('PH')
-  testWithVar('US')
-  testWithVar('JP')
-})
-
 /**
  * TitleField
  */

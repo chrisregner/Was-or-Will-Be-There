@@ -100,9 +100,9 @@ const countryNameShell = ({ requestPromise }) =>
 
       return (<WrapperEl {...otherProps}>
         <div className='flex items-center'>
-          <Paper className='w2' rounded={false}>
+          <Paper className='w2pt5 mr1' rounded={false}>
             <img
-              className='db'
+              className='db w-100 h-auto'
               src={createFlagUrl(countryId)}
               alt='Country Flag'
             />

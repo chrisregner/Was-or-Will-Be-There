@@ -9,7 +9,6 @@ import DatePicker from 'material-ui/DatePicker'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import * as FU from 'services/functionalUtils'
-import CountryName from 'components/countryName'
 
 const validationRules = {
   planName: planName => !planName && 'Plan name is required',
@@ -117,20 +116,14 @@ class PlanForm extends React.PureComponent {
   }
 
   render = () => {
-    const countryId = this.props.match.params.countryId
     const { values, errors, initialValues } = this.state
 
     return (
       <form
-        className='pt2 pb3 pr2 pl2'
+        className='pt0 pb3 pr2 pl2'
         ref={this.rootElRef}
         onSubmit={this.handleSubmit}
       >
-        <CountryName
-          className='plan-form-country-name ma0'
-          wrapperEl='h2'
-          countryId={countryId}
-        />
         <TextField
           className='w-100--i db--i'
           data-name='PlanNameField'

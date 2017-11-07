@@ -12,7 +12,6 @@ import Subheader from 'material-ui/Subheader'
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from 'constants/'
 import { cloudinaryUploadWidget as _cloudinaryUploadWidget } from 'services/cloudinary'
 import * as FU from 'services/functionalUtils'
-import CountryName from 'components/countryName'
 import PhotoFieldSet from 'components/PhotoFieldSet'
 
 const validationRules = {
@@ -206,20 +205,14 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
     }
 
     render = () => {
-      const countryId = this.props.match.params.countryId
       const { values, errors, initialValues } = this.state
 
       return (
         <form
-          className='journal-form-form pt2 pb3 pr2 pl2'
+          className='journal-form-form pt0 pb3 pr2 pl2'
           ref={this.rootElRef}
           onSubmit={this.handleSubmit}
         >
-          <CountryName
-            className='journal-form-country-name ma0'
-            wrapperEl='h2'
-            countryId={countryId}
-          />
           <TextField
             className='journal-form-title-field w-100--i db--i'
             floatingLabelText='Title*'

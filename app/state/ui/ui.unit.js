@@ -1,9 +1,7 @@
 import { test } from 'mocha'
 import { assert } from 'chai'
 import I from 'immutable'
-import Joi from 'joi-browser'
 
-import * as fromPlans from 'state/plans'
 import uiReducer, * as fromUi from './ui'
 
 /**

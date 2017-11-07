@@ -11,6 +11,7 @@ import 'tachyons/css/tachyons.css'
 import './App.css'
 import Nav from 'components/Nav'
 import MapCmpt from 'components/MapCmpt'
+import CountryName from 'components/countryName'
 import PopulatedPlansAndJournals from 'containers/PopulatedPlansAndJournals'
 import AddPlanForm from 'containers/AddPlanForm'
 import EditPlanForm from 'containers/EditPlanForm'
@@ -51,7 +52,7 @@ const App = () => (
       </div>
 
       {/* FIXME: USE AnimatedRoute instead */}
-      <Route path='/countries/:countryId' render={() => (
+      <Route path='/countries/:countryId' render={({ match }) => (
         <div
           style={{
             top: 48,
@@ -61,6 +62,11 @@ const App = () => (
           className='relative z-1 pa2 h-100'
         >
           <PaperWithHeight>
+            <CountryName
+              className='ma0 pa2'
+              wrapperEl='h2'
+              countryId={match.params.countryId}
+            />
             <AnimatedSwitchWrpr className='relative'>
               <AnimatedSwitch
                 atEnter={{ opacity: 0 }}

@@ -49,27 +49,6 @@ test('components.PlanForm | it should render without error', () => {
   assert.isTrue(actual)
 })
 
-test('components.PlanForm | it should render CountryName with correct props', () => {
-  const testWithVar = (countryId) => {
-    const props = {
-      match: {
-        params: { countryId },
-      },
-    }
-    const wrapper = setup({ props })
-    const countryNameWrpr = wrapper.find('.plan-form-country-name')
-
-    const actual = countryNameWrpr.prop('countryId')
-    const expected = countryId
-
-    assert.equal(actual, expected)
-  }
-
-  testWithVar('PH')
-  testWithVar('US')
-  testWithVar('JP')
-})
-
 /**
  * PlanNameField
  */

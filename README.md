@@ -1,6 +1,5 @@
 ## Todos
 
-- share CountryName on /countries/* pages
 - no plan/journal message
 - country/plan/journal 404
 - automatic image deleting (when certain limit is met, delete in the next midnight)

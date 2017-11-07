@@ -4,6 +4,7 @@
  * Tachyons-style Utility classes
  */
 
+.w2pt5 { width: 3rem; }
 .flex-grow-1 { flex-grow: 1; }
 .top-100 { top: 100%; }
 .bottom-100 { bottom: 100%; }

@@ -1,8 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import I from 'immutable'
 
-import * as fromPlans from 'state/plans'
-
 const defaultState = I.fromJS({
   snackbar: {
     isVisible: false,

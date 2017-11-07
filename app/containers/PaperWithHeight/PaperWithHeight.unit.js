@@ -5,11 +5,18 @@ import React from 'react'
 import * as TU from 'services/testUtils'
 import { BarePaperWithHeight as PaperWithHeight } from './PaperWithHeight'
 
-const defProps = { height: 0 }
+const defProps = {
+  height: 0,
+  ghostHeight: 0,
+}
 
 const setup = TU.makeTestSetup({
   Component: PaperWithHeight,
   defaultProps: defProps,
+  tools: ['mui'],
+  defaultEnzymeOpts: {
+    disableLifecycleMethods: true,
+  },
 })
 
 test('containers.PaperWithHeight | it should render without error', () => {
@@ -19,28 +26,76 @@ test('containers.PaperWithHeight | it should render without error', () => {
   assert.isTrue(actual)
 })
 
-test('containers.PaperWithHeight | it should use the height prop as height', () => {
-  const props = { height: 143 }
-  const wrapper = setup({ props })
+test('containers.PaperWithHeight > Paper | when mounted, its height should be the sum of children wrapper\'s and props height', () => {
+  const props = { height: 1000 }
+  const wrapper = setup({ useMount: true, props })
+
+  wrapper.instance().childrenWrapperEl = { offsetHeight: 143 }
+  wrapper.instance().componentDidMount()
+  wrapper.update()
 
   const actual = wrapper
     .find('.paper-with-height-paper')
+    .at(0) // index 0 is the Paper cmpt, while index 1 is the div that Paper cmpt creates
     .prop('style')
     .height
-  const expected = 143
+  const expected = 1143
 
   assert.equal(actual, expected)
 })
 
-test('containers.PaperWithHeight > ghost | it should use the ghostHeight as height', () => {
-  const props = { ghostHeight: 666 }
+test('containers.PaperWithHeight > Paper | when resized, its height should be the sum of children wrapper\'s and props height', () => {
+  const props = { height: 1000 }
   const wrapper = setup({ props })
+  const resizeFn = wrapper
+    .find('.paper-with-height-children-wrapper-resize-detector')
+    .prop('onResize')
+
+  resizeFn(null, 1143)
+  wrapper.update()
+
+  const actual = wrapper
+    .find('.paper-with-height-paper')
+    .at(0) // index 0 is the Paper cmpt, while index 1 is the div that Paper cmpt creates
+    .prop('style')
+    .height
+  const expected = 2143
+
+  assert.equal(actual, expected)
+})
+
+test('containers.PaperWithHeight > Ghost | when mounted, its height should be the sum of children wrapper\'s and props ghostHeight', () => {
+  const props = { ghostHeight: 1000 }
+  const wrapper = setup({ useMount: true, props })
+
+  wrapper.instance().childrenWrapperEl = { offsetHeight: 143 }
+  wrapper.instance().componentDidMount()
+  wrapper.update()
 
   const actual = wrapper
     .find('.paper-with-height-ghost')
     .prop('style')
     .height
-  const expected = 666
+  const expected = 1143
+
+  assert.equal(actual, expected)
+})
+
+test('containers.PaperWithHeight > Ghost | when resized, its height should be the sum of children wrapper\'s and props ghostHeight', () => {
+  const props = { ghostHeight: 1000 }
+  const wrapper = setup({ props })
+  const resizeFn = wrapper
+    .find('.paper-with-height-children-wrapper-resize-detector')
+    .prop('onResize')
+
+  resizeFn(null, 1143)
+  wrapper.update()
+
+  const actual = wrapper
+    .find('.paper-with-height-ghost')
+    .prop('style')
+    .height
+  const expected = 2143
 
   assert.equal(actual, expected)
 })
