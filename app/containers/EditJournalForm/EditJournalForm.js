@@ -8,7 +8,7 @@ import { journalsGetters } from 'state'
 import withHeightWatcher from 'containers/withHeightWatcher'
 
 const mapStateToProps = (state, { match }) => ({
-  initialValues: journalsGetters.getJournal(state, match.params.id),
+  initialValues: journalsGetters.getJournal(state, match.params.id) || I.Map({}),
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

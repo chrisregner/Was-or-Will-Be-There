@@ -315,8 +315,8 @@ test.skip('state.journals.deletePhotos() | When toDelete arg includes "all", it 
   td.reset()
 })
 
-test.skip('state.journals | when photo deletion fails in cloud, it should repeat the process every 5 seconds until it succeeds')
-test.skip('state.journals | when photo deletion fails in cloud, but only because the photo doesn\'t exist, it should not repeat the process')
+test.skip('state.journals.deletePhotos() | when photo deletion fails in cloud, it should repeat the process every 5 seconds until it succeeds')
+test.skip('state.journals.deletePhotos() | when photo deletion fails in cloud, but only because the photo doesn\'t exist, it should not repeat the process')
 
 /**
  * Reducer

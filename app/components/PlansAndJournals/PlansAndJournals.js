@@ -20,37 +20,45 @@ const PlansAndJournals = ({
     <List>
       <Subheader>Plans</Subheader>
       {
-        plans && plans.map(plan => (
-          <PlanItem
-            className='plans-and-journals-plan-item'
-            key={plan.get('id')}
-            countryId={countryId}
-            plan={plan}
-          />
-        )).toJS()
+        plans.isEmpty()
+          ? <div className='plans-and-journals-no-plan-msg pl3 pb2'>
+              You haven’t added any plan!
+            </div>
+          : plans.map(plan => (
+              <PlanItem
+                className='plans-and-journals-plan-item'
+                key={plan.get('id')}
+                countryId={countryId}
+                plan={plan}
+              />
+            )).toJS()
       }
     </List>
     <div className='pa2 tr'>
       <Link to={`/countries/${countryId}/plans/new`}>
-        <RaisedButton primary label='Add New Plan' />
+        <RaisedButton primary label='Add Plan' />
       </Link>
     </div>
     <List>
       <Subheader>Journals</Subheader>
       {
-        journals && journals.map(journal => (
-          <JournalItem
-            className='plans-and-journals-journal-item'
-            key={journal.get('id')}
-            countryId={countryId}
-            journal={journal}
-          />
-        )).toJS()
+        journals.isEmpty()
+          ? <div className='plans-and-journals-no-journal-msg pl3 pb2'>
+              You haven’t added any journal entry!
+            </div>
+          : journals.map(journal => (
+              <JournalItem
+                className='plans-and-journals-journal-item'
+                key={journal.get('id')}
+                countryId={countryId}
+                journal={journal}
+              />
+            )).toJS()
       }
     </List>
     <div className='pa2 tr'>
       <Link to={`/countries/${countryId}/journals/new`}>
-        <RaisedButton primary label='Add New Journal' />
+        <RaisedButton primary label='Add Journal' />
       </Link>
     </div>
   </div>
@@ -67,13 +75,13 @@ PlansAndJournals.propTypes = {
       id: PropTypes.string.isRequired,
       planName: PropTypes.string.isRequired,
     }),
-  ),
+  ).isRequired,
   journals: IPropTypes.listOf(
     IPropTypes.contains({
       id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
     }),
-  ),
+  ).isRequired,
 }
 
 export default PlansAndJournals

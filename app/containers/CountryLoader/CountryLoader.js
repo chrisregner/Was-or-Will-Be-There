@@ -2,18 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _requestPromise from 'request-promise'
 import c from 'classnames'
+import { connect } from 'react-redux'
 
 import ErrorIcon from 'material-ui/svg-icons/alert/error'
 import IconButton from 'material-ui/IconButton'
 import Paper from 'material-ui/Paper'
 
+import { setNotFound } from 'state/ui'
 import { COUNTRIES_JSON_URL, createFlagUrl } from 'constants/'
 import * as FU from 'services/functionalUtils'
 
-const countryNameShell = ({ requestPromise }) =>
-  class CountryName extends React.PureComponent {
+const countryLoaderShell = ({ requestPromise }) =>
+  class CountryLoader extends React.PureComponent {
     static propTypes = {
       countryId: PropTypes.string.isRequired,
+      pathname: PropTypes.string.isRequired,
+      setNotFound: PropTypes.func.isRequired,
       wrapperEl: PropTypes.string,
     }
 
@@ -28,14 +32,17 @@ const countryNameShell = ({ requestPromise }) =>
     }
 
     componentDidMount = () => {
-      const countryId = this.props.countryId.toUpperCase()
+      const { setNotFound, countryId, pathname } = this.props
 
       requestPromise(COUNTRIES_JSON_URL)
         .then((countryNamesJson) => {
           const countryNames = JSON.parse(countryNamesJson)
-          const countryName = countryNames[countryId]
+          const countryName = countryNames[countryId.toUpperCase()]
 
-          this.setState({ countryName })
+          if (countryName)
+            this.setState({ countryName })
+          else
+            setNotFound(pathname)
         })
         .catch((error) => {
           console.error('Error upon retrieving country name: ', error)
@@ -58,6 +65,8 @@ const countryNameShell = ({ requestPromise }) =>
       const {
         wrapperEl: WrapperEl,
         countryId,
+        pathname,
+        setNotFound,
         ...otherProps
       } = this.props
 
@@ -102,7 +111,7 @@ const countryNameShell = ({ requestPromise }) =>
         <div className='flex items-center'>
           <Paper className='w2pt5 mr1' rounded={false}>
             <img
-              className='db w-100 h-auto'
+              className='db w-100 h-auto f7 normal'
               src={createFlagUrl(countryId)}
               alt='Country Flag'
             />
@@ -115,9 +124,17 @@ const countryNameShell = ({ requestPromise }) =>
     }
   }
 
-const CountryName = countryNameShell({
+const BareCountryLoader = countryLoaderShell({
   requestPromise: _requestPromise,
 })
 
-export { countryNameShell }
-export default CountryName
+const mapDispatchToProps = dispatch => ({
+  setNotFound: (notFoundPath) => {
+    dispatch(setNotFound(notFoundPath))
+  }
+})
+
+const CountryLoader = connect(null, mapDispatchToProps)(BareCountryLoader)
+
+export { countryLoaderShell }
+export default CountryLoader

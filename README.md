@@ -1,10 +1,17 @@
 ## Todos
 
-- no plan/journal message
 - country/plan/journal 404
-- automatic image deleting (when certain limit is met, delete in the next midnight)
+  - cancel fetch of CountryLoad on unmount
+  - country/ph/journals/id/*
+  - country/ph/plans/id/*
+  - country/ph/journals/:crap
+  - country/ph/plans/:crap
+  - country/:crap
+  - country/*
+  - *
+  - TODO: Put the uppermost route within Switch with fallback route that only sets notFound in route
+  - TODO: Add fallback route with component that only sets notFound in route
 
-- journal items
 - countries overview
   - no of journals
   - no of countries traveled
@@ -60,6 +67,7 @@ DAY 5
     - geographically
   - input on map to search and select places
     - pan map upon selection
+  - automatic image deleting (when certain limit is met, delete in the next midnight)
 
 ## Misc todo
 

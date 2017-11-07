@@ -193,6 +193,25 @@ test('state.ui.SET_REAL_ROUTE', () => {
   tryUpdatingAnOldRoute()
 })
 
+test('state.ui.SET_NOT_FOUND | it should work with initial state', () => {
+  const initialState= I.Map({ notFound: '/old/not/found/route'})
+  const action = fromUi.setNotFound('/new/not/found/route')
+
+  const actual = uiReducer(undefined, action).get('notFound')
+  const expected = '/new/not/found/route'
+
+  assert.equal(actual, expected)
+})
+
+test('state.ui.SET_NOT_FOUND | it should work with NO initial state', () => {
+  const action = fromUi.setNotFound('/not/found/route')
+
+  const actual = uiReducer(undefined, action).get('notFound')
+  const expected = '/not/found/route'
+
+  assert.equal(actual, expected)
+})
+
 /**
  * Getters
  */
@@ -245,20 +264,40 @@ test('state.ui.getHighestGhostHeight() | it should work', () => {
 
 test('state.ui.isRouteCurrent() | when passed route is current, it should return true', () => {
   const state = I.fromJS({
-    realRoute: 'current/route',
+    realRoute: '/current/route',
   })
 
-  const actual = uiGetters.isRouteCurrent(state, 'current/route')
+  const actual = uiGetters.isRouteCurrent(state, '/current/route')
 
   assert.isTrue(actual)
 })
 
 test('state.ui.isRouteCurrent() | when passed route is NOT current, it should return false', () => {
   const state = I.fromJS({
-    realRoute: 'current/route',
+    realRoute: '/current/route',
   })
 
-  const actual = uiGetters.isRouteCurrent(state, 'not-current/route')
+  const actual = uiGetters.isRouteCurrent(state, '/wrong/route')
+
+  assert.isFalse(actual)
+})
+
+test('state.ui.isPathNotFound() | when passed route is equal to the not-found route in state, it should return true', () => {
+  const state = I.fromJS({
+    notFound: '/not/found/route',
+  })
+
+  const actual = uiGetters.isPathNotFound(state, '/not/found/route')
+
+  assert.isTrue(actual)
+})
+
+test('state.ui.isPathNotFound() | when passed route is NOT equal to the not-found route in state, it should return false', () => {
+  const state = I.fromJS({
+    notFound: '/not/found/route',
+  })
+
+  const actual = uiGetters.isPathNotFound(state, '/wrong/route')
 
   assert.isFalse(actual)
 })

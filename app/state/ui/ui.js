@@ -19,6 +19,7 @@ export const HIDE_SNACKBAR = 'ui/HIDE_SNACKBAR'
 export const SET_PAPER_HEIGHT = 'ui/SET_PAPER_HEIGHT'
 export const SET_GHOST_HEIGHT = 'ui/SET_GHOST_HEIGHT'
 export const SET_REAL_ROUTE = 'ui/SET_REAL_ROUTE'
+export const SET_NOT_FOUND = 'ui/SET_NOT_FOUND'
 
 /**
  * Action Creators
@@ -35,6 +36,7 @@ export const setGhostHeight = createAction(
   (paperName, height) => ({ paperName, height }),
 )
 export const setRealRoute = createAction(SET_REAL_ROUTE)
+export const setNotFound = createAction(SET_NOT_FOUND)
 
 /**
  * Reducer
@@ -54,6 +56,8 @@ const uiReducer = handleActions({
     state.setIn(['ghostHeights', payload.paperName], payload.height),
   [SET_REAL_ROUTE]: (state, { payload }) =>
     state.set('realRoute', payload),
+  [SET_NOT_FOUND]: (state, { payload }) =>
+    state.set('notFound', payload),
 }, defaultState)
 
 /**
@@ -72,7 +76,8 @@ export const uiGetters = {
       .reduce((highestHeight, currentHeight) =>
         currentHeight > highestHeight ? currentHeight : highestHeight,
       0),
-  isRouteCurrent: (state, route) => state.get('realRoute') === route,
+  isRouteCurrent: (state, route) => state.get('realRoute') && state.get('realRoute') === route,
+  isPathNotFound: (state, route) => state.get('notFound') && state.get('notFound') === route,
 }
 
 export default uiReducer

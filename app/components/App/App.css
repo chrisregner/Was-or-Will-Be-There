@@ -1,6 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
 
 /**
+ * Global styles
+ */
+
+body {
+  font-family: Roboto, sans-serif;
+}
+
+/**
  * Tachyons-style Utility classes
  */
 

@@ -3,12 +3,13 @@ import { batchActions } from 'redux-batched-actions'
 
 import PlanForm from 'components/PlanForm'
 import { editPlan, deletePlan } from 'state/plans'
-import { setSnackbar } from 'state/ui'
+import { setSnackbar, setNotFound } from 'state/ui'
 import { plansGetters } from 'state'
 import withHeightWatcher from 'containers/withHeightWatcher'
 
 const mapStateToProps = (state, { match }) => ({
   initialValues: plansGetters.getPlan(state, match.params.id),
+  isNotFound: !plansGetters.getPlan(state, match.params.id)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -30,6 +31,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       setSnackbar(deletePlanNotifMsg),
     ]))
   },
+  setNotFound: (notFoundPath) => {
+    dispatch(setNotFound(notFoundPath))
+  }
 })
 
 const EditPlanForm = connect(mapStateToProps, mapDispatchToProps)(

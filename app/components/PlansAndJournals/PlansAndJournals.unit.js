@@ -1,6 +1,6 @@
 import { test } from 'mocha'
 import { assert } from 'chai'
-import * as I from 'immutable'
+import I from 'immutable'
 import * as TU from 'services/testUtils'
 import PlansAndJournals from './PlansAndJournals'
 
@@ -11,6 +11,7 @@ const defProps = {
     },
   },
   plans: I.List(),
+  journals: I.List(),
 }
 
 const setup = TU.makeTestSetup({
@@ -59,8 +60,67 @@ test('components.PlansAndJournals | it should render a link to add a journal', (
   assert.equal(actual, expected)
 })
 
-test.skip('components.PlansAndJournals | if there is no plan, it should render a message for lacking plans')
-test.skip('components.PlansAndJournals | if there is no journal, it should render a message for lacking journals')
+test('components.PlansAndJournals | if there is NO plan, it should render a message for lacking plans', () => {
+  const props = {
+    plans: I.List(),
+  }
+  const wrapper = setup({ props })
+  const noPlanMsgWrpr = wrapper.find('.plans-and-journals-no-plan-msg')
+
+  const actual = noPlanMsgWrpr.length
+  const expected = 1
+
+  assert.equal(actual, expected)
+})
+
+test('components.PlansAndJournals | if there is plan, it should NOT render a message for lacking plans', () => {
+  const props = {
+    plans: I.List([
+      I.Map({
+        id: 'initialPlanId',
+        planName: 'The Initial Plan Name',
+      })
+    ]),
+  }
+  const wrapper = setup({ props })
+  const noPlanMsgWrpr = wrapper.find('.plans-and-journals-no-plan-msg')
+
+  const actual = noPlanMsgWrpr.length
+  const expected = 0
+
+  assert.equal(actual, expected)
+})
+
+test('components.PlansAndJournals | if there is NO journal, it should render a message for lacking journals', () => {
+  const props = {
+    journals: I.List(),
+  }
+  const wrapper = setup({ props })
+  const noJournalMsgWrpr = wrapper.find('.plans-and-journals-no-journal-msg')
+
+  const actual = noJournalMsgWrpr.length
+  const expected = 1
+
+  assert.equal(actual, expected)
+})
+
+test('components.PlansAndJournals | if there is journal, it should NOT render a message for lacking journals', () => {
+  const props = {
+    journals: I.List([
+      I.Map({
+        id: 'initialJournalId',
+        planName: 'The Initial Journal Name',
+      })
+    ]),
+  }
+  const wrapper = setup({ props })
+  const noJournalMsgWrpr = wrapper.find('.journals-and-journals-no-plan-msg')
+
+  const actual = noJournalMsgWrpr.length
+  const expected = 0
+
+  assert.equal(actual, expected)
+})
 
 test('components.PlansAndJournals | if plans are provided, it should render each', () => {
   const testWithVars = (plans, quantity) => {

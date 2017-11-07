@@ -96,9 +96,9 @@
     "start": "webpack-dev-server --hot",
     "lint": "eslint --ignore-pattern '/dist/*' --fix **/*.js",
     "mocha": "cross-env NODE_PATH=app mocha --require babel-register --require ./tools/testSetup.js",
-    "test": "yarn run mocha --reporter nyan --watch **/*.unit.js",
-    "test-spec": "yarn run mocha --reporter spec --watch **/*.unit.js",
-    "test-spec-specific": "yarn run mocha --reporter spec --watch"
+    "test": "yarn run mocha --reporter spec --watch **/*.unit.js",
+    "test-nyan": "yarn run mocha --reporter nyan --watch **/*.unit.js",
+    "test-specific": "yarn run mocha --reporter spec --watch"
   },
   "dependencies": {}
 }

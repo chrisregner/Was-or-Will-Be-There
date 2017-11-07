@@ -22,6 +22,9 @@ const defProps = {
   match: {
     params: { countryId: '' },
   },
+  location: {
+    pathname: ''
+  },
 }
 
 const setup = TU.makeTestSetup({
@@ -47,6 +50,28 @@ test('components.PlanForm | it should render without error', () => {
   const actual = wrapper.exists()
 
   assert.isTrue(actual)
+})
+
+test('components.PlanForm | if isNotFound is true, it should call setNotFound with pathname', () => {
+  const props = {
+    isNotFound: true,
+    setNotFound: td.func(),
+    location: {
+      pathname: '/random/pathname'
+    }
+  }
+  const wrapper = setup({ props })
+
+  td.verify(props.setNotFound('/random/pathname'), { times: 1 })
+})
+
+test('components.PlanForm | if isNotFound is NOT true, it should NOT call setNotFound with pathname', () => {
+  const props = {
+    setNotFound: td.func(),
+  }
+  const wrapper = setup({ props })
+
+  td.verify(props.setNotFound(), { times: 0, ignoreExtraArgs: true })
 })
 
 /**

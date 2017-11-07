@@ -1,6 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Route } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { AnimatedSwitch } from 'react-router-transition'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -9,9 +11,11 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import 'animate.css/animate.css'
 import 'tachyons/css/tachyons.css'
 import './App.css'
+import { uiGetters } from 'state'
 import Nav from 'components/Nav'
 import MapCmpt from 'components/MapCmpt'
-import CountryName from 'components/countryName'
+import NotFound from 'components/NotFound'
+import CountryLoader from 'containers/CountryLoader'
 import PopulatedPlansAndJournals from 'containers/PopulatedPlansAndJournals'
 import AddPlanForm from 'containers/AddPlanForm'
 import EditPlanForm from 'containers/EditPlanForm'
@@ -35,7 +39,7 @@ const muiTheme = getMuiTheme({
   },
 })
 
-const App = () => (
+const BareApp = ({ isPathNotFound, location }) => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <div style={{ minWidth: 300 }} className='min-vh-100'>
       <div className='fixed top-0 right-0 left-0 z-2'>
@@ -51,43 +55,65 @@ const App = () => (
         <MapCmpt />
       </div>
 
-      {/* FIXME: USE AnimatedRoute instead */}
-      <Route path='/countries/:countryId' render={({ match }) => (
-        <div
-          style={{
-            top: 48,
-            minHeight: 'calc(100vh - 48px)',
-            backgroundColor: 'rgba(0, 0, 0, 0.54)',
-          }}
-          className='relative z-1 pa2 h-100'
-        >
-          <PaperWithHeight>
-            <CountryName
-              className='ma0 pa2'
-              wrapperEl='h2'
-              countryId={match.params.countryId}
-            />
-            <AnimatedSwitchWrpr className='relative'>
-              <AnimatedSwitch
-                atEnter={{ opacity: 0 }}
-                atLeave={{ opacity: 0 }}
-                atActive={{ opacity: 1 }}
-              >
-                <Route exact path='/countries/:countryId' component={PopulatedPlansAndJournals} />
-                <Route path='/countries/:countryId/plans/new' component={AddPlanForm} />
-                <Route path='/countries/:countryId/plans/:id' component={EditPlanForm} />
-                <Route path='/countries/:countryId/journals/new' component={AddJournalForm} />
-                <Route path='/countries/:countryId/journals/:id' component={EditJournalForm} />
-              </AnimatedSwitch>
-            </AnimatedSwitchWrpr>
-          </PaperWithHeight>
-        </div>
-      )} />
 
+      {/* TODO: Put the uppermost route within Switch with fallback route that only sets notFound in route */}
+      {
+        isPathNotFound(location.pathname)
+        ? <NotFound />
+        : <Route path='/countries/:countryId' render={({ match, history }) => (
+            <div
+              style={{
+                top: 48,
+                minHeight: 'calc(100vh - 48px)',
+                backgroundColor: 'rgba(0, 0, 0, 0.54)',
+              }}
+              className='relative z-1 pa2 h-100'
+            >
+              <PaperWithHeight>
+                <CountryLoader
+                  className='ma0 pa2'
+                  wrapperEl='h2'
+                  countryId={match.params.countryId}
+                  pathname={location.pathname}
+                  history={history}
+                />
+                <AnimatedSwitchWrpr className='relative'>
+                  <AnimatedSwitch
+                    atEnter={{ opacity: 0 }}
+                    atLeave={{ opacity: 0 }}
+                    atActive={{ opacity: 1 }}
+                  >
+                    <Route exact path='/countries/:countryId' component={PopulatedPlansAndJournals} />
+                    <Route path='/countries/:countryId/plans/new' component={AddPlanForm} />
+                    <Route path='/countries/:countryId/plans/:id' component={EditPlanForm} />
+                    <Route path='/countries/:countryId/journals/new' component={AddJournalForm} />
+                    <Route path='/countries/:countryId/journals/:id' component={EditJournalForm} />
+                    {/* TODO: Add fallback route with component that only sets notFound in route */}
+                  </AnimatedSwitch>
+                </AnimatedSwitchWrpr>
+              </PaperWithHeight>
+            </div>
+          )} />
+      }
+
+      <Route path='/404' component={NotFound} />
       <NotifSnackbar />
       <RealRouteWatcher />
     </div>
   </MuiThemeProvider>
 )
+
+BareApp.propTypes = {
+  isPathNotFound: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+}
+
+const mapStateToProps = (state) => ({
+  isPathNotFound: (path) => uiGetters.isPathNotFound(state, path)
+})
+
+const App = withRouter(connect(mapStateToProps)(BareApp))
 
 export default App

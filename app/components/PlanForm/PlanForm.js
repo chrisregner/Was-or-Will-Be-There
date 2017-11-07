@@ -33,6 +33,11 @@ class PlanForm extends React.PureComponent {
         countryId: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
+    isNotFound: PropTypes.bool,
+    setNotFound: PropTypes.func,
   }
 
   state = {
@@ -40,6 +45,13 @@ class PlanForm extends React.PureComponent {
     errors: {},
     dirtyFields: [],
     initialValues: this.props.initialValues,
+  }
+
+  componentWillMount = () => {
+    const { isNotFound, setNotFound, location } = this.props
+
+    if (isNotFound)
+      setNotFound(location.pathname)
   }
 
   makeHandleChange = fieldName => (ev, newVal) => {
