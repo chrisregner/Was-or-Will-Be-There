@@ -17,7 +17,7 @@ const defProps = {
   path: '',
   id: '',
   handleDeletePhoto: td.func(),
-  handleSetPhotoDesc: td.func(),
+  handleRestorePhoto: td.func(),
   handleSetPhotoDesc: td.func(),
 }
 
@@ -88,6 +88,28 @@ test('PhotoFieldSet > ThumbPhoto | it should use description as alt', () => {
   assert.equal(actual, expected)
 })
 
+test('PhotoFieldSet > ThumbPhoto | if isDeleted prop is true, it should render the overlay', () => {
+  const props = {
+    isDeleted: true,
+  }
+  const thumbWrpr = setup({ props }).find('.photo-field-set-thumb-photo-overlay')
+
+  const actual = thumbWrpr.exists()
+
+  assert.isTrue(actual)
+})
+
+test('PhotoFieldSet > ThumbPhoto | if isDeleted prop is NOT true, it should NOT render the overlay', () => {
+  const props = {
+    isDeleted: null,
+  }
+  const thumbWrpr = setup({ props }).find('.photo-field-set-thumb-photo-overlay')
+
+  const actual = thumbWrpr.exists()
+
+  assert.isFalse(actual)
+})
+
 test('PhotoFieldSet > ThumbPhoto | it should show the full-sized photo on click', () => {
   const wrapper = setup()
 
@@ -103,22 +125,6 @@ test('PhotoFieldSet > ThumbPhoto | it should show the full-sized photo on click'
     assert.notInclude(actual, notExpectedCn)
   })
 })
-
-// test('PhotoFieldSet > ShowFullSizeButton | it should show the full-sized photo on click', () => {
-//   const wrapper = setup()
-
-//   wrapper.find('.photo-field-set-show-full-sized-photo').simulate('click')
-
-//   const photoContainerWrpr = wrapper.find('.photo-field-set-photo-wrapper')
-//   const photoContainerCns = photoContainerWrpr.prop('className').split(' ')
-
-//   const actual = photoContainerCns
-//   const notExpected = ['dn', 'fadeOut']
-
-//   notExpected.forEach((notExpectedCn) => {
-//     assert.notInclude(actual, notExpectedCn)
-//   })
-// })
 
 test('PhotoFieldSet > HideFullSizeButton | if full-sized photo is shown, it should hide the full-sized photo on click', () => {
   const wrapper = setup()
@@ -168,11 +174,38 @@ test('PhotoFieldSet > DescriptionField | when changed, it should call handleSetP
   td.verify(defProps.handleSetPhotoDesc(...expectedArgs), { times: 1 })
 })
 
-test('PhotoFieldSet > DeletePhotoButton | it should render', () => {
-  const delPhotoBtnWrpr = setup().find('.photo-field-set-delete-photo-btn')
+test('PhotoFieldSet > DescriptionField | if isDeleted prop is true, it should be disabled', () => {
+  const props = {
+    isDeleted: true
+  }
+
+  const descFieldWrpr = setup({ props }).find('.photo-field-set-description-field')
+
+  const actual = descFieldWrpr.prop('disabled')
+
+  assert.isTrue(actual)
+})
+
+test('PhotoFieldSet > DeletePhotoButton | if isDeleted prop is NOT true, it should render', () => {
+  const props = {
+    isDeleted: null,
+  }
+  const delPhotoBtnWrpr = setup({ props })
+    .find('.photo-field-set-delete-photo-btn')
   const actual = delPhotoBtnWrpr.exists()
 
   assert.isTrue(actual)
+})
+
+test('PhotoFieldSet > DeletePhotoButton | if isDeleted prop is true, it should NOT render', () => {
+  const props = {
+    isDeleted: true,
+  }
+  const delPhotoBtnWrpr = setup({ props })
+    .find('.photo-field-set-delete-photo-btn')
+  const actual = delPhotoBtnWrpr.exists()
+
+  assert.isFalse(actual)
 })
 
 test('PhotoFieldSet > DeletePhotoButton | when clicked, it should call handleDeletePhoto() with correct props', () => {
@@ -188,3 +221,41 @@ test('PhotoFieldSet > DeletePhotoButton | when clicked, it should call handleDel
 
   td.verify(defProps.handleDeletePhoto(expectedArg), { times: 1 })
 })
+
+test('PhotoFieldSet > RestorePhotoButton | if isDeleted prop is true, it should render', () => {
+  const props = {
+    isDeleted: true,
+  }
+  const delPhotoBtnWrpr = setup({ props })
+    .find('.photo-field-set-restore-photo-btn')
+  const actual = delPhotoBtnWrpr.exists()
+
+  assert.isTrue(actual)
+})
+
+test('PhotoFieldSet > RestorePhotoButton | if isDeleted prop is NOT true, it should NOT render', () => {
+  const props = {
+    isDeleted: null,
+  }
+  const delPhotoBtnWrpr = setup({ props })
+    .find('.photo-field-set-restore-photo-btn')
+  const actual = delPhotoBtnWrpr.exists()
+
+  assert.isFalse(actual)
+})
+
+test('PhotoFieldSet > RestorePhotoButton | when clicked, it should call handleRestorePhoto() with correct props', () => {
+  const props = {
+    id: 'randomId',
+    isDeleted: true,
+  }
+
+  setup({ props })
+    .find('.photo-field-set-restore-photo-btn')
+    .simulate('click')
+
+  const expectedArg = 'randomId'
+
+  td.verify(defProps.handleRestorePhoto(expectedArg), { times: 1 })
+})
+

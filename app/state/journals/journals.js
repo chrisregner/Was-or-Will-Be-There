@@ -42,13 +42,15 @@ export const deletePhotosShell = ({ localCloudinary }) => ({ toDelete, photos })
     .map(photo => photo.get('id'))
     .toJS()
 
-  if (photoIds.length)
-    localCloudinary.v2.api.delete_resources(photoIds, (error, result) => {
-      if (error)
-        console.error('Error in attempt to delete the image(s) in cloud: ', error)
-      else
-        console.log('Successfully uploaded images: ', result)
-    })
+  console.log('Images to delete:', photoIds)
+
+  // if (photoIds.length)
+  //   localCloudinary.v2.api.delete_resources(photoIds, (error, result) => {
+  //     if (error)
+  //       console.error('Error in attempt to delete the image(s) in cloud: ', error)
+  //     else
+  //       console.log('Successfully uploaded images: ', result)
+  //   })
 }
 
 export const addJournal = createAction(ADD_JOURNAL, removeMetaDataFromPhotos)

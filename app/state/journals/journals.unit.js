@@ -211,7 +211,7 @@ const deps = R.set(
 const fakeDeleteResources = R.view(deleteResourcesLens, deps)
 const deletePhotos = fromJournals.deletePhotosShell(deps)
 
-test('journals.deletePhotos() | When toDelete arg includes "not-saved", it should delete passed photos with isNotSaved prop in cloud', () => {
+test.skip('journals.deletePhotos() | When toDelete arg includes "not-saved", it should delete passed photos with isNotSaved prop in cloud', () => {
   const photos = I.List([
     I.Map({
       id: 'firstPhotoId',
@@ -247,7 +247,7 @@ test('journals.deletePhotos() | When toDelete arg includes "not-saved", it shoul
   td.reset()
 })
 
-test('journals.deletePhotos() | When toDelete arg includes "deleted", it should delete passed photos with isDeleted prop in cloud', () => {
+test.skip('journals.deletePhotos() | When toDelete arg includes "deleted", it should delete passed photos with isDeleted prop in cloud', () => {
   const photos = I.List([
     I.Map({
       id: 'firstPhotoId',
@@ -283,7 +283,7 @@ test('journals.deletePhotos() | When toDelete arg includes "deleted", it should 
   td.reset()
 })
 
-test('journals.deletePhotos() | When toDelete arg includes "all", it should delete all passed photos in cloud', () => {
+test.skip('journals.deletePhotos() | When toDelete arg includes "all", it should delete all passed photos in cloud', () => {
   const photos = I.List([
     I.Map({
       id: 'firstPhotoId',

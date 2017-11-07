@@ -122,6 +122,7 @@ class PlanForm extends React.PureComponent {
 
     return (
       <form
+        style={{ height: 700 }}
         className='pt2 pb3 pr2 pl2'
         ref={this.rootElRef}
         onSubmit={this.handleSubmit}

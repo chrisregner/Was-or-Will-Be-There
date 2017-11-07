@@ -55,6 +55,4 @@ PlanItem.propTypes = {
   }).isRequired,
 }
 
-/*: <div style={{ paddingRight: 16 }} className='h-100 flex--i items-center'><div>TimeBadge</div></div> */
-
 export default PlanItem

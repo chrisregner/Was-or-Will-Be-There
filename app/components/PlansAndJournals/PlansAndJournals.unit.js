@@ -59,13 +59,8 @@ test('PlansAndJournals | it should render a link to add a journal', () => {
   assert.equal(actual, expected)
 })
 
-test.skip('PlansAndJournals | if there is no plans nor journals, it should render a message')
-test.skip('PlansAndJournals | if there is no plans nor journals, it should NOT render the message for lacking plans alone')
-test.skip('PlansAndJournals | if there is no plans nor journals, it should NOT render the message for lacking journals alone')
-test.skip('PlansAndJournals | if there is journal(s) but no plan, it should render a message for lacking plans')
-test.skip('PlansAndJournals | if there is journal(s) but no plan, it should NOT render a message for lacking BOTH plans and journals')
-test.skip('PlansAndJournals | if there is plan(s) but no journal, it should render a message for lacking journals')
-test.skip('PlansAndJournals | if there is plan(s) but no journal, it should NOT render a message for lacking BOTH plans and journals')
+test.skip('PlansAndJournals | if there is no plan, it should render a message for lacking plans')
+test.skip('PlansAndJournals | if there is no journal, it should render a message for lacking journals')
 
 test('PlansAndJournals | if plans are provided, it should render each', () => {
   const testWithVars = (plans, quantity) => {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import IPropTypes from 'react-immutable-proptypes'
 import { Link } from 'react-router-dom'
 import PlanItem from 'components/PlanItem'
+import JournalItem from 'components/JournalItem'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import Subheader from 'material-ui/Subheader'
@@ -38,7 +39,7 @@ const PlansAndJournals = ({
       <Subheader>Journals</Subheader>
       {
         journals && journals.map(journal => (
-          <div
+          <JournalItem
             className='plans-and-journals-journal-item'
             key={journal.get('id')}
             countryId={countryId}

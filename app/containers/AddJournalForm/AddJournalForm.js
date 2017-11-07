@@ -3,7 +3,7 @@ import I from 'immutable'
 import shortid from 'shortid'
 
 import JournalForm from 'components/JournalForm'
-import { addJournal } from 'state/journals'
+import { addJournal, deletePhotos } from 'state/journals'
 import withHeightWatcher from 'containers/withHeightWatcher'
 
 const mapStateToProps = () => ({
@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
     dispatch(addJournal(journalWithCountryId))
   },
-  handleDeletePhotos: () => {},
+  handleDeletePhotos: deletePhotos,
 })
 
 const AddJournalForm = connect(mapStateToProps, mapDispatchToProps)(

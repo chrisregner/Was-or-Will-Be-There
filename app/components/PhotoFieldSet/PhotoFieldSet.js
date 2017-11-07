@@ -7,6 +7,7 @@ import IconButton from 'material-ui/IconButton'
 import TextField from 'material-ui/TextField'
 import CloseIcon from 'material-ui/svg-icons/content/clear'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
+import RestoreIcon from 'material-ui/svg-icons/action/restore'
 
 import { createJournalThumbUrl, createJournalPhotoUrl } from 'constants/'
 
@@ -42,13 +43,18 @@ class PhotoFieldSet extends React.PureComponent {
     const { handleDeletePhoto, id } = this.props
     handleDeletePhoto(id)
   }
+  handleRestorePhoto = () => {
+    const { handleRestorePhoto, id } = this.props
+    handleRestorePhoto(id)
+  }
 
   render = () => {
-    const { path, description } = this.props
+    const { path, description, isDeleted } = this.props
     const { fullSizedPhotoVisiblity } = this.state
 
     return (
       <div>
+        {/*The full-sized photo*/}
         <div
           style={{ backgroundColor: 'rgba(0, 0, 0, 0.54)' }}
           className={c(
@@ -75,14 +81,23 @@ class PhotoFieldSet extends React.PureComponent {
             />
           </Paper>
         </div>
+
+        {/*The field set*/}
         <div className='flex items-center'>
-          <div className='w-20 tc' style={{ maxWidth: 60 }}>
+          <div className='w-20 tc relative' style={{ maxWidth: 60 }}>
             <img
               className='photo-field-set-thumb-photo db w-100 h-auto pointer'
               onClick={this.handleShowFullSizedPhoto}
               src={createJournalThumbUrl(path)}
               alt={description}
             />
+            {
+              isDeleted
+              && <div
+                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.54)' }}
+                  className={'photo-field-set-thumb-photo-overlay absolute absolute--fill z-1'}
+                />
+            }
           </div>
           <div className='relative flex-grow-1 pl2' style={{ top: -4 }}>
             <TextField
@@ -93,16 +108,29 @@ class PhotoFieldSet extends React.PureComponent {
               multiLine
               rowsMax={4}
               value={description}
+              disabled={isDeleted ? true : false}
             />
           </div>
           <div>
-            <IconButton
-              onClick={this.handleDeletePhoto}
-              className='photo-field-set-delete-photo-btn'
-              tooltip='SVG Icon'
-            >
-              <DeleteIcon />
-            </IconButton>
+            {
+              isDeleted
+                ? <IconButton
+                    onClick={this.handleRestorePhoto}
+                    className='photo-field-set-restore-photo-btn'
+                    tooltip='restore photohoto'
+                    tooltipPosition='bottom-left'
+                  >
+                    <RestoreIcon />
+                  </IconButton>
+                : <IconButton
+                    onClick={this.handleDeletePhoto}
+                    className='photo-field-set-delete-photo-btn'
+                    tooltip='delete photo'
+                    tooltipPosition='bottom-left'
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+            }
           </div>
         </div>
       </div>

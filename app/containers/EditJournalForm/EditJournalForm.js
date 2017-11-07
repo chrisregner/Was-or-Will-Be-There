@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import JournalForm from 'components/JournalForm'
-import { editJournal, deleteJournal } from 'state/journals'
+import { editJournal, deleteJournal, deletePhotos } from 'state/journals'
 import { journalsGetters } from 'state'
 import withHeightWatcher from 'containers/withHeightWatcher'
 
@@ -19,6 +19,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   handleDelete: (id) => {
     dispatch(deleteJournal(id))
   },
+  handleDeletePhotos: deletePhotos,
 })
 
 const EditJournalForm = connect(mapStateToProps, mapDispatchToProps)(

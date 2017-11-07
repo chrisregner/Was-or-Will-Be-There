@@ -58,7 +58,7 @@ const App = () => (
             minHeight: 'calc(100vh - 48px)',
             backgroundColor: 'rgba(0, 0, 0, 0.54)',
           }}
-          className='relative z-1 pa2'
+          className='relative z-1 pa2 h-100'
         >
           <PaperWithHeight>
             <AnimatedSwitchWrpr className='relative'>
