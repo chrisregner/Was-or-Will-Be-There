@@ -16,8 +16,10 @@ class PhotoFieldSet extends React.PureComponent {
     path: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     handleDeletePhoto: PropTypes.func.isRequired,
+    handleRestorePhoto: PropTypes.func.isRequired,
     handleSetPhotoDesc: PropTypes.func.isRequired,
     description: PropTypes.string.isRequired,
+    isDeleted: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -54,7 +56,7 @@ class PhotoFieldSet extends React.PureComponent {
 
     return (
       <div>
-        {/*The full-sized photo*/}
+        {/* The full-sized photo */}
         <div
           style={{ backgroundColor: 'rgba(0, 0, 0, 0.54)' }}
           className={c(
@@ -82,7 +84,7 @@ class PhotoFieldSet extends React.PureComponent {
           </Paper>
         </div>
 
-        {/*The field set*/}
+        {/* The field set */}
         <div className='flex items-center'>
           <div className='w-20 tc relative' style={{ maxWidth: 60 }}>
             <img
@@ -92,11 +94,11 @@ class PhotoFieldSet extends React.PureComponent {
               alt={description}
             />
             {
-              isDeleted
-              && <div
-                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.54)' }}
-                  className={'photo-field-set-thumb-photo-overlay absolute absolute--fill z-1'}
-                />
+              isDeleted &&
+              <div
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.54)' }}
+                className={'photo-field-set-thumb-photo-overlay absolute absolute--fill z-1'}
+              />
             }
           </div>
           <div className='relative flex-grow-1 pl2' style={{ top: -4 }}>
@@ -108,28 +110,28 @@ class PhotoFieldSet extends React.PureComponent {
               multiLine
               rowsMax={4}
               value={description}
-              disabled={isDeleted ? true : false}
+              disabled={!!isDeleted}
             />
           </div>
           <div>
             {
               isDeleted
                 ? <IconButton
-                    onClick={this.handleRestorePhoto}
-                    className='photo-field-set-restore-photo-btn'
-                    tooltip='restore photohoto'
-                    tooltipPosition='bottom-left'
-                  >
-                    <RestoreIcon />
-                  </IconButton>
+                  onClick={this.handleRestorePhoto}
+                  className='photo-field-set-restore-photo-btn'
+                  tooltip='restore photohoto'
+                  tooltipPosition='bottom-left'
+                >
+                  <RestoreIcon />
+                </IconButton>
                 : <IconButton
-                    onClick={this.handleDeletePhoto}
-                    className='photo-field-set-delete-photo-btn'
-                    tooltip='delete photo'
-                    tooltipPosition='bottom-left'
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                  onClick={this.handleDeletePhoto}
+                  className='photo-field-set-delete-photo-btn'
+                  tooltip='delete photo'
+                  tooltipPosition='bottom-left'
+                >
+                  <DeleteIcon />
+                </IconButton>
             }
           </div>
         </div>

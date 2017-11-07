@@ -6,10 +6,6 @@ import * as R from 'ramda'
 
 import journalsReducer, * as fromJournals from './journals'
 
-const mocks = {
-  initialState: I.List([]),
-}
-
 test.skip('journals | it should return the correct default state')
 
 /**
@@ -384,7 +380,6 @@ test('journals.ADD_JOURNAL | it should work', () => {
 })
 
 test('journals.EDIT_JOURNAL | it should work', () => {
-
   const initialState = I.List([
     I.Map({
       id: '1',
@@ -457,7 +452,6 @@ test('journals.EDIT_JOURNAL | it should work', () => {
 })
 
 test('journals.DELETE_JOURNAL | it should work', () => {
-
   const initialState = I.List([
     I.Map({
       id: '1',

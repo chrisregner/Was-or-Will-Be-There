@@ -143,6 +143,61 @@ test('ui.SET_PAPER_HEIGHT | it should work', () => {
   tryUpdatingAHeight()
 })
 
+test('ui.SET_GHOST_HEIGHT | it should work', () => {
+  const tryAddingToEmptyHeights = () => {
+    const initialState = I.fromJS({
+      ghostHeights: {},
+    })
+    const action = fromUi.setGhostHeight('someGhost', 143)
+
+    const actual = uiReducer(initialState, action).get('ghostHeights')
+    const expected = I.Map({ someGhost: 143 })
+
+    assert.isTrue(actual.equals(expected))
+  }
+
+  const tryAddingToNonEmptyHeights = () => {
+    const initialState = I.fromJS({
+      ghostHeights: {
+        firstGhost: 111,
+      },
+    })
+    const action = fromUi.setGhostHeight('secondGhost', 222)
+
+    const actual = uiReducer(initialState, action)
+    const expected = I.fromJS({
+      ghostHeights: {
+        firstGhost: 111,
+        secondGhost: 222,
+      },
+    })
+
+    assert.isTrue(actual.equals(expected))
+  }
+
+  const tryUpdatingAHeight = () => {
+    const initialState = I.fromJS({
+      ghostHeights: {
+        someGhost: 666,
+      },
+    })
+    const action = fromUi.setGhostHeight('someGhost', 143)
+
+    const actual = uiReducer(initialState, action)
+    const expected = I.fromJS({
+      ghostHeights: {
+        someGhost: 143,
+      },
+    })
+
+    assert.isTrue(actual.equals(expected))
+  }
+
+  tryAddingToEmptyHeights()
+  tryAddingToNonEmptyHeights()
+  tryUpdatingAHeight()
+})
+
 test('ui.SET_REAL_ROUTE', () => {
   const tryUpdatingANull = () => {
     const initialState = I.fromJS({ realRoute: null })
@@ -198,6 +253,21 @@ test('ui.getHighestHeight() | it should work', () => {
   })
 
   const actual = uiGetters.getHighestHeight(state)
+  const expected = 999
+
+  assert.equal(actual, expected)
+})
+
+test('ui.getHighestGhostHeight() | it should work', () => {
+  const state = I.fromJS({
+    ghostHeights: {
+      firstPaper: 0,
+      secondPaper: 999,
+      thirdPaper: 143,
+    },
+  })
+
+  const actual = uiGetters.getHighestGhostHeight(state)
   const expected = 999
 
   assert.equal(actual, expected)

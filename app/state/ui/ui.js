@@ -12,6 +12,7 @@ const defaultState = I.fromJS({
     message: '',
   },
   paperHeights: I.Map({}),
+  ghostHeights: I.Map({}),
 })
 
 /**
@@ -20,6 +21,7 @@ const defaultState = I.fromJS({
 
 export const HIDE_SNACKBAR = 'ui/HIDE_SNACKBAR'
 export const SET_PAPER_HEIGHT = 'ui/SET_PAPER_HEIGHT'
+export const SET_GHOST_HEIGHT = 'ui/SET_GHOST_HEIGHT'
 export const SET_REAL_ROUTE = 'ui/SET_REAL_ROUTE'
 
 /**
@@ -29,6 +31,10 @@ export const SET_REAL_ROUTE = 'ui/SET_REAL_ROUTE'
 export const hideSnackbar = createAction(HIDE_SNACKBAR)
 export const setPaperHeight = createAction(
   SET_PAPER_HEIGHT,
+  (paperName, height) => ({ paperName, height }),
+)
+export const setGhostHeight = createAction(
+  SET_GHOST_HEIGHT,
   (paperName, height) => ({ paperName, height }),
 )
 export const setRealRoute = createAction(SET_REAL_ROUTE)
@@ -57,6 +63,8 @@ const uiReducer = handleActions({
     state.setIn(['snackbar', 'isVisible'], false),
   [SET_PAPER_HEIGHT]: (state, { payload }) =>
     state.setIn(['paperHeights', payload.paperName], payload.height),
+  [SET_GHOST_HEIGHT]: (state, { payload }) =>
+    state.setIn(['ghostHeights', payload.paperName], payload.height),
   [SET_REAL_ROUTE]: (state, { payload }) =>
     state.set('realRoute', payload),
 }, defaultState)
@@ -69,6 +77,11 @@ export const uiGetters = {
   getSnackbarInfo: state => state.get('snackbar'),
   getHighestHeight: state =>
     state.get('paperHeights')
+      .reduce((highestHeight, currentHeight) =>
+        currentHeight > highestHeight ? currentHeight : highestHeight,
+      0),
+  getHighestGhostHeight: state =>
+    state.get('ghostHeights')
       .reduce((highestHeight, currentHeight) =>
         currentHeight > highestHeight ? currentHeight : highestHeight,
       0),

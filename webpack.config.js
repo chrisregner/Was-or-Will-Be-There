@@ -69,6 +69,6 @@ module.exports = {
       state: resolve(__dirname, 'app/state'),
       constants: resolve(__dirname, 'app/constants'),
     },
-    extensions: ['.js']
+    extensions: ['.js'],
   },
 }

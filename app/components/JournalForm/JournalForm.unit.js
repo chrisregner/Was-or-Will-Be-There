@@ -586,7 +586,7 @@ test('JournalForm[imageUpload] > PhotoFieldSet | it should render it with correc
     const actual = R.pick(
       [
         'id', 'path', 'description', 'isDeleted',
-        'handleDeletePhoto', 'handleRestorePhoto', 'handleSetPhotoDesc'
+        'handleDeletePhoto', 'handleRestorePhoto', 'handleSetPhotoDesc',
       ],
       allProps
     )
@@ -608,7 +608,7 @@ test('JournalForm[imageUpload] > PhotoFieldSet | it should render it with correc
     const actual = R.pick(
       [
         'id', 'path', 'description', 'isDeleted',
-        'handleDeletePhoto', 'handleRestorePhoto', 'handleSetPhotoDesc'
+        'handleDeletePhoto', 'handleRestorePhoto', 'handleSetPhotoDesc',
       ],
       allProps
     )
@@ -974,7 +974,7 @@ test('JournalForm[imageUpload] | when unmounted and status is the default of "no
   ])
 
   wrapper.setState(({ values }) => ({
-    values: values.set('photos', photos)
+    values: values.set('photos', photos),
   }))
   wrapper.unmount()
 
@@ -1009,7 +1009,7 @@ test('JournalForm[imageUpload] | when unmounted and status is "saved", it should
 
   wrapper.setState(({ values }) => ({
     status: 'saved',
-    values: values.set('photos', photos)
+    values: values.set('photos', photos),
   }))
   wrapper.unmount()
 
@@ -1044,7 +1044,7 @@ test('JournalForm[imageUpload] | when unmounted and status is "deleted", it shou
 
   wrapper.setState(({ values }) => ({
     status: 'deleted',
-    values: values.set('photos', photos)
+    values: values.set('photos', photos),
   }))
   wrapper.unmount()
 

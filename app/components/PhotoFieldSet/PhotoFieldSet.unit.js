@@ -176,7 +176,7 @@ test('PhotoFieldSet > DescriptionField | when changed, it should call handleSetP
 
 test('PhotoFieldSet > DescriptionField | if isDeleted prop is true, it should be disabled', () => {
   const props = {
-    isDeleted: true
+    isDeleted: true,
   }
 
   const descFieldWrpr = setup({ props }).find('.photo-field-set-description-field')
@@ -258,4 +258,3 @@ test('PhotoFieldSet > RestorePhotoButton | when clicked, it should call handleRe
 
   td.verify(defProps.handleRestorePhoto(expectedArg), { times: 1 })
 })
-

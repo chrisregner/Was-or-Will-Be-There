@@ -42,14 +42,14 @@ export const deletePhotosShell = ({ localCloudinary }) => ({ toDelete, photos })
     .map(photo => photo.get('id'))
     .toJS()
 
-  console.log('Images to delete:', photoIds)
+  console.log('Images to delete:', photoIds) // eslint-disable-line no-console
 
   // if (photoIds.length)
   //   localCloudinary.v2.api.delete_resources(photoIds, (error, result) => {
   //     if (error)
   //       console.error('Error in attempt to delete the image(s) in cloud: ', error)
   //     else
-  //       console.log('Successfully uploaded images: ', result)
+  //       console.log('Successfully uploaded images: ', result) // eslint-disable-line no-console
   //   })
 }
 

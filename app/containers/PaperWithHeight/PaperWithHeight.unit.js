@@ -19,14 +19,30 @@ test('PaperWithHeight | it should render without error', () => {
   assert.isTrue(actual)
 })
 
-test('PaperWithHeight | it should use the height prop as style', () => {
+test('PaperWithHeight | it should use the height prop as height', () => {
   const props = { height: 143 }
   const wrapper = setup({ props })
 
-  const actual = wrapper.prop('style')
-  const expected = props
+  const actual = wrapper
+    .find('.paper-with-height-paper')
+    .prop('style')
+    .height
+  const expected = 143
 
-  assert.deepEqual(actual, expected)
+  assert.equal(actual, expected)
+})
+
+test('PaperWithHeight > ghost | it should use the ghostHeight as height', () => {
+  const props = { ghostHeight: 666 }
+  const wrapper = setup({ props })
+
+  const actual = wrapper
+    .find('.paper-with-height-ghost')
+    .prop('style')
+    .height
+  const expected = 666
+
+  assert.equal(actual, expected)
 })
 
 test('PaperWithHeight | it should render its children', () => {

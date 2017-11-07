@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom'
 
 import { ListItem } from 'material-ui/List'
 
-import TimeBadge from 'components/TimeBadge'
-
 const smartFormatDate = date =>
   date
     ? formatDate(date, 'MM/DD/YY')

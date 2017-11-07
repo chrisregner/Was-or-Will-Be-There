@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import ResizeDetector from 'react-resize-detector'
 
-import { setPaperHeight } from 'state/ui'
+import { setPaperHeight, setGhostHeight } from 'state/ui'
 import { uiGetters } from 'state'
 
 export default (WrappedCmpt, componentName) => {
@@ -13,6 +13,7 @@ export default (WrappedCmpt, componentName) => {
     })`
 
     static propTypes = {
+      setGhostHeight: PropTypes.func.isRequired,
       setPaperHeight: PropTypes.func.isRequired,
       isRouteCurrent: PropTypes.func.isRequired,
       location: PropTypes.shape({
@@ -22,10 +23,17 @@ export default (WrappedCmpt, componentName) => {
 
     componentDidMount = () => {
       this.props.setPaperHeight(this.rootEl.offsetHeight)
+      this.props.setGhostHeight(this.rootEl.offsetHeight)
+    }
+
+    componentWillUnmount = () => {
+      this.props.setGhostHeight(0)
     }
 
     componentDidUpdate = () => {
       const { isRouteCurrent, setPaperHeight, location } = this.props
+
+      this.props.setGhostHeight(this.rootEl.offsetHeight)
 
       if (isRouteCurrent(location.pathname))
         setPaperHeight(this.rootEl.offsetHeight)
@@ -56,6 +64,9 @@ export default (WrappedCmpt, componentName) => {
   const mapDispatchToProps = dispatch => ({
     setPaperHeight: (height) => {
       dispatch(setPaperHeight(componentName, height))
+    },
+    setGhostHeight: (height) => {
+      dispatch(setGhostHeight(componentName, height))
     },
   })
 

@@ -6,19 +6,23 @@ import Paper from 'material-ui/Paper'
 
 import { uiGetters } from 'state'
 
-const BarePaperWithHeight = ({ height, children }) => (
-  <Paper style={{ height }}>
-    {children}
-  </Paper>
+const BarePaperWithHeight = ({ height, ghostHeight, children }) => (
+  <div className='paper-with-height-ghost' style={{ height: ghostHeight }}>
+    <Paper className='paper-with-height-paper' style={{ height }}>
+      {children}
+    </Paper>
+  </div>
 )
 
 BarePaperWithHeight.propTypes = {
   height: PropTypes.number.isRequired,
+  ghostHeight: PropTypes.number.isRequired,
   children: PropTypes.node,
 }
 
 const mapStateToProps = state => ({
   height: uiGetters.getHighestHeight(state),
+  ghostHeight: uiGetters.getHighestGhostHeight(state),
 })
 
 const PaperWithHeight = connect(mapStateToProps)(BarePaperWithHeight)

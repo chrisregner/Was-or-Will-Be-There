@@ -71,7 +71,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
 
       handleDeletePhotos({
         photos: values.get('photos'),
-        toDelete: [toDelete]
+        toDelete: [toDelete],
       })
     }
 
@@ -157,9 +157,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
           upload_preset: CLOUDINARY_UPLOAD_PRESET,
         },
         (err, res) => {
-          if (err)
-            console.error('Error upon uploading:', err)
-          else if (res) {
+          if (err) { console.error('Error upon uploading:', err) } else if (res) {
             const photosData = res.map(photoData => I.Map({
               id: photoData.public_id,
               path: photoData.path,
@@ -175,20 +173,20 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
     }
     handleDeletePhoto = (photoId) => {
       this.setState(({ values }) => ({
-          values: values.update('photos', photos =>
-            photos.map(photo =>
-              photo.get('id') === photoId
-                ? photo.set('isDeleted', true)
-                : photo))
+        values: values.update('photos', photos =>
+          photos.map(photo =>
+            photo.get('id') === photoId
+              ? photo.set('isDeleted', true)
+              : photo)),
       }))
     }
     handleRestorePhoto = (photoId) => {
       this.setState(({ values }) => ({
-          values: values.update('photos', photos =>
-            photos.map(photo =>
-              photo.get('id') === photoId
-                ? photo.delete('isDeleted')
-                : photo))
+        values: values.update('photos', photos =>
+          photos.map(photo =>
+            photo.get('id') === photoId
+              ? photo.delete('isDeleted')
+              : photo)),
       }))
     }
     handleSetPhotoDesc = (photoId, description) => {
