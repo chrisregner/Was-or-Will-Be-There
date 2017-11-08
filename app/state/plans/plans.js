@@ -45,6 +45,7 @@ const plansReducer = handleActions({
 export const plansGetters = {
   getPlansByCountryId: (plans, countryId) => plans.filter(plan => plan.get('countryId') === countryId),
   getPlan: (plans, id) => plans.find(plan => plan.get('id') === id),
+  getPlans: plans => plans,
 }
 
 export default plansReducer

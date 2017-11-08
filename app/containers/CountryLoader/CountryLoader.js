@@ -34,7 +34,7 @@ const countryLoaderShell = ({ requestPromise }) =>
     componentDidMount = () => {
       const { setNotFound, countryId, pathname } = this.props
 
-      requestPromise(COUNTRIES_JSON_URL)
+      this.request = requestPromise(COUNTRIES_JSON_URL)
         .then((countryNamesJson) => {
           const countryNames = JSON.parse(countryNamesJson)
           const countryName = countryNames[countryId.toUpperCase()]
@@ -49,6 +49,10 @@ const countryLoaderShell = ({ requestPromise }) =>
 
           this.setState({ error })
         })
+    }
+
+    componentWillUnmount = () => {
+      this.request.cancel()
     }
 
     handleErrorToggle = () => {
@@ -70,7 +74,6 @@ const countryLoaderShell = ({ requestPromise }) =>
         ...otherProps
       } = this.props
 
-      // Sorry, an error is encountered while getting the county name. Please try refreshing the app.
       if (countryName)
         content = this.state.countryName
       else if (error)

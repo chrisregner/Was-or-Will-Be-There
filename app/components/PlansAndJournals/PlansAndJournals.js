@@ -21,7 +21,7 @@ const PlansAndJournals = ({
       <Subheader>Plans</Subheader>
       {
         plans.isEmpty()
-          ? <div className='plans-and-journals-no-plan-msg pl3 pb2'>
+          ? <div className='plans-and-journals-no-plan-msg pl3 pb2 i'>
               You haven’t added any plan!
             </div>
           : plans.map(plan => (
@@ -43,7 +43,7 @@ const PlansAndJournals = ({
       <Subheader>Journals</Subheader>
       {
         journals.isEmpty()
-          ? <div className='plans-and-journals-no-journal-msg pl3 pb2'>
+          ? <div className='plans-and-journals-no-journal-msg pl3 pb2 i'>
               You haven’t added any journal entry!
             </div>
           : journals.map(journal => (

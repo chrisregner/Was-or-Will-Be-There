@@ -82,4 +82,5 @@ export default journalsReducer
 export const journalsGetters = {
   getJournalsByCountryId: (journals, countryId) => journals.filter(journal => journal.get('countryId') === countryId),
   getJournal: (journals, id) => journals.find(journal => journal.get('id') === id),
+  getJournals: journals => journals,
 }

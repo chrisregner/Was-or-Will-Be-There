@@ -11,6 +11,7 @@ const any = td.matchers.anything()
 const fakePromise = {
   then: () => fakePromise,
   catch: () => fakePromise,
+  cancel: td.func(),
 }
 
 const defProps = {
@@ -102,30 +103,7 @@ test('components.CountryLoader | if fetch is resolved, but country code has NO m
 // We have issues related with SVG, material-ui, and JSDOM. Watch out on these for he meanwhile:
 //   https://github.com/callemall/material-ui/issues/8643
 //   https://github.com/tmpvar/jsdom/pull/2011
-test.skip('components.CountryLoader | if fetch is rejected, should show the country code', () => {
-  const testWithVars = (countryId) => {
-    const props = { countryId }
-    const wrapper = setup({
-      props,
-      hooks: {
-        beforeRender: () => {
-          td.replace(console, 'error') // silence logs from the component
-          td.when(defDeps.requestPromise(any))
-            .thenReject()
-        },
-      },
-    })
-
-    const actual = wrapper.text().includes(countryId.toUpperCase())
-
-    assert.isTrue(actual)
-  }
-
-  testWithVars('ph')
-  testWithVars('us')
-  testWithVars('jp')
-})
-
+test.skip('components.CountryLoader | if fetch is rejected, should show the country code')
 test.skip('components.CountryLoader | if fetch is rejected, it should show an info button')
 test.skip('components.CountryLoader | if fetch is rejected and info button is clicked, it toggle the info popover')
 test.skip('components.CountryLoader | if fetch is rejected, it should NOT fire the click handler twice on first and subsequent key presses of enter and space key')
@@ -175,4 +153,10 @@ test('components.CountryLoader | it should pass the other props to the wrapper',
   assert.isTrue(actual)
 })
 
-test.skip('components.CountryLoader | if unmounted and the fetch is not resolved yet, it should cancel the fetch')
+test('components.CountryLoader | if unmounted, it should cancel the fetch', () => {
+  const wrapper = setup()
+
+  wrapper.unmount()
+
+  td.verify(fakePromise.cancel())
+})

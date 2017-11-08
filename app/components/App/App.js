@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Route, withRouter } from 'react-router-dom'
+import { Route, withRouter, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { AnimatedSwitch } from 'react-router-transition'
 
@@ -24,6 +24,7 @@ import EditJournalForm from 'containers/EditJournalForm'
 import PaperWithHeight from 'containers/PaperWithHeight'
 import NotifSnackbar from 'containers/NotifSnackbar'
 import RealRouteWatcher from 'containers/RealRouteWatcher'
+import NotFoundSetter from 'containers/NotFoundSetter'
 
 const AnimatedSwitchWrpr = styled.div`
   & > div > div,
@@ -56,47 +57,49 @@ const BareApp = ({ isPathNotFound, location }) => (
       </div>
 
 
-      {/* TODO: Put the uppermost route within Switch with fallback route that only sets notFound in route */}
       {
         isPathNotFound(location.pathname)
         ? <NotFound />
-        : <Route path='/countries/:countryId' render={({ match, history }) => (
-            <div
-              style={{
-                top: 48,
-                minHeight: 'calc(100vh - 48px)',
-                backgroundColor: 'rgba(0, 0, 0, 0.54)',
-              }}
-              className='relative z-1 pa2 h-100'
-            >
-              <PaperWithHeight>
-                <CountryLoader
-                  className='ma0 pa2'
-                  wrapperEl='h2'
-                  countryId={match.params.countryId}
-                  pathname={location.pathname}
-                  history={history}
-                />
-                <AnimatedSwitchWrpr className='relative'>
-                  <AnimatedSwitch
-                    atEnter={{ opacity: 0 }}
-                    atLeave={{ opacity: 0 }}
-                    atActive={{ opacity: 1 }}
-                  >
-                    <Route exact path='/countries/:countryId' component={PopulatedPlansAndJournals} />
-                    <Route path='/countries/:countryId/plans/new' component={AddPlanForm} />
-                    <Route path='/countries/:countryId/plans/:id' component={EditPlanForm} />
-                    <Route path='/countries/:countryId/journals/new' component={AddJournalForm} />
-                    <Route path='/countries/:countryId/journals/:id' component={EditJournalForm} />
-                    {/* TODO: Add fallback route with component that only sets notFound in route */}
-                  </AnimatedSwitch>
-                </AnimatedSwitchWrpr>
-              </PaperWithHeight>
-            </div>
-          )} />
+        : <Switch>
+            <Route path='/countries/:countryId' render={({ match, history }) => (
+              <div
+                style={{
+                  top: 48,
+                  minHeight: 'calc(100vh - 48px)',
+                  backgroundColor: 'rgba(0, 0, 0, 0.54)',
+                }}
+                className='relative z-1 pa2 h-100'
+              >
+                <PaperWithHeight>
+                  <CountryLoader
+                    className='ma0 pa2'
+                    wrapperEl='h2'
+                    countryId={match.params.countryId}
+                    pathname={location.pathname}
+                    history={history}
+                  />
+                  <AnimatedSwitchWrpr className='relative'>
+                    <AnimatedSwitch
+                      atEnter={{ opacity: 0 }}
+                      atLeave={{ opacity: 0 }}
+                      atActive={{ opacity: 1 }}
+                    >
+                      <Route exact path='/countries/:countryId' component={PopulatedPlansAndJournals} />
+                      <Route exact path='/countries/:countryId/plans/new' component={AddPlanForm} />
+                      <Route exact path='/countries/:countryId/plans/:id' component={EditPlanForm} />
+                      <Route exact path='/countries/:countryId/journals/new' component={AddJournalForm} />
+                      <Route exact path='/countries/:countryId/journals/:id' component={EditJournalForm} />
+                      <Route component={NotFoundSetter} />
+                    </AnimatedSwitch>
+                  </AnimatedSwitchWrpr>
+                </PaperWithHeight>
+              </div>
+            )} />
+            <Route exact path='/' />
+            <Route component={NotFoundSetter} />
+          </Switch>
       }
 
-      <Route path='/404' component={NotFound} />
       <NotifSnackbar />
       <RealRouteWatcher />
     </div>

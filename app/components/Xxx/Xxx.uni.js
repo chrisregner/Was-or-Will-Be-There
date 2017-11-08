@@ -8,7 +8,7 @@ const setup = TU.makeTestSetup({
   Component: Xxx,
 })
 
-test('Xxx | it should render without error', () => {
+test('yyyyy.Xxx | it should render without error', () => {
   const wrapper = setup()
   const actual = wrapper.exists()
 

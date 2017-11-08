@@ -560,3 +560,27 @@ test('state.journals.getJournal() | it should work', () => {
 
   assert.isTrue(actual.equals(expected))
 })
+
+test('state.journals.getJournals() | it should work', () => {
+  const state = I.List([
+    I.Map({
+      id: '1',
+      title: 'First Journal',
+    }),
+    I.Map({
+      id: '2',
+      title: 'Second Journal',
+      departure: new Date(2001, 0, 1),
+      homecoming: new Date(2001, 0, 10),
+    }),
+    I.Map({
+      id: '3',
+      title: 'Third Journal',
+    }),
+  ])
+
+  const actual = journalsGetters.getJournals(state)
+  const expected = state
+
+  assert.isTrue(actual.equals(expected))
+})

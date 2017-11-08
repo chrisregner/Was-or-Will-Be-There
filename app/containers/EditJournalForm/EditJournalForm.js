@@ -3,12 +3,13 @@ import { batchActions } from 'redux-batched-actions'
 
 import JournalForm from 'components/JournalForm'
 import { editJournal, deleteJournal, deletePhotos } from 'state/journals'
-import { setSnackbar } from 'state/ui'
+import { setSnackbar, setNotFound } from 'state/ui'
 import { journalsGetters } from 'state'
 import withHeightWatcher from 'containers/withHeightWatcher'
 
 const mapStateToProps = (state, { match }) => ({
-  initialValues: journalsGetters.getJournal(state, match.params.id) || I.Map({}),
+  initialValues: journalsGetters.getJournal(state, match.params.id),
+  isNotFound: !journalsGetters.getJournal(state, match.params.id),
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -31,6 +32,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     ]))
   },
   handleDeletePhotos: deletePhotos,
+  setNotFound: (notFoundPath) => {
+    dispatch(setNotFound(notFoundPath))
+  }
 })
 
 const EditJournalForm = connect(mapStateToProps, mapDispatchToProps)(

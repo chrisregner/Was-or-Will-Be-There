@@ -24,7 +24,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
       handleSubmit: PropTypes.func.isRequired,
       handleDelete: PropTypes.func,
       initialValues: IPropTypes.contains({
-        id: PropTypes.string.isRequired,
+        id: PropTypes.string,
         title: PropTypes.string,
         textContent: PropTypes.string,
         departure: PropTypes.instanceOf(Date),
@@ -34,7 +34,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
           path: PropTypes.string.isRequired,
           description: PropTypes.string,
         })),
-      }).isRequired,
+      }),
       history: PropTypes.shape({
         push: PropTypes.func.isRequired,
       }).isRequired,
@@ -44,16 +44,32 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
         }).isRequired,
       }).isRequired,
       handleDeletePhotos: PropTypes.func.isRequired,
+      location: PropTypes.shape({
+        pathname: PropTypes.string.isRequired,
+      }).isRequired,
+      isNotFound: PropTypes.bool,
+      setNotFound: PropTypes.func,
+    }
+
+    static defaultProps = {
+      initialValues: I.Map()
     }
 
     state = {
       status: 'not-saved',
       values: I.Map({
-        photos: this.props.initialValues.get('photos') || I.List([]),
+        photos: this.props.initialValues.get('photos') || I.List(),
       }),
       errors: {},
       initialValues: this.props.initialValues.delete('photos'),
       photosDeleted: [],
+    }
+
+    componentWillMount = () => {
+      const { isNotFound, setNotFound, location } = this.props
+
+      if (isNotFound)
+        setNotFound(location.pathname)
     }
 
     componentWillUnmount = () => {

@@ -1,0 +1,6 @@
+{
+  "name:": "WorldOverview",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./WorldOverview.js"
+}

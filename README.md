@@ -1,26 +1,33 @@
 ## Todos
 
-- country/plan/journal 404
-  - cancel fetch of CountryLoad on unmount
-  - country/ph/journals/id/*
-  - country/ph/plans/id/*
-  - country/ph/journals/:crap
-  - country/ph/plans/:crap
-  - country/:crap
-  - country/*
-  - *
-  - TODO: Put the uppermost route within Switch with fallback route that only sets notFound in route
-  - TODO: Add fallback route with component that only sets notFound in route
-
-- countries overview
+- world overview
+  - no of plans
   - no of journals
   - no of countries traveled
-  - no of plans
-  - plans only, collapsible if has notes
-  - journals only, with photos, collapsible if has notes/photos
-- country overview
-  - plans only, collapsible if has notes
-  - journals only, with photos, collapsible if has notes/photos
+  - list of countries with... *alphabetical*
+    - link
+    - plan name
+    - has plan?
+    - has journal?
+  - go back to map link
+
+- country overview, edit on right-nav-link?
+  - plans tab
+    - list
+      - name
+      - dates
+      - notes
+  - journals tab
+    - all pictures
+      - descriptions
+    - list
+      - name
+      - dates
+      - text
+      - pictures
+        - descriptions
+
+- navbar
 
 - notification
   - plan turning into journal
@@ -30,32 +37,54 @@
     - 7 days before an departure/homecoming
     - 1 day before an departure/homecoming
     - on the day of departure/homecoming
-- navbar
+
 - the map
   - if has plan, destination icon
   - if has journal, flag icon
 
-- redux-persist
+- misc
+  - preloaded state?
+  - redux-persist
+  - accessibility
+  - performance test
+  - deploy
+  - performance test
+  - credits
 
 ---
 
-cThumbUrlFormat: http://res.cloudinary.com/chrisregner/image/upload/c_limit,h_60,w_90/${urlPart}
-cUrlFormat: http://res.cloudinary.com/chrisregner/image/upload/${urlPart}
-imgPathPart: v1509689468/wowbt/u1ghlbn5nvcrwfjnabvr.png
+map              - /
+world overview   - /countries/
+country overview - /countries/:countryId
+new plan         - /countries/:countryId/plans/new
+edit plan        - /countries/:countryId/plans/:id
+new journal      - /countries/:countryId/journals/new
+edit journal     - /countries/:countryId/journals/:id
 
 ---
 
-DAY 1
-  JOURNAL FORM
-  SNACKBAR
-DAY 2
-  OVERVIEWS
-DAY 3
-  NOTIF
-DAY 4
-  MAP
-DAY 5
-  POLISH???
+- scenario
+  - move country names to state
+
+- separate PaperRoutes
+
+- CountryName in PaperRoutes?
+- CountryNames in WorldOverview?
+
+  - it should render without error
+  - it should call fetch()
+  - if fetch is still loading, should show loader
+  - if fetch is resolved, and country code has match, it should show the country name
+  - if fetch is resolved, but country code has NO match, it should call setNotFound with pathname
+  - if fetch is rejected, should show the country code
+  - if fetch is rejected, it should show an info button
+  - if fetch is rejected and info button is clicked, it toggle the info popover
+  - if fetch is rejected, it should NOT fire the click handler twice on first and subsequent key presses of enter and space key
+  - if fetch is rejected, it should render an info popover containing the error message
+  - it should render the correct country flag
+  - if wrapper element is specified, it should use it
+  - it should pass the other props to the wrapper
+  - if unmounted, it should cancel the fetch
 
 ---
 

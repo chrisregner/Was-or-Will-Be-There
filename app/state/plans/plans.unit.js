@@ -206,3 +206,27 @@ test('state.plans.getPlan() | it should work', () => {
 
   assert.isTrue(actual.equals(expected))
 })
+
+test('state.plans.getPlans() | it should work', () => {
+  const state = I.List([
+    I.Map({
+      id: '1',
+      planName: 'First Plan',
+    }),
+    I.Map({
+      id: '2',
+      planName: 'Second Plan',
+      departure: new Date(2001, 0, 1),
+      homecoming: new Date(2001, 0, 10),
+    }),
+    I.Map({
+      id: '3',
+      planName: 'Third Plan',
+    }),
+  ])
+
+  const actual = plansGetters.getPlans(state)
+  const expected = state
+
+  assert.isTrue(actual.equals(expected))
+})
