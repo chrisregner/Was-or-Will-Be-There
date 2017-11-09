@@ -26,11 +26,13 @@ const PlanItem = ({ countryId, plan }) => (
       <div className='flex items-center w-100'>
         <div className='flex-grow-1 pr2 truncate'>
           {plan.get('planName')}
+
           {
-            (plan.get('homecoming') || plan.get('departure')) &&
-            <div className='pt1 f6 gray'>{createDateRange(plan)}</div>
+            (plan.get('homecoming') || plan.get('departure'))
+            && <div className='pt1 f6 gray'>{createDateRange(plan)}</div>
           }
         </div>
+
         <div>
           <TimeBadge
             className='plan-item-time-badge'
@@ -40,6 +42,7 @@ const PlanItem = ({ countryId, plan }) => (
             departure={plan.get('departure')}
           />
         </div>
+
       </div>
     </ListItem>
   </Link>

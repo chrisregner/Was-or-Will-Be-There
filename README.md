@@ -1,4 +1,6 @@
 ## Todos
+- contryNames state
+- countryName container
 
 - world overview
   - no of plans
@@ -50,6 +52,16 @@
   - deploy
   - performance test
   - credits
+  - misc
+    - styles
+      - animate.css duration
+      - material-ui Paper height transition duration
+      - react-router-transition animation
+        - add shrinking/expanding animation alongside the fading
+    - css prefixes/polyfills
+    - production optimization
+    - **important** change rawgit links as per rawgit.com for production
+    - remove excess deps
 
 ---
 
@@ -98,25 +110,9 @@ edit journal     - /countries/:countryId/journals/:id
     - pan map upon selection
   - automatic image deleting (when certain limit is met, delete in the next midnight)
 
-## Misc todo
-
-- styles
-  - animate.css duration
-  - material-ui Paper height transition duration
-  - react-router-transition animation
-    - add shrinking/expanding animation alongside the fading
-- css prefixes/polyfills
-- production optimization
-- **important** change rawgit links as per rawgit.com for production
-- remove excess deps
-
 ## Manual testing
 - plans crud
   - snackbar
 - journals crud
   - images crud
   - snackbar
-
-## Possible trash
-
-- withHeightWatcher test file

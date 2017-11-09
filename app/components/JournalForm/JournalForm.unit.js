@@ -520,34 +520,6 @@ test('components.JournalForm[imageUpload].state.values.photos | it should accept
   assert.isTrue(actual.equals(expected))
 })
 
-test('components.JournalForm[imageUpload].state.initialValues.photos | it should remove the photos property', () => {
-  const props = {
-    initialValues: I.Map({
-      id: 'initialId',
-      title: 'The Initial Title',
-      photos: I.List([
-        I.Map({
-          id: 'fakeFirstPredefinedPubId',
-          path: 'fake/first/predefined/path',
-        }),
-        I.Map({
-          id: 'fakeSecondPredefinedPubId',
-          path: 'fake/second/predefined/path',
-        }),
-      ]),
-    }),
-  }
-  const wrapper = setup({ props })
-
-  const actual = wrapper.state('initialValues')
-  const expected = I.Map({
-    id: 'initialId',
-    title: 'The Initial Title',
-  })
-
-  assert.isTrue(actual.equals(expected))
-})
-
 test('components.JournalForm[imageUpload] > PhotoFieldSet | it should render it with correct props for each photo data in state', () => {
   const wrapper = setup()
   const photos = I.List([

@@ -2,15 +2,17 @@ import { test } from 'mocha'
 import { assert } from 'chai'
 
 import * as TU from 'services/testUtils'
-import App from './App'
+import PaperRoutes from './PaperRoutes'
 
 const setup = TU.makeTestSetup({
-  Component: App,
+  Component: PaperRoutes,
 })
 
-test('components.App | it should render without error', () => {
+test('components.PaperRoutes | it should render without error', () => {
   const wrapper = setup()
   const actual = wrapper.exists()
 
   assert.isTrue(actual)
 })
+
+test('components.PaperRoutes | it should render country name cmpt with country id')

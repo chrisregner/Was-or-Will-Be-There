@@ -19,7 +19,7 @@ const validationRules = {
 }
 
 const JournalFormShell = ({ cloudinaryUploadWidget }) =>
-  class JournalForm extends React.PureComponent {
+  class JournalForm extends React.Component {
     static propTypes = {
       handleSubmit: PropTypes.func.isRequired,
       handleDelete: PropTypes.func,
@@ -57,11 +57,9 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
 
     state = {
       status: 'not-saved',
-      values: I.Map({
-        photos: this.props.initialValues.get('photos') || I.List(),
-      }),
+      values: this.props.initialValues.update('photos', photos =>
+        photos || I.List()),
       errors: {},
-      initialValues: this.props.initialValues.delete('photos'),
       photosDeleted: [],
     }
 
@@ -95,28 +93,17 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
         ? validationRules[fieldName](newVal, this.state.values)
         : ''
 
-      this.setState(({initialValues, values, errors}) => ({
-        initialValues: initialValues && initialValues.filter((v, k) =>
-          k !== fieldName
-        ),
+      this.setState(({values, errors}) => ({
         values: values.set(fieldName, newVal),
         errors: R.merge(errors, { [fieldName]: error }),
       }))
-    }
-
-    getFinalProp = (fieldName) => {
-      const { values, initialValues } = this.state
-
-      if (values.get(fieldName))
-        return values.get(fieldName)
-      else if (initialValues && initialValues.get(fieldName))
-        return initialValues.get(fieldName)
     }
 
     handleChangeTitle = this.makeHandleChange('title')
     handleChangeTextContent = this.makeHandleChange('textContent')
     handleChangeDeparture = this.makeHandleChange('departure')
     handleChangeHomecoming = this.makeHandleChange('homecoming')
+
     handleDelete = () => {
       const { match, history, initialValues } = this.props
       const id = initialValues.get('id')
@@ -126,17 +113,15 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
 
       history.push(`/countries/${match.params.countryId}`)
     }
+
     handleSubmit = (ev) => {
       ev.preventDefault()
 
-      // Merge values with final initial values, if any
-      const mergedValues = this.state.initialValues
-        ? this.state.initialValues.merge(this.state.values)
-        : this.state.values
+      const { values } = this.state
 
       // Validate all fields
       const errors = Object.keys(validationRules).reduce((errorsAcc, fieldName) => {
-        const error = validationRules[fieldName](mergedValues.get(fieldName), mergedValues)
+        const error = validationRules[fieldName](values.get(fieldName), values)
 
         errorsAcc[fieldName] = error
 
@@ -159,12 +144,13 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
           history,
           match,
         } = this.props
-        const trimmedValues = mergedValues.map(FU.trimIfString)
+        const trimmedValues = values.map(FU.trimIfString)
 
         handleSubmit(trimmedValues, this.state.photosDeleted)
         history.push(`/countries/${match.params.countryId}`)
       }
     }
+
     handleOpenUploadWidget = () => {
       cloudinaryUploadWidget.openUploadWidget(
         {
@@ -172,7 +158,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
           upload_preset: CLOUDINARY_UPLOAD_PRESET,
         },
         (err, res) => {
-          if (err) { console.error('Error upon uploading:', err) } else if (res) {
+          if (res) {
             const photosData = res.map(photoData => I.Map({
               id: photoData.public_id,
               path: photoData.path,
@@ -182,10 +168,13 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
             this.setState(prevState => ({
               values: prevState.values.set('photos', prevState.values.get('photos').concat(photosData)),
             }))
+          } else if (err) {
+            console.error('Error upon uploading:', err)
           }
         },
       )
     }
+
     handleDeletePhoto = (photoId) => {
       this.setState(({ values }) => ({
         values: values.update('photos', photos =>
@@ -195,6 +184,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
               : photo)),
       }))
     }
+
     handleRestorePhoto = (photoId) => {
       this.setState(({ values }) => ({
         values: values.update('photos', photos =>
@@ -204,6 +194,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
               : photo)),
       }))
     }
+
     handleSetPhotoDesc = (photoId, description) => {
       this.setState(({ values }) => ({
         values: values.set(
@@ -221,7 +212,8 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
     }
 
     render = () => {
-      const { values, errors, initialValues } = this.state
+      const { initialValues } = this.props
+      const { values, errors } = this.state
 
       return (
         <form
@@ -235,7 +227,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
             floatingLabelFixed
             onChange={this.handleChangeTitle}
             errorText={errors.title || ''}
-            value={this.getFinalProp('title') || ''}
+            value={values.get('title') || ''}
           />
           <TextField
             className='journal-form-text-content-field w-100--i db--i'
@@ -244,7 +236,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
             onChange={this.handleChangeTextContent}
             multiLine
             rowsMax={4}
-            value={this.getFinalProp('textContent') || ''}
+            value={values.get('textContent') || ''}
           />
           <DatePicker
             className='journal-form-departure-field'
@@ -255,7 +247,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
             errorText={errors.departure || ''}
             minDate={new Date()}
             maxDate={values.get('homecoming')}
-            value={this.getFinalProp('departure') || null}
+            value={values.get('departure') || null}
           />
           <DatePicker
             className='journal-form-homecoming-field'
@@ -265,7 +257,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
             onChange={this.handleChangeHomecoming}
             errorText={errors.homecoming || ''}
             minDate={values.get('departure') || new Date()}
-            value={this.getFinalProp('homecoming') || null}
+            value={values.get('homecoming') || null}
           />
           <div>
             <Subheader style={{ lineHeight: '24px !important' }} className='pt3--i pb2--i pl0--i'>

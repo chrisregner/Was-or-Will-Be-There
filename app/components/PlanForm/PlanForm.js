@@ -14,7 +14,7 @@ const validationRules = {
   planName: planName => !planName && 'Plan name is required',
 }
 
-class PlanForm extends React.PureComponent {
+class PlanForm extends React.Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     handleDelete: PropTypes.func,
@@ -41,10 +41,9 @@ class PlanForm extends React.PureComponent {
   }
 
   state = {
-    values: I.Map(),
+    values: this.props.initialValues || I.Map(),
     errors: {},
     dirtyFields: [],
-    initialValues: this.props.initialValues,
   }
 
   componentWillMount = () => {
@@ -59,51 +58,40 @@ class PlanForm extends React.PureComponent {
       ? validationRules[fieldName](newVal, this.state.values)
       : ''
 
-    this.setState(({initialValues, values, errors}) => ({
-      initialValues: initialValues && initialValues.filter((v, k) =>
-        k !== fieldName
-      ),
+    this.setState(({ values, errors }) => ({
       values: values.set(fieldName, newVal),
       errors: R.merge(errors, { [fieldName]: error }),
     }))
-  }
-
-  getFinalProp = (fieldName) => {
-    const { values, initialValues } = this.state
-
-    if (values.get(fieldName))
-      return values.get(fieldName)
-    else if (initialValues && initialValues.get(fieldName))
-      return initialValues.get(fieldName)
   }
 
   handleChangePlanName = this.makeHandleChange('planName')
   handleChangeNotes = this.makeHandleChange('notes')
   handleChangeDeparture = this.makeHandleChange('departure')
   handleChangeHomecoming = this.makeHandleChange('homecoming')
+
   handleDelete = () => {
     const { match, history, initialValues } = this.props
     const id = initialValues.get('id')
-    this.props.handleDelete(id)
 
+    this.props.handleDelete(id)
     history.push(`/countries/${match.params.countryId}`)
   }
+
   handleSubmit = (ev) => {
     ev.preventDefault()
 
-    // Merge values with final initial values, if any
-    const finalValues = this.state.initialValues
-      ? this.state.initialValues.merge(this.state.values)
-      : this.state.values
+    const { values } = this.state
 
     // Validate all fields
-    const errors = Object.keys(validationRules).reduce((errorsAcc, fieldName) => {
-      const error = validationRules[fieldName](finalValues.get(fieldName), finalValues)
+    const errors = Object.keys(validationRules)
+      .reduce((errorsAcc, fieldName) => {
+        const validator = validationRules[fieldName]
+        const error = validator(values.get(fieldName), values)
 
-      errorsAcc[fieldName] = error
+        errorsAcc[fieldName] = error
 
-      return errorsAcc
-    }, {})
+        return errorsAcc
+      }, {})
 
     const isFormValid = !Object.values(errors)
       .find(error => !!error)
@@ -116,7 +104,7 @@ class PlanForm extends React.PureComponent {
         history,
         match,
       } = this.props
-      const trimmedValues = finalValues.map(FU.trimIfString)
+      const trimmedValues = values.map(FU.trimIfString)
 
       handleSubmit(trimmedValues)
       history.push(`/countries/${match.params.countryId}`)
@@ -128,7 +116,8 @@ class PlanForm extends React.PureComponent {
   }
 
   render = () => {
-    const { values, errors, initialValues } = this.state
+    const { initialValues } = this.props
+    const { values, errors } = this.state
 
     return (
       <form
@@ -143,7 +132,7 @@ class PlanForm extends React.PureComponent {
           floatingLabelFixed
           onChange={this.handleChangePlanName}
           errorText={errors.planName || ''}
-          value={this.getFinalProp('planName') || ''}
+          value={values.get('planName') || ''}
         />
         <TextField
           className='w-100--i db--i'
@@ -153,7 +142,7 @@ class PlanForm extends React.PureComponent {
           onChange={this.handleChangeNotes}
           multiLine
           rowsMax={4}
-          value={this.getFinalProp('notes') || ''}
+          value={values.get('notes') || ''}
         />
         <DatePicker
           textFieldStyle={{ width: '100%' }}
@@ -164,7 +153,7 @@ class PlanForm extends React.PureComponent {
           errorText={errors.departure || ''}
           minDate={new Date()}
           maxDate={values.get('homecoming')}
-          value={this.getFinalProp('departure') || null}
+          value={values.get('departure') || null}
         />
         <DatePicker
           textFieldStyle={{ width: '100%' }}
@@ -174,7 +163,7 @@ class PlanForm extends React.PureComponent {
           onChange={this.handleChangeHomecoming}
           errorText={errors.homecoming || ''}
           minDate={values.get('departure') || new Date()}
-          value={this.getFinalProp('homecoming') || null}
+          value={values.get('homecoming') || null}
         />
 
         <div className='tr'>

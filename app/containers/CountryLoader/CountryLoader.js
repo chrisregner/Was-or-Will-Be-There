@@ -13,7 +13,7 @@ import { COUNTRIES_JSON_URL, createFlagUrl } from 'constants/'
 import * as FU from 'services/functionalUtils'
 
 const countryLoaderShell = ({ requestPromise }) =>
-  class CountryLoader extends React.PureComponent {
+  class CountryLoader extends React.Component {
     static propTypes = {
       countryId: PropTypes.string.isRequired,
       pathname: PropTypes.string.isRequired,

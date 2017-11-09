@@ -38,6 +38,7 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-react": "^7.4.0",
     "eslint-plugin-standard": "^3.0.1",
+    "fetch": "^1.1.0",
     "history": "^4.7.2",
     "immutable": "^3.8.2",
     "is-subset": "^0.1.1",

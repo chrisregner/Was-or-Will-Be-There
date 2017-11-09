@@ -6,7 +6,7 @@ import { AppContainer } from 'react-hot-loader'
 
 import { configureStore } from 'state/store'
 
-import App from 'components/App'
+import App from 'containers/App'
 
 const store = configureStore()
 
@@ -27,4 +27,4 @@ render(App)
 
 // Webpack Hot Module Replacement API
 if (module.hot)
-  module.hot.accept('components/App', () => { render(App) })
+  module.hot.accept('containers/App', () => { render(App) })

@@ -33,18 +33,22 @@ class PhotoFieldSet extends React.PureComponent {
   handleShowFullSizedPhoto = () => {
     this.setState({ fullSizedPhotoVisiblity: true })
   }
+
   handleHideFullSizedPhoto = () => {
     this.setState({ fullSizedPhotoVisiblity: false })
   }
+
   handleSetPhotoDesc = (ev, newDesc) => {
     ev.preventDefault()
     const { handleSetPhotoDesc, id } = this.props
     handleSetPhotoDesc(id, newDesc)
   }
+
   handleDeletePhoto = () => {
     const { handleDeletePhoto, id } = this.props
     handleDeletePhoto(id)
   }
+
   handleRestorePhoto = () => {
     const { handleRestorePhoto, id } = this.props
     handleRestorePhoto(id)
@@ -101,6 +105,7 @@ class PhotoFieldSet extends React.PureComponent {
               />
             }
           </div>
+
           <div className='relative flex-grow-1 pl2' style={{ top: -4 }}>
             <TextField
               className='photo-field-set-description-field w-100--i'
@@ -113,6 +118,7 @@ class PhotoFieldSet extends React.PureComponent {
               disabled={!!isDeleted}
             />
           </div>
+
           <div>
             {
               isDeleted

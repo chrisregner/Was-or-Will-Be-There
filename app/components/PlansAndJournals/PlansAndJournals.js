@@ -17,8 +17,10 @@ const PlansAndJournals = ({
   },
 }) => (
   <div>
+
     <List>
       <Subheader>Plans</Subheader>
+
       {
         plans.isEmpty()
           ? <div className='plans-and-journals-no-plan-msg pl3 pb2 i'>
@@ -34,13 +36,16 @@ const PlansAndJournals = ({
             )).toJS()
       }
     </List>
+
     <div className='pa2 tr'>
       <Link to={`/countries/${countryId}/plans/new`}>
         <RaisedButton primary label='Add Plan' />
       </Link>
     </div>
+
     <List>
       <Subheader>Journals</Subheader>
+
       {
         journals.isEmpty()
           ? <div className='plans-and-journals-no-journal-msg pl3 pb2 i'>
@@ -56,6 +61,7 @@ const PlansAndJournals = ({
             )).toJS()
       }
     </List>
+
     <div className='pa2 tr'>
       <Link to={`/countries/${countryId}/journals/new`}>
         <RaisedButton primary label='Add Journal' />
