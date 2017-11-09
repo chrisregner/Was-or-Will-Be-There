@@ -9,13 +9,14 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import 'animate.css/animate.css'
 import 'tachyons/css/tachyons.css'
 import './App.css'
+import { uiGetters } from 'state'
 import Nav from 'components/Nav'
 import MapCmpt from 'components/MapCmpt'
+import PaperRoutes from 'components/PaperRoutes'
+import NotFound from 'components/NotFound'
 import NotifSnackbar from 'containers/NotifSnackbar'
 import RealRouteWatcher from 'containers/RealRouteWatcher'
 import NotFoundSetter from 'containers/NotFoundSetter'
-import { uiGetters } from 'state'
-import PaperRoutes from 'components/PaperRoutes'
 
 const muiTheme = getMuiTheme({
   appBar: {
@@ -55,9 +56,9 @@ class BareApp extends React.Component {
 
           {
             isNotFound
-            ? <NotFound />
-            : <Switch>
-                <Route path='/countries/:countryId' component={PaperRoutes} />
+            ? <NotFound className='app-not-found' />
+            : <Switch className='app-routes'>
+                <Route path='/:path(countries|overview)' component={PaperRoutes} />
                 <Route exact path='/' />
                 <Route component={NotFoundSetter} />
               </Switch>
@@ -75,11 +76,7 @@ const mapStateToProps = (state) => ({
   isPathNotFound: (path) => uiGetters.isPathNotFound(state, path)
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  // fetchCountryNames: () => dispatch(getCountryNames())
-})
-
-const App = withRouter(connect(mapStateToProps, mapDispatchToProps)(BareApp))
+const App = withRouter(connect(mapStateToProps)(BareApp))
 
 export { BareApp }
 export default App

@@ -1,6 +1,4 @@
 ## Todos
-- contryNames state
-- countryName container
 
 - world overview
   - no of plans

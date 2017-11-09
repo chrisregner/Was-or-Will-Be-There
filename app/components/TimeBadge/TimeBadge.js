@@ -14,7 +14,7 @@ const timeBadgePadding = {
   paddingTop: '.125rem',
   paddingBottom: '.125rem',
   paddingLeft: '.125rem',
-  paddingRight: '.2rem',
+  paddingRight: '.25rem',
 }
 
 const beforePush = (ev) => {
@@ -37,12 +37,18 @@ const TimeBadge = ({ id, countryId, departure, homecoming }) => {
   if (isHomecomingPast) // homcoming is yesterday or earlier
     return (
       <Link
-        className='no-underline blue fw5'
+        className='no-underline blue'
         to={`/countries/${countryId}/plans/${id}/journalize`}
         beforePush={beforePush}
       >
         <div className='dib'>
-          <div style={timeBadgePadding} className='flex items-center br1 bg-yellow blue f7 ttu' >
+          <div
+            style={{
+              backgroundColor: '#ffd43b',
+              ...timeBadgePadding
+            }}
+            className='flex items-center br1 bg-yellow white f7 ttu'
+          >
             <EditIcon style={{ width: 16, height: 16 }} viewBox='0 0 24 24' />
             <div className='time-badge-text pl1'>Journalize!</div>
           </div>
@@ -52,16 +58,21 @@ const TimeBadge = ({ id, countryId, departure, homecoming }) => {
   else if (departure && daysUntilDeparture === 0) // departure is today
     text = 'today!'
   else if (departure && daysUntilDeparture === 1) // departure is tomorrow
-    text = 'tomorrow'
+    text = 'in\u00a01\u00a0day'
   else if (departure && daysUntilDeparture <= 30 && daysUntilDeparture >= 2)
-    // departure is in 2 to 30 days
-    text = `in ${daysUntilDeparture} days`
+    text = `in\u00a0${daysUntilDeparture}\u00a0days`
   else
     return null
 
   return (
     <div className='dib'>
-      <div style={timeBadgePadding} className='flex items-center br1 bg-light-blue f7 ttu' >
+      <div
+        style={{
+          backgroundColor: '#4dadf7',
+          ...timeBadgePadding
+        }}
+        className='flex items-center br1 white f7 ttu'
+      >
         <CalendarIcon style={{ width: 16, height: 16 }} viewBox='0 0 24 24' />
         <div className='time-badge-text pl1'>{text}</div>
       </div>

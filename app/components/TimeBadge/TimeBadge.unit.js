@@ -74,7 +74,10 @@ test('components.TimeBadge | if departure is in 2 to 30 days, it should say "in 
 
     const wrapper = setup({ props })
 
-    const actual = wrapper.find('.time-badge-text').text()
+    const actual = wrapper
+      .find('.time-badge-text')
+      .text()
+      .replace(String.fromCharCode(160), ' ') // replace non-breaking space to a regular one
     const expected = `in ${noOfDays} days`
 
     assert.include(actual, expected)
@@ -85,13 +88,16 @@ test('components.TimeBadge | if departure is in 2 to 30 days, it should say "in 
   testWithVars(30)
 })
 
-test('components.TimeBadge | if departure is tomorrow, it should say "tomorrow"', () => {
+test('components.TimeBadge | if departure is in 1 day, it should say "in 1 day"', () => {
   const departure = createMidnightDate(1)
   const props = { departure }
   const wrapper = setup({ props })
 
-  const actual = wrapper.find('.time-badge-text').text()
-  const expected = 'tomorrow'
+  const actual = wrapper
+    .find('.time-badge-text')
+    .text()
+    .replace(String.fromCharCode(160), ' ') // replace non-breaking space to a regular one
+  const expected = 'in 1 day'
 
   assert.include(actual, expected)
 })

@@ -13,6 +13,8 @@ import EditPlanForm from 'containers/EditPlanForm'
 import AddJournalForm from 'containers/AddJournalForm'
 import EditJournalForm from 'containers/EditJournalForm'
 import NotFoundSetter from 'containers/NotFoundSetter'
+import SmartCountryNameAndFlag from 'containers/SmartCountryNameAndFlag'
+import WorldOverview from 'containers/WorldOverview'
 
 const AnimatedSwitchWrpr = styled.div`
   & > div > div,
@@ -22,7 +24,7 @@ const AnimatedSwitchWrpr = styled.div`
   }
 `
 
-const PaperPages = () => (
+const PaperRoutes = () => (
   <div
     style={{
       top: 48,
@@ -32,13 +34,15 @@ const PaperPages = () => (
     className='relative z-1 pa2 h-100'
   >
     <PaperWithHeight>
-      {/*CountryName here*/}
+      <Route path='/countries/:countryId' component={SmartCountryNameAndFlag} />
+
       <AnimatedSwitchWrpr className='relative'>
         <AnimatedSwitch
           atEnter={{ opacity: 0 }}
           atLeave={{ opacity: 0 }}
           atActive={{ opacity: 1 }}
         >
+          <Route exact path='/overview' component={WorldOverview} />
           <Route exact path='/countries/:countryId' component={PopulatedPlansAndJournals} />
           <Route exact path='/countries/:countryId/plans/new' component={AddPlanForm} />
           <Route exact path='/countries/:countryId/plans/:id' component={EditPlanForm} />
@@ -51,4 +55,4 @@ const PaperPages = () => (
   </div>
 )
 
-export default PaperPages
+export default PaperRoutes

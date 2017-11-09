@@ -16,16 +16,94 @@ const defProps = {
 const setup = TU.makeTestSetup({
   Component: BareApp,
   defaultProps: defProps,
+  tools: ['td']
 })
 
 test('containers.App | it should render without error', () => {
-  const wrapper = setup()
-  const actual = wrapper.exists()
-
+  const actual = setup().exists()
   assert.isTrue(actual)
 })
 
-test('containers.App | it should call isPathNotFound once with location.pathname')
-test('containers.App | if isPathNotFound returned true, it should render the not found page')
-test('containers.App | if isPathNotFound returned false, it should render the routes')
-test('containers.App | when mounted, it should call fetchCountryNames')
+test('containers.App | it should call isPathNotFound once with location.pathname', () => {
+  const props = {
+    location: {
+      pathname: '/random/pathname'
+    }
+  }
+
+  setup({ props })
+
+  td.verify(defProps.isPathNotFound('/random/pathname'), { times: 1 })
+})
+
+test('containers.App | if isPathNotFound returned true, it should render the not found page', () => {
+  const wrapper = setup({
+    hooks: {
+      beforeRender: () => {
+        td.when(defProps.isPathNotFound(td.matchers.anything()))
+          .thenReturn(true)
+      }
+    }
+  })
+
+  const actual = wrapper
+    .find('.app-not-found')
+    .length
+  const expected = 1
+
+  assert.equal(actual, expected)
+})
+
+test('containers.App | if isPathNotFound returned true, it should NOT render the routes', () => {
+  const wrapper = setup({
+    hooks: {
+      beforeRender: () => {
+        td.when(defProps.isPathNotFound(td.matchers.anything()))
+          .thenReturn(true)
+      }
+    }
+  })
+
+  const actual = wrapper
+    .find('.app-routes')
+    .length
+  const expected = 0
+
+  assert.equal(actual, expected)
+})
+
+test('containers.App | if isPathNotFound does NOT return TRUE, it should render the routes', () => {
+  const wrapper = setup({
+    hooks: {
+      beforeRender: () => {
+        td.when(defProps.isPathNotFound(td.matchers.anything()))
+          .thenReturn(false)
+      }
+    }
+  })
+
+  const actual = wrapper
+    .find('.app-routes')
+    .length
+  const expected = 1
+
+  assert.equal(actual, expected)
+})
+
+test('containers.App | if isPathNotFound does NOT return TRUE, it should NOT render the not found page', () => {
+  const wrapper = setup({
+    hooks: {
+      beforeRender: () => {
+        td.when(defProps.isPathNotFound(td.matchers.anything()))
+          .thenReturn(false)
+      }
+    }
+  })
+
+  const actual = wrapper
+    .find('.app-not-found')
+    .length
+  const expected = 0
+
+  assert.equal(actual, expected)
+})

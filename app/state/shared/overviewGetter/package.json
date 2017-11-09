@@ -1,6 +1,6 @@
 {
-  "name:": "overvieGetter",
+  "name:": "overviewGetter",
   "version": "0.0.0",
   "private": true,
-  "main": "./overvieGetter.js"
+  "main": "./overviewGetter.js"
 }

@@ -9,8 +9,6 @@ const setup = TU.makeTestSetup({
 })
 
 test('yyyyy.Xxx | it should render without error', () => {
-  const wrapper = setup()
-  const actual = wrapper.exists()
-
+  const actual = setup().exists()
   assert.isTrue(actual)
 })

@@ -245,7 +245,6 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
             floatingLabelFixed
             onChange={this.handleChangeDeparture}
             errorText={errors.departure || ''}
-            minDate={new Date()}
             maxDate={values.get('homecoming')}
             value={values.get('departure') || null}
           />

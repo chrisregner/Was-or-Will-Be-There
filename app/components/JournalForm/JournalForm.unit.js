@@ -18,7 +18,7 @@ const JournalForm = JournalFormShell(deps)
 
 const mockData = {
   ev: { preventDefault: () => {} },
-  inOneDay: new Date(),
+  inOneDay: D.addDays(new Date(), 1),
   inTenDays: D.addDays(new Date(), 10),
 }
 
