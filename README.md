@@ -42,59 +42,39 @@
   - if has plan, destination icon
   - if has journal, flag icon
 
+
 - misc
-  - preloaded state?
-  - redux-persist
-  - accessibility
-  - performance test
-  - deploy
-  - performance test
-  - credits
-  - misc
-    - styles
+  - styles
+    - animation
       - animate.css duration
       - material-ui Paper height transition duration
       - react-router-transition animation
         - add shrinking/expanding animation alongside the fading
     - css prefixes/polyfills
-    - production optimization
-    - **important** change rawgit links as per rawgit.com for production
+  - state configuration
+    - preloaded state?
+    - redux-persist
+  - responsiveness
+  - accessibility
+  - performance test (before and after deployment)
+    - research more
+  - webpack production optimization
+    - research more
+    - change rawgit links as per rawgit.com for production
     - remove excess deps
+  - deploy
+  - credits
 
 ---
 
-map              - /
-world overview   - /countries/
-country overview - /countries/:countryId
-new plan         - /countries/:countryId/plans/new
-edit plan        - /countries/:countryId/plans/:id
-new journal      - /countries/:countryId/journals/new
-edit journal     - /countries/:countryId/journals/:id
-
----
-
-- scenario
-  - move country names to state
-
-- separate PaperRoutes
-
-- CountryName in PaperRoutes?
-- CountryNames in WorldOverview?
-
-  - it should render without error
-  - it should call fetch()
-  - if fetch is still loading, should show loader
-  - if fetch is resolved, and country code has match, it should show the country name
-  - if fetch is resolved, but country code has NO match, it should call setNotFound with pathname
-  - if fetch is rejected, should show the country code
-  - if fetch is rejected, it should show an info button
-  - if fetch is rejected and info button is clicked, it toggle the info popover
-  - if fetch is rejected, it should NOT fire the click handler twice on first and subsequent key presses of enter and space key
-  - if fetch is rejected, it should render an info popover containing the error message
-  - it should render the correct country flag
-  - if wrapper element is specified, it should use it
-  - it should pass the other props to the wrapper
-  - if unmounted, it should cancel the fetch
+map                     - /
+world overview          - /overview/
+country overview        - /countries/:countryId
+edit plans and journals - /countries/:countryId/edit?
+new plan                - /countries/:countryId/plans/new
+edit plan               - /countries/:countryId/plans/:id
+new journal             - /countries/:countryId/journals/new
+edit journal            - /countries/:countryId/journals/:id
 
 ---
 
