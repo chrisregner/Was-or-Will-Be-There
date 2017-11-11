@@ -5,6 +5,7 @@ import getYear from 'date-fns/get_year'
 import getMonth from 'date-fns/get_month'
 import getDate from 'date-fns/get_date'
 
+import muiThemeable from 'material-ui/styles/muiThemeable'
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit'
 import CalendarIcon from 'material-ui/svg-icons/action/today'
 
@@ -21,7 +22,7 @@ const beforePush = (ev) => {
   ev.stopPropagation()
 }
 
-const TimeBadge = ({ id, countryId, departure, homecoming }) => {
+const BareTimeBadge = ({ id, countryId, departure, homecoming, muiTheme }) => {
   const today = new Date()
   const todayMidnight = new Date(
     getYear(today),
@@ -44,13 +45,21 @@ const TimeBadge = ({ id, countryId, departure, homecoming }) => {
         <div className='dib'>
           <div
             style={{
-              backgroundColor: '#ffd43b',
-              ...timeBadgePadding
+              backgroundColor: muiTheme.palette.tertiary2Color,
+              color: muiTheme.palette.alternateTextColor,
+              ...timeBadgePadding,
             }}
-            className='flex items-center br1 bg-yellow white f7 ttu'
+            className='flex items-center br1 bg-yellow f7 ttu'
           >
-            <EditIcon style={{ width: 16, height: 16 }} viewBox='0 0 24 24' />
-            <div className='time-badge-text pl1'>Journalize!</div>
+            <EditIcon
+              style={{
+                width: 16,
+                height: 16,
+                color: muiTheme.palette.alternateTextColor,
+              }}
+              viewBox='0 0 24 24'
+            />
+            <div className='time-badge-text pl1 underline'>Journalize!</div>
           </div>
         </div>
       </Link>
@@ -68,23 +77,35 @@ const TimeBadge = ({ id, countryId, departure, homecoming }) => {
     <div className='dib'>
       <div
         style={{
-          backgroundColor: '#4dadf7',
-          ...timeBadgePadding
+          backgroundColor: muiTheme.palette.primary2Color,
+          color: muiTheme.palette.alternateTextColor,
+          ...timeBadgePadding,
         }}
-        className='flex items-center br1 white f7 ttu'
+        className='flex items-center br1 f7 ttu'
       >
-        <CalendarIcon style={{ width: 16, height: 16 }} viewBox='0 0 24 24' />
+        <CalendarIcon
+          style={{
+            width: 16,
+            height: 16,
+            color: muiTheme.palette.alternateTextColor,
+          }}
+          viewBox='0 0 24 24'
+        />
         <div className='time-badge-text pl1'>{text}</div>
       </div>
     </div>
   )
 }
 
-TimeBadge.propTypes = {
+BareTimeBadge.propTypes = {
   id: PropTypes.string.isRequired,
   countryId: PropTypes.string.isRequired,
   departure: PropTypes.instanceOf(Date),
   homecoming: PropTypes.instanceOf(Date),
+  muiTheme: PropTypes.object.isRequired,
 }
 
+const TimeBadge = muiThemeable()(BareTimeBadge)
+
+export { BareTimeBadge }
 export default TimeBadge

@@ -24,6 +24,19 @@ body {
 .right-50 { right: 50%; }
 
 /**
+ * Basscss utility classes
+ */
+.bg-darken-1 { background-color: rgba(0, 0, 0, .0625) }
+.bg-darken-2 { background-color: rgba(0, 0, 0, .125) }
+.bg-darken-3 { background-color: rgba(0, 0, 0, .25) }
+.bg-darken-4 { background-color: rgba(0, 0, 0, .5) }
+
+.bg-lighten-1 { background-color: rgba(255, 255, 255, .0625) }
+.bg-lighten-2 { background-color: rgba(255, 255, 255, .125) }
+.bg-lighten-3 { background-color: rgba(255, 255, 255, .25) }
+.bg-lighten-4 { background-color: rgba(255, 255, 255, .5) }
+
+/**
  * Tachyons-style classes with !important
  *
  * spacing scale for reference:

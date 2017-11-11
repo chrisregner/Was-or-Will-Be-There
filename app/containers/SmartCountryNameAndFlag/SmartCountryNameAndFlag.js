@@ -11,7 +11,7 @@ class BareSmartCountryNameAndFlag extends React.Component {
     match: PropTypes.shape({
       params: PropTypes.shape({
         countryId: PropTypes.string.isRequired,
-      }).isRequired
+      }).isRequired,
     }).isRequired,
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired,
@@ -40,7 +40,7 @@ class BareSmartCountryNameAndFlag extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   setNotFound: (pathname) => { dispatch(setNotFound(pathname)) },
 })
 

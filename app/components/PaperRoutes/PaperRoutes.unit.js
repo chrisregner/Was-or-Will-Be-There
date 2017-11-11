@@ -7,14 +7,14 @@ import PaperRoutes from './PaperRoutes'
 const defProps = {
   match: {
     params: {
-      countryId: ''
-    }
-  }
+      countryId: '',
+    },
+  },
 }
 
 const setup = TU.makeTestSetup({
   Component: PaperRoutes,
-  defaultProps: defProps
+  defaultProps: defProps,
 })
 
 test('components.PaperRoutes | it should render without error', () => {

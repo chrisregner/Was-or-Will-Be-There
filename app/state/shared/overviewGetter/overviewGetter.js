@@ -1,5 +1,6 @@
 import I from 'immutable'
 import { createSelector } from 'reselect'
+import countryNames from 'constants/countryNames'
 
 const getPlans = state => state.get('plans')
 const getJournals = state => state.get('journals')
@@ -8,16 +9,16 @@ const overviewGetter = createSelector(
   getPlans,
   getJournals,
   (plans, journals) => {
-    let countriesInfo = I.List()
+    let unorderedCountriesInfo = I.List()
 
-    // Yes, the following functions totalPlans and totalJournals has side-effects to countriesInfo
+    // Yes, the following functions totalPlans and totalJournals has side-effects to unorderedCountriesInfo
     // This aims to minimize the number of iterations
     // It is all contained in a single function anyway
 
     plans.forEach((plan) => {
       let isCountryMarkedToHavePlan = false
       const planCountryId = plan.get('countryId')
-      const countryIndex = countriesInfo.findIndex(country => {
+      const countryIndex = unorderedCountriesInfo.findIndex((country) => {
         if (country.get('id') === planCountryId) {
           isCountryMarkedToHavePlan = country.get('hasPlan')
           return true
@@ -26,23 +27,22 @@ const overviewGetter = createSelector(
         return false
       })
 
-      if (!isCountryMarkedToHavePlan) {
+      if (!isCountryMarkedToHavePlan)
         if (countryIndex !== -1)
-          countriesInfo = countriesInfo.update(countryIndex, country =>
+          unorderedCountriesInfo = unorderedCountriesInfo.update(countryIndex, country =>
             country.set('hasPlan', true))
         else
-          countriesInfo = countriesInfo.push(I.Map({
+          unorderedCountriesInfo = unorderedCountriesInfo.push(I.Map({
             id: planCountryId,
             hasPlan: true,
-            hasJournal: false
+            hasJournal: false,
           }))
-      }
     })
 
     journals.forEach((journal) => {
       let isCountryMarkedToHaveJournal = false
       const journalCountryId = journal.get('countryId')
-      const countryIndex = countriesInfo.findIndex(country => {
+      const countryIndex = unorderedCountriesInfo.findIndex((country) => {
         if (country.get('id') === journalCountryId) {
           isCountryMarkedToHaveJournal = country.get('hasJournal')
           return true
@@ -51,25 +51,34 @@ const overviewGetter = createSelector(
         return false
       })
 
-      if (!isCountryMarkedToHaveJournal) {
+      if (!isCountryMarkedToHaveJournal)
         if (countryIndex !== -1)
-          countriesInfo = countriesInfo.update(countryIndex, country =>
+          unorderedCountriesInfo = unorderedCountriesInfo.update(countryIndex, country =>
             country.set('hasJournal', true))
         else
-          countriesInfo = countriesInfo.push(I.Map({
+          unorderedCountriesInfo = unorderedCountriesInfo.push(I.Map({
             id: journalCountryId,
             hasJournal: true,
-            hasPlan: false
+            hasPlan: false,
           }))
-      }
     })
 
-    const totalCountries = countriesInfo.size
+    const countriesInfo = unorderedCountriesInfo.sort((countryA, countryB) => {
+      const countryNameA = countryNames[countryA.get('id')]
+      const countryNameB = countryNames[countryB.get('id')]
+
+      if (countryNameA > countryNameB)
+        return 1
+      else if (countryNameA < countryNameB)
+        return -1
+
+      return 0
+    })
 
     return I.Map({
       totalPlans: plans.size,
       totalJournals: journals.size,
-      totalCountries: countriesInfo.size,
+      totalCountries: unorderedCountriesInfo.size,
       countriesInfo,
     })
   }

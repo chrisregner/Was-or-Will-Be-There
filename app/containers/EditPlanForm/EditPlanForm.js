@@ -9,7 +9,7 @@ import withHeightWatcher from 'containers/withHeightWatcher'
 
 const mapStateToProps = (state, { match }) => ({
   initialValues: plansGetters.getPlan(state, match.params.id),
-  isNotFound: !plansGetters.getPlan(state, match.params.id)
+  isNotFound: !plansGetters.getPlan(state, match.params.id),
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -33,7 +33,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   setNotFound: (notFoundPath) => {
     dispatch(setNotFound(notFoundPath))
-  }
+  },
 })
 
 const EditPlanForm = connect(mapStateToProps, mapDispatchToProps)(

@@ -9,8 +9,9 @@ const mapStateToProps = (state, { match }) => ({
   journals: journalsGetters.getJournalsByCountryId(state, match.params.countryId),
 })
 
-const PopulatedPlansAndJournals = connect(mapStateToProps)(
-  withHeightWatcher(PlansAndJournals, 'PopulatedPlansAndJournals')
+const PopulatedPlansAndJournals = withHeightWatcher(
+  connect(mapStateToProps)(PlansAndJournals),
+  'PopulatedPlansAndJournals',
 )
 
 export default PopulatedPlansAndJournals

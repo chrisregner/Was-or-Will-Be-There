@@ -78,4 +78,4 @@ export const makeTestSetup = (args1 = {}) => {
 }
 
 export const getArgs = (tdFn, nthCall = 0) => td.explain(tdFn).calls[nthCall].args
-export const prettyImmutableLog = (immutableObj) => { console.log(JSON.stringify(immutableObj, null, 2)) }
+export const prettyImmutableLog = (immutableObj) => { console.log(JSON.stringify(immutableObj, null, 2)) } // eslint-disable-line no-console

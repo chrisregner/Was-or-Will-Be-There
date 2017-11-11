@@ -15,23 +15,22 @@ const defProps = {
 const setup = TU.makeTestSetup({
   Component: BareNotFoundSetter,
   defaultProps: defProps,
-  tools: ['td']
+  tools: ['td'],
 })
 
 test('containers.NotFoundSetter | it should render without error', () => {
-  const wrapper = setup()
-  const actual = wrapper.exists()
-
+  const actual = setup().exists()
   assert.isTrue(actual)
 })
 
 test('containers.NotFoundSetter | it should call setNotFound with pathname', () => {
   const props = {
     location: {
-      pathname: '/random/pathname'
-    }
+      pathname: '/random/pathname',
+    },
   }
-  const wrapper = setup({ props })
+
+  setup({ props })
 
   td.verify(defProps.setNotFound('/random/pathname'), { times: 1 })
 })

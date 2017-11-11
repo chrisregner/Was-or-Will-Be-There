@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default () => (
   <div className='pa2 h-100 bg-light-blue'>
-    <Link to='/countries'>Overview</Link> <br />
+    <Link to='/overview'>Overview</Link> <br />
     <Link to='/countries/jp'>Go to Japan</Link> <br />
     <Link to='/countries/ru'>Go to Russia</Link> <br />
     <Link to='/countries/us'>Go to US</Link> <br />

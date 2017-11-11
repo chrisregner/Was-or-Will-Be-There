@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import ResizeDetector from 'react-resize-detector'
+import shortid from 'shortid'
 
-import { setPaperHeight, setGhostHeight } from 'state/ui'
+import * as fromUi from 'state/ui'
 import { uiGetters } from 'state'
 
 export default (WrappedCmpt, componentName) => {
@@ -15,34 +16,55 @@ export default (WrappedCmpt, componentName) => {
     static propTypes = {
       setGhostHeight: PropTypes.func.isRequired,
       setPaperHeight: PropTypes.func.isRequired,
+      removeGhostHeight: PropTypes.func.isRequired,
+      removePaperHeight: PropTypes.func.isRequired,
       isRouteCurrent: PropTypes.func.isRequired,
       location: PropTypes.shape({
         pathname: PropTypes.string.isRequired,
       }).isRequired,
     }
 
+    componentWillMount = () => {
+      this.paperId = `${componentName}-${shortid.generate()}`
+    }
+
     componentDidMount = () => {
-      this.props.setPaperHeight(this.rootEl.offsetHeight)
-      this.props.setGhostHeight(this.rootEl.offsetHeight)
+      const { props, paperId, rootEl } = this
+
+      props.setPaperHeight(paperId, rootEl.offsetHeight)
+      props.setGhostHeight(paperId, rootEl.offsetHeight)
     }
 
     componentWillUnmount = () => {
-      this.props.setGhostHeight(0)
+      this.props.removeGhostHeight(this.paperId)
+    }
+
+    shouldComponentUpdate = (nextProps) => {
+      const { location, isRouteCurrent } = nextProps
+      return !isRouteCurrent(location.pathname)
     }
 
     componentDidUpdate = () => {
-      const { isRouteCurrent, setPaperHeight, location } = this.props
+      const { resizedHeight, paperId } = this
+      const {
+        isRouteCurrent,
+        setPaperHeight,
+        setGhostHeight,
+        removePaperHeight,
+        location,
+      } = this.props
 
-      this.props.setGhostHeight(this.rootEl.offsetHeight)
+      setGhostHeight(paperId, resizedHeight)
 
       if (isRouteCurrent(location.pathname))
-        setPaperHeight(this.rootEl.offsetHeight)
+        setPaperHeight(paperId, resizedHeight)
       else
-        setPaperHeight(0)
+        removePaperHeight(paperId)
     }
 
     handleResize = (width, height) => {
-      this.props.setPaperHeight(height)
+      this.resizedHeight = height
+      this.componentDidUpdate()
     }
 
     rootElRef = (rootEl) => {
@@ -62,11 +84,17 @@ export default (WrappedCmpt, componentName) => {
   }
 
   const mapDispatchToProps = dispatch => ({
-    setPaperHeight: (height) => {
-      dispatch(setPaperHeight(componentName, height))
+    setPaperHeight: (paperId, height) => {
+      dispatch(fromUi.setPaperHeight(paperId, height))
     },
-    setGhostHeight: (height) => {
-      dispatch(setGhostHeight(componentName, height))
+    setGhostHeight: (paperId, height) => {
+      dispatch(fromUi.setGhostHeight(paperId, height))
+    },
+    removePaperHeight: (paperId, height) => {
+      dispatch(fromUi.removePaperHeight(paperId))
+    },
+    removeGhostHeight: (paperId, height) => {
+      dispatch(fromUi.removeGhostHeight(paperId))
     },
   })
 

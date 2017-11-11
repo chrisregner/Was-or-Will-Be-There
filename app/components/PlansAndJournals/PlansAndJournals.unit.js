@@ -79,7 +79,7 @@ test('components.PlansAndJournals | if there is plan, it should NOT render a mes
       I.Map({
         id: 'initialPlanId',
         planName: 'The Initial Plan Name',
-      })
+      }),
     ]),
   }
   const wrapper = setup({ props })
@@ -110,7 +110,7 @@ test('components.PlansAndJournals | if there is journal, it should NOT render a 
       I.Map({
         id: 'initialJournalId',
         planName: 'The Initial Journal Name',
-      })
+      }),
     ]),
   }
   const wrapper = setup({ props })

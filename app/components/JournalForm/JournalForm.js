@@ -52,7 +52,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
     }
 
     static defaultProps = {
-      initialValues: I.Map()
+      initialValues: I.Map(),
     }
 
     state = {

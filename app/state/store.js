@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { enableBatching } from 'redux-batched-actions'
-import I from 'immutable'
 
 import rootReducer from './state'
 import dummyStore from './dummyStore'

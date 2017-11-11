@@ -8,7 +8,7 @@ const todayMidnight = new Date(
   D.getDate(today),
   0, 0, 0, 0
 )
-const inOneDay = D.addDays(todayMidnight, 1)
+
 const inOneMonth = D.addDays(todayMidnight, 30)
 const inOneYear = D.addDays(todayMidnight, 365)
 const inOneYearAndHalf = D.addDays(todayMidnight, 548)
@@ -25,7 +25,7 @@ export default I.Map({
       countryId: 'jp',
       planName: 'Surprise Tita on her birthday!',
       notes: 'Buy some Filipino souvenir for her',
-      departure: inOneMonth
+      departure: inOneMonth,
     }),
     I.Map({
       id: 'plan2',
@@ -33,7 +33,7 @@ export default I.Map({
       planName: 'DevConf',
       notes: 'Don’t forget the notes',
       departure: inOneYear,
-      homecoming: inOneYearAndHalf
+      homecoming: inOneYearAndHalf,
     }),
     I.Map({
       id: 'plan3',
@@ -58,7 +58,7 @@ export default I.Map({
       countryId: 'no',
       planName: 'I was there yesterday',
       homecoming: oneDayAgo,
-    })
+    }),
   ]),
   journals: I.List([
     I.Map({
@@ -66,7 +66,7 @@ export default I.Map({
       countryId: 'jp',
       title: 'Visit my old home',
       text: 'It is renovated and is for sale ',
-      homecoming: oneMonthAgo
+      homecoming: oneMonthAgo,
     }),
     I.Map({
       id: 'journal2',
@@ -74,19 +74,19 @@ export default I.Map({
       title: 'Visit my girlfriend',
       text: 'Don’t forget the gift!',
       departure: oneYearAgo,
-      homecoming: oneYearAndHalfAgo
+      homecoming: oneYearAndHalfAgo,
     }),
     I.Map({
       id: 'journal3',
       countryId: 'ru',
       title: 'Meeting with Putin',
-      homecoming: oneDayAgo
+      homecoming: oneDayAgo,
     }),
     I.Map({
       id: 'journal4',
       countryId: 'ru',
       title: 'Take a break from work',
-      homecoming: oneDayAgo
-    })
-  ])
+      homecoming: oneDayAgo,
+    }),
+  ]),
 })

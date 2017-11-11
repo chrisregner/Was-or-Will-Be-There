@@ -25,15 +25,15 @@ const PlansAndJournals = ({
         plans.isEmpty()
           ? <div className='plans-and-journals-no-plan-msg pl3 pb2 i'>
               You haven’t added any plan!
-            </div>
+          </div>
           : plans.map(plan => (
-              <PlanItem
-                className='plans-and-journals-plan-item'
-                key={plan.get('id')}
-                countryId={countryId}
-                plan={plan}
-              />
-            )).toJS()
+            <PlanItem
+              className='plans-and-journals-plan-item'
+              key={plan.get('id')}
+              countryId={countryId}
+              plan={plan}
+            />
+          )).toJS()
       }
     </List>
 
@@ -50,19 +50,19 @@ const PlansAndJournals = ({
         journals.isEmpty()
           ? <div className='plans-and-journals-no-journal-msg pl3 pb2 i'>
               You haven’t added any journal entry!
-            </div>
+          </div>
           : journals.map(journal => (
-              <JournalItem
-                className='plans-and-journals-journal-item'
-                key={journal.get('id')}
-                countryId={countryId}
-                journal={journal}
-              />
-            )).toJS()
+            <JournalItem
+              className='plans-and-journals-journal-item'
+              key={journal.get('id')}
+              countryId={countryId}
+              journal={journal}
+            />
+          )).toJS()
       }
     </List>
 
-    <div className='pa2 tr'>
+    <div className='ph2 pt2 pb3 tr'>
       <Link to={`/countries/${countryId}/journals/new`}>
         <RaisedButton primary label='Add Journal' />
       </Link>

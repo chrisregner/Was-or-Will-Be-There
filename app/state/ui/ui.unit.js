@@ -168,6 +168,84 @@ test('state.ui.SET_GHOST_HEIGHT | it should work', () => {
   tryUpdatingAHeight()
 })
 
+test('state.ui.REMOVE_PAPER_HEIGHT | it should work', () => {
+  const tryRemovingTheLastHeight = () => {
+    const initialState = I.fromJS({
+      paperHeights: {
+        somePaper: 666,
+      },
+    })
+    const action = fromUi.removePaperHeight('somePaper')
+
+    const actual = uiReducer(initialState, action).get('paperHeights')
+    const expected = I.Map()
+
+    assert.isTrue(actual.equals(expected))
+  }
+
+  const tryRemovingOneOfTheHeights = () => {
+    const initialState = I.fromJS({
+      paperHeights: {
+        firstPaper: 111,
+        secondPaper: 222,
+        thirdPaper: 333,
+      },
+    })
+    const action = fromUi.removePaperHeight('secondPaper')
+
+    const actual = uiReducer(initialState, action)
+    const expected = I.fromJS({
+      paperHeights: {
+        firstPaper: 111,
+        thirdPaper: 333,
+      },
+    })
+
+    assert.isTrue(actual.equals(expected))
+  }
+
+  tryRemovingTheLastHeight()
+  tryRemovingOneOfTheHeights()
+})
+
+test('state.ui.REMOVE_GHOST_HEIGHT | it should work', () => {
+  const tryRemovingTheLastHeight = () => {
+    const initialState = I.fromJS({
+      ghostHeights: {},
+    })
+    const action = fromUi.removeGhostHeight('someGhost')
+
+    const actual = uiReducer(initialState, action).get('ghostHeights')
+    const expected = I.Map()
+
+    assert.isTrue(actual.equals(expected))
+  }
+
+  const tryRemovingOneOfTheHeights = () => {
+    const initialState = I.fromJS({
+      ghostHeights: {
+        firstGhost: 111,
+        secondGhost: 222,
+        thirdGhost: 333,
+      },
+    })
+    const action = fromUi.removeGhostHeight('secondGhost')
+
+    const actual = uiReducer(initialState, action)
+    const expected = I.fromJS({
+      ghostHeights: {
+        firstGhost: 111,
+        thirdGhost: 333,
+      },
+    })
+
+    assert.isTrue(actual.equals(expected))
+  }
+
+  tryRemovingTheLastHeight()
+  tryRemovingOneOfTheHeights()
+})
+
 test('state.ui.SET_REAL_ROUTE', () => {
   const tryUpdatingANull = () => {
     const initialState = I.fromJS({ realRoute: null })
@@ -194,10 +272,10 @@ test('state.ui.SET_REAL_ROUTE', () => {
 })
 
 test('state.ui.SET_NOT_FOUND | it should work with initial state', () => {
-  const initialState= I.Map({ notFound: '/old/not/found/route'})
+  const initialState = I.Map({ notFound: '/old/not/found/route' })
   const action = fromUi.setNotFound('/new/not/found/route')
 
-  const actual = uiReducer(undefined, action).get('notFound')
+  const actual = uiReducer(initialState, action).get('notFound')
   const expected = '/new/not/found/route'
 
   assert.equal(actual, expected)
@@ -258,6 +336,36 @@ test('state.ui.getHighestGhostHeight() | it should work', () => {
 
   const actual = uiGetters.getHighestGhostHeight(state)
   const expected = 999
+
+  assert.equal(actual, expected)
+})
+
+test('state.ui.getHeightByComponentName() | it should work', () => {
+  const state = I.fromJS({
+    paperHeights: {
+      firstPaper: 0,
+      secondPaper: 143,
+      thirdPaper: 999,
+    },
+  })
+
+  const actual = uiGetters.getHeightByComponentName(state, 'secondPaper')
+  const expected = 143
+
+  assert.equal(actual, expected)
+})
+
+test('state.ui.getGhostHeightByComponentName() | it should work', () => {
+  const state = I.fromJS({
+    ghostHeights: {
+      firstPaper: 0,
+      secondPaper: 143,
+      thirdPaper: 999,
+    },
+  })
+
+  const actual = uiGetters.getGhostHeightByComponentName(state, 'secondPaper')
+  const expected = 143
 
   assert.equal(actual, expected)
 })

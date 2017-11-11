@@ -4,6 +4,7 @@ import I from 'immutable'
 
 import * as TU from 'services/testUtils'
 import { BareWorldOverview } from './WorldOverview'
+import { createFlagUrl } from 'constants/'
 
 const defProps = {
   worldOverview: I.Map({
@@ -11,24 +12,27 @@ const defProps = {
     totalJournals: 0,
     totalCountries: 0,
     countriesInfo: I.List(),
-  })
+  }),
+  muiTheme: {
+    palette: {},
+  },
 }
 
 const setup = TU.makeTestSetup({
   Component: BareWorldOverview,
-  defaultProps: defProps
+  defaultProps: defProps,
 })
 
-test.skip('containers.WorldOverview | it should render without error', () => {
+test('containers.WorldOverview | it should render without error', () => {
   const actual = setup().exists()
   assert.isTrue(actual)
 })
 
-test.skip('containers.WorldOverview | it should show the no of plans', () => {
+test('containers.WorldOverview | it should show the no of plans', () => {
   const props = {
     worldOverview: I.Map({
       totalPlans: 143,
-    })
+    }),
   }
 
   const actual = setup({ props })
@@ -38,11 +42,11 @@ test.skip('containers.WorldOverview | it should show the no of plans', () => {
   assert.isTrue(actual)
 })
 
-test.skip('containers.WorldOverview | it should show the no of journals', () => {
+test('containers.WorldOverview | it should show the no of journals', () => {
   const props = {
     worldOverview: I.Map({
       totalJournals: 143,
-    })
+    }),
   }
 
   const actual = setup({ props })
@@ -52,11 +56,11 @@ test.skip('containers.WorldOverview | it should show the no of journals', () => 
   assert.isTrue(actual)
 })
 
-test.skip('containers.WorldOverview | it should show the no of countries', () => {
+test('containers.WorldOverview | it should show the no of countries', () => {
   const props = {
     worldOverview: I.Map({
       totalCountries: 143,
-    })
+    }),
   }
 
   const actual = setup({ props })
@@ -66,42 +70,44 @@ test.skip('containers.WorldOverview | it should show the no of countries', () =>
   assert.isTrue(actual)
 })
 
-const propsWithCountries = {
-  countriesInfo:  I.List([
-    I.Map({
-      id: 'cn',
-      hasPlan: true,
-      hasJournal: true,
-    }),
-    I.Map({
-      id: 'de',
-      hasPlan: true,
-      hasJournal: false
-    }),
-    I.Map({
-      id: 'gb',
-      hasPlan: false,
-      hasJournal: true
-    }),
-    I.Map({
-      id: 'jp',
-      hasPlan: true,
-      hasJournal: true
-    }),
-    I.Map({
-      id: 'ph',
-      hasPlan: true,
-      hasJournal: false
-    }),
-    I.Map({
-      id: 'us',
-      hasPlan: false,
-      hasJournal: true
-    }),
-  ])
+const propsWithCountriesInfo = {
+  worldOverview: I.Map({
+    countriesInfo: I.List([
+      I.Map({
+        id: 'cn',
+        hasPlan: true,
+        hasJournal: true,
+      }),
+      I.Map({
+        id: 'de',
+        hasPlan: true,
+        hasJournal: false,
+      }),
+      I.Map({
+        id: 'gb',
+        hasPlan: false,
+        hasJournal: true,
+      }),
+      I.Map({
+        id: 'jp',
+        hasPlan: true,
+        hasJournal: true,
+      }),
+      I.Map({
+        id: 'ph',
+        hasPlan: true,
+        hasJournal: false,
+      }),
+      I.Map({
+        id: 'us',
+        hasPlan: false,
+        hasJournal: true,
+      }),
+    ]),
+  }),
 }
 
-test.skip('containers.WorldOverview > CountriesList | if no country is passed, it should list none', () => {
+test('containers.WorldOverview > CountriesList | if no country is passed, it should list none', () => {
   const actual = setup()
     .find('.world-overview-country-item')
     .length
@@ -110,7 +116,7 @@ test.skip('containers.WorldOverview > CountriesList | if no country is passed, i
   assert.equal(actual, expected)
 })
 
-test.skip('containers.WorldOverview > CountriesList | if no country is passed, it should show a message', () => {
+test('containers.WorldOverview > CountriesList | if no country is passed, it should show a message', () => {
   const actual = setup()
     .find('.world-overview-no-country-msg')
     .length
@@ -119,8 +125,8 @@ test.skip('containers.WorldOverview > CountriesList | if no country is passed, i
   assert.equal(actual, expected)
 })
 
-test.skip('containers.WorldOverview > CountriesList | if any country is passed, it should NOT show the message', () => {
-  const actual = setup()
+test('containers.WorldOverview > CountriesList | if any country is passed, it should NOT show the message', () => {
+  const actual = setup({ props: propsWithCountriesInfo })
     .find('.world-overview-no-country-msg')
     .length
   const expected = 0
@@ -128,7 +134,7 @@ test.skip('containers.WorldOverview > CountriesList | if any country is passed, 
   assert.equal(actual, expected)
 })
 
-test.skip('containers.WorldOverview > CountriesList | it should list all of the countries passed', () => {
+test('containers.WorldOverview > CountriesList | it should list all of the countries passed', () => {
   const actual = setup({ props: propsWithCountriesInfo })
     .find('.world-overview-country-item')
     .length
@@ -137,30 +143,7 @@ test.skip('containers.WorldOverview > CountriesList | it should list all of the 
   assert.equal(actual, expected)
 })
 
-test.skip('containers.WorldOverview > CountriesList | it should be in alphabetical of country names', () => {
-  const countryItems = setup({ props: propsWithCountriesInfo })
-    .find('.world-overview-country-item')
-  const expectedSequence = [
-    'ch', // China
-    'de', // Germany
-    'jp', // Japan
-    'ph', // Philippines
-    'gb', // United Kingdom
-    'us', // United States
-  ]
-
-  expectedSequence.forEach((countryId, index) => {
-    const actual = countryItems
-      .at(index)
-      .prop('classNames')
-      .split(' ')
-    const expected = `world-overview-country-item-${countryId}`
-
-    assert.includes(actual, expected)
-  })
-})
-
-test.skip('containers.WorldOverview > CountriesList | it should render link for each item', () => {
+test('containers.WorldOverview > CountriesList | it should render link for each item', () => {
   const actual = setup({ props: propsWithCountriesInfo })
     .find('.world-overview-country-item-de')
     .find('.world-overview-country-item-link')
@@ -170,17 +153,39 @@ test.skip('containers.WorldOverview > CountriesList | it should render link for 
   assert.equal(actual, expected)
 })
 
-test.skip('containers.WorldOverview > CountriesList | it should render country name', () => {
+test('containers.WorldOverview > CountriesList | it should render country name', () => {
+  /**
+   * NOTE: `.find('CountryNameAndFlagL').dive()` isn't optimal (coupling to implementation)
+   *   but using mount() on components with SVG has issues
+   */
   const actual = setup({ props: propsWithCountriesInfo })
     .find('.world-overview-country-item-de')
+    .find('CountryNameAndFlag')
+    .dive()
     .find('.world-overview-country-item-name')
-    .prop('text')
+    .text()
   const expected = 'Germany'
 
   assert.equal(actual, expected)
 })
 
-test.skip('containers.WorldOverview > CountriesList | if country has plan but NO journal, it should render the tags correctly', () => {
+test('containers.WorldOverview > CountriesList | it should render country flag', () => {
+  /**
+   * NOTE: `.find('CountryNameAndFlagL').dive()` isn't optimal (coupling to implementation)
+   *   but using mount() on components with SVG has issues
+   */
+  const actual = setup({ props: propsWithCountriesInfo })
+    .find('.world-overview-country-item-de')
+    .find('CountryNameAndFlag')
+    .dive()
+    .find('.world-overview-country-item-flag')
+    .prop('src')
+  const expected = createFlagUrl('de')
+
+  assert.equal(actual, expected)
+})
+
+test('containers.WorldOverview > CountriesList | if country has plan but NO journal, it should render the tags correctly', () => {
   const germany = setup({ props: propsWithCountriesInfo })
     .find('.world-overview-country-item-de')
 
@@ -194,14 +199,14 @@ test.skip('containers.WorldOverview > CountriesList | if country has plan but NO
   }
 
   const expected = {
-    hasPlan: 1,
-    hasJournal: 0
+    hasPlanTag: 1,
+    hasJournalTag: 0,
   }
 
   assert.deepEqual(actual, expected)
 })
 
-test.skip('containers.WorldOverview > CountriesList | if country has journal but NO plan, it should render the tags correctly', () => {
+test('containers.WorldOverview > CountriesList | if country has journal but NO plan, it should render the tags correctly', () => {
   const uk = setup({ props: propsWithCountriesInfo })
     .find('.world-overview-country-item-gb')
 
@@ -215,14 +220,14 @@ test.skip('containers.WorldOverview > CountriesList | if country has journal but
   }
 
   const expected = {
-    hasPlan: 0,
-    hasJournal: 1
+    hasPlanTag: 0,
+    hasJournalTag: 1,
   }
 
   assert.deepEqual(actual, expected)
 })
 
-test.skip('containers.WorldOverview > CountriesList | if country has both journal but plan, it should render the tags correctly', () => {
+test('containers.WorldOverview > CountriesList | if country has both journal but plan, it should render the tags correctly', () => {
   const china = setup({ props: propsWithCountriesInfo })
     .find('.world-overview-country-item-cn')
 
@@ -236,8 +241,8 @@ test.skip('containers.WorldOverview > CountriesList | if country has both journa
   }
 
   const expected = {
-    hasPlan: 1,
-    hasJournal: 1
+    hasPlanTag: 1,
+    hasJournalTag: 1,
   }
 
   assert.deepEqual(actual, expected)

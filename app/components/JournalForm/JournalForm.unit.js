@@ -36,7 +36,7 @@ const defProps = {
   handleDeletePhotos: td.func(),
   location: {
     pathname: '',
-  }
+  },
 }
 
 const setup = TU.makeTestSetup({
@@ -65,10 +65,11 @@ test('components.JournalForm | if isNotFound is true, it should call setNotFound
     isNotFound: true,
     setNotFound: td.func(),
     location: {
-      pathname: '/random/pathname'
-    }
+      pathname: '/random/pathname',
+    },
   }
-  const wrapper = setup({ props })
+
+  setup({ props })
 
   td.verify(props.setNotFound('/random/pathname'), { times: 1 })
 })

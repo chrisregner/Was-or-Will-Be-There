@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   handleDeletePhotos: deletePhotos,
   setNotFound: (notFoundPath) => {
     dispatch(setNotFound(notFoundPath))
-  }
+  },
 })
 
 const EditJournalForm = connect(mapStateToProps, mapDispatchToProps)(

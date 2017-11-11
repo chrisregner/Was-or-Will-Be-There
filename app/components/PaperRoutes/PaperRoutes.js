@@ -1,12 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Route, withRouter, Switch } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { Route } from 'react-router-dom'
 import { AnimatedSwitch } from 'react-router-transition'
 
 import PaperWithHeight from 'containers/PaperWithHeight'
-import NotFound from 'components/NotFound'
 import PopulatedPlansAndJournals from 'containers/PopulatedPlansAndJournals'
 import AddPlanForm from 'containers/AddPlanForm'
 import EditPlanForm from 'containers/EditPlanForm'

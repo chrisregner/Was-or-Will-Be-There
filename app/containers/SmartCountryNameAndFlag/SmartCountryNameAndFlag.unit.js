@@ -7,20 +7,20 @@ import { BareSmartCountryNameAndFlag } from './SmartCountryNameAndFlag'
 
 const defProps = {
   location: {
-    pathname: ''
+    pathname: '',
   },
   match: {
     params: {
-      countryId: ''
-    }
+      countryId: '',
+    },
   },
-  setNotFound: td.func()
+  setNotFound: td.func(),
 }
 
 const setup = TU.makeTestSetup({
   Component: BareSmartCountryNameAndFlag,
   defaultProps: defProps,
-  tools: ['td']
+  tools: ['td'],
 })
 
 test('containers.SmartCountryNameAndFlag | it should render without error', () => {
@@ -32,9 +32,9 @@ test('containers.SmartCountryNameAndFlag | it should render country name and fla
   const props = {
     match: {
       params: {
-        countryId: 'de'
-      }
-    }
+        countryId: 'de',
+      },
+    },
   }
 
   const actual = setup({ props })
@@ -48,13 +48,13 @@ test('containers.SmartCountryNameAndFlag | it should render country name and fla
 test('containers.SmartCountryNameAndFlag | if country id is NOT valid, it should call setNotFound() with pathname on componentWillMount', () => {
   const props = {
     location: {
-      pathname: '/random/pathname'
+      pathname: '/random/pathname',
     },
     match: {
       params: {
-        countryId: 'invalidCountryId'
-      }
-    }
+        countryId: 'invalidCountryId',
+      },
+    },
   }
 
   const componentWillMount = setup({ props })
@@ -66,14 +66,13 @@ test('containers.SmartCountryNameAndFlag | if country id is NOT valid, it should
   td.verify(defProps.setNotFound('/random/pathname'))
 })
 
-
 test('containers.SmartCountryNameAndFlag | if country id is valid, it should NOT call setNotFound()', () => {
   const props = {
     match: {
       params: {
-        countryId: 'de'
-      }
-    }
+        countryId: 'de',
+      },
+    },
   }
 
   setup({ props })

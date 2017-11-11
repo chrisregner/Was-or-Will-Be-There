@@ -4,7 +4,7 @@ import D from 'date-fns'
 import lolex from 'lolex'
 
 import * as TU from 'services/testUtils'
-import TimeBadge from './TimeBadge'
+import { BareTimeBadge } from './TimeBadge'
 
 const todayMidnight = new Date(2001, 0, 1)
 const todayNoon = new Date(2001, 0, 1, 12)
@@ -21,10 +21,13 @@ const mocks = {
 const defProps = {
   countryId: 'countryDefaultId',
   id: 'defaultId',
+  muiTheme: {
+    palette: {},
+  },
 }
 
 const setup = TU.makeTestSetup({
-  Component: TimeBadge,
+  Component: BareTimeBadge,
   defaultProps: defProps,
 })
 

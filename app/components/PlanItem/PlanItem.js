@@ -28,8 +28,8 @@ const PlanItem = ({ countryId, plan }) => (
           {plan.get('planName')}
 
           {
-            (plan.get('homecoming') || plan.get('departure'))
-            && <div className='pt1 f6 gray'>{createDateRange(plan)}</div>
+            (plan.get('homecoming') || plan.get('departure')) &&
+            <div className='pt1 f6 gray'>{createDateRange(plan)}</div>
           }
         </div>
 

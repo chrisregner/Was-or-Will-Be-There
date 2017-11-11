@@ -4,6 +4,7 @@ import { Route, withRouter, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import { amber500, amber700, grey400 } from 'material-ui/styles/colors'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 import 'animate.css/animate.css'
@@ -22,13 +23,18 @@ const muiTheme = getMuiTheme({
   appBar: {
     height: 48,
   },
+  palette: {
+    tertiary1Color: amber500,
+    tertiary2Color: amber700,
+    tertiary3Color: grey400,
+  },
 })
 
 class BareApp extends React.Component {
   static propTypes = {
     isPathNotFound: PropTypes.func.isRequired,
     location: PropTypes.shape({
-      pathname: PropTypes.string.isRequired
+      pathname: PropTypes.string.isRequired,
     }).isRequired,
   }
 
@@ -56,8 +62,8 @@ class BareApp extends React.Component {
 
           {
             isNotFound
-            ? <NotFound className='app-not-found' />
-            : <Switch className='app-routes'>
+              ? <NotFound className='app-not-found' />
+              : <Switch className='app-routes'>
                 <Route path='/:path(countries|overview)' component={PaperRoutes} />
                 <Route exact path='/' />
                 <Route component={NotFoundSetter} />
@@ -72,8 +78,8 @@ class BareApp extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  isPathNotFound: (path) => uiGetters.isPathNotFound(state, path)
+const mapStateToProps = state => ({
+  isPathNotFound: path => uiGetters.isPathNotFound(state, path),
 })
 
 const App = withRouter(connect(mapStateToProps)(BareApp))

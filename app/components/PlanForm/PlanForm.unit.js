@@ -23,7 +23,7 @@ const defProps = {
     params: { countryId: '' },
   },
   location: {
-    pathname: ''
+    pathname: '',
   },
 }
 
@@ -57,10 +57,11 @@ test('components.PlanForm | if isNotFound is true, it should call setNotFound wi
     isNotFound: true,
     setNotFound: td.func(),
     location: {
-      pathname: '/random/pathname'
-    }
+      pathname: '/random/pathname',
+    },
   }
-  const wrapper = setup({ props })
+
+  setup({ props })
 
   td.verify(props.setNotFound('/random/pathname'), { times: 1 })
 })
@@ -69,7 +70,8 @@ test('components.PlanForm | if isNotFound is NOT true, it should NOT call setNot
   const props = {
     setNotFound: td.func(),
   }
-  const wrapper = setup({ props })
+
+  setup({ props })
 
   td.verify(props.setNotFound(), { times: 0, ignoreExtraArgs: true })
 })
@@ -427,7 +429,7 @@ test('components.PlanForm.onSubmit() | if form is valid and initial values were 
         notes: 'Sample Spaceous Note',
         departure: mockData.inOneDay,
         homecoming: mockData.inTenDays,
-      })
+      }),
     ])
 
     assert.isTrue(actual.equals(expected))
@@ -452,7 +454,7 @@ test('components.PlanForm.onSubmit() | if form is valid and initial values were 
         id: 'randomId',
         planName: 'Random Initial Plan',
         homecoming: mockData.inOneDay,
-      })
+      }),
     ])
 
     assert.isTrue(actual.equals(expected))
@@ -485,7 +487,7 @@ test('components.PlanForm.onSubmit() | if form is valid and initial values were 
         planName: 'Random Initial Plan',
         homecoming: mockData.inOneDay,
         notes: '',
-      })
+      }),
     ])
 
     assert.isTrue(actual.equals(expected))
@@ -493,8 +495,8 @@ test('components.PlanForm.onSubmit() | if form is valid and initial values were 
   }
 
   testWithChangingSomeField()
-  // testWithChangingNoField()
-  // testWithEmptiyingAField()
+  testWithChangingNoField()
+  testWithEmptiyingAField()
 })
 
 test('components.PlanForm.onSubmit() | if form is valid, it should call history.push() with correct args', () => {

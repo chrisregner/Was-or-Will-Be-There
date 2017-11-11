@@ -9,14 +9,14 @@ const defProps = {
   isPathNotFound: td.func(),
   fetchCountryNames: td.func(),
   location: {
-    pathname: ''
+    pathname: '',
   },
 }
 
 const setup = TU.makeTestSetup({
   Component: BareApp,
   defaultProps: defProps,
-  tools: ['td']
+  tools: ['td'],
 })
 
 test('containers.App | it should render without error', () => {
@@ -27,8 +27,8 @@ test('containers.App | it should render without error', () => {
 test('containers.App | it should call isPathNotFound once with location.pathname', () => {
   const props = {
     location: {
-      pathname: '/random/pathname'
-    }
+      pathname: '/random/pathname',
+    },
   }
 
   setup({ props })
@@ -42,8 +42,8 @@ test('containers.App | if isPathNotFound returned true, it should render the not
       beforeRender: () => {
         td.when(defProps.isPathNotFound(td.matchers.anything()))
           .thenReturn(true)
-      }
-    }
+      },
+    },
   })
 
   const actual = wrapper
@@ -60,8 +60,8 @@ test('containers.App | if isPathNotFound returned true, it should NOT render the
       beforeRender: () => {
         td.when(defProps.isPathNotFound(td.matchers.anything()))
           .thenReturn(true)
-      }
-    }
+      },
+    },
   })
 
   const actual = wrapper
@@ -78,8 +78,8 @@ test('containers.App | if isPathNotFound does NOT return TRUE, it should render 
       beforeRender: () => {
         td.when(defProps.isPathNotFound(td.matchers.anything()))
           .thenReturn(false)
-      }
-    }
+      },
+    },
   })
 
   const actual = wrapper
@@ -96,8 +96,8 @@ test('containers.App | if isPathNotFound does NOT return TRUE, it should NOT ren
       beforeRender: () => {
         td.when(defProps.isPathNotFound(td.matchers.anything()))
           .thenReturn(false)
-      }
-    }
+      },
+    },
   })
 
   const actual = wrapper

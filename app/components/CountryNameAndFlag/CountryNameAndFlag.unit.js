@@ -70,8 +70,8 @@ test('components.CountryNameAndFlag | it should render the correct country name'
 test('components.CountryNameAndFlag | if custom flag wrapper class is provided, it should use it and NOT the default', () => {
   const props = {
     customClassNames: {
-      flagWrapper: 'my random class'
-    }
+      flagWrapper: 'my random class',
+    },
   }
 
   const actual = setup({ props })
@@ -91,17 +91,43 @@ test('components.CountryNameAndFlag | if custom flag wrapper class is NOT provid
     .prop('className')
     .split(' ')
   const expected = 'country-name-and-flag-default'
-  const notExpected = ['my', 'random', 'class']
 
   assert.include(actual, expected)
-  assert.notIncludeMembers(actual, notExpected)
+})
+/// 
+test('components.CountryNameAndFlag | if custom flag class is provided, it should use it and NOT the default', () => {
+  const props = {
+    customClassNames: {
+      flag: 'my random class',
+    },
+  }
+
+  const actual = setup({ props })
+    .find('.country-name-and-flag-flag')
+    .prop('className')
+    .split(' ')
+  const expected = ['my', 'random', 'class']
+  const notExpected = 'country-name-and-flag-default'
+
+  assert.includeMembers(actual, expected)
+  assert.notInclude(actual, notExpected)
 })
 
+test('components.CountryNameAndFlag | if custom flag class is NOT provided, it should use the default', () => {
+  const actual = setup()
+    .find('.country-name-and-flag-flag')
+    .prop('className')
+    .split(' ')
+  const expected = 'country-name-and-flag-default'
+
+  assert.include(actual, expected)
+})
+/// 
 test('components.CountryNameAndFlag | if custom country name class is provided, it should use it and NOT the default', () => {
   const props = {
     customClassNames: {
-      countryName: 'my random class'
-    }
+      countryName: 'my random class',
+    },
   }
 
   const actual = setup({ props })
@@ -121,8 +147,6 @@ test('components.CountryNameAndFlag | if custom country name class is NOT provid
     .prop('className')
     .split(' ')
   const expected = 'country-name-and-flag-default'
-  const notExpected = ['my', 'random', 'class']
 
   assert.include(actual, expected)
-  assert.notIncludeMembers(actual, notExpected)
 })

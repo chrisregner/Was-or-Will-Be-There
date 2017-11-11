@@ -19,10 +19,10 @@ class BareNotFoundSetter extends React.Component {
   render = () => null
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   setNotFound: (notFoundPath) => {
     dispatch(setNotFound(notFoundPath))
-  }
+  },
 })
 
 const NotFoundSetter = connect(null, mapDispatchToProps)(BareNotFoundSetter)

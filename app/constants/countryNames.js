@@ -250,5 +250,5 @@ export default {
   yt: 'Mayotte',
   za: 'South Africa',
   zm: 'Zambia',
-  zw: 'Zimbabwe'
+  zw: 'Zimbabwe',
 }

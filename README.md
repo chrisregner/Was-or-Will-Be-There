@@ -1,16 +1,5 @@
 ## Todos
 
-- world overview
-  - no of plans
-  - no of journals
-  - no of countries traveled
-  - list of countries with... *alphabetical*
-    - link
-    - plan name
-    - has plan?
-    - has journal?
-  - go back to map link
-
 - country overview, edit on right-nav-link?
   - plans tab
     - list
@@ -42,6 +31,9 @@
   - if has plan, destination icon
   - if has journal, flag icon
 
+- journalize?
+- scroll on location change
+- transition from no paper to have paper
 
 - misc
   - styles
