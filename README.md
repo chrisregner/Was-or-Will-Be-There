@@ -54,6 +54,7 @@
     - research more
     - change rawgit links as per rawgit.com for production
     - remove excess deps
+    - delete \_ignore folder
   - deploy
   - credits
 
@@ -61,7 +62,9 @@
 
 map                     - /
 world overview          - /overview/
-country overview        - /countries/:countryId
+country plans           - /countries/:countryId/ **TODO: redirect to plans when in this route**
+country plans           - /countries/:countryId/plans
+country journals        - /countries/:countryId/journals
 edit plans and journals - /countries/:countryId/edit?
 new plan                - /countries/:countryId/plans/new
 edit plan               - /countries/:countryId/plans/:id

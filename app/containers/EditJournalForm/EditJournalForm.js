@@ -5,7 +5,6 @@ import JournalForm from 'components/JournalForm'
 import { editJournal, deleteJournal, deletePhotos } from 'state/journals'
 import { setSnackbar, setNotFound } from 'state/ui'
 import { journalsGetters } from 'state'
-import withHeightWatcher from 'containers/withHeightWatcher'
 
 const mapStateToProps = (state, { match }) => ({
   initialValues: journalsGetters.getJournal(state, match.params.id),
@@ -37,8 +36,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
 })
 
-const EditJournalForm = connect(mapStateToProps, mapDispatchToProps)(
-  withHeightWatcher(JournalForm, 'EditJournalForm')
-)
+const EditJournalForm = connect(mapStateToProps, mapDispatchToProps)(JournalForm)
 
 export default EditJournalForm

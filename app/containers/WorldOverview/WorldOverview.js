@@ -14,19 +14,7 @@ import IconButton from 'material-ui/IconButton'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import overviewGetter from 'state/shared/overviewGetter'
-import withHeightWatcher from 'containers/withHeightWatcher'
 import CountryNameAndFlag from 'components/CountryNameAndFlag'
-
-/*
-
-backgroundColor: muiTheme.palette.tertiary2Color,
-color: muiTheme.palette.alternateTextColor,
-color: muiTheme.palette.alternateTextColor
-backgroundColor: muiTheme.palette.primary2Color,
-color: muiTheme.palette.alternateTextColor,
-color: muiTheme.palette.alternateTextColor
-
- */
 
 const preventDefault = (ev) => { ev.preventDefault() }
 
@@ -100,7 +88,7 @@ const BareWorldOverview = ({ worldOverview, muiTheme }) => (
                         onClick={preventDefault}
                         className='world-overview-country-item-has-plan'
                         style={{ padding: 6, width: 36, height: 36 }}
-                        iconStyle={{ color: muiTheme.palette.primary2Color }}
+                        iconStyle={{ color: muiTheme.palette.secondaryTextColor }}
                         tooltip='Has plan!'
                         tooltipPosition='bottom-left'
                       >
@@ -113,7 +101,7 @@ const BareWorldOverview = ({ worldOverview, muiTheme }) => (
                         onClick={preventDefault}
                         className='world-overview-country-item-has-journal'
                         style={{ padding: 6, width: 36, height: 36 }}
-                        iconStyle={{ color: muiTheme.palette.tertiary2Color }}
+                        iconStyle={{ color: muiTheme.palette.secondaryTextColor }}
                         tooltip='Has Journal!'
                         tooltipPosition='bottom-left'
                       >
@@ -162,11 +150,8 @@ const mapStateToProps = state => ({
   worldOverview: overviewGetter(state),
 })
 
-const WorldOverview = withHeightWatcher(
-  muiThemeable()(
-    connect(mapStateToProps)(BareWorldOverview),
-  ),
-  'WorldOverview'
+const WorldOverview = muiThemeable()(
+  connect(mapStateToProps)(BareWorldOverview),
 )
 
 export { BareWorldOverview }

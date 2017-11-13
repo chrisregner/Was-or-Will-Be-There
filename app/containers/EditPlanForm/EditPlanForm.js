@@ -5,7 +5,6 @@ import PlanForm from 'components/PlanForm'
 import { editPlan, deletePlan } from 'state/plans'
 import { setSnackbar, setNotFound } from 'state/ui'
 import { plansGetters } from 'state'
-import withHeightWatcher from 'containers/withHeightWatcher'
 
 const mapStateToProps = (state, { match }) => ({
   initialValues: plansGetters.getPlan(state, match.params.id),
@@ -36,8 +35,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
 })
 
-const EditPlanForm = connect(mapStateToProps, mapDispatchToProps)(
-  withHeightWatcher(PlanForm, 'EditPlanForm')
-)
+const EditPlanForm = connect(mapStateToProps, mapDispatchToProps)(PlanForm)
 
 export default EditPlanForm

@@ -18,6 +18,7 @@ const CountryNameAndFlag = ({ countryId, customClassNames }) => (
         (customClassNames && customClassNames.flagWrapper) ||
         defaultClassNames.flagWrapper
       }`}
+      zDepth={2}
       rounded={false}
     >
       <img

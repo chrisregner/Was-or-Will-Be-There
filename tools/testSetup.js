@@ -47,3 +47,12 @@ td.config({
 
 // https://github.com/chaijs/type-detect/issues/98#issuecomment-294254114
 global.HTMLElement = window.HTMLElement
+
+// https://github.com/akiran/react-slick#test-setup
+global.window.matchMedia = window.matchMedia || function() {
+    return {
+        matches : false,
+        addListener : function() {},
+        removeListener: function() {}
+    };
+};

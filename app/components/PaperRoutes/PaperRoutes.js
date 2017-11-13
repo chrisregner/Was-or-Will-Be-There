@@ -2,9 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { Route } from 'react-router-dom'
 import { AnimatedSwitch } from 'react-router-transition'
+import * as R from 'ramda'
 
+import PhotoSlider from 'components/PhotoSlider'
 import PaperWithHeight from 'containers/PaperWithHeight'
-import PopulatedPlansAndJournals from 'containers/PopulatedPlansAndJournals'
 import AddPlanForm from 'containers/AddPlanForm'
 import EditPlanForm from 'containers/EditPlanForm'
 import AddJournalForm from 'containers/AddJournalForm'
@@ -12,6 +13,7 @@ import EditJournalForm from 'containers/EditJournalForm'
 import NotFoundSetter from 'containers/NotFoundSetter'
 import SmartCountryNameAndFlag from 'containers/SmartCountryNameAndFlag'
 import WorldOverview from 'containers/WorldOverview'
+import withHeightWatcher from 'containers/withHeightWatcher'
 
 const AnimatedSwitchWrpr = styled.div`
   & > div > div,
@@ -20,6 +22,18 @@ const AnimatedSwitchWrpr = styled.div`
     width: 100%;
   }
 `
+const routeCmpts = {
+  PhotoSlider,
+  WorldOverview,
+  AddPlanForm,
+  EditPlanForm,
+  AddJournalForm,
+  EditJournalForm,
+}
+
+const routeCmptsWithHtWatcher = R.mapObjIndexed((Component, componentName) =>
+  withHeightWatcher(Component, componentName),
+routeCmpts)
 
 const PaperRoutes = () => (
   <div
@@ -39,12 +53,12 @@ const PaperRoutes = () => (
           atLeave={{ opacity: 0 }}
           atActive={{ opacity: 1 }}
         >
-          <Route exact path='/overview' component={WorldOverview} />
-          <Route exact path='/countries/:countryId' component={PopulatedPlansAndJournals} />
-          <Route exact path='/countries/:countryId/plans/new' component={AddPlanForm} />
-          <Route exact path='/countries/:countryId/plans/:id' component={EditPlanForm} />
-          <Route exact path='/countries/:countryId/journals/new' component={AddJournalForm} />
-          <Route exact path='/countries/:countryId/journals/:id' component={EditJournalForm} />
+          <Route exact path='/overview/test' component={routeCmptsWithHtWatcher.PhotoSlider} />
+          <Route exact path='/overview' component={routeCmptsWithHtWatcher.WorldOverview} />
+          <Route exact path='/countries/:countryId/plans/new' component={routeCmptsWithHtWatcher.AddPlanForm} />
+          <Route exact path='/countries/:countryId/plans/:id' component={routeCmptsWithHtWatcher.EditPlanForm} />
+          <Route exact path='/countries/:countryId/journals/new' component={routeCmptsWithHtWatcher.AddJournalForm} />
+          <Route exact path='/countries/:countryId/journals/:id' component={routeCmptsWithHtWatcher.EditJournalForm} />
           <Route component={NotFoundSetter} />
         </AnimatedSwitch>
       </AnimatedSwitchWrpr>

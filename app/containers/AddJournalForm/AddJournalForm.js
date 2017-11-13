@@ -6,7 +6,6 @@ import { batchActions } from 'redux-batched-actions'
 import JournalForm from 'components/JournalForm'
 import { addJournal, deletePhotos } from 'state/journals'
 import { setSnackbar } from 'state/ui'
-import withHeightWatcher from 'containers/withHeightWatcher'
 
 const mapStateToProps = () => ({
   initialValues: I.Map({
@@ -28,8 +27,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   handleDeletePhotos: deletePhotos,
 })
 
-const AddJournalForm = connect(mapStateToProps, mapDispatchToProps)(
-  withHeightWatcher(JournalForm, 'AddJournalForm')
-)
+const AddJournalForm = connect(mapStateToProps, mapDispatchToProps)(JournalForm)
 
 export default AddJournalForm

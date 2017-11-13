@@ -3,7 +3,7 @@ import AppBar from 'material-ui/AppBar'
 
 export default () => (
   <AppBar
-    title='WOWBT'
+    title='P&J'
     iconClassNameRight='muidocs-icon-navigation-expand-more'
   />
 )
