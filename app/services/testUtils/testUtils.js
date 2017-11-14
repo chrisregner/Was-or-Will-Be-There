@@ -54,6 +54,7 @@ export const makeTestSetup = (args1 = {}) => {
     }
 
     const finalProps = IU.smartMergeDeep(defaultProps, props)
+
     const theNode = (
       <FinalComponent {...finalProps}>
         {childNode}

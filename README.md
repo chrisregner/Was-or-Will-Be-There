@@ -2,19 +2,7 @@
 
 - country overview, edit on right-nav-link?
   - plans tab
-    - list
-      - name
-      - dates
-      - notes
   - journals tab
-    - all pictures
-      - descriptions
-    - list
-      - name
-      - dates
-      - text
-      - pictures
-        - descriptions
 
 - navbar
 

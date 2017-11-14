@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom'
 import { AnimatedSwitch } from 'react-router-transition'
 import * as R from 'ramda'
 
-import PhotoSlider from 'components/PhotoSlider'
+import CollapsibleItem from 'components/CollapsibleItem'
 import PaperWithHeight from 'containers/PaperWithHeight'
 import AddPlanForm from 'containers/AddPlanForm'
 import EditPlanForm from 'containers/EditPlanForm'
@@ -23,12 +23,12 @@ const AnimatedSwitchWrpr = styled.div`
   }
 `
 const routeCmpts = {
-  PhotoSlider,
   WorldOverview,
   AddPlanForm,
   EditPlanForm,
   AddJournalForm,
   EditJournalForm,
+  CollapsibleItem,
 }
 
 const routeCmptsWithHtWatcher = R.mapObjIndexed((Component, componentName) =>
@@ -46,14 +46,12 @@ const PaperRoutes = () => (
   >
     <PaperWithHeight>
       <Route path='/countries/:countryId' component={SmartCountryNameAndFlag} />
-
       <AnimatedSwitchWrpr className='relative'>
         <AnimatedSwitch
           atEnter={{ opacity: 0 }}
           atLeave={{ opacity: 0 }}
           atActive={{ opacity: 1 }}
         >
-          <Route exact path='/overview/test' component={routeCmptsWithHtWatcher.PhotoSlider} />
           <Route exact path='/overview' component={routeCmptsWithHtWatcher.WorldOverview} />
           <Route exact path='/countries/:countryId/plans/new' component={routeCmptsWithHtWatcher.AddPlanForm} />
           <Route exact path='/countries/:countryId/plans/:id' component={routeCmptsWithHtWatcher.EditPlanForm} />

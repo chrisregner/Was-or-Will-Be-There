@@ -26,7 +26,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
       initialValues: IPropTypes.contains({
         id: PropTypes.string,
         title: PropTypes.string,
-        textContent: PropTypes.string,
+        copy: PropTypes.string,
         departure: PropTypes.instanceOf(Date),
         homecoming: PropTypes.instanceOf(Date),
         photos: IPropTypes.listOf(IPropTypes.contains({
@@ -100,7 +100,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
     }
 
     handleChangeTitle = this.makeHandleChange('title')
-    handleChangeTextContent = this.makeHandleChange('textContent')
+    handleChangeCopy = this.makeHandleChange('copy')
     handleChangeDeparture = this.makeHandleChange('departure')
     handleChangeHomecoming = this.makeHandleChange('homecoming')
 
@@ -231,12 +231,12 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
           />
           <TextField
             className='journal-form-text-content-field w-100--i db--i'
-            floatingLabelText='Text Content'
+            floatingLabelText='Story'
             floatingLabelFixed
-            onChange={this.handleChangeTextContent}
+            onChange={this.handleChangeCopy}
             multiLine
             rowsMax={4}
-            value={values.get('textContent') || ''}
+            value={values.get('copy') || ''}
           />
           <DatePicker
             className='journal-form-departure-field'

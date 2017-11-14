@@ -11,7 +11,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import * as FU from 'services/functionalUtils'
 
 const validationRules = {
-  planName: planName => !planName && 'Plan name is required',
+  title: title => !title && 'Plan name is required',
 }
 
 class PlanForm extends React.Component {
@@ -20,8 +20,8 @@ class PlanForm extends React.Component {
     handleDelete: PropTypes.func,
     initialValues: IPropTypes.contains({
       id: PropTypes.string.isRequired,
-      planName: PropTypes.string.isRequired,
-      notes: PropTypes.string,
+      title: PropTypes.string.isRequired,
+      copy: PropTypes.string,
       departure: PropTypes.instanceOf(Date),
       homecoming: PropTypes.instanceOf(Date),
     }),
@@ -64,8 +64,8 @@ class PlanForm extends React.Component {
     }))
   }
 
-  handleChangePlanName = this.makeHandleChange('planName')
-  handleChangeNotes = this.makeHandleChange('notes')
+  handleChangeTitle = this.makeHandleChange('title')
+  handleChangeCopy = this.makeHandleChange('copy')
   handleChangeDeparture = this.makeHandleChange('departure')
   handleChangeHomecoming = this.makeHandleChange('homecoming')
 
@@ -127,22 +127,22 @@ class PlanForm extends React.Component {
       >
         <TextField
           className='w-100--i db--i'
-          data-name='PlanNameField'
-          floatingLabelText='Plan Name*'
+          data-name='TitleField'
+          floatingLabelText='Title*'
           floatingLabelFixed
-          onChange={this.handleChangePlanName}
-          errorText={errors.planName || ''}
-          value={values.get('planName') || ''}
+          onChange={this.handleChangeTitle}
+          errorText={errors.title || ''}
+          value={values.get('title') || ''}
         />
         <TextField
           className='w-100--i db--i'
-          data-name='NotesField'
+          data-name='CopyField'
           floatingLabelText='Notes'
           floatingLabelFixed
-          onChange={this.handleChangeNotes}
+          onChange={this.handleChangeCopy}
           multiLine
           rowsMax={4}
-          value={values.get('notes') || ''}
+          value={values.get('copy') || ''}
         />
         <DatePicker
           textFieldStyle={{ width: '100%' }}

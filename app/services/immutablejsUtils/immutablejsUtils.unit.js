@@ -108,7 +108,7 @@ test('services.immutablejsUtils.smartMergeDeep() | if the source\'s and correspo
 //   INSTEAD of asserting their original ImmutableJS-and-native-JS hybrid object form
 test('services.immutablejsUtils.smartMergeDeep() | if the source\'s and corresponding base\'s NESTED property both an Immutable data structure, it should mergeDeep it properly', () => {
   const baseObj = {
-    a: 'a',
+    a: new Date(2001, 0, 1, 0, 0, 0, 0),
     b: {
       c: 'c',
     },
@@ -126,7 +126,7 @@ test('services.immutablejsUtils.smartMergeDeep() | if the source\'s and correspo
     f: 'f',
   }
   const sourceObj = {
-    a: 1,
+    a: new Date(2002, 1, 2, 0, 0, 0, 0),
     b: {
       c: 3,
     },
@@ -145,7 +145,7 @@ test('services.immutablejsUtils.smartMergeDeep() | if the source\'s and correspo
   }
   const actual = smartMergeDeep(baseObj, sourceObj)
   const expected = {
-    a: 1,
+    a: new Date(2002, 1, 2, 0, 0, 0, 0),
     b: {
       c: 3,
     },

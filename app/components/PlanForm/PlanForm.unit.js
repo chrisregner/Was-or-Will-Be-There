@@ -77,12 +77,12 @@ test('components.PlanForm | if isNotFound is NOT true, it should NOT call setNot
 })
 
 /**
- * PlanNameField
+ * TitleField
  */
 
-test('components.PlanForm > PlanNameField | it should work', () => {
+test('components.PlanForm > TitleField | it should work', () => {
   const wrapper = setup()
-  const getField = () => wrapper.find('[data-name="PlanNameField"]')
+  const getField = () => wrapper.find('[data-name="TitleField"]')
 
   const value = 'Sample Plan Name'
   getField().simulate('change', null, value)
@@ -93,9 +93,9 @@ test('components.PlanForm > PlanNameField | it should work', () => {
   assert.equal(actual, expected)
 })
 
-test('components.PlanForm > PlanNameField | if changed to blank, it should show error', () => {
+test('components.PlanForm > TitleField | if changed to blank, it should show error', () => {
   const wrapper = setup()
-  const getField = () => wrapper.find('[data-name="PlanNameField"]')
+  const getField = () => wrapper.find('[data-name="TitleField"]')
 
   getField().simulate('change', null, '')
 
@@ -104,7 +104,7 @@ test('components.PlanForm > PlanNameField | if changed to blank, it should show 
   assert.ok(actual)
 })
 
-test('components.PlanForm > PlanNameField | if NOT filled and submitted, it should NOT call handleSubmit()', () => {
+test('components.PlanForm > TitleField | if NOT filled and submitted, it should NOT call handleSubmit()', () => {
   const wrapper = setup()
 
   wrapper.find('form').simulate('submit', mockData.ev)
@@ -112,44 +112,44 @@ test('components.PlanForm > PlanNameField | if NOT filled and submitted, it shou
   td.verify(defProps.handleSubmit(), { times: 0, ignoreExtraArgs: true })
 })
 
-test('components.PlanForm > PlanNameField | if NOT filled and submitted, it should show error', () => {
+test('components.PlanForm > TitleField | if NOT filled and submitted, it should show error', () => {
   const wrapper = setup()
 
   wrapper.find('form').simulate('submit', mockData.ev)
 
-  const getField = () => wrapper.find('[data-name="PlanNameField"]')
+  const getField = () => wrapper.find('[data-name="TitleField"]')
   const actual = getField().prop('errorText')
 
   assert.ok(actual)
 })
 
-test('components.PlanForm > PlanNameField | it should accept initial value', () => {
+test('components.PlanForm > TitleField | it should accept initial value', () => {
   const props = {
     initialValues: I.Map({
       id: 'randomId',
-      planName: 'Random Initial Plan',
+      title: 'Random Initial Plan',
     }),
   }
 
-  const planNameWrpr = setup({ props })
-    .find('[data-name="PlanNameField"]')
+  const titleWrpr = setup({ props })
+    .find('[data-name="TitleField"]')
 
-  const actual = planNameWrpr.prop('value')
+  const actual = titleWrpr.prop('value')
   const expected = 'Random Initial Plan'
 
   assert.equal(actual, expected)
 })
 
-test('components.PlanForm > PlanNameField | if initial value is provided, it should still be emptiable', () => {
+test('components.PlanForm > TitleField | if initial value is provided, it should still be emptiable', () => {
   const props = {
     initialValues: I.Map({
       id: 'randomId',
-      planName: 'Random Initial Plan',
+      title: 'Random Initial Plan',
     }),
   }
 
   const wrapper = setup({ props })
-  const getField = () => wrapper.find('[data-name="PlanNameField"]')
+  const getField = () => wrapper.find('[data-name="TitleField"]')
   const newEmptyVal = ''
 
   getField().simulate('change', null, newEmptyVal)
@@ -160,14 +160,14 @@ test('components.PlanForm > PlanNameField | if initial value is provided, it sho
 })
 
 /**
- * NotesField
+ * CopyField
  */
 
-test('components.PlanForm > NotesField | it should work', () => {
+test('components.PlanForm > CopyField | it should work', () => {
   const wrapper = setup()
-  const getField = () => wrapper.find('[data-name="NotesField"]')
+  const getField = () => wrapper.find('[data-name="CopyField"]')
 
-  const value = 'Sample Notes'
+  const value = 'Sample Copy'
   getField().simulate('change', null, value)
 
   const expected = value
@@ -176,35 +176,35 @@ test('components.PlanForm > NotesField | it should work', () => {
   assert.equal(actual, expected)
 })
 
-test('components.PlanForm > NotesField | it should accept initial value', () => {
+test('components.PlanForm > CopyField | it should accept initial value', () => {
   const props = {
     initialValues: I.Map({
       id: 'randomId',
-      planName: '',
-      notes: 'Random Initial Notes',
+      title: '',
+      copy: 'Random Initial Copy',
     }),
   }
 
-  const notesWrpr = setup({ props })
-    .find('[data-name="NotesField"]')
+  const copyWrpr = setup({ props })
+    .find('[data-name="CopyField"]')
 
-  const actual = notesWrpr.prop('value')
-  const expected = 'Random Initial Notes'
+  const actual = copyWrpr.prop('value')
+  const expected = 'Random Initial Copy'
 
   assert.equal(actual, expected)
 })
 
-test('components.PlanForm > NotesField | if initial value is provided, it should still be emptiable', () => {
+test('components.PlanForm > CopyField | if initial value is provided, it should still be emptiable', () => {
   const props = {
     initialValues: I.Map({
       id: 'randomId',
-      planName: '',
-      notes: 'Random Initial Notes',
+      title: '',
+      copy: 'Random Initial Copy',
     }),
   }
 
   const wrapper = setup({ props })
-  const getField = () => wrapper.find('[data-name="NotesField"]')
+  const getField = () => wrapper.find('[data-name="CopyField"]')
   const newEmptyVal = ''
 
   getField().simulate('change', null, newEmptyVal)
@@ -249,7 +249,7 @@ test('components.PlanForm > DepartureField | it should accept initial value', ()
   const props = {
     initialValues: I.Map({
       id: 'randomId',
-      planName: '',
+      title: '',
       departure: mockData.inOneDay,
     }),
   }
@@ -296,7 +296,7 @@ test('components.PlanForm > HomecomingField | it should accept initial value', (
   const props = {
     initialValues: I.Map({
       id: 'randomId',
-      planName: '',
+      title: '',
       homecoming: mockData.inOneDay,
     }),
   }
@@ -316,7 +316,7 @@ test('components.PlanForm > DeleteBtn | if id is provided, it should the render 
   const props = {
     initialValues: I.Map({
       id: 'randomId',
-      planName: '',
+      title: '',
     }),
   }
   const deleteBtnWrpr = setup({ props })
@@ -332,7 +332,7 @@ test('components.PlanForm > DeleteBtn | if delete button is clicked, it should h
   const props = {
     initialValues: I.Map({
       id: 'randomId',
-      planName: '',
+      title: '',
     }),
     handleDelete: fakeHandleDelete,
   }
@@ -352,7 +352,7 @@ test('components.PlanForm > DeleteBtn | if delete button is clicked, it should c
       },
       initialValues: I.Map({
         id: 'randomId',
-        planName: '',
+        title: '',
       }),
       handleDelete: () => {},
     }
@@ -378,8 +378,8 @@ test('components.PlanForm > DeleteBtn | if delete button is clicked, it should c
 
 test('components.PlanForm.onSubmit() | if form is valid, it should call handleSubmit() with trimmed data', () => {
   const values = {
-    PlanNameField: '  Sample Spaceous Name  ',
-    NotesField: `
+    TitleField: '  Sample Spaceous Name  ',
+    CopyField: `
       Sample Spaceous Note
     `,
     DepartureField: mockData.inOneDay,
@@ -391,8 +391,8 @@ test('components.PlanForm.onSubmit() | if form is valid, it should call handleSu
   wrapper.find('form').simulate('submit', mockData.ev)
 
   const expectedArg = I.Map({
-    planName: 'Sample Spaceous Name',
-    notes: 'Sample Spaceous Note',
+    title: 'Sample Spaceous Name',
+    copy: 'Sample Spaceous Note',
     departure: mockData.inOneDay,
     homecoming: mockData.inTenDays,
   })
@@ -405,12 +405,12 @@ test('components.PlanForm.onSubmit() | if form is valid and initial values were 
     const props = {
       initialValues: I.Map({
         id: 'randomId',
-        planName: 'Random Initial Plan',
+        title: 'Random Initial Plan',
         homecoming: mockData.inOneDay,
       }),
     }
     const values = {
-      NotesField: `
+      CopyField: `
         Sample Spaceous Note
       `,
       DepartureField: mockData.inOneDay,
@@ -425,8 +425,8 @@ test('components.PlanForm.onSubmit() | if form is valid and initial values were 
     const expected = I.List([
       I.Map({
         id: 'randomId',
-        planName: 'Random Initial Plan',
-        notes: 'Sample Spaceous Note',
+        title: 'Random Initial Plan',
+        copy: 'Sample Spaceous Note',
         departure: mockData.inOneDay,
         homecoming: mockData.inTenDays,
       }),
@@ -440,7 +440,7 @@ test('components.PlanForm.onSubmit() | if form is valid and initial values were 
     const props = {
       initialValues: I.Map({
         id: 'randomId',
-        planName: 'Random Initial Plan',
+        title: 'Random Initial Plan',
         homecoming: mockData.inOneDay,
       }),
     }
@@ -452,7 +452,7 @@ test('components.PlanForm.onSubmit() | if form is valid and initial values were 
     const expected = I.List([
       I.Map({
         id: 'randomId',
-        planName: 'Random Initial Plan',
+        title: 'Random Initial Plan',
         homecoming: mockData.inOneDay,
       }),
     ])
@@ -465,8 +465,8 @@ test('components.PlanForm.onSubmit() | if form is valid and initial values were 
     const props = {
       initialValues: I.Map({
         id: 'randomId',
-        planName: 'Random Initial Plan',
-        notes: `
+        title: 'Random Initial Plan',
+        copy: `
           Sample Spaceous Note
         `,
         homecoming: mockData.inOneDay,
@@ -474,7 +474,7 @@ test('components.PlanForm.onSubmit() | if form is valid and initial values were 
     }
     const wrapper = setup({ props })
     const values = {
-      NotesField: '',
+      CopyField: '',
     }
 
     fillForm(values, wrapper)
@@ -484,9 +484,9 @@ test('components.PlanForm.onSubmit() | if form is valid and initial values were 
     const expected = I.List([
       I.Map({
         id: 'randomId',
-        planName: 'Random Initial Plan',
+        title: 'Random Initial Plan',
         homecoming: mockData.inOneDay,
-        notes: '',
+        copy: '',
       }),
     ])
 
@@ -508,7 +508,7 @@ test('components.PlanForm.onSubmit() | if form is valid, it should call history.
     }
     const wrapper = setup({ props })
 
-    fillForm({ PlanNameField: 'Sample Plan Name' }, wrapper)
+    fillForm({ TitleField: 'Sample Plan Name' }, wrapper)
     wrapper.find('form').simulate('submit', mockData.ev)
 
     const expectedArg = `/countries/${countryId}`

@@ -158,10 +158,10 @@ test('components.JournalForm > TitleField | if initial value is provided, it sho
 })
 
 /**
- * TextContentField
+ * CopyField
  */
 
-test('components.JournalForm > TextContentField | it should work', () => {
+test('components.JournalForm > CopyField | it should work', () => {
   const wrapper = setup()
   const getField = () => wrapper.find('.journal-form-text-content-field')
 
@@ -174,30 +174,30 @@ test('components.JournalForm > TextContentField | it should work', () => {
   assert.equal(actual, expected)
 })
 
-test('components.JournalForm > TextContentField | it should accept initial value', () => {
+test('components.JournalForm > CopyField | it should accept initial value', () => {
   const props = {
     initialValues: I.Map({
       id: 'randomId',
       title: '',
-      textContent: 'Random Initial Text Content',
+      copy: 'Random Initial Text Content',
     }),
   }
 
-  const textContentWrpr = setup({ props })
+  const copyWrpr = setup({ props })
     .find('.journal-form-text-content-field')
 
-  const actual = textContentWrpr.prop('value')
+  const actual = copyWrpr.prop('value')
   const expected = 'Random Initial Text Content'
 
   assert.equal(actual, expected)
 })
 
-test('components.JournalForm > TextContentField | if initial value is provided, it should still be emptiable', () => {
+test('components.JournalForm > CopyField | if initial value is provided, it should still be emptiable', () => {
   const props = {
     initialValues: I.Map({
       id: 'randomId',
       title: '',
-      textContent: 'Random Initial Text Content',
+      copy: 'Random Initial Text Content',
     }),
   }
 
@@ -404,7 +404,7 @@ test('components.JournalForm.onSubmit() | if form is valid and initial values we
     const expected = I.Map({
       id: 'randomId',
       title: 'Random Initial Title',
-      textContent: 'Sample Spaceous Text Content',
+      copy: 'Sample Spaceous Text Content',
       departure: mockData.inOneDay,
       homecoming: mockData.inTenDays,
       photos: I.List(),
@@ -441,7 +441,7 @@ test('components.JournalForm.onSubmit() | if form is valid and initial values we
       initialValues: I.Map({
         id: 'randomId',
         title: 'Random Initial Title',
-        textContent: `
+        copy: `
           Sample Spaceous Text Content
         `,
         homecoming: mockData.inOneDay,
@@ -460,7 +460,7 @@ test('components.JournalForm.onSubmit() | if form is valid and initial values we
       id: 'randomId',
       title: 'Random Initial Title',
       homecoming: mockData.inOneDay,
-      textContent: '',
+      copy: '',
       photos: I.List(),
     })
 

@@ -4,7 +4,7 @@ import { Route, withRouter, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { amber500, amber700, grey400 } from 'material-ui/styles/colors'
+import { amber500, amber700, amber900 } from 'material-ui/styles/colors'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 import 'animate.css/animate.css'
@@ -26,7 +26,7 @@ const muiTheme = getMuiTheme({
   palette: {
     tertiary1Color: amber500,
     tertiary2Color: amber700,
-    tertiary3Color: grey400,
+    tertiary3Color: amber900,
   },
 })
 

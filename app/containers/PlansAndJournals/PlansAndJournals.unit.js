@@ -13,7 +13,6 @@ test('components.PlansAndJournals | it should render without error', () => {
   assert.isTrue(actual)
 })
 
-test('components.PlansAndJournals | it should have a working tabs of plans and journals')
 test('components.PlansAndJournals > plansList | when there are plans, it should render each correctly')
 test('components.PlansAndJournals > plansList | when there are NO plans, it should render a message instead')
 test('components.PlansAndJournals > journalsList | when there are journals, it should render each correctly')

@@ -51,7 +51,7 @@ PhotoSlider.propTypes = {
     IPropTypes.contains({
       id: PropTypes.string.isRequired,
       path: PropTypes.string,
-      description: PropTypes.string.isRequired,
+      description: PropTypes.string,
     }).isRequired
   ).isRequired
 }
