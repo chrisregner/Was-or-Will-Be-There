@@ -8,18 +8,18 @@ import { ScrollOnRouteChangeShell } from './ScrollOnRouteChange'
 const defProps = {
   location: {
     pathname: '/default/path',
-  }
+  },
 }
 
 const defDeps = {
-  smoothscroll: td.func()
+  smoothscroll: td.func(),
 }
 
 const setup = TU.makeTestSetup({
   shell: ScrollOnRouteChangeShell,
   defaultProps: defProps,
   defaultDeps: defDeps,
-  tools: ['td']
+  tools: ['td'],
 })
 
 after(() => {
@@ -34,8 +34,8 @@ test('components.ScrollOnRouteChange | it should render without error', () => {
 test('components.ScrollOnRouteChange | when props changes with new pathname, it should update', () => {
   const props = {
     location: {
-      pathname: '/new/path'
-    }
+      pathname: '/new/path',
+    },
   }
   const wrapper = setup()
   const fakeComponentDidUpdate = td.replace(wrapper.instance(), 'componentDidUpdate')
@@ -47,8 +47,8 @@ test('components.ScrollOnRouteChange | when props changes with new pathname, it 
 test('components.ScrollOnRouteChange | when props changes with new pathname, it should scroll to top', () => {
   const props = {
     location: {
-      pathname: '/new/path'
-    }
+      pathname: '/new/path',
+    },
   }
   setup().setProps(props)
   td.verify(defDeps.smoothscroll(), { times: 1, ignoreExtraArgs: true })
@@ -57,8 +57,8 @@ test('components.ScrollOnRouteChange | when props changes with new pathname, it 
 test('components.ScrollOnRouteChange | when props changes with the same pathname, it should NOT update', () => {
   const props = {
     location: {
-      pathname: '/default/path'
-    }
+      pathname: '/default/path',
+    },
   }
   const wrapper = setup()
   const fakeComponentDidUpdate = td.replace(wrapper.instance(), 'componentDidUpdate')
@@ -70,8 +70,8 @@ test('components.ScrollOnRouteChange | when props changes with the same pathname
 test('components.ScrollOnRouteChange | when props changes with the same pathname, it should NOT scroll to top', () => {
   const props = {
     location: {
-      pathname: '/default/path'
-    }
+      pathname: '/default/path',
+    },
   }
   setup().setProps(props)
   td.verify(defDeps.smoothscroll(), { times: 0, ignoreExtraArgs: true })

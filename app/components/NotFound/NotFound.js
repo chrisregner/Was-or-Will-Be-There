@@ -23,7 +23,7 @@ export default () => (
     <p className='ma0 lh-copy f6 gray'>Maybe there was some mistake in the URL?</p>
     <div className='tc pt4'>
       <Link to={'/'}>
-        <RaisedButton secondary={true} label='Explore The World Instead' />
+        <RaisedButton secondary label='Explore The World Instead' />
       </Link>
     </div>
   </div>

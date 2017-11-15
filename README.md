@@ -1,12 +1,5 @@
 ## Todos
 
-- transition from no paper to have paper
-- commit first
-- withHeightWatcher && PaperWithHeight, remove all about...
-  - real routes
-  - ghost height
-- remove real routes
-
 - navbar
 
 - the map

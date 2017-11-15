@@ -39,11 +39,6 @@ const routeCmptsWithHtWatcher = R.mapObjIndexed((Component, componentName) =>
   withHeightWatcher(Component, componentName),
 routeCmpts)
 
-const quick = (val) => spring(val, {
-  stiffness: 210,
-  damping: 20,
-})
-
 const PaperRoutes = () => (
   <div
     style={{

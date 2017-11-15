@@ -46,12 +46,8 @@ test('containers.App | if isPathNotFound returned true, it should render the not
     },
   })
 
-  const actual = wrapper
-    .find('.app-not-found')
-    .length
-  const expected = 1
-
-  assert.equal(actual, expected)
+  const actual = wrapper.find('.app-not-found').prop('isVisible')
+  assert.isTrue(actual)
 })
 
 test('containers.App | if isPathNotFound returned true, it should NOT render the routes', () => {
@@ -64,15 +60,11 @@ test('containers.App | if isPathNotFound returned true, it should NOT render the
     },
   })
 
-  const actual = wrapper
-    .find('.app-routes')
-    .length
-  const expected = 0
-
-  assert.equal(actual, expected)
+  const actual = wrapper.find('.app-routes').prop('isVisible')
+  assert.isFalse(actual)
 })
 
-test('containers.App | if isPathNotFound does NOT return TRUE, it should render the routes', () => {
+test('containers.App | if isPathNotFound does NOT return true, it should render the routes', () => {
   const wrapper = setup({
     hooks: {
       beforeRender: () => {
@@ -82,15 +74,11 @@ test('containers.App | if isPathNotFound does NOT return TRUE, it should render 
     },
   })
 
-  const actual = wrapper
-    .find('.app-routes')
-    .length
-  const expected = 1
-
-  assert.equal(actual, expected)
+  const actual = wrapper.find('.app-routes').prop('isVisible')
+  assert.isTrue(actual)
 })
 
-test('containers.App | if isPathNotFound does NOT return TRUE, it should NOT render the not found page', () => {
+test('containers.App | if isPathNotFound does NOT return true, it should NOT render the not found page', () => {
   const wrapper = setup({
     hooks: {
       beforeRender: () => {
@@ -100,10 +88,6 @@ test('containers.App | if isPathNotFound does NOT return TRUE, it should NOT ren
     },
   })
 
-  const actual = wrapper
-    .find('.app-not-found')
-    .length
-  const expected = 0
-
-  assert.equal(actual, expected)
+  const actual = wrapper.find('.app-not-found').prop('isVisible')
+  assert.isFalse(actual)
 })

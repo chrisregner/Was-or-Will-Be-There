@@ -14,7 +14,7 @@ const defProps = {
 
 const setup = TU.makeTestSetup({
   Component: FadingMounter,
-  defaultProps: defProps
+  defaultProps: defProps,
 })
 
 test('components.FadingMounter | it should render without error', () => {

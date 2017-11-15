@@ -28,40 +28,36 @@ class BarePaperWithHeight extends React.Component {
 
   render = () => {
     const { ownHeight } = this.state
-    const { height, ghostHeight, children } = this.props
+    const { height, children } = this.props
 
     return (
-      <div className='paper-with-height-ghost' style={{ height: ghostHeight + ownHeight }}>
-        <Paper
-          className='paper-with-height-paper'
-          style={{
-            height: height + ownHeight,
-            transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms'
-          }}
-        >
-          <div className='paper-with-height-children-wrapper' ref={this.childrenWrapperRef}>
-            <ResizeDetector
-              className='paper-with-height-children-wrapper-resize-detector'
-              handleHeight
-              onResize={this.handleChildrenWrprResize}
-            />
-            {children}
-          </div>
-        </Paper>
-      </div>
+      <Paper
+        className='paper-with-height-paper'
+        style={{
+          height: height + ownHeight,
+          transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+        }}
+      >
+        <div className='paper-with-height-children-wrapper' ref={this.childrenWrapperRef}>
+          <ResizeDetector
+            className='paper-with-height-children-wrapper-resize-detector'
+            handleHeight
+            onResize={this.handleChildrenWrprResize}
+          />
+          {children}
+        </div>
+      </Paper>
     )
   }
 }
 
 BarePaperWithHeight.propTypes = {
   height: PropTypes.number.isRequired,
-  ghostHeight: PropTypes.number.isRequired,
   children: PropTypes.node,
 }
 
 const mapStateToProps = state => ({
   height: uiGetters.getHighestHeight(state),
-  ghostHeight: uiGetters.getHighestGhostHeight(state),
 })
 
 const PaperWithHeight = connect(mapStateToProps)(BarePaperWithHeight)

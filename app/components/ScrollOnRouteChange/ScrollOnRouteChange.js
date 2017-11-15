@@ -8,10 +8,10 @@ const ScrollOnRouteChangeShell = ({ smoothscroll }) =>
     static propTypes = {
       location: PropTypes.shape({
         pathname: PropTypes.string.isRequired,
-      }).isRequired
+      }).isRequired,
     }
 
-    shouldComponentUpdate = (newProps) =>
+    shouldComponentUpdate = newProps =>
       this.props.location.pathname !== newProps.location.pathname
 
     componentDidUpdate = () => smoothscroll(0, 300)

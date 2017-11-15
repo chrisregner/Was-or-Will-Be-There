@@ -15,8 +15,6 @@ class FadingMounter extends React.Component {
   }
 
   componentDidUpdate = () => {
-    console.log(this.props.component.displayName || this.props.component.name || this.props.component, '>>> updated, isVisible? >>>', this.props.isVisible)
-
     const { isVisible } = this.props
     const { isTimerUp, isTimerSet } = this.state
 
@@ -31,8 +29,6 @@ class FadingMounter extends React.Component {
   render = () => {
     const { component: Component, isVisible } = this.props
     const { isTimerUp } = this.state
-
-    console.log(Component.displayName || Component.name || Component, '>>> rendered, isTimerUp? >>>', isTimerUp)
 
     return (
       <div className={`animated ${isVisible ? 'fadeIn' : 'fadeOut'}`}>

@@ -1,6 +1,0 @@
-{
-  "name:": "RealRouteWatcher",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./RealRouteWatcher.js"
-}

@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Route, withRouter, Switch } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { AnimatedSwitch } from 'react-router-transition'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { amber500, amber700, amber900 } from 'material-ui/styles/colors'
@@ -18,7 +19,6 @@ import NotFound from 'components/NotFound'
 import ScrollOnRouteChange from 'components/ScrollOnRouteChange'
 import FadingMounter from 'components/FadingMounter'
 import NotifSnackbar from 'containers/NotifSnackbar'
-import RealRouteWatcher from 'containers/RealRouteWatcher'
 import NotFoundSetter from 'containers/NotFoundSetter'
 
 const muiTheme = getMuiTheme({
@@ -32,13 +32,17 @@ const muiTheme = getMuiTheme({
   },
 })
 
-const MyRoutes = () => (
-  <Switch>
-    <Route exact path='/countries' component={PaperRoutes} />
-    <Route exact path='/overview' component={PaperRoutes} />
+const WrappedPaperRoutes = () => (
+  <AnimatedSwitch
+    atEnter={{ opacity: 0 }}
+    atLeave={{ opacity: 0 }}
+    atActive={{ opacity: 1 }}
+    className='relative'
+  >
+    <Route path='/:path(countries|overview)' component={PaperRoutes} />
     <Route exact path='/' />
     <Route component={NotFoundSetter} />
-  </Switch>
+  </AnimatedSwitch>
 )
 
 class BareApp extends React.Component {
@@ -53,12 +57,9 @@ class BareApp extends React.Component {
     const { isPathNotFound, location } = this.props
     const isNotFound = isPathNotFound(location.pathname) || false
 
-    console.log('isNotFound >>>', isNotFound)
-
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={{ minWidth: 300 }} className='min-vh-100'>
-
           <div className='fixed top-0 right-0 left-0 z-2'>
             <Nav />
           </div>
@@ -74,11 +75,10 @@ class BareApp extends React.Component {
           </div>
 
           <FadingMounter className='app-not-found' isVisible={isNotFound} component={NotFound} />
-          <FadingMounter className='app-routes' isVisible={!isNotFound} component={MyRoutes} />
+          <FadingMounter className='app-routes' isVisible={!isNotFound} component={WrappedPaperRoutes} />
 
           <ScrollOnRouteChange />
           <NotifSnackbar />
-          <RealRouteWatcher />
         </div>
       </MuiThemeProvider>
     )
