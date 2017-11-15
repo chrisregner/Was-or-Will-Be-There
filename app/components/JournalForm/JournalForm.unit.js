@@ -365,7 +365,7 @@ test('components.JournalForm > DeleteBtn | if delete button is clicked, it shoul
 
     deleteBtnWrpr.simulate('click')
 
-    const expectedArg = `/countries/${countryId}`
+    const expectedArg = `/countries/${countryId}/journals`
 
     td.verify(defProps.history.push(expectedArg), { times: 1 })
   }
@@ -484,7 +484,7 @@ test('components.JournalForm.onSubmit() | if form is valid, it should call histo
     fillForm({ 'title-field': 'Sample Journal Title' }, wrapper)
     wrapper.find('form').simulate('submit', mockData.ev)
 
-    const expectedArg = `/countries/${countryId}`
+    const expectedArg = `/countries/${countryId}/journals`
 
     td.verify(defProps.history.push(expectedArg), { times: 1 })
   }

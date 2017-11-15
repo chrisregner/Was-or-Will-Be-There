@@ -39,6 +39,7 @@ export const deletePhotosShell = ({ localCloudinary }) => ({ toDelete, photos })
       })
 
   const photoIds = photosToDelete
+    .filter(photo => !photo.get('path').startsWith('default/')) // don't delete dummy photos
     .map(photo => photo.get('id'))
     .toJS()
 

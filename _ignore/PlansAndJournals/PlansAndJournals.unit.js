@@ -26,6 +26,13 @@ test('components.PlansAndJournals | it should render without error', () => {
   assert.isTrue(actual)
 })
 
+test('components.PlansAndJournals | when in plans route, it should render the plans list')
+test('components.PlansAndJournals | when in plans route, it should NOT render the journals list')
+test('components.PlansAndJournals | when in journals route, it should render the journals list')
+test('components.PlansAndJournals | when in journals route, it should NOT render the plans list')
+test('components.PlansAndJournals | when plan tab button is clicked, it should call history.push() with correct args')
+test('components.PlansAndJournals | when journals tab button is clicked, it should call history.push() with correct args')
+
 test('components.PlansAndJournals | it should render a link to add a plan', () => {
   const props = {
     match: {

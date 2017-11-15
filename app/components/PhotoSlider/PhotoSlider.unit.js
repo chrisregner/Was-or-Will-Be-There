@@ -21,7 +21,7 @@ const defProps = {
       id: 'c',
       path: 'photo/c/path',
     }),
-  ])
+  ]),
 }
 
 const setup = TU.makeTestSetup({

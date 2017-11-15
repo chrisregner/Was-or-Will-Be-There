@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import IPropTypes from 'react-immutable-proptypes'
 import styled from 'styled-components'
 import Slider from 'react-slick'
-import I from 'immutable'
 
 import { blueGrey900 } from 'material-ui/styles/colors'
 
@@ -12,7 +11,7 @@ import { createJournalPhotoUrl } from 'constants/'
 const sliderOpts = {
   adaptiveHeight: true,
   arrows: false,
-  dots: true
+  dots: true,
 }
 
 const Container = styled.div`
@@ -25,7 +24,7 @@ const PhotoSlider = ({ photos }) => (
   <Container className='pb4'>
     <Slider {...sliderOpts}>
       {
-        photos.map((photo) => (
+        photos.map(photo => (
           <div style={{ backgroundColor: blueGrey900 }} key={photo.get('id')} data-test='photo-set'>
             <img
               src={createJournalPhotoUrl(photo.get('path'))}
@@ -34,10 +33,10 @@ const PhotoSlider = ({ photos }) => (
               data-test='photo'
             />
             {
-              photo.get('description')
-              && <p className='pa3 ma0 normal tc' data-test='description'>
-                  {photo.get('description')}
-                </p>
+              photo.get('description') &&
+              <p className='pa3 ma0 normal f6 tc white' data-test='description'>
+                {photo.get('description')}
+              </p>
             }
           </div>
         )).toJS()
@@ -53,7 +52,7 @@ PhotoSlider.propTypes = {
       path: PropTypes.string,
       description: PropTypes.string,
     }).isRequired
-  ).isRequired
+  ).isRequired,
 }
 
 export default PhotoSlider

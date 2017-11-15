@@ -111,7 +111,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
       this.setState({ status: 'deleted' })
       this.props.handleDelete(id)
 
-      history.push(`/countries/${match.params.countryId}`)
+      history.push(`/countries/${match.params.countryId}/journals`)
     }
 
     handleSubmit = (ev) => {
@@ -147,7 +147,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
         const trimmedValues = values.map(FU.trimIfString)
 
         handleSubmit(trimmedValues, this.state.photosDeleted)
-        history.push(`/countries/${match.params.countryId}`)
+        history.push(`/countries/${match.params.countryId}/journals`)
       }
     }
 
@@ -255,7 +255,7 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
             floatingLabelFixed
             onChange={this.handleChangeHomecoming}
             errorText={errors.homecoming || ''}
-            minDate={values.get('departure') || new Date()}
+            minDate={values.get('departure')}
             value={values.get('homecoming') || null}
           />
           <div>

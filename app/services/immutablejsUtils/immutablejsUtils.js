@@ -20,8 +20,8 @@ const smartSet = (obj, k, v) => {
 
 const recursiveSmartReducer = (newObj, v, k) =>
   (
-    (isImmutable(v) && isImmutable(smartGet(newObj, k)))
-    || (isObject(v) && isObject(smartGet(newObj, k)))
+    (isImmutable(v) && isImmutable(smartGet(newObj, k))) ||
+    (isObject(v) && isObject(smartGet(newObj, k)))
   )
     ? smartSet(newObj, k, smartMergeDeep(smartGet(newObj, k), v))
     : smartSet(newObj, k, v)

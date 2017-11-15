@@ -1,4 +1,4 @@
-import { test, after } from 'mocha'
+import { test, after, before } from 'mocha'
 import { assert } from 'chai'
 import I from 'immutable'
 import D from 'date-fns'
@@ -28,9 +28,9 @@ before(() => {
   }
 
   defProps = {
-    countryId: 'ph',
     type: 'plan',
     data: I.Map({
+      countryId: 'de',
       id: 'defaultDataId',
       title: 'Default Title',
       copy: 'Default copy',
@@ -44,13 +44,13 @@ before(() => {
         I.Map({
           id: 'defaultPhotoSecond',
           path: 'path/to/default/photo/second',
-          description: 'Default second photo description'
+          description: 'Default second photo description',
         }),
         I.Map({
           id: 'defaultPhotoThree',
           path: 'path/to/default/photo/three',
         }),
-      ])
+      ]),
     }),
     muiTheme: {
       palette: {
@@ -58,13 +58,13 @@ before(() => {
         tertiary2Color: '',
         tertiary3Color: '',
         secondaryTextColor: '',
-      }
-    }
+      },
+    },
   }
 
   setup = TU.makeTestSetup({
     Component: BareCollapsibleItem,
-    defaultProps: defProps
+    defaultProps: defProps,
   })
 })
 
@@ -142,7 +142,7 @@ test('components.CollapsibelItem > details | it should not be shown by default',
 
 test('components.CollapsibelItem > details > editLink | when type is "plan", it should be rendered with correct url', () => {
   const actual = setup().find('[data-test="details"]').find('[data-test="editLink"]').prop('to')
-  const expected = '/countries/ph/plans/defaultDataId'
+  const expected = '/countries/de/plans/defaultDataId'
   assert.equal(actual, expected)
 })
 
@@ -152,7 +152,7 @@ test('components.CollapsibelItem > details > editLink | when type is "journal", 
     .find('[data-test="details"]')
     .find('[data-test="editLink"]')
     .prop('to')
-  const expected = '/countries/ph/journals/defaultDataId'
+  const expected = '/countries/de/journals/defaultDataId'
   assert.equal(actual, expected)
 })
 
@@ -220,7 +220,7 @@ test('components.CollapsibelItem > details > photosSlider | when photo(s) are pr
     I.Map({
       id: 'defaultPhotoSecond',
       path: 'path/to/default/photo/second',
-      description: 'Default second photo description'
+      description: 'Default second photo description',
     }),
     I.Map({
       id: 'defaultPhotoThree',
@@ -244,13 +244,13 @@ test('components.CollapsibelItem > details > photosSlider | when photo(s) are NO
 //   if time is included in the calculation
 
 test(
-  'components.CollapsibelItem > summary > timeAlert | '
-  + 'when type is "plan", homecoming is yesterday or earlier, regardless of departure, '
-  + 'it should say "journalize"',
+  'components.CollapsibelItem > summary > timeAlert | ' +
+  'when type is "plan", homecoming is yesterday or earlier, regardless of departure, ' +
+  'it should say "journalize"',
   () => {
     const testWithVars = (departure, homecoming) => {
       const props = {
-        data: I.Map({ departure, homecoming })
+        data: I.Map({ departure, homecoming }),
       }
       const actual = setup({ props })
         .find('[data-test="summary"]')
@@ -272,19 +272,19 @@ test(
 )
 
 test(
-  'components.CollapsibelItem > details > timeAlert | '
-  + 'when type is "plan", homecoming is yesterday or earlier, regardless of departure, '
-  + 'it should be link with correct url',
+  'components.CollapsibelItem > details > timeAlert | ' +
+  'when type is "plan", homecoming is yesterday or earlier, regardless of departure, ' +
+  'it should be link with correct url',
   () => {
     const testWithVars = (departure, homecoming) => {
       const props = {
-        data: I.Map({ departure, homecoming })
+        data: I.Map({ departure, homecoming }),
       }
       const actual = setup({ props })
         .find('[data-test="details"]')
         .find('[data-test="timeAlert"]')
         .prop('to')
-      const expected = '/countries/ph/plans/defaultDataId/journalize'
+      const expected = '/countries/de/plans/defaultDataId/journalize'
       assert.equal(actual, expected)
     }
 
@@ -300,13 +300,13 @@ test(
 )
 
 test(
-  'components.CollapsibelItem > summary > timeAlert | '
-  + 'when type is "plan", homecoming is NOT yesterday or earlier, and departure is in 2 to 30 days, '
-  + 'it should say "in X days"',
+  'components.CollapsibelItem > summary > timeAlert | ' +
+  'when type is "plan", homecoming is NOT yesterday or earlier, and departure is in 2 to 30 days, ' +
+  'it should say "in X days"',
   () => {
     const testWithVars = (departure, homecoming, noOfDays) => {
       const props = {
-        data: I.Map({ departure, homecoming })
+        data: I.Map({ departure, homecoming }),
       }
       const actual = setup({ props })
         .find('[data-test="summary"]')
@@ -323,13 +323,13 @@ test(
 )
 
 test(
-  'components.CollapsibelItem > details > timeAlert | '
-  + 'when type is "plan", homecoming is NOT yesterday or earlier, and departure is in 2 to 30 days, '
-  + 'it should say "in X days"',
+  'components.CollapsibelItem > details > timeAlert | ' +
+  'when type is "plan", homecoming is NOT yesterday or earlier, and departure is in 2 to 30 days, ' +
+  'it should say "in X days"',
   () => {
     const testWithVars = (departure, homecoming, noOfDays) => {
       const props = {
-        data: I.Map({ departure, homecoming })
+        data: I.Map({ departure, homecoming }),
       }
       const actual = setup({ props })
         .find('[data-test="details"]')
@@ -346,13 +346,13 @@ test(
 )
 
 test(
-  'components.CollapsibelItem > summary > timeAlert | '
-  + 'when type is "plan", homecoming is NOT yesterday or earlier, and departure is tomorrow, '
-  + 'it should say "tomorrow"',
+  'components.CollapsibelItem > summary > timeAlert | ' +
+  'when type is "plan", homecoming is NOT yesterday or earlier, and departure is tomorrow, ' +
+  'it should say "tomorrow"',
   () => {
     const testWithVars = (departure, homecoming) => {
       const props = {
-        data: I.Map({ departure, homecoming })
+        data: I.Map({ departure, homecoming }),
       }
       const actual = setup({ props })
         .find('[data-test="summary"]')
@@ -363,19 +363,19 @@ test(
     }
 
     testWithVars(mocks.tomorrow, mocks.inFifteenDays)
-    testWithVars(mocks.tomorrow, mocks.inOneYear,)
-    testWithVars(mocks.tomorrow, undefined,)
+    testWithVars(mocks.tomorrow, mocks.inOneYear)
+    testWithVars(mocks.tomorrow, undefined)
   }
 )
 
 test(
-  'components.CollapsibelItem > details > timeAlert | '
-  + 'when type is "plan", homecoming is NOT yesterday or earlier, and departure is tomorrow, '
-  + 'it should say "tomorrow"',
+  'components.CollapsibelItem > details > timeAlert | ' +
+  'when type is "plan", homecoming is NOT yesterday or earlier, and departure is tomorrow, ' +
+  'it should say "tomorrow"',
   () => {
     const testWithVars = (departure, homecoming) => {
       const props = {
-        data: I.Map({ departure, homecoming })
+        data: I.Map({ departure, homecoming }),
       }
       const actual = setup({ props })
         .find('[data-test="details"]')
@@ -386,19 +386,19 @@ test(
     }
 
     testWithVars(mocks.tomorrow, mocks.inFifteenDays)
-    testWithVars(mocks.tomorrow, mocks.inOneYear,)
-    testWithVars(mocks.tomorrow, undefined,)
+    testWithVars(mocks.tomorrow, mocks.inOneYear)
+    testWithVars(mocks.tomorrow, undefined)
   }
 )
 
 test(
-  'components.CollapsibelItem > summary > timeAlert | '
-  + 'when type is "plan", homecoming is NOT yesterday or earlier, and departure is today, '
-  + 'it should say "today"',
+  'components.CollapsibelItem > summary > timeAlert | ' +
+  'when type is "plan", homecoming is NOT yesterday or earlier, and departure is today, ' +
+  'it should say "today"',
   () => {
     const testWithVars = (departure, homecoming) => {
       const props = {
-        data: I.Map({ departure, homecoming })
+        data: I.Map({ departure, homecoming }),
       }
       const actual = setup({ props })
         .find('[data-test="summary"]')
@@ -409,19 +409,19 @@ test(
     }
 
     testWithVars(mocks.today, mocks.inFifteenDays)
-    testWithVars(mocks.today, mocks.inOneYear,)
-    testWithVars(mocks.today, undefined,)
+    testWithVars(mocks.today, mocks.inOneYear)
+    testWithVars(mocks.today, undefined)
   }
 )
 
 test(
-  'components.CollapsibelItem > details > timeAlert | '
-  + 'when type is "plan", homecoming is NOT yesterday or earlier, and departure is today, '
-  + 'it should say "today"',
+  'components.CollapsibelItem > details > timeAlert | ' +
+  'when type is "plan", homecoming is NOT yesterday or earlier, and departure is today, ' +
+  'it should say "today"',
   () => {
     const testWithVars = (departure, homecoming) => {
       const props = {
-        data: I.Map({ departure, homecoming })
+        data: I.Map({ departure, homecoming }),
       }
       const actual = setup({ props })
         .find('[data-test="details"]')
@@ -432,20 +432,19 @@ test(
     }
 
     testWithVars(mocks.today, mocks.inFifteenDays)
-    testWithVars(mocks.today, mocks.inOneYear,)
-    testWithVars(mocks.today, undefined,)
+    testWithVars(mocks.today, mocks.inOneYear)
+    testWithVars(mocks.today, undefined)
   }
 )
 
-
 test(
-  'components.CollapsibelItem > summary > timeAlert | '
-  + 'when type is "plan", homecoming is NOT yesterday or earlier, and departure is earlier than today or later than 30 days, '
-  + 'it should NOT render',
+  'components.CollapsibelItem > summary > timeAlert | ' +
+  'when type is "plan", homecoming is NOT yesterday or earlier, and departure is earlier than today or later than 30 days, ' +
+  'it should NOT render',
   () => {
     const testWithVars = (departure, homecoming) => {
       const props = {
-        data: I.Map({ departure, homecoming })
+        data: I.Map({ departure, homecoming }),
       }
       const actual = setup({ props })
         .find('[data-test="summary"]')
@@ -468,13 +467,13 @@ test(
 )
 
 test(
-  'components.CollapsibelItem > details > timeAlert | '
-  + 'when type is "plan", homecoming is NOT yesterday or earlier, and departure is earlier than today or later than 30 days, '
-  + 'it should NOT render',
+  'components.CollapsibelItem > details > timeAlert | ' +
+  'when type is "plan", homecoming is NOT yesterday or earlier, and departure is earlier than today or later than 30 days, ' +
+  'it should NOT render',
   () => {
     const testWithVars = (departure, homecoming) => {
       const props = {
-        data: I.Map({ departure, homecoming })
+        data: I.Map({ departure, homecoming }),
       }
       const actual = setup({ props })
         .find('[data-test="details"]')
@@ -497,14 +496,14 @@ test(
 )
 
 test(
-  'components.CollapsibelItem > summary > timeAlert | '
-  + 'when type is "journal", regardless of the dates, '
-  + 'it should NOT render',
+  'components.CollapsibelItem > summary > timeAlert | ' +
+  'when type is "journal", regardless of the dates, ' +
+  'it should NOT render',
   () => {
     const testWithVars = (departure, homecoming) => {
       const props = {
         type: 'journal',
-        data: I.Map({ departure, homecoming })
+        data: I.Map({ departure, homecoming }),
       }
       const actual = setup({ props })
         .find('[data-test="summary"]')
@@ -522,16 +521,15 @@ test(
   }
 )
 
-
 test(
-  'components.CollapsibelItem > details > timeAlert | '
-  + 'when type is "journal", regardless of the dates, '
-  + 'it should NOT render',
+  'components.CollapsibelItem > details > timeAlert | ' +
+  'when type is "journal", regardless of the dates, ' +
+  'it should NOT render',
   () => {
     const testWithVars = (departure, homecoming) => {
       const props = {
         type: 'journal',
-        data: I.Map({ departure, homecoming })
+        data: I.Map({ departure, homecoming }),
       }
       const actual = setup({ props })
         .find('[data-test="details"]')

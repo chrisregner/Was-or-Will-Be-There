@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import { AnimatedSwitch } from 'react-router-transition'
 import * as R from 'ramda'
 
 import CollapsibleItem from 'components/CollapsibleItem'
 import PaperWithHeight from 'containers/PaperWithHeight'
+import PlansAndJournals from 'containers/PlansAndJournals'
 import AddPlanForm from 'containers/AddPlanForm'
 import EditPlanForm from 'containers/EditPlanForm'
 import AddJournalForm from 'containers/AddJournalForm'
@@ -29,6 +30,7 @@ const routeCmpts = {
   AddJournalForm,
   EditJournalForm,
   CollapsibleItem,
+  PlansAndJournals,
 }
 
 const routeCmptsWithHtWatcher = R.mapObjIndexed((Component, componentName) =>
@@ -53,6 +55,14 @@ const PaperRoutes = () => (
           atActive={{ opacity: 1 }}
         >
           <Route exact path='/overview' component={routeCmptsWithHtWatcher.WorldOverview} />
+          {/* TODO: redirect `/countries/:countryId` to PlansAndJournals */}
+          <Route
+            exact
+            path='/countries/:countryId'
+            render={({ match }) => (match ? (<Redirect to={`/countries/${match.params.countryId}/plans`} />) : null)}
+          />
+          <Route exact path='/countries/:countryId/plans' component={routeCmptsWithHtWatcher.PlansAndJournals} />
+          <Route exact path='/countries/:countryId/journals' component={routeCmptsWithHtWatcher.PlansAndJournals} />
           <Route exact path='/countries/:countryId/plans/new' component={routeCmptsWithHtWatcher.AddPlanForm} />
           <Route exact path='/countries/:countryId/plans/:id' component={routeCmptsWithHtWatcher.EditPlanForm} />
           <Route exact path='/countries/:countryId/journals/new' component={routeCmptsWithHtWatcher.AddJournalForm} />

@@ -1,19 +1,14 @@
 ## Todos
 
-- country overview, edit on right-nav-link?
-  - plans tab
-  - journals tab
-
 - navbar
 
 - notification
-  - plan turning into journal
-    - notify to suggest adding photos to new journal entry
   - notify when...
     - 30 days before an departure/homecoming
     - 7 days before an departure/homecoming
     - 1 day before an departure/homecoming
     - on the day of departure/homecoming
+    - 1 day after homecoming (journalize)
 
 - the map
   - if has plan, destination icon
@@ -39,12 +34,14 @@
   - performance test (before and after deployment)
     - research more
   - webpack production optimization
+    - reenable remote deletion of photo
     - research more
     - change rawgit links as per rawgit.com for production
     - remove excess deps
-    - delete \_ignore folder
-  - deploy
+    - delete `_ignore` folder
   - credits
+  - deploy
+  - correct DailyRoutinesTrackers dummy data (remove the "test" entry)
 
 ---
 

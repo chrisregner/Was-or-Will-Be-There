@@ -1,14 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import IPropTypes from 'react-immutable-proptypes'
-import I from 'immutable'
 import { Link } from 'react-router-dom'
 import formatDate from 'date-fns/format'
 import diffInCalendarDays from 'date-fns/difference_in_calendar_days'
 
 import muiThemeable from 'material-ui/styles/muiThemeable'
 import { ListItem } from 'material-ui/List'
-import List from 'material-ui/List'
 import IconButton from 'material-ui/IconButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import InfoIcon from 'material-ui/svg-icons/action/info'
@@ -21,9 +19,9 @@ import PhotoSlider from 'components/PhotoSlider'
 
 class BareCollapsibleItem extends React.Component {
   static propTypes = {
-    countryId: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['journal', 'plan']).isRequired,
     data: IPropTypes.contains({
+      countryId: PropTypes.string.isRequired,
       id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       copy: PropTypes.string,
@@ -33,7 +31,7 @@ class BareCollapsibleItem extends React.Component {
         id: PropTypes.string.isRequired,
         path: PropTypes.string.isRequired,
         description: PropTypes.string,
-      }))
+      })),
     }).isRequired,
     muiTheme: PropTypes.shape({
       palette: PropTypes.shape({
@@ -41,33 +39,35 @@ class BareCollapsibleItem extends React.Component {
         tertiary2Color: PropTypes.string,
         tertiary3Color: PropTypes.string,
         secondaryTextColor: PropTypes.string,
-      })
-    })
+      }),
+    }),
   }
 
   state = {
-    isExpanded: false
+    isExpanded: false,
   }
 
   handleSummaryClick = () => {
     this.setState(prevState => ({
-      isExpanded: !prevState.isExpanded
+      isExpanded: !prevState.isExpanded,
     }))
   }
 
   titleRef = (titleEl) => {
-    this.isTitleTruncated = titleEl.scrollWidth > titleEl.clientWidth
+    if (titleEl)
+      this.isTitleTruncated = titleEl.scrollWidth > titleEl.clientWidth
   }
 
   getTimeAlert = () => {
     const { data } = this.props
 
-    const departureFromNow = data.get('departure')
-      && diffInCalendarDays(data.get('departure'), new Date())
-    const homecomingFromNow = data.get('homecoming')
-      && diffInCalendarDays(data.get('homecoming'), new Date())
+    const departureFromNow = data.get('departure') &&
+      diffInCalendarDays(data.get('departure'), new Date())
+    const homecomingFromNow = data.get('homecoming') &&
+      diffInCalendarDays(data.get('homecoming'), new Date())
 
-    switch(true) {
+    /* eslint-disable no-unreachable */
+    switch (true) {
       case homecomingFromNow < 0:
         return 'journalize'
         break
@@ -83,11 +83,12 @@ class BareCollapsibleItem extends React.Component {
       default:
         return null
         break
+    /* eslint-enable no-unreachable */
     }
   }
 
   render = () => {
-    const { type, countryId, data } = this.props
+    const { type, data } = this.props
     const { palette } = this.props.muiTheme
     const departure = data.get('departure')
     const homecoming = data.get('homecoming')
@@ -102,8 +103,8 @@ class BareCollapsibleItem extends React.Component {
         >
           <div className='flex items-center'>
             {
-              (timeAlert && type === 'plan')
-              && <div>
+              (timeAlert && type === 'plan') &&
+              <div>
                 <IconButton
                   data-test='timeAlert'
                   tooltip={
@@ -116,7 +117,7 @@ class BareCollapsibleItem extends React.Component {
                   iconStyle={{
                     color: timeAlert === 'journalize'
                       ? palette.tertiary2Color
-                      : palette.primary2Color
+                      : palette.primary2Color,
                   }}
                 >
                   <InfoIcon />
@@ -136,18 +137,18 @@ class BareCollapsibleItem extends React.Component {
 
               {
                 /* Data Range */
-                (departure || homecoming)
-                && <div
-                    data-test='dateRange'
-                    className='f6'
-                    style={{ color: palette.secondaryTextColor }}
-                  >
-                    {`${
-                      departure ? formatDate(departure, 'MM/DD/YY') : '(TBD)'
-                    } – ${
-                      homecoming ? formatDate(homecoming, 'MM/DD/YY') : '(TBD)'
-                    }`}
-                  </div>
+                (departure || homecoming) &&
+                <div
+                  data-test='dateRange'
+                  className='f6'
+                  style={{ color: palette.secondaryTextColor }}
+                >
+                  {`${
+                    departure ? formatDate(departure, 'MM/DD/YY') : '(TBD)'
+                  } – ${
+                    homecoming ? formatDate(homecoming, 'MM/DD/YY') : '(TBD)'
+                  }`}
+                </div>
               }
             </div>
             <div>
@@ -156,78 +157,72 @@ class BareCollapsibleItem extends React.Component {
           </div>
         </ListItem>
         <Collapse data-test='details' in={this.state.isExpanded}>
-          <div className='pv3'>
+          <div className='bg-black-10'>
             {
-              (timeAlert && type === 'plan')
-              && <div className='ph3 pb3 f6 tc'>
+              (timeAlert && type === 'plan') &&
+              <div className='pt3 ph3 f6 tc'>
                 {
                   timeAlert === 'journalize'
-                  ? <span style={{ color: palette.tertiary3Color }}>
+                    ? <span style={{ color: palette.tertiary3Color }}>
                     You must already be home. Click{' '}
-                    <Link
-                      data-test='timeAlert'
-                      to={`/countries/${countryId}/${type}s/${data.get('id')}/journalize`}
-                      className='color-inherit'
-                    >
+                      <Link
+                        data-test='timeAlert'
+                        to={`/countries/${data.get('countryId')}/${type}s/${data.get('id')}/journalize`}
+                        className='color-inherit'
+                      >
                       here
-                    </Link>
-                    {' '}to journalize and save memories from your journey!
-                  </span>
-                  : <span data-test='timeAlert' style={{ color: palette.primary2Color }}>
+                      </Link>
+                      {' '}to journalize and save memories from your journey!
+                    </span>
+                    : <span data-test='timeAlert' style={{ color: palette.primary2Color }}>
                     Don’t forget, you will be leaving {timeAlert}!
-                  </span>
+                    </span>
                 }
               </div>
             }
 
-            <div className='cf'>
+            {
+              this.isTitleTruncated &&
+              <div className='pt3 ph3 w-100 cg'>
+                <div className='f6 pb2' style={{ color: palette.secondaryTextColor }}>
+                  Full title:
+                </div>
+                <div data-test='fullTitle' className='f5 lh-title'>
+                  {data.get('title')}
+                </div>
+              </div>
+            }
+
+            {
+              data.get('photos') && data.get('photos').size > 0 &&
+              <PhotoSlider data-test='photoSlider' photos={data.get('photos')} />
+            }
+
+            {
+              data.get('copy') &&
+              <div className='pt3 ph3'>
+                <div
+                  data-test='copyLabel'
+                  className='f6 pb2'
+                  style={{ color: palette.secondaryTextColor }}
+                >
+                  {type === 'plan' && 'Notes'}
+                  {type === 'journal' && 'Story'}
+                </div>
+                <div data-test='copy' className='f5 lh-title'>
+                  {data.get('copy')}
+                </div>
+              </div>
+            }
+
+            <div className='pa3 tr'>
               <Link
                 data-test='editLink'
-                to={`/countries/${countryId}/${type}s/${data.get('id')}`}
-                className='flex items-center fr ph3 f5 no-underline'
+                to={`/countries/${data.get('countryId')}/${type}s/${data.get('id')}`}
+                className='no-underline'
               >
-                <EditIcon style={{
-                  marginTop: -2,
-                  marginRight: 2,
-                  width: 14,
-                  height: 14,
-                  color: palette.primary2Color
-                }} /> <span className='f6' style={{ color: palette.primary2Color }}>Edit</span>
+                <RaisedButton label='edit' icon={<EditIcon />} />
               </Link>
-
-              {
-                this.isTitleTruncated
-                && <div className='ph3'>
-                  <div className='f6 pb2' style={{ color: palette.secondaryTextColor }}>
-                    Full title:
-                  </div>
-                  <div data-test='fullTitle' className='f5 lh-title pb3'>
-                    {data.get('title')}
-                  </div>
-                </div>
-              }
-
-              {
-                data.get('photos') && data.get('photos').size > 0
-                && <PhotoSlider data-test='photoSlider' photos={data.get('photos')}/>
-              }
-
-              {
-                data.get('copy')
-                && <div className='ph3'>
-                  <div
-                    data-test='copyLabel'
-                    className='f6 pb2'
-                    style={{ color: palette.secondaryTextColor }}
-                  >
-                    {type === 'plan' && 'Notes'}
-                    {type === 'journal' && 'Story'}
-                  </div>
-                  <div data-test='copy' className='f5 lh-title pb3'>
-                    {data.get('copy')}
-                  </div>
-                </div>
-              }
             </div>
           </div>
         </Collapse>

@@ -1,6 +1,6 @@
 {
-  "name:": "Xxx",
+  "name:": "PlansAndJournals",
   "version": "0.0.0",
   "private": true,
-  "main": "./Xxx.js"
+  "main": "./PlansAndJournals.js"
 }

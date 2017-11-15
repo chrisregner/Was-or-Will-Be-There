@@ -49,10 +49,10 @@ td.config({
 global.HTMLElement = window.HTMLElement
 
 // https://github.com/akiran/react-slick#test-setup
-global.window.matchMedia = window.matchMedia || function() {
-    return {
-        matches : false,
-        addListener : function() {},
-        removeListener: function() {}
-    };
-};
+global.window.matchMedia = window.matchMedia || function () {
+  return {
+    matches: false,
+    addListener: function () {},
+    removeListener: function () {},
+  }
+}

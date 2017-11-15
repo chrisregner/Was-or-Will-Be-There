@@ -24,4 +24,3 @@ suite('components.CountryOverview > journalList', () => {
   test('when there are journals, it should render the journals correctly')
   test('when there are NO journals, it should render a message')
 })
-
