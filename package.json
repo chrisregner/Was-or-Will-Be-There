@@ -73,6 +73,7 @@
     "reselect": "^3.0.1",
     "schema-validator": "^3.3.0",
     "shortid": "^2.2.8",
+    "smoothscroll": "^0.4.0",
     "style-loader": "^0.19.0",
     "styled-components": "^2.2.1",
     "synchronous-promise": "^1.0.18",

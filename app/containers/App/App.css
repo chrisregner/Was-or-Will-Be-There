@@ -62,15 +62,14 @@ body {
  * Animate.css overrides
  */
 
-@keyframes disappearLastly {
+/* @keyframes disappearLastly {
   100% { visibility: hidden; }
-}
+} */
 
 .animated {
-  -webkit-animation-duration: .25s !important;
-  animation-duration: .25s !important;
+  animation-duration: .450s !important;
 }
 
-.fadeOut {
+/* .fadeOut {
   animation-name: fadeOut, disappearLastly !important;
-}
+} */

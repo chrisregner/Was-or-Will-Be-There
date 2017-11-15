@@ -56,3 +56,6 @@ global.window.matchMedia = window.matchMedia || function () {
     removeListener: function () {},
   }
 }
+
+// fixes the issue with smoothscroll package
+global.history = {}

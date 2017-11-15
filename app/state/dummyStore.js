@@ -38,7 +38,7 @@ export default I.Map({
       homecoming: today,
     }),
     I.Map({
-      id: 'dummy_plan_de_01',
+      id: 'dummy_plan_de_02',
       countryId: 'de',
       title: 'Tony’s wedding',
       copy: 'That crystal duck would make a perfect gift',

@@ -37,6 +37,7 @@ export default (WrappedCmpt, componentName) => {
 
     componentWillUnmount = () => {
       this.props.removeGhostHeight(this.paperId)
+      this.props.removePaperHeight(this.paperId)
     }
 
     shouldComponentUpdate = (nextProps) => {

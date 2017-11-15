@@ -1,4 +1,6 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import RaisedButton from 'material-ui/RaisedButton'
 
 export default () => (
   <div
@@ -19,5 +21,10 @@ export default () => (
     </h1>
     <p className='ma0 lh-copy f5'>That page doesn’t even exist!</p>
     <p className='ma0 lh-copy f6 gray'>Maybe there was some mistake in the URL?</p>
+    <div className='tc pt4'>
+      <Link to={'/'}>
+        <RaisedButton secondary={true} label='Explore The World Instead' />
+      </Link>
+    </div>
   </div>
 )

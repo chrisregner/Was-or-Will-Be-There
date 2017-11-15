@@ -1,30 +1,19 @@
 ## Todos
 
-- navbar
+- transition from no paper to have paper
+- commit first
+- withHeightWatcher && PaperWithHeight, remove all about...
+  - real routes
+  - ghost height
+- remove real routes
 
-- notification
-  - notify when...
-    - 30 days before an departure/homecoming
-    - 7 days before an departure/homecoming
-    - 1 day before an departure/homecoming
-    - on the day of departure/homecoming
-    - 1 day after homecoming (journalize)
+- navbar
 
 - the map
   - if has plan, destination icon
   - if has journal, flag icon
 
-- journalize?
-- scroll on location change
-- transition from no paper to have paper
-
 - misc
-  - styles
-    - animation
-      - animate.css duration
-      - material-ui Paper height transition duration
-      - react-router-transition animation
-        - add shrinking/expanding animation alongside the fading
     - css prefixes/polyfills
   - state configuration
     - preloaded state?
@@ -61,16 +50,16 @@ edit journal            - /countries/:countryId/journals/:id
 ## Additional features
 
 - additional features
-  - sort
+  - notification
+    - notify when...
+      - 30 days before an departure/homecoming
+      - 7 days before an departure/homecoming
+      - 1 day before an departure/homecoming
+      - on the day of departure/homecoming
+      - 1 day after homecoming (journalize)
+  - sort plans/journals/both
     - chronologically
     - geographically
   - input on map to search and select places
     - pan map upon selection
-  - automatic image deleting (when certain limit is met, delete in the next midnight)
-
-## Manual testing
-- plans crud
-  - snackbar
-- journals crud
-  - images crud
-  - snackbar
+  - automatic image deleting (when certain limit is met, delete in the next midnight?)

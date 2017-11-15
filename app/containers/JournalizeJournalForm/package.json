@@ -1,0 +1,6 @@
+{
+  "name:": "JournalizeJournalForm",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./JournalizeJournalForm.js"
+}

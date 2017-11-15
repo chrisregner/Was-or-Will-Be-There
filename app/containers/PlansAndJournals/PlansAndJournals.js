@@ -60,7 +60,7 @@ class BarePlansAndJournals extends React.Component {
       : 'journals'
 
     return (
-      <div>
+      <div className='pt2'>
         <BottomNavigation
           style={{ backgroundColor: 'transparet' }}
           selectedIndex={activeTab === 'plans' ? 0 : 1}
@@ -92,8 +92,8 @@ class BarePlansAndJournals extends React.Component {
                     data={plan}
                   />
                 )).toJS()
-                : <div data-test='noPlan'>
-                    You haven’t added any plan yet!
+                : <div data-test='noPlan' className='pa3 tc gray'>
+                    You have no plan in this country!
                 </div>
             }
 
@@ -118,8 +118,8 @@ class BarePlansAndJournals extends React.Component {
                     data={journal}
                   />
                 )).toJS()
-                : <div data-test='noJournal'>
-                    You haven’t added any journal yet!
+                : <div data-test='noJournal' className='pa3 tc gray'>
+                    You have no journal in this country!
                 </div>
             }
 
