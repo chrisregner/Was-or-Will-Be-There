@@ -1,18 +1,16 @@
 ## Todos
 
-- navbar
-
 - the map
   - if has plan, destination icon
   - if has journal, flag icon
 
+- redux-persist
+
 - misc
-    - css prefixes/polyfills
-  - state configuration
-    - preloaded state?
-    - redux-persist
   - responsiveness
   - accessibility
+  - css prefixes/polyfills
+  - crossbrowser test?
   - performance test (before and after deployment)
     - research more
   - webpack production optimization
@@ -29,18 +27,17 @@
 
 map                     - /
 world overview          - /overview/
-country plans           - /countries/:countryId/ **TODO: redirect to plans when in this route**
 country plans           - /countries/:countryId/plans
 country journals        - /countries/:countryId/journals
-edit plans and journals - /countries/:countryId/edit?
 new plan                - /countries/:countryId/plans/new
 edit plan               - /countries/:countryId/plans/:id
+journalize plan         - /countries/:countryId/plans/journalize
 new journal             - /countries/:countryId/journals/new
 edit journal            - /countries/:countryId/journals/:id
 
 ---
 
-## Additional features
+## Possible Additional features
 
 - additional features
   - notification
