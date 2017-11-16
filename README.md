@@ -20,6 +20,9 @@
     - remove excess deps
     - delete `_ignore` folder
   - credits
+    - natural earth data?
+    - mapbox?
+    - leaflet?
   - deploy
   - correct DailyRoutinesTrackers dummy data (remove the "test" entry)
 

@@ -10,6 +10,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 import 'tachyons/css/tachyons.css'
 import 'animate.css/animate.css'
+import 'leaflet/dist/leaflet.css'
 import './App.css'
 import { uiGetters } from 'state'
 import Nav from 'components/Nav'
