@@ -1,78 +1,86 @@
 import React from 'react'
 import styled from 'styled-components'
-import L from 'leaflet'
 import { Link } from 'react-router-dom'
 import worldTopoJson from 'constants/world.topo.json'
 import topojsonFeature  from 'topojson-client/src/feature'
 
 /*
 
-mapbox alternatives
-label over overlay pane
-limt zoom to limit edges to bounds
-limit pan to bounds
+AIzaSyAe_z5uQZuI9fDFrEAxfjBlHuanTwg8CNs
+
+limit zoom to limit edges to bounds?
+limit pan to bounds?
 horizontal layer repeat or no-repeat
 click for all features
-colors for each feature
+colors for some countris
   journal (regardless of plan)
   plan
-  neutral
-markers for each...
+markers for some countries...
   journal (regardless of plan)
   plan
-openstreemap seems faster
+style
+  map
+  backgroundcolor
+
+wait for location?
 
  */
 
 const worldGeoJson = topojsonFeature(worldTopoJson, worldTopoJson.objects)
 const Wrapper = styled.div`
   .leaflet-container {
-    background: #fff;
+    background-color: #AAD3DF;
   }
 `
-
 class PJMap extends React.Component {
   componentDidMount = () => {
-    const lMap = L.map(this.mapEl, {
-      center: [42.5, 0],
-      zoom: 2,
-      minZoom: 2,
-      maxZoom: 12,
-      maxBoundsViscosity: 1,
-      maxBounds: [[90, -180], [-90, 180]],
-      layers: [
-        L.tileLayer(
-          'https://api.mapbox.com/styles/v1/chrisregner/cja2h8gt70raf2snmk0qcrubf/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiY2hyaXNyZWduZXIiLCJhIjoiY2o3NzFvMngwMTF5ejJ3cDM4MzI0OWJ0ciJ9.i91qADEbokI_EM_IWqKc7w',
-          { noWrap: true, }
-        ),
-        // L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { noWrap: true }),
-      ]
+    const gMap = new google.maps.Map(this.mapEl, {
+      zoom: 3,
+      center: { lat: 45, lng: 0 },
     })
 
-    const beneathTilePane = lMap.createPane('beneathTilePane')
-    beneathTilePane.style.zIndex = 100
+    gMap.data.addGeoJson(worldGeoJson)
 
-    const lGeoJson = L.geoJson(worldGeoJson, {
-      pane: beneathTilePane,
-      onEachFeature: (feature, layer) => {
-        layer.on({
-          click: () => { console.log(feature, layer) }
-        })
-      }
-    }).addTo(lMap)
+    // gMap.addListener('bounds_changed', this.checkBounds)
+    // gMap.addListener('zoom_changed', this.checkZoom)
   }
+
+  // checkZoom = (passedGMap) => {
+  //   const { gMap } = this
+  //   const uppermostLat = gMap.getBounds().getNorthEast().lat()
+  //   const lowermostLat = gMap.getBounds().getSouthWest().lat()
+
+  //   if (uppermostLat - lowermostLat > 170)
+  //     gMap.setZoom(gMap.getZoom() + 1)
+  // }
+
+  // checkBounds = () => {
+  //   const { gMap } = this
+  //   const uppermostLat = gMap.getBounds().getNorthEast().lat()
+  //   const lowermostLat = gMap.getBounds().getSouthWest().lat()
+  //   const isTooHigh = uppermostLat > 85
+  //   const isTooLow = lowermostLat < -85
+
+  //   if (isTooHigh || isTooLow) {
+  //     const center = gMap.getCenter()
+  //     const lat = center.lat()
+  //     const lng = center.lng()
+
+  //     const correctLat = lat - (isTooHigh ? uppermostLat - 85 : lowermostLat + 85)
+
+  //     gMap.setCenter(new google.maps.LatLng(correctLat, lng))
+  //   }
+  // }
 
   mapRef = (mapEl) => {
     this.mapEl = mapEl
   }
 
-  render = () => {
-    return (
-      <Wrapper className='h-100'>
-        <div ref={this.mapRef} className='h-100 bg-white' />
-      </Wrapper>
-    )
-  }
+  render = () => (
+    <Wrapper className='h-100'>
+      <div ref={this.mapRef} className='h-100 bg-white' />
+    </Wrapper>
+  )
 }
 
 export default PJMap
