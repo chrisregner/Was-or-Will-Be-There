@@ -25,7 +25,7 @@ const BareWorldOverview = ({ worldOverview, muiTheme }) => (
     <div className='flex pa2 f6'>
       <div className='w-33 tc'>
         <div>
-          <DestinationIcon style={{ color: muiTheme.palette.primary2Color }} />
+          <DestinationIcon style={{ color: muiTheme.palette.tertiary2Color }} />
         </div>
         <div className='world-overview-total-plans f3 fw5'>
           {worldOverview.get('totalPlans')}
@@ -36,7 +36,7 @@ const BareWorldOverview = ({ worldOverview, muiTheme }) => (
       </div>
       <div className='w-33 tc'>
         <div>
-          <FlagIcon style={{ color: muiTheme.palette.tertiary2Color }} />
+          <FlagIcon style={{ color: muiTheme.palette.accent1Color }} />
         </div>
         <div className='world-overview-total-journals f3 fw5'>
           {worldOverview.get('totalJournals')}
@@ -47,7 +47,7 @@ const BareWorldOverview = ({ worldOverview, muiTheme }) => (
       </div>
       <div className='w-33 tc'>
         <div>
-          <GlobeIcon style={{ color: muiTheme.palette.accent1Color }} />
+          <GlobeIcon style={{ color: muiTheme.palette.primary2Color }} />
         </div>
         <div className='world-overview-total-countries f3 fw5'>
           {worldOverview.get('totalCountries')}
@@ -63,58 +63,62 @@ const BareWorldOverview = ({ worldOverview, muiTheme }) => (
       <Subheader>Countries</Subheader>
       {
         worldOverview.get('countriesInfo').size > 0
-          ? worldOverview.get('countriesInfo').map(country => (
-            <Link
-              key={country.get('id')}
-              to={`/countries/${country.get('id')}`}
-              className={`world-overview-country-item world-overview-country-item-${country.get('id')} world-overview-country-item-link db no-underline`}
-            >
-              <ListItem innerDivStyle={{ padding: '12px 8px 12px 16px' }}>
-                <div className='flex items-center'>
-                  <div className='flex-grow-1'>
-                    <CountryNameAndFlag
-                      customClassNames={{
-                        flag: 'world-overview-country-item-flag w2pt5',
-                        flagWrapper: 'mr2',
-                        countryName: 'world-overview-country-item-name f5 fw4 pl1',
-                      }}
-                      countryId={country.get('id')}
-                    />
-                  </div>
-                  <div>
-                    {
-                      country.get('hasPlan') &&
-                      <IconButton
-                        onClick={preventDefault}
-                        className='world-overview-country-item-has-plan'
-                        style={{ padding: 6, width: 36, height: 36 }}
-                        iconStyle={{ color: muiTheme.palette.secondaryTextColor }}
-                        tooltip='Has plan!'
-                        tooltipPosition='bottom-left'
-                      >
-                        <DestinationIcon />
-                      </IconButton>
-                    }
-                    {
-                      country.get('hasJournal') &&
-                      <IconButton
-                        onClick={preventDefault}
-                        className='world-overview-country-item-has-journal'
-                        style={{ padding: 6, width: 36, height: 36 }}
-                        iconStyle={{ color: muiTheme.palette.secondaryTextColor }}
-                        tooltip='Has Journal!'
-                        tooltipPosition='bottom-left'
-                      >
-                        <FlagIcon />
-                      </IconButton>
-                    }
-                  </div>
+        ? worldOverview.get('countriesInfo').reduce((acc, country, countryId) => {
+            acc.push(
+              <Link
+                key={countryId}
+                to={`/countries/${countryId}`}
+                className={`world-overview-country-item world-overview-country-item-${countryId} world-overview-country-item-link db no-underline`}
+              >
+                <ListItem innerDivStyle={{ padding: '12px 8px 12px 16px' }}>
+                  <div className='flex items-center'>
+                    <div className='flex-grow-1'>
+                      <CountryNameAndFlag
+                        customClassNames={{
+                          flag: 'world-overview-country-item-flag w2pt5',
+                          flagWrapper: 'mr2',
+                          countryName: 'world-overview-country-item-name f5 fw4 pl1',
+                        }}
+                        countryId={countryId}
+                      />
+                    </div>
+                    <div>
+                      {
+                        country.get('hasPlan') &&
+                        <IconButton
+                          onClick={preventDefault}
+                          className='world-overview-country-item-has-plan'
+                          style={{ padding: 6, width: 36, height: 36 }}
+                          iconStyle={{ color: muiTheme.palette.secondaryTextColor }}
+                          tooltip='Has plan!'
+                          tooltipPosition='bottom-left'
+                        >
+                          <DestinationIcon />
+                        </IconButton>
+                      }
+                      {
+                        country.get('hasJournal') &&
+                        <IconButton
+                          onClick={preventDefault}
+                          className='world-overview-country-item-has-journal'
+                          style={{ padding: 6, width: 36, height: 36 }}
+                          iconStyle={{ color: muiTheme.palette.secondaryTextColor }}
+                          tooltip='Has Journal!'
+                          tooltipPosition='bottom-left'
+                        >
+                          <FlagIcon />
+                        </IconButton>
+                      }
+                    </div>
 
-                </div>
-              </ListItem>
-            </Link>
-          )).toJS()
-          : <div>
+                  </div>
+                </ListItem>
+              </Link>
+            )
+
+            return acc
+          }, [])
+        : <div>
             <p className='world-overview-no-country-msg ph3 pv0 ma0 lh-copy f5 i'>
             You don’t have any entry on any country yet!
             </p>
@@ -135,15 +139,22 @@ BareWorldOverview.propTypes = {
     totalPlans: PropTypes.number.isRequired,
     totalJournals: PropTypes.number.isRequired,
     totalCountries: PropTypes.number.isRequired,
-    countriesInfo: IPropTypes.listOf(
+    countriesInfo: IPropTypes.orderedMapOf(
       IPropTypes.contains({
-        id: PropTypes.string.isRequired,
         hasPlan: PropTypes.bool.isRequired,
         hasJournal: PropTypes.bool.isRequired,
-      })
-    ),
+      }),
+      PropTypes.string,
+    )
   }).isRequired,
-  muiTheme: PropTypes.object.isRequired,
+  muiTheme: PropTypes.shape({
+    palette: PropTypes.shape({
+      tertiary2Color: PropTypes.string.isRequired,
+      accent1Color: PropTypes.string.isRequired,
+      secondaryTextColor: PropTypes.string.isRequired,
+      primary2Color: PropTypes.string.isRequired,
+    }).isRequired
+  }).isRequired,
 }
 
 const mapStateToProps = state => ({

@@ -159,41 +159,35 @@ test('state.overviewGetter | it should return the total number of countries trav
   testWithZeroState()
 })
 
-test('state.overviewGetter | it should return the list of unique countries with hasPlan and hasJournal data, ordered by their country names', () => {
+test('state.overviewGetter | it should return the Map of unique countries with hasPlan and hasJournal data, ordered by their country names', () => {
   const testWithNonZeroState = () => {
     const actual = overviewGetter(nonZeroState).get('countriesInfo')
-    const expected = I.List([
-      I.Map({
-        id: 'cn', // China
+    const expected = I.OrderedMap({
+      cn: I.Map({ // China
         hasPlan: false,
         hasJournal: true,
       }),
-      I.Map({
-        id: 'de', // Germany
+      de: I.Map({ // Germany
         hasPlan: true,
         hasJournal: false,
       }),
-      I.Map({ // Japan
-        id: 'jp',
+      jp: I.Map({ // Japan
         hasPlan: true,
         hasJournal: true,
       }),
-      I.Map({
-        id: 'no', // Norway
+      no: I.Map({ // Norway
         hasPlan: false,
         hasJournal: true,
       }),
-      I.Map({ // Philippines
-        id: 'ph',
+      ph: I.Map({ // Philippines
         hasPlan: true,
         hasJournal: true,
       }),
-      I.Map({
-        id: 'us', // United States
+      us: I.Map({ // United States
         hasPlan: false,
         hasJournal: true,
       }),
-    ])
+    })
 
     assert.isTrue(
       actual.equals(expected)

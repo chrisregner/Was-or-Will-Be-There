@@ -10,13 +10,13 @@ export default () => (
     titleStyle={{ fontSize: '1.25rem'}}
     title={(
       <Switch>
-        <Route exact path='/overview' render={() => ('Travels Overview')}/>
+        <Route exact path='/overview' render={() => ('Overall Stats')}/>
         <Route exact path='/countries/:countryId/plans/new' render={() => ('Add Plan')}/>
         <Route exact path='/countries/:countryId/plans/:id' render={() => ('Edit Plan')}/>
         <Route exact path='/countries/:countryId/plans/:id/journalize' render={() => ('Journalize')}/>
         <Route exact path='/countries/:countryId/journals/new' render={() => ('Add Journal')}/>
         <Route exact path='/countries/:countryId/journals/:id' render={() => ('Edit Journal')}/>
-        <Route render={() => ('Plans&Journals')}/>
+        <Route render={() => ('Plans & Journals')}/>
       </Switch>
     )}
     showMenuIconButton={false}

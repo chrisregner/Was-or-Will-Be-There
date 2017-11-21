@@ -1,9 +1,15 @@
 ## Todos
 
 - the map
-  - if has plan, destination icon
-  - if has journal, flag icon
+- fix tests
+- flag loader
+- nav
+  - right icon, use menu instead
+    - overview
+    - map
+  - back button
 
+- better dummy data
 - redux-persist
 
 - misc

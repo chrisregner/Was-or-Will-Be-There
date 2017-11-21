@@ -251,4 +251,5 @@ export default {
   za: 'South Africa',
   zm: 'Zambia',
   zw: 'Zimbabwe',
+  kosovo: 'Kosovo',
 }

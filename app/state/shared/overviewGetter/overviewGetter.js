@@ -9,76 +9,41 @@ const overviewGetter = createSelector(
   getPlans,
   getJournals,
   (plans, journals) => {
-    let unorderedCountriesInfo = I.List()
+    const makeCountriesInfoReducer = (type) => (acc, entry) => {
+      const countryId = entry.get('countryId')
 
-    // Yes, the following functions totalPlans and totalJournals has side-effects to unorderedCountriesInfo
-    // This aims to minimize the number of iterations
-    // It is all contained in a single function anyway
+      if (!acc.get(countryId))
+        return acc.set(countryId, I.Map({
+          [type]: true,
+          [type === 'hasPlan' ? 'hasJournal' : 'hasPlan']: false
+        }))
+      else if (!acc.getIn([countryId, type]))
+        return acc.setIn([countryId, type], true)
 
-    plans.forEach((plan) => {
-      let isCountryMarkedToHavePlan = false
-      const planCountryId = plan.get('countryId')
-      const countryIndex = unorderedCountriesInfo.findIndex((country) => {
-        if (country.get('id') === planCountryId) {
-          isCountryMarkedToHavePlan = country.get('hasPlan')
-          return true
-        }
+      return acc
+    }
 
-        return false
-      })
+    const incompleteCountriesInfo = plans.reduce(makeCountriesInfoReducer('hasPlan'), I.Map())
+    const unsortedCountriesInfo = journals.reduce(makeCountriesInfoReducer('hasJournal'), incompleteCountriesInfo)
+    const countriesInfo = unsortedCountriesInfo.sortBy(
+      (countryInfo, countryId) => countryId,
+      (countryA, countryB) => {
+        const countryNameA = countryNames[countryA]
+        const countryNameB = countryNames[countryB]
 
-      if (!isCountryMarkedToHavePlan)
-        if (countryIndex !== -1)
-          unorderedCountriesInfo = unorderedCountriesInfo.update(countryIndex, country =>
-            country.set('hasPlan', true))
-        else
-          unorderedCountriesInfo = unorderedCountriesInfo.push(I.Map({
-            id: planCountryId,
-            hasPlan: true,
-            hasJournal: false,
-          }))
-    })
+        if (countryNameA > countryNameB)
+          return 1
+        else if (countryNameA < countryNameB)
+          return -1
 
-    journals.forEach((journal) => {
-      let isCountryMarkedToHaveJournal = false
-      const journalCountryId = journal.get('countryId')
-      const countryIndex = unorderedCountriesInfo.findIndex((country) => {
-        if (country.get('id') === journalCountryId) {
-          isCountryMarkedToHaveJournal = country.get('hasJournal')
-          return true
-        }
-
-        return false
-      })
-
-      if (!isCountryMarkedToHaveJournal)
-        if (countryIndex !== -1)
-          unorderedCountriesInfo = unorderedCountriesInfo.update(countryIndex, country =>
-            country.set('hasJournal', true))
-        else
-          unorderedCountriesInfo = unorderedCountriesInfo.push(I.Map({
-            id: journalCountryId,
-            hasJournal: true,
-            hasPlan: false,
-          }))
-    })
-
-    const countriesInfo = unorderedCountriesInfo.sort((countryA, countryB) => {
-      const countryNameA = countryNames[countryA.get('id')]
-      const countryNameB = countryNames[countryB.get('id')]
-
-      if (countryNameA > countryNameB)
-        return 1
-      else if (countryNameA < countryNameB)
-        return -1
-
-      return 0
-    })
+        return 0
+      }
+    )
 
     return I.Map({
       totalPlans: plans.size,
       totalJournals: journals.size,
-      totalCountries: unorderedCountriesInfo.size,
+      totalCountries: countriesInfo.size,
       countriesInfo,
     })
   }

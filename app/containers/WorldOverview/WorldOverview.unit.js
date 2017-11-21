@@ -11,7 +11,7 @@ const defProps = {
     totalPlans: 0,
     totalJournals: 0,
     totalCountries: 0,
-    countriesInfo: I.List(),
+    countriesInfo: I.Map(),
   }),
   muiTheme: {
     palette: {},
@@ -72,38 +72,32 @@ test('containers.WorldOverview | it should show the no of countries', () => {
 
 const propsWithCountriesInfo = {
   worldOverview: I.Map({
-    countriesInfo: I.List([
-      I.Map({
-        id: 'cn',
+    countriesInfo: I.Map({
+      cn: I.Map({
         hasPlan: true,
         hasJournal: true,
       }),
-      I.Map({
-        id: 'de',
+      de: I.Map({
         hasPlan: true,
         hasJournal: false,
       }),
-      I.Map({
-        id: 'gb',
+      gb: I.Map({
         hasPlan: false,
         hasJournal: true,
       }),
-      I.Map({
-        id: 'jp',
+      jp: I.Map({
         hasPlan: true,
         hasJournal: true,
       }),
-      I.Map({
-        id: 'ph',
+      ph: I.Map({
         hasPlan: true,
         hasJournal: false,
       }),
-      I.Map({
-        id: 'us',
+      us: I.Map({
         hasPlan: false,
         hasJournal: true,
       }),
-    ]),
+    }),
   }),
 }
 
