@@ -2,23 +2,21 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import IPropTypes from 'react-immutable-proptypes'
-import styled from 'styled-components'
-import { Link, withRouter, matchPath } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { feature as topojsonFeature } from 'topojson-client'
-import * as R from 'ramda'
-import I from 'immutable'
 
 import {
-  amber700, amber900, pinkA200, pinkA400, green500
+  amber700, amber900, pinkA200, pinkA400, green500,
 } from 'material-ui/styles/colors'
 import RaisedButton from 'material-ui/RaisedButton'
 import Paper from 'material-ui/Paper'
 
 import overviewGetter from 'state/shared/overviewGetter'
 import worldTopoJson from 'constants/world.topo.json'
-import countryNames from 'constants/countryNames'
 import gMapStyle from 'constants/gMapStyle.json'
+
+/* global google */
 
 /*
 
@@ -35,7 +33,7 @@ Checklist:
 - *DONE* colors on hover
 - *DONE* colors on change
 - *DONE* colors initially
-- panTo on countryId change
+- *DONE*panTo on countryId change
 
 */
 
@@ -49,38 +47,37 @@ const mapColors = {
 }
 
 const computeCountryStyles = (countryInfo) => {
-  if (countryInfo && countryInfo.get('hasJournal')) {
+  if (countryInfo && countryInfo.get('hasJournal'))
     return {
       fillColor: mapColors.hasJournal,
       fillColorHovered: mapColors.hasJournalHovered,
-      fillOpacity: .7,
-      fillOpacityHovered: .7,
+      fillOpacity: 0.7,
+      fillOpacityHovered: 0.7,
     }
-  } else if (countryInfo && countryInfo.get('hasPlan')) {
+  else if (countryInfo && countryInfo.get('hasPlan'))
     return {
       fillColor: mapColors.hasPlan,
       fillColorHovered: mapColors.hasPlanHovered,
-      fillOpacity: .7,
-      fillOpacityHovered: .7,
+      fillOpacity: 0.7,
+      fillOpacityHovered: 0.7,
     }
-  } else {
+  else
     return {
       fillColorHovered: mapColors.defaultHovered,
       fillOpacity: 0,
-      fillOpacityHovered: .7,
+      fillOpacityHovered: 0.7,
     }
-  }
 }
 
 const setCountryHoverListeners = (countryId, country, countryInfo) => {
   const {
-    fillColor, fillColorHovered, fillOpacity, fillOpacityHovered
+    fillColor, fillColorHovered, fillOpacity, fillOpacityHovered,
   } = computeCountryStyles(countryInfo)
 
   google.maps.event.addListener(country, 'mouseover', () => {
     country.setOptions({
       fillOpacity: fillOpacityHovered,
-      fillColor: fillColorHovered
+      fillColor: fillColorHovered,
     })
   })
 
@@ -99,23 +96,32 @@ const clearCountryHoverListeners = (country) => {
   google.maps.event.clearListeners(country, 'mouseout')
 }
 
-// const panIfCountryChanged = (pathname, gMap, prevCountryId) => {
-//   const currCountryId = matchPath('/countries/:countryId', {
-//     path: '/users/:id',
-//     exact: true,
-//     strict: false
-//   }).params.countryId
+const panIfCountryChanged = ({ nextCountryId, gMap, countryPolygons, currCountryId }) => {
+  if (nextCountryId && nextCountryId !== currCountryId) {
+    const bounds = new google.maps.LatLngBounds()
+    const nextCountryPaths = countryPolygons[nextCountryId]
+      .getPaths()
+    const pathsIteratee = (path) => {
+      if (path instanceof google.maps.LatLng)
+        bounds.extend(path)
+      else
+        path.forEach(pathsIteratee)
+    }
 
-//   if (currCountryId && currCountryId !== prevCountryId) {
-//     gMap.panTo()
-//   }
-// }
+    nextCountryPaths.forEach(pathsIteratee)
+    gMap.panTo(bounds.getCenter())
+  }
+}
 
 class BareMapCmpt extends React.Component {
   static propTypes = {
     history: PropTypes.shape({
-      // pathname: PropTypes.string.isRequired,
       push: PropTypes.func.isRequired,
+    }).isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        countryId: PropTypes.string,
+      }).isRequired,
     }).isRequired,
     countriesInfo: IPropTypes.orderedMapOf(
       IPropTypes.contains({
@@ -123,21 +129,31 @@ class BareMapCmpt extends React.Component {
         hasJournal: PropTypes.bool.isRequired,
       }),
       PropTypes.string,
-    )
+    ),
   }
 
   state = {
-    countriesInfo: this.props.countriesInfo
+    countriesInfo: this.props.countriesInfo,
   }
 
   componentWillReceiveProps = (nextProps) => {
+    const { match } = this.props
     const newCountriesInfo = nextProps.countriesInfo
     let oldCountriesInfo = this.state.countriesInfo
-    let diff = I.Map()
 
+    /* if the route points to a country different from the previous, pan the map to it */
+    panIfCountryChanged({
+      nextCountryId: nextProps.match.params.countryId,
+      gMap: this.gMap,
+      countryPolygons: this.countryPolygons,
+      currCountryId: match.params.countryId,
+    })
+
+    /* If countries info didn't change, there's nothing else to do here */
     if (newCountriesInfo === oldCountriesInfo || newCountriesInfo.equals(oldCountriesInfo))
       return
 
+    /* Iterate thru new countryInfo and compare it against its old equivalent */
     newCountriesInfo.forEach((newCountryInfo, newCountryId) => {
       let hasChanged = false
       const matchingOldCountryInfo = oldCountriesInfo.get(newCountryId)
@@ -146,10 +162,10 @@ class BareMapCmpt extends React.Component {
         oldCountriesInfo = oldCountriesInfo.delete(newCountryId)
 
         if (
-          !newCountryInfo.equals(matchingOldCountryInfo)
-          && !(
-            newCountryInfo.get('hasJournal')
-            && matchingOldCountryInfo.get('hasJournal')
+          !newCountryInfo.equals(matchingOldCountryInfo) &&
+          !(
+            newCountryInfo.get('hasJournal') &&
+            matchingOldCountryInfo.get('hasJournal')
           )
         )
           hasChanged = true
@@ -157,6 +173,7 @@ class BareMapCmpt extends React.Component {
         hasChanged = true
       }
 
+      /* if a country info is new or modified, reconfigure the corresponding country polygon */
       if (hasChanged) {
         const country = this.countryPolygons[newCountryId]
         clearCountryHoverListeners(country)
@@ -165,6 +182,7 @@ class BareMapCmpt extends React.Component {
       }
     })
 
+    /* Any old country info with no new equivalent are to be reset to the default configuration */
     const countriesWithRemovedInfo = oldCountriesInfo
 
     countriesWithRemovedInfo.forEach((countryInfo, countryId) => {
@@ -174,6 +192,7 @@ class BareMapCmpt extends React.Component {
       setCountryStyles(country)
     })
 
+    /* Save the latest country info in state, to be compared to the newer ones */
     this.setState({ countriesInfo: newCountriesInfo })
   }
 
@@ -216,12 +235,13 @@ class BareMapCmpt extends React.Component {
       const country = new google.maps.Polygon({
         paths: gCoords,
         strokeWeight: 0,
-        fillOpacity, fillColor,
+        fillOpacity,
+        fillColor,
       })
 
       countryPolygons[countryId] = country
 
-      /* Add Listeners to the Country Polygon*/
+      /* Add Listeners to the Country Polygon */
       if (countryId !== 'null') {
         google.maps.event.addListener(country, 'click', () => {
           history.push(`/countries/${countryId}`)
@@ -230,7 +250,7 @@ class BareMapCmpt extends React.Component {
         setCountryHoverListeners(countryId, country, countryInfo)
       }
 
-      /* Add the Country Polygon to the Map*/
+      /* Add the Country Polygon to the Map */
       country.setMap(gMap)
     })
 
@@ -242,6 +262,16 @@ class BareMapCmpt extends React.Component {
     this.overviewWrpr.style['margin-bottom'] = '24px'
     gMap.controls[google.maps.ControlPosition.TOP_LEFT].push(this.legendWrpr)
     gMap.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(this.overviewWrpr)
+
+    /* if the route points to a country, pan the map to it */
+    panIfCountryChanged({
+      nextCountryId: match.params.countryId,
+      gMap,
+      countryPolygons,
+    })
+
+    /* Save the map */
+    this.gMap = gMap
   }
 
   overviewWrpr = document.createElement('div')
@@ -283,7 +313,7 @@ const mapStateToProps = state => ({
   countriesInfo: overviewGetter(state).get('countriesInfo'),
 })
 
-const MapCmpt = withRouter(connect(mapStateToProps)(BareMapCmpt))
+const MapCmpt = connect(mapStateToProps)(BareMapCmpt)
 
 export { BareMapCmpt }
 export default MapCmpt

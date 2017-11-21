@@ -63,7 +63,7 @@ const BareWorldOverview = ({ worldOverview, muiTheme }) => (
       <Subheader>Countries</Subheader>
       {
         worldOverview.get('countriesInfo').size > 0
-        ? worldOverview.get('countriesInfo').reduce((acc, country, countryId) => {
+          ? worldOverview.get('countriesInfo').reduce((acc, country, countryId) => {
             acc.push(
               <Link
                 key={countryId}
@@ -118,7 +118,7 @@ const BareWorldOverview = ({ worldOverview, muiTheme }) => (
 
             return acc
           }, [])
-        : <div>
+          : <div>
             <p className='world-overview-no-country-msg ph3 pv0 ma0 lh-copy f5 i'>
             You don’t have any entry on any country yet!
             </p>
@@ -145,7 +145,7 @@ BareWorldOverview.propTypes = {
         hasJournal: PropTypes.bool.isRequired,
       }),
       PropTypes.string,
-    )
+    ),
   }).isRequired,
   muiTheme: PropTypes.shape({
     palette: PropTypes.shape({
@@ -153,7 +153,7 @@ BareWorldOverview.propTypes = {
       accent1Color: PropTypes.string.isRequired,
       secondaryTextColor: PropTypes.string.isRequired,
       primary2Color: PropTypes.string.isRequired,
-    }).isRequired
+    }).isRequired,
   }).isRequired,
 }
 

@@ -9,13 +9,13 @@ const overviewGetter = createSelector(
   getPlans,
   getJournals,
   (plans, journals) => {
-    const makeCountriesInfoReducer = (type) => (acc, entry) => {
+    const makeCountriesInfoReducer = type => (acc, entry) => {
       const countryId = entry.get('countryId')
 
       if (!acc.get(countryId))
         return acc.set(countryId, I.Map({
           [type]: true,
-          [type === 'hasPlan' ? 'hasJournal' : 'hasPlan']: false
+          [type === 'hasPlan' ? 'hasJournal' : 'hasPlan']: false,
         }))
       else if (!acc.getIn([countryId, type]))
         return acc.setIn([countryId, type], true)

@@ -70,8 +70,8 @@ module.exports = {
             },
           },
         ],
-      }
-          ],
+      },
+    ],
   },
   resolve: {
     alias: {

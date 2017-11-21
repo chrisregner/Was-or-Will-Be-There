@@ -1,7 +1,5 @@
 ## Todos
 
-- the map
-- fix tests
 - flag loader
 - nav
   - right icon, use menu instead

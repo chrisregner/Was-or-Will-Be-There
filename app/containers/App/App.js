@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Route, withRouter } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { AnimatedSwitch } from 'react-router-transition'
 
@@ -72,7 +72,10 @@ class BareApp extends React.Component {
               height: 'calc(100vh - 48px)',
             }}
           >
-            <MapCmpt />
+            <Switch>
+              <Route path='/countries/:countryId' component={MapCmpt} />
+              <Route component={MapCmpt} />
+            </Switch>
           </div>
 
           <FadingMounter className='app-not-found' isVisible={isNotFound} component={NotFound} />
