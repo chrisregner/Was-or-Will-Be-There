@@ -33,6 +33,7 @@ class BareSmartCountryNameAndFlag extends React.Component {
       <h2 className='ma0 pt2 ph2 pb0 f4'>
         <CountryNameAndFlag
           className='paper-routes-country-name-and-flag'
+          customClassNames={{ loader: 'w2pt5 mr2 pl2' }}
           countryId={countryId}
         />
       </h2>

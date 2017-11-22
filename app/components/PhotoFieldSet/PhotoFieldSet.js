@@ -70,12 +70,12 @@ class PhotoFieldSet extends React.PureComponent {
             !fullSizedPhotoVisiblity && 'animated fadeOut',
           )}
         >
-          <Paper className='relative' rounded={false} >
-            <div className='absolute top-1 right-1'>
+          <Paper className='relative center' rounded={false} >
+            <div className='absolute right-0'>
               <IconButton
                 onClick={this.handleHideFullSizedPhoto}
                 className='photo-field-set-hide-full-sized-photo'
-                tooltip='SVG Icon'
+                tooltip='Hide full sized photo'
               >
                 <CloseIcon />
               </IconButton>

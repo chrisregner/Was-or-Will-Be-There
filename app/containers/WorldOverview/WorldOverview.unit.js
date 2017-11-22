@@ -4,7 +4,6 @@ import I from 'immutable'
 
 import * as TU from 'services/testUtils'
 import { BareWorldOverview } from './WorldOverview'
-import { createFlagUrl } from 'constants/'
 
 const defProps = {
   worldOverview: I.Map({
@@ -147,7 +146,7 @@ test('containers.WorldOverview > CountriesList | it should render link for each 
   assert.equal(actual, expected)
 })
 
-test('containers.WorldOverview > CountriesList | it should render country name', () => {
+test('containers.WorldOverview > CountriesList | it should rende the country name and flag component correctly', () => {
   /**
    * NOTE: `.find('CountryNameAndFlagL').dive()` isn't optimal (coupling to implementation)
    *   but using mount() on components with SVG has issues
@@ -155,26 +154,8 @@ test('containers.WorldOverview > CountriesList | it should render country name',
   const actual = setup({ props: propsWithCountriesInfo })
     .find('.world-overview-country-item-de')
     .find('CountryNameAndFlag')
-    .dive()
-    .find('.world-overview-country-item-name')
-    .text()
-  const expected = 'Germany'
-
-  assert.equal(actual, expected)
-})
-
-test('containers.WorldOverview > CountriesList | it should render country flag', () => {
-  /**
-   * NOTE: `.find('CountryNameAndFlagL').dive()` isn't optimal (coupling to implementation)
-   *   but using mount() on components with SVG has issues
-   */
-  const actual = setup({ props: propsWithCountriesInfo })
-    .find('.world-overview-country-item-de')
-    .find('CountryNameAndFlag')
-    .dive()
-    .find('.world-overview-country-item-flag')
-    .prop('src')
-  const expected = createFlagUrl('de')
+    .prop('countryId')
+  const expected = 'de'
 
   assert.equal(actual, expected)
 })

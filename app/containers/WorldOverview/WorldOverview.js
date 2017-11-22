@@ -70,13 +70,12 @@ const BareWorldOverview = ({ worldOverview, muiTheme }) => (
                 to={`/countries/${countryId}`}
                 className={`world-overview-country-item world-overview-country-item-${countryId} world-overview-country-item-link db no-underline`}
               >
-                <ListItem innerDivStyle={{ padding: '12px 8px 12px 16px' }}>
+                <ListItem innerDivStyle={{ padding: '8px 8px 8px 16px' }}>
                   <div className='flex items-center'>
                     <div className='flex-grow-1'>
                       <CountryNameAndFlag
                         customClassNames={{
-                          flag: 'world-overview-country-item-flag w2pt5',
-                          flagWrapper: 'mr2',
+                          loader: 'w2pt5 mr2',
                           countryName: 'world-overview-country-item-name f5 fw4 pl1',
                         }}
                         countryId={countryId}

@@ -1,6 +1,5 @@
 ## Todos
 
-- flag loader
 - nav
   - right icon, use menu instead
     - overview
