@@ -3,6 +3,7 @@ import IPropTypes from 'react-immutable-proptypes'
 import PropTypes from 'prop-types'
 import I from 'immutable'
 import * as R from 'ramda'
+import { Switch, Route } from 'react-router-dom'
 
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
@@ -221,6 +222,12 @@ const JournalFormShell = ({ cloudinaryUploadWidget }) =>
           ref={this.rootElRef}
           onSubmit={this.handleSubmit}
         >
+          <div className='dn db-l pt3 fw5 f5'>
+            <Switch>
+              <Route exact path='/countries/:countryId/journals/new' render={() => 'Add New Journal'} />
+              <Route exact path='/countries/:countryId/journals/:id' render={() => 'Edit Journal'} />
+            </Switch>
+          </div>
           <TextField
             className='journal-form-title-field w-100--i db--i'
             floatingLabelText='Title*'

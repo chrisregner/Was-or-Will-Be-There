@@ -35,12 +35,14 @@ class BareCollapsibleItem extends React.Component {
     }).isRequired,
     muiTheme: PropTypes.shape({
       palette: PropTypes.shape({
-        primary2Color: PropTypes.string,
-        tertiary2Color: PropTypes.string,
-        tertiary3Color: PropTypes.string,
-        secondaryTextColor: PropTypes.string,
-      }),
-    }),
+        primary1Color: PropTypes.string.isRequired,
+        primary2Color: PropTypes.string.isRequired,
+        tertiary2Color: PropTypes.string.isRequired,
+        tertiary3Color: PropTypes.string.isRequired,
+        secondaryTextColor: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
+    isSelected: PropTypes.bool.isRequired,
   }
 
   state = {
@@ -88,18 +90,29 @@ class BareCollapsibleItem extends React.Component {
   }
 
   render = () => {
-    const { type, data } = this.props
+    const { type, data, isSelected } = this.props
     const { palette } = this.props.muiTheme
     const departure = data.get('departure')
     const homecoming = data.get('homecoming')
     const timeAlert = this.getTimeAlert()
+    const iconStyle = isSelected ? { color: '#fff' } : {}
 
     return (
       <div>
         <ListItem
           data-test='summary'
           onClick={this.handleSummaryClick}
-          innerDivStyle={{ paddingRight: 12 }}
+          innerDivStyle={{
+            paddingRight: 12,
+            ...(
+              isSelected
+                ? {
+                    backgroundColor: palette.primary1Color,
+                    color: '#fff',
+                  }
+                : {}
+            )
+          }}
         >
           <div className='flex items-center'>
             {
@@ -118,6 +131,7 @@ class BareCollapsibleItem extends React.Component {
                     color: timeAlert === 'journalize'
                       ? palette.tertiary2Color
                       : palette.primary2Color,
+                    ...iconStyle
                   }}
                 >
                   <InfoIcon />
@@ -141,7 +155,7 @@ class BareCollapsibleItem extends React.Component {
                 <div
                   data-test='dateRange'
                   className='f6'
-                  style={{ color: palette.secondaryTextColor }}
+                  style={{ color: isSelected ? '#fff' : palette.secondaryTextColor }}
                 >
                   {`${
                     departure ? formatDate(departure, 'MM/DD/YY') : '(TBD)'
@@ -152,9 +166,19 @@ class BareCollapsibleItem extends React.Component {
               }
             </div>
             <div>
-              {this.state.isExpanded ? <LessIcon /> : <MoreIcon />}
+              {this.state.isExpanded ? <LessIcon style={iconStyle} /> : <MoreIcon style={iconStyle} />}
             </div>
           </div>
+
+          {isSelected &&
+            <div
+              className='absolute top-0 right-0 bottom-0'
+              style={{
+                backgroundColor: '#FF4081',
+                width: 2,
+              }}
+            />
+          }
         </ListItem>
         <Collapse data-test='details' in={this.state.isExpanded}>
           <div className='bg-black-10'>

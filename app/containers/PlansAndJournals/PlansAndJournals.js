@@ -20,6 +20,7 @@ class BarePlansAndJournals extends React.Component {
     match: PropTypes.shape({
       params: PropTypes.shape({
         countryId: PropTypes.string.isRequired,
+        id: PropTypes.string,
       }).isRequired,
     }).isRequired,
     location: PropTypes.shape({
@@ -53,11 +54,13 @@ class BarePlansAndJournals extends React.Component {
   }
 
   render = () => {
-    const { history, match, location, plans, journals } = this.props
-    const { countryId } = match.params
+    const { history, location, plans, journals } = this.props
+    const { countryId, id } = this.props.match.params
     const activeTab = location.pathname.includes('plans')
       ? 'plans'
       : 'journals'
+
+      console.log(id)
 
     return (
       <div className='pt2'>
@@ -90,6 +93,7 @@ class BarePlansAndJournals extends React.Component {
                     data-test='plan'
                     type='plan'
                     data={plan}
+                    isSelected={plan.get('id') === id}
                   />
                 )).toJS()
                 : <div data-test='noPlan' className='pa3 tc gray'>
@@ -116,6 +120,7 @@ class BarePlansAndJournals extends React.Component {
                     data-test='journal'
                     type='journal'
                     data={journal}
+                    isSelected={journal.get('id') === id}
                   />
                 )).toJS()
                 : <div data-test='noJournal' className='pa3 tc gray'>

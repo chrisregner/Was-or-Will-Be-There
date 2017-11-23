@@ -15,8 +15,6 @@ const defaultState = I.fromJS({
 
 export const SET_SNACKBAR = 'ui/SET_SNACKBAR'
 export const HIDE_SNACKBAR = 'ui/HIDE_SNACKBAR'
-export const SET_PAPER_HEIGHT = 'ui/SET_PAPER_HEIGHT'
-export const REMOVE_PAPER_HEIGHT = 'ui/REMOVE_PAPER_HEIGHT'
 export const SET_NOT_FOUND = 'ui/SET_NOT_FOUND'
 
 /**
@@ -25,11 +23,6 @@ export const SET_NOT_FOUND = 'ui/SET_NOT_FOUND'
 
 export const setSnackbar = createAction(SET_SNACKBAR)
 export const hideSnackbar = createAction(HIDE_SNACKBAR)
-export const setPaperHeight = createAction(
-  SET_PAPER_HEIGHT,
-  (paperName, height) => ({ paperName, height }),
-)
-export const removePaperHeight = createAction(REMOVE_PAPER_HEIGHT)
 export const setNotFound = createAction(SET_NOT_FOUND)
 
 /**
@@ -44,10 +37,6 @@ const uiReducer = handleActions({
     })),
   [HIDE_SNACKBAR]: (state, { payload }) =>
     state.setIn(['snackbar', 'isVisible'], false),
-  [SET_PAPER_HEIGHT]: (state, { payload }) =>
-    state.setIn(['paperHeights', payload.paperName], payload.height),
-  [REMOVE_PAPER_HEIGHT]: (state, { payload }) =>
-    state.deleteIn(['paperHeights', payload]),
   [SET_NOT_FOUND]: (state, { payload }) =>
     state.set('notFound', payload),
 }, defaultState)
@@ -58,13 +47,6 @@ const uiReducer = handleActions({
 
 export const uiGetters = {
   getSnackbarInfo: state => state.get('snackbar'),
-  getHighestHeight: state =>
-    state.get('paperHeights')
-      .reduce((highestHeight, currentHeight) =>
-        currentHeight > highestHeight ? currentHeight : highestHeight,
-      0),
-  getHeightByComponentName: (state, componentName) =>
-    state.getIn(['paperHeights', componentName]),
   isPathNotFound: (state, route) => state.get('notFound') && state.get('notFound') === route,
 }
 

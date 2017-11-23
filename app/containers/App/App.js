@@ -8,9 +8,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { amber500, amber700, amber900 } from 'material-ui/styles/colors'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
-import 'tachyons/css/tachyons.css'
-import 'animate.css/animate.css'
-import 'leaflet/dist/leaflet.css'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import './App.css'
 import { uiGetters } from 'state'
 import Nav from 'components/Nav'
@@ -33,14 +31,14 @@ const muiTheme = getMuiTheme({
   },
 })
 
-const WrappedPaperRoutes = () => (
+const Pages = () => (
   <AnimatedSwitch
     atEnter={{ opacity: 0 }}
     atLeave={{ opacity: 0 }}
     atActive={{ opacity: 1 }}
     className='relative'
   >
-    <Route path='/:path(countries|overview)' component={PaperRoutes} />
+    <Route path='/:path(countries|stats)' component={PaperRoutes} />
     <Route exact path='/' />
     <Route component={NotFoundSetter} />
   </AnimatedSwitch>
@@ -79,7 +77,7 @@ class BareApp extends React.Component {
           </div>
 
           <FadingMounter className='app-not-found' isVisible={isNotFound} component={NotFound} />
-          <FadingMounter className='app-routes' isVisible={!isNotFound} component={WrappedPaperRoutes} />
+          <FadingMounter className='app-routes' isVisible={!isNotFound} component={Pages} />
 
           <ScrollOnRouteChange />
           <NotifSnackbar />

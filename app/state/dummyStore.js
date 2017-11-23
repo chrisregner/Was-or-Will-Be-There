@@ -64,12 +64,12 @@ export default I.Map({
         I.Map({
           id: 'dummy_journal_jp_01_photo_01',
           path: 'default/mt-fuji-jp-01_z4x3nn.jpg',
-          description: 'This made me google why mountain roads are curved',
+          description: 'Real roads have curves',
         }),
         I.Map({
           id: 'dummy_journal_jp_01_photo_02',
           path: 'default/mt-fuji-jp-02_krolra.jpg',
-          description: 'At Fuji’s foot',
+          description: 'Fuji’s foot',
         }),
         I.Map({
           id: 'dummy_journal_jp_01_photo_03',

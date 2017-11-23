@@ -1,31 +1,105 @@
 import React from 'react'
-import { Route, Switch, Link } from 'react-router-dom'
+import { withRouter, Route, Switch, Link } from 'react-router-dom'
 
-import MapIcon from 'material-ui/svg-icons/maps/map'
 import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
+import IconMenu from 'material-ui/IconMenu'
+import MenuItem from 'material-ui/MenuItem'
+import MoreIcon from 'material-ui/svg-icons/navigation/more-vert'
+import MapIcon from 'material-ui/svg-icons/maps/map'
+import InfoIcon from 'material-ui/svg-icons/action/info'
+import StatsIcon from 'material-ui/svg-icons/av/equalizer'
+import { Tabs, Tab } from 'material-ui/Tabs'
 
-export default () => (
-  <AppBar
-    titleStyle={{ fontSize: '1.25rem' }}
-    title={(
-      <Switch>
-        <Route exact path='/overview' render={() => ('Overall Stats')} />
-        <Route exact path='/countries/:countryId/plans/new' render={() => ('Add Plan')} />
-        <Route exact path='/countries/:countryId/plans/:id' render={() => ('Edit Plan')} />
-        <Route exact path='/countries/:countryId/plans/:id/journalize' render={() => ('Journalize')} />
-        <Route exact path='/countries/:countryId/journals/new' render={() => ('Add Journal')} />
-        <Route exact path='/countries/:countryId/journals/:id' render={() => ('Edit Journal')} />
-        <Route render={() => ('Plans & Journals')} />
-      </Switch>
-    )}
-    showMenuIconButton={false}
-    iconElementRight={(
-      <Link to='/'>
-        <IconButton iconStyle={{ color: 'white' }} tooltip='go to map' tooltipPosition='bottom-left'>
-          <MapIcon />
-        </IconButton>
-      </Link>
-    )}
-  />
-)
+const BareNav = ({ history, location }) => {
+  const changePath = (evOrPath, path) =>
+    typeof evOrPath === 'string'
+      ? history.push(evOrPath)
+      : history.push(path)
+
+  return (
+    <AppBar
+      style={{ paddingRight: 0 }}
+      titleStyle={{ fontSize: '1.25rem' }}
+      title={(
+        <div>
+          <div className='dn-l'>
+            <Switch>
+              <Route exact path='/stats' render={() => 'Overall Stats'} />
+              <Route exact path='/countries/:countryId/plans/new' render={() => 'Add New Plan'} />
+              <Route exact path='/countries/:countryId/plans/:id' render={() => 'Edit Plan'} />
+              <Route exact path='/countries/:countryId/plans/:id/journalize' render={() => 'Journalize'} />
+              <Route exact path='/countries/:countryId/journals/new' render={() => 'Add New Journal'} />
+              <Route exact path='/countries/:countryId/journals/:id' render={() => 'Edit Journal'} />
+              <Route render={() => ('Plans & Journals')} />
+            </Switch>
+          </div>
+          <div className='dn db-l'>
+            Plans & Journals
+          </div>
+        </div>
+      )}
+      showMenuIconButton={false}
+    >
+      <div className='dn db-m db-l pr1 mr1'>
+        <Tabs onChange={changePath} value={location.pathname}>
+          <Tab
+            value='/'
+            label={
+              <div className='ph3 flex items-center'>
+                <div>
+                  <MapIcon style={{
+                    color: location.pathname === '/' ? '#fff' : 'rgba(255, 255, 255, 0.7)'
+                  }} />
+                </div>
+                <div className='dn db-l'>&ensp;Map</div>
+              </div>
+            }
+          />
+          <Tab
+            value='/stats'
+            label={
+              <div className='ph3 flex items-center'>
+                <div>
+                  <StatsIcon style={{
+                    color: location.pathname === '/stats' ? '#fff' : 'rgba(255, 255, 255, 0.7)'
+                  }} />
+                </div>
+                <div className='dn db-l'>&ensp;Stats</div>
+              </div>
+            }
+          />
+          <Tab
+            value='/map'
+            label={
+              <div className='ph3 flex items-center'>
+                <div>
+                  <InfoIcon style={{
+                    color: location.pathname === '/map' ? '#fff' : 'rgba(255, 255, 255, 0.7)'
+                  }} />
+                </div>
+                <div className='dn db-l'>&ensp;About</div>
+              </div>
+            }
+          />
+        </Tabs>
+      </div>
+
+      <div className='dn-ns pr2'>
+        <IconMenu
+          onChange={changePath}
+          iconButtonElement={(<IconButton iconStyle={{ color: '#fff' }}><MoreIcon /></IconButton>)}
+          targetOrigin={{horizontal: 'right', vertical: 'top'}}
+          anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+        >
+          <MenuItem leftIcon={<StatsIcon />} primaryText="Stats" value='/stats' />
+          <MenuItem leftIcon={<MapIcon />} primaryText="Map" value='/' />
+          <MenuItem leftIcon={<InfoIcon />} primaryText="About" value='/about' />
+        </IconMenu>
+      </div>
+    </AppBar>
+  )
+}
+
+const Nav = withRouter(BareNav)
+export default Nav

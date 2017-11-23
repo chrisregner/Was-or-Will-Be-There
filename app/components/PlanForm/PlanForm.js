@@ -3,6 +3,7 @@ import IPropTypes from 'react-immutable-proptypes'
 import PropTypes from 'prop-types'
 import I from 'immutable'
 import * as R from 'ramda'
+import { Switch, Route } from 'react-router-dom'
 
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
@@ -125,6 +126,12 @@ class PlanForm extends React.Component {
         ref={this.rootElRef}
         onSubmit={this.handleSubmit}
       >
+        <div className='dn db-l pt3 fw5 f5'>
+          <Switch>
+            <Route exact path='/countries/:countryId/plans/new' render={() => 'Add New Plan'} />
+            <Route exact path='/countries/:countryId/plans/:id' render={() => 'Edit Plan'} />
+          </Switch>
+        </div>
         <TextField
           className='w-100--i db--i'
           data-name='TitleField'

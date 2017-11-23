@@ -64,6 +64,7 @@
     "react-redux": "^5.0.6",
     "react-required-if": "^1.0.2",
     "react-resize-detector": "^1.1.0",
+    "react-responsive-carousel": "^3.1.28",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.8",
     "react-router-transition": "^1.1.1",

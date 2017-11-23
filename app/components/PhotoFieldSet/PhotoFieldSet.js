@@ -4,6 +4,7 @@ import c from 'classnames'
 
 import Paper from 'material-ui/Paper'
 import IconButton from 'material-ui/IconButton'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
 import TextField from 'material-ui/TextField'
 import CloseIcon from 'material-ui/svg-icons/content/clear'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
@@ -62,29 +63,35 @@ class PhotoFieldSet extends React.PureComponent {
       <div>
         {/* The full-sized photo */}
         <div
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.54)' }}
+          style={{
+            top: 48,
+            backgroundColor: 'rgba(0, 0, 0, 0.54)',
+          }}
           className={c(
-            'photo-field-set-photo-wrapper fixed absolute--fill z-1 items-center',
+            'photo-field-set-photo-wrapper fixed right-0 left-0 bottom-0 z-2 items-center justify-center content-center',
             (fullSizedPhotoVisiblity === 'clean') ? 'dn' : 'flex',
             (fullSizedPhotoVisiblity === true) && 'animated fadeIn',
             !fullSizedPhotoVisiblity && 'animated fadeOut',
           )}
         >
-          <Paper className='relative center' rounded={false} >
-            <div className='absolute right-0'>
-              <IconButton
-                onClick={this.handleHideFullSizedPhoto}
-                className='photo-field-set-hide-full-sized-photo'
-                tooltip='Hide full sized photo'
-              >
-                <CloseIcon />
-              </IconButton>
-            </div>
+          <Paper className='relative' rounded={false} style={{ maxHeight: '100%' }}>
             <img
-              className='photo-field-set-photo db w-100'
+              className='photo-field-set-photo db h-auto'
               src={createJournalPhotoUrl(path)}
               alt={description}
             />
+            <div style={{ top: 8, right: 8 }} className='absolute'>
+              <FloatingActionButton
+                onClick={this.handleHideFullSizedPhoto}
+                className='photo-field-set-hide-full-sized-photo'
+                mini={true}
+                tooltip='Hide full sized photo'
+                backgroundColor='rgba(0, 0, 0, 0.54)'
+                iconstyle={{ color: '#fff' }}
+              >
+                <CloseIcon />
+              </FloatingActionButton>
+            </div>
           </Paper>
         </div>
 

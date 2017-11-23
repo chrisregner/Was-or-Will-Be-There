@@ -1,10 +1,8 @@
 ## Todos
 
-- nav
-  - right icon, use menu instead
-    - overview
-    - map
-  - back button
+- responsive extra paper
+  - paper close buttons
+- About
 
 - better dummy data
 - redux-persist
@@ -21,13 +19,21 @@
     - research more
     - change rawgit links as per rawgit.com for production
     - remove excess deps
+      - research how to do it
+      - leaflet
+      - animate.css
+      - tachyons
+      - react-slick
+      - material-ui-next?
     - delete `_ignore` folder
   - credits
     - natural earth data?
     - mapbox?
     - leaflet?
   - deploy
-  - correct DailyRoutinesTrackers dummy data (remove the "test" entry)
+  - DailyRoutinesTrackers
+    - correct dummy data (remove the "test" entry)
+    - about page/footer to chrisregner.github.io
 
 ---
 
@@ -42,6 +48,18 @@ new journal             - /countries/:countryId/journals/new
 edit journal            - /countries/:countryId/journals/:id
 
 ---
+
+## Todos
+
+- tests
+  - nav
+  - PaperWithAnimatingHt
+  - InsertPaperTransition
+  - PlansAndJournals (active item behavior)
+
+## Issues
+
+- Full-size image preview on journal form overflows downward (not visible) if the image is a portrait
 
 ## Possible Additional features
 
