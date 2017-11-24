@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { AnimatedSwitch } from 'react-router-transition'
+import { LastLocationProvider } from 'react-router-last-location'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { amber500, amber700, amber900 } from 'material-ui/styles/colors'
@@ -38,7 +39,7 @@ const Pages = () => (
     atActive={{ opacity: 1 }}
     className='relative'
   >
-    <Route path='/:path(countries|stats)' component={PaperRoutes} />
+    <Route path='/:path(countries|stats|about)' component={PaperRoutes} />
     <Route exact path='/' />
     <Route component={NotFoundSetter} />
   </AnimatedSwitch>
@@ -77,7 +78,10 @@ class BareApp extends React.Component {
           </div>
 
           <FadingMounter className='app-not-found' isVisible={isNotFound} component={NotFound} />
-          <FadingMounter className='app-routes' isVisible={!isNotFound} component={Pages} />
+
+          <LastLocationProvider>
+            <FadingMounter className='app-routes' isVisible={!isNotFound} component={Pages} />
+          </LastLocationProvider>
 
           <ScrollOnRouteChange />
           <NotifSnackbar />

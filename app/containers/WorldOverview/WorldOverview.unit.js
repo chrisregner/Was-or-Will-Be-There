@@ -10,10 +10,15 @@ const defProps = {
     totalPlans: 0,
     totalJournals: 0,
     totalCountries: 0,
-    countriesInfo: I.Map(),
+    countriesInfo: I.OrderedMap(),
   }),
   muiTheme: {
-    palette: {},
+    palette: {
+      tertiary2Color: '',
+      accent1Color: '',
+      secondaryTextColor: '',
+      primary2Color: '',
+    },
   },
 }
 

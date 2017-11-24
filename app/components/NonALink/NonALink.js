@@ -38,7 +38,7 @@ class BareNonALink extends React.Component {
     return (
       <div
         href={to}
-        tabIndex='0'
+        tabIndex={-1}
         role='link'
         onClick={this.handleClick}
         {...finalOtherProps}

@@ -1,8 +1,9 @@
 import { createAction, handleActions } from 'redux-actions'
 import I from 'immutable'
 import _shortid from 'shortid'
+import { plans as dummyPlans } from 'state/dummyData'
 
-const defaultState = I.List()
+const defaultState = dummyPlans
 
 /**
  * Constants

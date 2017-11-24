@@ -15,6 +15,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import overviewGetter from 'state/shared/overviewGetter'
 import CountryNameAndFlag from 'components/CountryNameAndFlag'
+import NonALink from 'components/NonALink'
 
 const preventDefault = (ev) => { ev.preventDefault() }
 
@@ -65,7 +66,7 @@ const BareWorldOverview = ({ worldOverview, muiTheme }) => (
         worldOverview.get('countriesInfo').size > 0
           ? worldOverview.get('countriesInfo').reduce((acc, country, countryId) => {
             acc.push(
-              <Link
+              <NonALink
                 key={countryId}
                 to={`/countries/${countryId}`}
                 className={`world-overview-country-item world-overview-country-item-${countryId} world-overview-country-item-link db no-underline`}
@@ -112,7 +113,7 @@ const BareWorldOverview = ({ worldOverview, muiTheme }) => (
 
                   </div>
                 </ListItem>
-              </Link>
+              </NonALink>
             )
 
             return acc
@@ -126,9 +127,9 @@ const BareWorldOverview = ({ worldOverview, muiTheme }) => (
     </List>
 
     <div className='tc pb3'>
-      <Link to='/'>
+      <NonALink to='/'>
         <RaisedButton primary label='Open Map' />
-      </Link>
+      </NonALink>
     </div>
   </div>
 )

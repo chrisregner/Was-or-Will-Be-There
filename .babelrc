@@ -1,5 +1,15 @@
 {
   'presets': ['env', 'react'],
+  'env': {
+    'production': {
+      'presets': ['react-optimize'],
+      'plugins': [
+        'styled-components',
+        'tailcall-optimization',
+        'constant-folding'
+      ]
+    }
+  },
   'plugins': [
     'react-hot-loader/babel',
     'transform-object-rest-spread',

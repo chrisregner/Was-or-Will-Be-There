@@ -8,6 +8,7 @@ import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNaviga
 import RaisedButton from 'material-ui/RaisedButton'
 import DestinationIcon from 'material-ui/svg-icons/action/room'
 import FlagIcon from 'material-ui/svg-icons/content/flag'
+import NonALink from 'components/NonALink'
 
 import { plansGetters, journalsGetters } from 'state'
 import CollapsibleItem from 'components/CollapsibleItem'
@@ -60,8 +61,6 @@ class BarePlansAndJournals extends React.Component {
       ? 'plans'
       : 'journals'
 
-      console.log(id)
-
     return (
       <div className='pt2'>
         <BottomNavigation
@@ -96,15 +95,19 @@ class BarePlansAndJournals extends React.Component {
                     isSelected={plan.get('id') === id}
                   />
                 )).toJS()
-                : <div data-test='noPlan' className='pa3 tc gray'>
+                : <div data-test='noPlan' className='pv4 ph3 tc gray'>
                     You have no plan in this country!
                 </div>
             }
 
             <div className='tc pv3'>
-              <Link data-test='addPlan' to={`/countries/${countryId}/plans/new`}>
+              <NonALink
+                data-test='addPlan'
+                to={`/countries/${countryId}/plans/new`}
+                className='dib'
+              >
                 <RaisedButton label='Add Plan' primary />
-              </Link>
+              </NonALink>
             </div>
           </div>
         }
@@ -123,15 +126,19 @@ class BarePlansAndJournals extends React.Component {
                     isSelected={journal.get('id') === id}
                   />
                 )).toJS()
-                : <div data-test='noJournal' className='pa3 tc gray'>
+                : <div data-test='noJournal' className='pv4 ph3 tc gray'>
                     You have no journal in this country!
                 </div>
             }
 
             <div className='tc pv3'>
-              <Link data-test='addJournal' to={`/countries/${countryId}/journals/new`}>
+              <NonALink
+                data-test='addJournal'
+                to={`/countries/${countryId}/journals/new`}
+                className='dib'
+              >
                 <RaisedButton label='Add Journal' primary />
-              </Link>
+              </NonALink>
             </div>
           </div>
         }

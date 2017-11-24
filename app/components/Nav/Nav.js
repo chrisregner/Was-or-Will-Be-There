@@ -31,11 +31,11 @@ const BareNav = ({ history, location }) => {
               <Route exact path='/countries/:countryId/plans/:id/journalize' render={() => 'Journalize'} />
               <Route exact path='/countries/:countryId/journals/new' render={() => 'Add New Journal'} />
               <Route exact path='/countries/:countryId/journals/:id' render={() => 'Edit Journal'} />
-              <Route render={() => ('Plans & Journals')} />
+              <Route render={() => (<Link to='/' className='no-underline white--i'>Plans & Journals</Link>)} />
             </Switch>
           </div>
           <div className='dn db-l'>
-            Plans & Journals
+            <Link to='/' className='no-underline white--i'>Plans & Journals</Link>
           </div>
         </div>
       )}
@@ -70,7 +70,7 @@ const BareNav = ({ history, location }) => {
             }
           />
           <Tab
-            value='/map'
+            value='/about'
             label={
               <div className='ph3 flex items-center'>
                 <div>

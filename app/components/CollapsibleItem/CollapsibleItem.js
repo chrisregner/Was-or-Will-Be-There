@@ -16,6 +16,9 @@ import EditIcon from 'material-ui/svg-icons/editor/mode-edit'
 import Collapse from 'material-ui-next/transitions/Collapse'
 
 import PhotoSlider from 'components/PhotoSlider'
+import NonALink from 'components/NonALink'
+
+const preventDefault = (e) => e.preventDefault()
 
 class BareCollapsibleItem extends React.Component {
   static propTypes = {
@@ -119,6 +122,7 @@ class BareCollapsibleItem extends React.Component {
               (timeAlert && type === 'plan') &&
               <div>
                 <IconButton
+                  onClick={preventDefault}
                   data-test='timeAlert'
                   tooltip={
                     timeAlert === 'journalize'
@@ -190,6 +194,7 @@ class BareCollapsibleItem extends React.Component {
                     ? <span style={{ color: palette.tertiary3Color }}>
                     You must already be home. Click{' '}
                       <Link
+                        tabIndex={this.state.isExpanded ? 0 : -1}
                         data-test='timeAlert'
                         to={`/countries/${data.get('countryId')}/${type}s/${data.get('id')}/journalize`}
                         className='color-inherit'
@@ -240,13 +245,13 @@ class BareCollapsibleItem extends React.Component {
             }
 
             <div className='pa3 tr'>
-              <Link
+              <NonALink
                 data-test='editLink'
                 to={`/countries/${data.get('countryId')}/${type}s/${data.get('id')}`}
                 className='no-underline'
               >
-                <RaisedButton label='edit' icon={<EditIcon />} />
-              </Link>
+                <RaisedButton tabIndex={this.state.isExpanded ? 0 : -1} label='edit' icon={<EditIcon />} />
+              </NonALink>
             </div>
           </div>
         </Collapse>

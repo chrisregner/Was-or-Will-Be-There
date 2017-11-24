@@ -362,7 +362,7 @@ test('components.PlanForm > DeleteBtn | if delete button is clicked, it should c
 
     deleteBtnWrpr.simulate('click')
 
-    const expectedArg = `/countries/${countryId}`
+    const expectedArg = `/countries/${countryId}/plans`
 
     td.verify(defProps.history.push(expectedArg), { times: 1 })
   }
@@ -511,7 +511,7 @@ test('components.PlanForm.onSubmit() | if form is valid, it should call history.
     fillForm({ TitleField: 'Sample Plan Name' }, wrapper)
     wrapper.find('form').simulate('submit', mockData.ev)
 
-    const expectedArg = `/countries/${countryId}`
+    const expectedArg = `/countries/${countryId}/plans`
 
     td.verify(defProps.history.push(expectedArg), { times: 1 })
   }

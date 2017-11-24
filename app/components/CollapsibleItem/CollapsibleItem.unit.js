@@ -54,12 +54,14 @@ before(() => {
     }),
     muiTheme: {
       palette: {
+        primary1Color: '',
         primary2Color: '',
         tertiary2Color: '',
         tertiary3Color: '',
         secondaryTextColor: '',
       },
     },
+    isSelected: false
   }
 
   setup = TU.makeTestSetup({

@@ -55,11 +55,13 @@ export const makeTestSetup = (args1 = {}) => {
 
     const finalProps = IU.smartMergeDeep(defaultProps, props)
 
-    const theNode = (
-      <FinalComponent {...finalProps}>
-        {childNode}
-      </FinalComponent>
-    )
+    const theNode = childNode
+      ? (
+          <FinalComponent {...finalProps}>
+            {childNode}
+          </FinalComponent>
+        )
+      : (<FinalComponent {...finalProps} />)
 
     if (hooks.beforeRender)
       hooks.beforeRender()

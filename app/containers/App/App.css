@@ -4,14 +4,15 @@
  * Global styles
  */
 
-body {
-  font-family: Roboto, sans-serif;
-}
+body { font-family: Roboto, sans-serif; }
+a { color: #00838F; }
+/* a:visited { color: #4527A0; } */
 
 /**
  * Tachyons-style Utility classes
  */
 
+.white--i { color: #fff !important; }
 .pr3pt5 { padding-right: 1.33333rem; }
 .w2pt5 { width: 3rem; }
 .flex-grow-1 { flex-grow: 1; }

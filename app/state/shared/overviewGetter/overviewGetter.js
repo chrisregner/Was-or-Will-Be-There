@@ -2,8 +2,8 @@ import I from 'immutable'
 import { createSelector } from 'reselect'
 import countryNames from 'constants/countryNames'
 
-const getPlans = state => state.get('plans')
-const getJournals = state => state.get('journals')
+const getPlans = state => state['plans']
+const getJournals = state => state['journals']
 
 const overviewGetter = createSelector(
   getPlans,

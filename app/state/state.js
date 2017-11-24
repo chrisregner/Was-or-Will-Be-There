@@ -4,23 +4,30 @@ import * as R from 'ramda'
 import plansReducer, { plansGetters as _plansGetters } from './plans'
 import journalsReducer, { journalsGetters as _journalsGetters } from './journals'
 import uiReducer, { uiGetters as _uiGetters } from './ui'
+// import dummyStore from './dummyStore'
 
-const rootReducer = combineReducers({
+// const rootReducer = combineReducers({
+//   plans: plansReducer,
+//   journals: journalsReducer,
+//   ui: uiReducer,
+// }, dummyStore)
+
+const rootReducers = {
   plans: plansReducer,
   journals: journalsReducer,
   ui: uiReducer,
-})
+}
 
 /**
  * Getters
  */
 
-export const gettersShell = stateToGetters =>
+const gettersShell = stateToGetters =>
   R.mapObjIndexed(
     (getters, stateKey) =>
       R.mapObjIndexed(
         (getter, getterName) =>
-          (state, ...getterArgs) => getter(state.get(stateKey), ...getterArgs),
+          (state, ...getterArgs) => getter(state[stateKey], ...getterArgs),
         getters
       ),
     stateToGetters
@@ -39,4 +46,4 @@ const {
 } = allGetters
 
 export { uiGetters, plansGetters, journalsGetters }
-export default rootReducer
+export default rootReducers

@@ -75,7 +75,7 @@ class PlanForm extends React.Component {
     const id = initialValues.get('id')
 
     this.props.handleDelete(id)
-    history.push(`/countries/${match.params.countryId}`)
+    history.push(`/countries/${match.params.countryId}/plans`)
   }
 
   handleSubmit = (ev) => {
@@ -108,7 +108,7 @@ class PlanForm extends React.Component {
       const trimmedValues = values.map(FU.trimIfString)
 
       handleSubmit(trimmedValues)
-      history.push(`/countries/${match.params.countryId}`)
+      history.push(`/countries/${match.params.countryId}/plans`)
     }
   }
 

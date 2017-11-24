@@ -1,8 +1,9 @@
 import { createAction, handleActions } from 'redux-actions'
 import I from 'immutable'
 import _localCloudinary from 'services/cloudinary'
+import { journals as dummyJournals } from 'state/dummyData'
 
-const defaultState = I.List()
+const defaultState = dummyJournals
 const removeMetaDataFromPhotos = payload =>
   payload.update('photos', photos =>
     photos
@@ -43,15 +44,13 @@ export const deletePhotosShell = ({ localCloudinary }) => ({ toDelete, photos })
     .map(photo => photo.get('id'))
     .toJS()
 
-  console.log('Images to delete:', photoIds) // eslint-disable-line no-console
-
-  // if (photoIds.length)
-  //   localCloudinary.v2.api.delete_resources(photoIds, (error, result) => {
-  //     if (error)
-  //       console.error('Error in attempt to delete the image(s) in cloud: ', error)
-  //     else
-  //       console.log('Successfully uploaded images: ', result) // eslint-disable-line no-console
-  //   })
+  if (photoIds.length)
+    localCloudinary.v2.api.delete_resources(photoIds, (error, result) => {
+      if (error)
+        console.error('Error in attempt to delete the image(s) in cloud: ', error)
+      else
+        console.log('Successfully uploaded images: ', result) // eslint-disable-line no-console
+    })
 }
 
 export const addJournal = createAction(ADD_JOURNAL, removeMetaDataFromPhotos)

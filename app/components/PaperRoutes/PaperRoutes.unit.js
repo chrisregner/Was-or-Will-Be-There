@@ -10,6 +10,9 @@ const defProps = {
       countryId: '',
     },
   },
+  location: {
+    pathname: ''
+  }
 }
 
 const setup = TU.makeTestSetup({

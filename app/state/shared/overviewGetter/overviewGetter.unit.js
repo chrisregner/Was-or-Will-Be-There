@@ -31,7 +31,7 @@ This should have 6 countries
   cn hasJournal
 */
 
-const nonZeroState = I.Map({
+const nonZeroState = {
   journals: I.List([
     I.Map({
       id: 'journalOne',
@@ -101,12 +101,12 @@ const nonZeroState = I.Map({
       planName: 'Plan Five',
     }),
   ]),
-})
+}
 
-const zeroState = I.Map({
+const zeroState = {
   plans: I.List(),
   journals: I.List(),
-})
+}
 
 test('state.overviewGetter | it should return the total number of plans', () => {
   const testWithNonZeroState = () => {
