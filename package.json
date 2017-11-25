@@ -33,7 +33,7 @@
     "del-cli": "^1.1.0",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.2",
-    "eslint": "^4.9.0",
+    "eslint": "^4.11.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-config-standard-react": "^5.0.0",
     "eslint-plugin-import": "^2.8.0",
@@ -100,7 +100,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --hot",
-    "lint": "eslint --ignore-pattern '/dist/*' --fix **/*.js",
+    "lint": "eslint --ignore-pattern dist/* --fix **/*.js",
     "mocha": "cross-env NODE_PATH=app mocha --require babel-register --require ./tools/testSetup.js",
     "prod": "del-cli dist/* --force && cross-env NODE_ENV=production webpack",
     "deploy": "git subtree push --prefix dist origin gh-pages",

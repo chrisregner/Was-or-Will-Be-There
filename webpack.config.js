@@ -11,12 +11,8 @@ const prodUrl = 'https://chrisregner.github.io/plans-and-journals/'
 
 module.exports = {
   entry: isProd
-    ? {
-      app: './app/main.js',
-      vendor: ['babel-polyfill', 'react', 'react-dom', 'react-router'],
-    }
+    ? './app/main.js'
     : [
-      'babel-polyfill',
       'react-hot-loader/patch',
       './app/main.js',
     ],
@@ -131,9 +127,6 @@ module.exports = {
         new WebpackChunkHash(),
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify('production'),
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-          name: 'vendor',
         }),
         new ChunkManifestPlugin({
           filename: 'chunk-manifest.json',

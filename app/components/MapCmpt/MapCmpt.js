@@ -16,8 +16,6 @@ import worldTopoJson from 'constants/world.topo.json'
 import gMapStyle from 'constants/gMapStyle.json'
 import NonALink from 'components/NonALink'
 
-/* global google */
-
 /*
 
 Checklist:
@@ -36,6 +34,8 @@ Checklist:
 - *DONE*panTo on countryId change
 
 */
+
+/* global google */
 
 const worldGeoJson = topojsonFeature(worldTopoJson, worldTopoJson.objects['-'])
 const mapColors = {
@@ -284,7 +284,7 @@ class BareMapCmpt extends React.Component {
   }
 
   render = () => (
-    <div className='h-100'>
+    <div className='h-100' style={{ backgroundColor: '#b3e5fc' }}>
       <this.OverviewPortal>
         <NonALink to='/stats'>
           <RaisedButton label='View Overall Stats' primary />

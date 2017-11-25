@@ -1,5 +1,10 @@
 ## Todos
 
+- lint
+- check yarn start
+- prod and deploy
+- test?
+
 - misc
   - css prefixes/polyfills
     - how do we know they work? as long as crossbrowser test passes, I suppose
