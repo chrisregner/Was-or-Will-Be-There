@@ -59,7 +59,7 @@ class BareApp extends React.Component {
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div style={{ minWidth: 300 }} className='min-vh-100'>
+        <div style={{ minWidth: 300 }} className='min-vh-100 animated fadeIn'>
           <div className='fixed top-0 right-0 left-0 z-2'>
             <Nav />
           </div>

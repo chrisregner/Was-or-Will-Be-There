@@ -17,7 +17,13 @@ const render = (Component) => {
       <PersistGate persistor={persistor}>
         <AppContainer>
           <Provider store={store}>
-            <BrowserRouter>
+            <BrowserRouter
+              basename={
+                process.env.NODE_ENV === 'production'
+                ? '/plans-and-journals'
+                : '/'
+              }
+            >
               <Component />
             </BrowserRouter>
           </Provider>
