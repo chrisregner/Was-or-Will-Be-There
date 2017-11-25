@@ -1,6 +1,0 @@
-{
-  "name:": "CountryNameAndFlag",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./CountryNameAndFlag.js"
-}

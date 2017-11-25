@@ -1,6 +1,0 @@
-{
-  "name:": "state",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./state.js"
-}

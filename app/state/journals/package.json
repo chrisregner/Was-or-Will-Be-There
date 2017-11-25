@@ -1,6 +1,0 @@
-{
-  "name:": "journals",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./journals.js"
-}
