@@ -1,5 +1,4 @@
 import { createAction, handleActions } from 'redux-actions'
-import I from 'immutable'
 import _localCloudinary from 'services/cloudinary'
 import { journals as dummyJournals } from 'state/dummyData'
 

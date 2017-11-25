@@ -61,7 +61,7 @@ before(() => {
         secondaryTextColor: '',
       },
     },
-    isSelected: false
+    isSelected: false,
   }
 
   setup = TU.makeTestSetup({

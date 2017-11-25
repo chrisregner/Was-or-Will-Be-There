@@ -7,7 +7,7 @@ import ResizeDetector from 'react-resize-detector'
  * https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
  */
 
-if (typeof window.CustomEvent !== "function") {
+if (typeof window.CustomEvent !== 'function') {
   const CustomEvent = (event, params) => {
     params = params || { bubbles: false, cancelable: false, detail: undefined }
     const evt = document.createEvent('CustomEvent')
@@ -24,6 +24,7 @@ if (typeof window.CustomEvent !== "function") {
  * https://developer.mozilla.org/en-US/docs/Web/Events/resize
  */
 const throttle = (type, name, obj) => {
+  /* global requestAnimationFrame CustomEvent */
   obj = obj || window
   let running = false
   const func = () => {
@@ -41,20 +42,20 @@ const throttle = (type, name, obj) => {
   obj.addEventListener(type, func)
 }
 
-throttle("resize", "optimizedResize")
+throttle('resize', 'optimizedResize')
 
 /* The AnimatingHtDiv itself */
 class AnimatingHtDiv extends React.Component {
   static propTypes = {
-    children: PropTypes.node.isRequired
+    children: PropTypes.node.isRequired,
   }
 
   state = {
     height: 0,
   }
 
-  componentDidMount = () => window.addEventListener("optimizedResize", this.handleWindowResize)
-  componentWillUnmount = () => window.removeEventListener("optimizedResize", this.handleWindowResize)
+  componentDidMount = () => window.addEventListener('optimizedResize', this.handleWindowResize)
+  componentWillUnmount = () => window.removeEventListener('optimizedResize', this.handleWindowResize)
 
   handleWindowResize = () => this.setState({
     height: this.childWrapperEl.offsetHeight,

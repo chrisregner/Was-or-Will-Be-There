@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import IPropTypes from 'react-immutable-proptypes'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { feature as topojsonFeature } from 'topojson-client'
 

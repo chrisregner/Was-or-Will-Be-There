@@ -11,14 +11,14 @@ const isProd = process.env.NODE_ENV === 'production'
 module.exports = {
   entry: isProd
     ? {
-        app: './app.js',
-        vendor: ['babel-polyfill', 'react', 'react-dom', 'react-router'],
-      }
+      app: './app/main.js',
+      vendor: ['babel-polyfill', 'react', 'react-dom', 'react-router'],
+    }
     : [
-        'babel-polyfill',
-        'react-hot-loader/patch',
-        './app/main.js',
-      ],
+      'babel-polyfill',
+      'react-hot-loader/patch',
+      './app/main.js',
+    ],
   output: {
     filename: isProd ? 'js/[name].[hash].js' : 'js/bundle.js',
     path: resolve(__dirname, 'dist'),
@@ -75,18 +75,18 @@ module.exports = {
             loader: 'css-loader',
             options: isProd
               ? { importLoaders: 1 }
-              : {}
+              : {},
           },
           ...(isProd ? [] : [{
             loader: 'postcss-loader',
             options: {
-              plugins: (loader) => [
+              plugins: loader => [
                 require('postcss-flexibility')(),
                 require('postcss-flexbugs-fixes')(),
                 require('autoprefixer')(),
-                require('cssnano')()
+                require('cssnano')(),
               ],
-            }
+            },
           }]),
         ],
       },
@@ -123,23 +123,23 @@ module.exports = {
     }),
     ...(isProd
       ? [
-          new BundleAnalyzerPlugin(),
-          new webpack.optimize.ModuleConcatenationPlugin(),
-          new UglifyJsPlugin(),
-          new webpack.HashedModuleIdsPlugin(),
-          new WebpackChunkHash(),
-          new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('production')
-          }),
-          new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-          }),
-          new ChunkManifestPlugin({
-            filename: 'chunk-manifest.json',
-            manifestVariable: 'webpackManifest',
-            inlineManifest: true,
-          }),
-        ]
-      : [])
-  ]
+        new BundleAnalyzerPlugin(),
+        new webpack.optimize.ModuleConcatenationPlugin(),
+        new UglifyJsPlugin(),
+        new webpack.HashedModuleIdsPlugin(),
+        new WebpackChunkHash(),
+        new webpack.DefinePlugin({
+          'process.env.NODE_ENV': JSON.stringify('production'),
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+          name: 'vendor',
+        }),
+        new ChunkManifestPlugin({
+          filename: 'chunk-manifest.json',
+          manifestVariable: 'webpackManifest',
+          inlineManifest: true,
+        }),
+      ]
+      : []),
+  ],
 }

@@ -84,7 +84,7 @@ class PhotoFieldSet extends React.PureComponent {
               <FloatingActionButton
                 onClick={this.handleHideFullSizedPhoto}
                 className='photo-field-set-hide-full-sized-photo'
-                mini={true}
+                mini
                 tooltip='Hide full sized photo'
                 backgroundColor='rgba(0, 0, 0, 0.54)'
                 iconstyle={{ color: '#fff' }}

@@ -10,8 +10,10 @@ const defProps = {
   pathname: '',
   children: (<div />),
 }
+
 const setup = TU.makeTestSetup({
   Component: InsertPaperTransition,
+  defaultProps: defProps,
 })
 
 test('components.InsertPaperTransition | it should render without error', () => {

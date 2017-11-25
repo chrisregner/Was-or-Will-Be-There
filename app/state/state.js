@@ -1,16 +1,8 @@
-import { combineReducers } from 'redux-immutable'
 import * as R from 'ramda'
 
 import plansReducer, { plansGetters as _plansGetters } from './plans'
 import journalsReducer, { journalsGetters as _journalsGetters } from './journals'
 import uiReducer, { uiGetters as _uiGetters } from './ui'
-// import dummyStore from './dummyStore'
-
-// const rootReducer = combineReducers({
-//   plans: plansReducer,
-//   journals: journalsReducer,
-//   ui: uiReducer,
-// }, dummyStore)
 
 const rootReducers = {
   plans: plansReducer,

@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import IPropTypes from 'react-immutable-proptypes'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 
 import muiThemeable from 'material-ui/styles/muiThemeable'
 import DestinationIcon from 'material-ui/svg-icons/action/room'

@@ -6,11 +6,11 @@ import * as TU from 'services/testUtils'
 import AnimatingHtDiv from './AnimatingHtDiv'
 
 const defProps = {
-  children: (<div />)
+  children: (<div />),
 }
 const setup = TU.makeTestSetup({
   Component: AnimatingHtDiv,
-  defaultProps: defProps
+  defaultProps: defProps,
 })
 
 test('components.AnimatingHtDiv | it should render without error', () => {

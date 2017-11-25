@@ -11,8 +11,8 @@ const defProps = {
     },
   },
   location: {
-    pathname: ''
-  }
+    pathname: '',
+  },
 }
 
 const setup = TU.makeTestSetup({

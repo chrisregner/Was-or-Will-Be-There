@@ -57,10 +57,10 @@ export const makeTestSetup = (args1 = {}) => {
 
     const theNode = childNode
       ? (
-          <FinalComponent {...finalProps}>
-            {childNode}
-          </FinalComponent>
-        )
+        <FinalComponent {...finalProps}>
+          {childNode}
+        </FinalComponent>
+      )
       : (<FinalComponent {...finalProps} />)
 
     if (hooks.beforeRender)

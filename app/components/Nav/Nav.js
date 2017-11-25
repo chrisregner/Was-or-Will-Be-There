@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { withRouter, Route, Switch, Link } from 'react-router-dom'
 
 import AppBar from 'material-ui/AppBar'
@@ -49,7 +50,7 @@ const BareNav = ({ history, location }) => {
               <div className='ph3 flex items-center'>
                 <div>
                   <MapIcon style={{
-                    color: location.pathname === '/' ? '#fff' : 'rgba(255, 255, 255, 0.7)'
+                    color: location.pathname === '/' ? '#fff' : 'rgba(255, 255, 255, 0.7)',
                   }} />
                 </div>
                 <div className='dn db-l'>&ensp;Map</div>
@@ -62,7 +63,7 @@ const BareNav = ({ history, location }) => {
               <div className='ph3 flex items-center'>
                 <div>
                   <StatsIcon style={{
-                    color: location.pathname === '/stats' ? '#fff' : 'rgba(255, 255, 255, 0.7)'
+                    color: location.pathname === '/stats' ? '#fff' : 'rgba(255, 255, 255, 0.7)',
                   }} />
                 </div>
                 <div className='dn db-l'>&ensp;Stats</div>
@@ -75,7 +76,7 @@ const BareNav = ({ history, location }) => {
               <div className='ph3 flex items-center'>
                 <div>
                   <InfoIcon style={{
-                    color: location.pathname === '/map' ? '#fff' : 'rgba(255, 255, 255, 0.7)'
+                    color: location.pathname === '/map' ? '#fff' : 'rgba(255, 255, 255, 0.7)',
                   }} />
                 </div>
                 <div className='dn db-l'>&ensp;About</div>
@@ -92,13 +93,22 @@ const BareNav = ({ history, location }) => {
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
         >
-          <MenuItem leftIcon={<StatsIcon />} primaryText="Stats" value='/stats' />
-          <MenuItem leftIcon={<MapIcon />} primaryText="Map" value='/' />
-          <MenuItem leftIcon={<InfoIcon />} primaryText="About" value='/about' />
+          <MenuItem leftIcon={<StatsIcon />} primaryText='Stats' value='/stats' />
+          <MenuItem leftIcon={<MapIcon />} primaryText='Map' value='/' />
+          <MenuItem leftIcon={<InfoIcon />} primaryText='About' value='/about' />
         </IconMenu>
       </div>
     </AppBar>
   )
+}
+
+BareNav.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
 }
 
 const Nav = withRouter(BareNav)

@@ -50,7 +50,7 @@ class BareInsertPaperTransition extends React.Component {
     className: PropTypes.string,
     lastLocation: PropTypes.shape({
       pathname: PropTypes.string.isRequired,
-    })
+    }),
   }
 
   wrapperRef = (wrapperEl) => {
@@ -60,7 +60,7 @@ class BareInsertPaperTransition extends React.Component {
   render = () => {
     const {
       pathname: currPath,
-      nth, children, className, lastLocation
+      nth, children, className, lastLocation,
     } = this.props
 
     const prevPath = lastLocation && lastLocation.pathname
@@ -75,26 +75,23 @@ class BareInsertPaperTransition extends React.Component {
 
     let animation = ''
 
-    if (wasInPlansOrJournals && isInSpecificPlanOrJournal) {
+    if (wasInPlansOrJournals && isInSpecificPlanOrJournal)
       if (nth === 1) animation = 'divergeToLeft'
       else animation = 'divergeToRight'
-    }
 
-    if (wasInSpecificPlanOrJournal && isInPlansOrJournals) {
+    if (wasInSpecificPlanOrJournal && isInPlansOrJournals)
       if (nth === 1) animation = 'convergeToRight'
       else animation = 'convergeToLeft'
-    }
 
-    if (wasInSpecificPlanOrJournal && isInSpecificPlanOrJournal && prevPath !== currPath) {
+    if (wasInSpecificPlanOrJournal && isInSpecificPlanOrJournal && prevPath !== currPath)
       if (nth === 2) {
         animation = 'divergeToRight'
 
-        /* force repaint in browser*/
+        /* force repaint in browser */
         this.wrapperEl.classList.remove(animation)
         void this.wrapperEl.offsetWidth
         this.wrapperEl.classList.add(animation)
       }
-    }
 
     return (
       <Wrapper innerRef={this.wrapperRef} className={`animated ${animation} ${className}`}>

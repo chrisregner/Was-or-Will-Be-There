@@ -18,7 +18,7 @@ import Collapse from 'material-ui-next/transitions/Collapse'
 import PhotoSlider from 'components/PhotoSlider'
 import NonALink from 'components/NonALink'
 
-const preventDefault = (e) => e.preventDefault()
+const preventDefault = e => e.preventDefault()
 
 class BareCollapsibleItem extends React.Component {
   static propTypes = {
@@ -110,11 +110,11 @@ class BareCollapsibleItem extends React.Component {
             ...(
               isSelected
                 ? {
-                    backgroundColor: palette.primary1Color,
-                    color: '#fff',
-                  }
+                  backgroundColor: palette.primary1Color,
+                  color: '#fff',
+                }
                 : {}
-            )
+            ),
           }}
         >
           <div className='flex items-center'>
@@ -135,7 +135,7 @@ class BareCollapsibleItem extends React.Component {
                     color: timeAlert === 'journalize'
                       ? palette.tertiary2Color
                       : palette.primary2Color,
-                    ...iconStyle
+                    ...iconStyle,
                   }}
                 >
                   <InfoIcon />

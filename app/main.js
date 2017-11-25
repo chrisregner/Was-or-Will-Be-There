@@ -12,26 +12,26 @@ const { persistor, store } = configureStore()
 
 const render = (Component) => {
   ReactDOM.render(
-    // (
-    //   <PersistGate persistor={persistor}>
-    //     <AppContainer>
-    //       <Provider store={store}>
-    //         <BrowserRouter>
-    //           <Component />
-    //         </BrowserRouter>
-    //       </Provider>
-    //     </AppContainer>
-    //   </PersistGate>
-    // ),
     (
-      <AppContainer>
-        <Provider store={store}>
-          <BrowserRouter>
-            <Component />
-          </BrowserRouter>
-        </Provider>
-      </AppContainer>
+      <PersistGate persistor={persistor}>
+        <AppContainer>
+          <Provider store={store}>
+            <BrowserRouter>
+              <Component />
+            </BrowserRouter>
+          </Provider>
+        </AppContainer>
+      </PersistGate>
     ),
+    // (
+    //   <AppContainer>
+    //     <Provider store={store}>
+    //       <BrowserRouter>
+    //         <Component />
+    //       </BrowserRouter>
+    //     </Provider>
+    //   </AppContainer>
+    // ),
     document.getElementById('root'),
   )
 }

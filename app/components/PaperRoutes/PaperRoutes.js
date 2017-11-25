@@ -2,14 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Route, Redirect, Switch } from 'react-router-dom'
-import { AnimatedRoute } from 'react-router-transition'
-import * as R from 'ramda'
 
 import IconButton from 'material-ui/IconButton'
 import CloseIcon from 'material-ui/svg-icons/content/clear'
 import Paper from 'material-ui/Paper'
 
-import CollapsibleItem from 'components/CollapsibleItem'
 import AnimatingHtDiv from 'components/AnimatingHtDiv'
 import InsertPaperTransition from 'components/InsertPaperTransition'
 import About from 'components/About'
@@ -43,7 +40,7 @@ const CloseToMap = () => (
     <IconButton
       style={{ width: 36, height: 36, padding: 8 }}
       iconStyle={{ width: 18, height: 18 }}
-      tooltip="Go back to maps"
+      tooltip='Go back to maps'
       tooltipPosition='bottom-left'
     >
       <CloseIcon />
@@ -150,7 +147,7 @@ const PaperRoutes = ({ location }) => (
 
       <Route
         path='/countries/:countryId/:plansOrJournals(plans|journals)/:any'
-        render={(props) => (
+        render={props => (
           <InsertPaperTransition nth={2} pathname={props.location.pathname} className='relative dn db-l ph2 tl'>
             <Paper className='relative'>
               {/* Close Button */}
@@ -180,17 +177,17 @@ const PaperRoutes = ({ location }) => (
 
 PaperRoutes.propTypes = {
   location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired
-  }).isRequired
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
 }
 
 CloseToPlansOrJournals.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       countryId: PropTypes.string.isRequired,
-      plansOrJournals: PropTypes.string.isRequired
-    }).isRequired
-  }).isRequired
+      plansOrJournals: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 }
 
 export default PaperRoutes

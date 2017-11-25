@@ -1,9 +1,5 @@
 ## Todos
 
-- redux-persist
-- test url queries
-- lint
-
 - misc
   - css prefixes/polyfills
     - how do we know they work? as long as crossbrowser test passes, I suppose
@@ -24,6 +20,7 @@
   - final readme.md
     - credits
       - natural earth data
+  - lint
   - deploy
 
 ---
