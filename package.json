@@ -1,5 +1,5 @@
 {
-  "name": "wowbt",
+  "name": "plans-and-journals",
   "version": "1.0.0",
   "description": "Planner and journal app for travelers",
   "main": "app/main.js",

@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const isProd = process.env.NODE_ENV === 'production'
+const prodUrl = 'https://chrisregner.github.io/plans-and-journals/'
 
 module.exports = {
   entry: isProd
@@ -24,7 +25,7 @@ module.exports = {
     path: resolve(__dirname, 'dist'),
 
     // path of output bundle relative to HTML file, necessary for live editing
-    publicPath: '/',
+    publicPath: isProd ? prodUrl : '/',
   },
   devServer: {
     // Respond to 404s with index.html
@@ -34,7 +35,7 @@ module.exports = {
     contentBase: resolve(__dirname, 'dist'),
 
     // Must be the same as output.publicPath, necessary for live editing
-    publicPath: '/',
+    publicPath: isProd ? prodUrl : '/',
   },
 
   // Solution for request/request-promise issue
