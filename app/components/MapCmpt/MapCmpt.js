@@ -199,79 +199,89 @@ class BareMapCmpt extends React.Component {
   shouldComponentUpdate = () => false
 
   componentDidMount = () => {
-    const { history, countriesInfo, match } = this.props
-    const countryPolygons = {}
+    const setupGMap = () => {
+      const { history, countriesInfo, match } = this.props
+      const countryPolygons = {}
 
-    /* Initiate map */
-    const gMap = new google.maps.Map(this.mapEl, {
-      zoom: 3,
-      center: { lat: 45, lng: 0 },
-      mapTypeControl: false,
-      streetViewControl: false,
-      fullscreenControl: false,
-      backgroundColor: '#b3e5fc',
-      styles: gMapStyle,
-    })
-
-    /* Add SVG shapes to the map */
-    worldGeoJson.features.forEach((feature) => {
-      const countryId = feature.properties.id
-      const countryInfo = countriesInfo.get(countryId)
-      const { fillOpacity, fillColor } = computeCountryStyles(countryInfo)
-
-      /* Derive the country's Google-compatible coordinates from GeoJSON  */
-      const reducer = (acc, coords) => {
-        if (typeof coords[0][0] === 'number')
-          acc.push(coords.map(coord => new google.maps.LatLng(coord[1], coord[0])))
-        else
-          acc = coords.reduce(reducer, acc)
-
-        return acc
-      }
-
-      const gCoords = feature.geometry.coordinates.reduce(reducer, [])
-
-      /* Create the Google Map Polygon of the country */
-      const country = new google.maps.Polygon({
-        paths: gCoords,
-        strokeWeight: 0,
-        fillOpacity,
-        fillColor,
+      /* Initiate map */
+      const gMap = new google.maps.Map(this.mapEl, {
+        zoom: 3,
+        center: { lat: 45, lng: 0 },
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false,
+        backgroundColor: '#b3e5fc',
+        styles: gMapStyle,
       })
 
-      countryPolygons[countryId] = country
+      /* Add SVG shapes to the map */
+      worldGeoJson.features.forEach((feature) => {
+        const countryId = feature.properties.id
+        const countryInfo = countriesInfo.get(countryId)
+        const { fillOpacity, fillColor } = computeCountryStyles(countryInfo)
 
-      /* Add Listeners to the Country Polygon */
-      if (countryId !== 'null') {
-        google.maps.event.addListener(country, 'click', () => {
-          history.push(`/countries/${countryId}/plans`)
+        /* Derive the country's Google-compatible coordinates from GeoJSON  */
+        const reducer = (acc, coords) => {
+          if (typeof coords[0][0] === 'number')
+            acc.push(coords.map(coord => new google.maps.LatLng(coord[1], coord[0])))
+          else
+            acc = coords.reduce(reducer, acc)
+
+          return acc
+        }
+
+        const gCoords = feature.geometry.coordinates.reduce(reducer, [])
+
+        /* Create the Google Map Polygon of the country */
+        const country = new google.maps.Polygon({
+          paths: gCoords,
+          strokeWeight: 0,
+          fillOpacity,
+          fillColor,
         })
 
-        setCountryHoverListeners(countryId, country, countryInfo)
-      }
+        countryPolygons[countryId] = country
 
-      /* Add the Country Polygon to the Map */
-      country.setMap(gMap)
-    })
+        /* Add Listeners to the Country Polygon */
+        if (countryId !== 'null') {
+          google.maps.event.addListener(country, 'click', () => {
+            history.push(`/countries/${countryId}/plans`)
+          })
 
-    this.countryPolygons = countryPolygons
+          setCountryHoverListeners(countryId, country, countryInfo)
+        }
 
-    /* Adjust custom controls' styles then add to the map's controls */
-    this.legendWrpr.style['margin-top'] = '10px'
-    this.legendWrpr.style['margin-left'] = '10px'
-    this.overviewWrpr.style['margin-bottom'] = '24px'
-    gMap.controls[google.maps.ControlPosition.TOP_LEFT].push(this.legendWrpr)
-    gMap.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(this.overviewWrpr)
+        /* Add the Country Polygon to the Map */
+        country.setMap(gMap)
+      })
 
-    /* if the route points to a country, pan the map to it */
-    panIfCountryChanged({
-      nextCountryId: match.params.countryId,
-      gMap,
-      countryPolygons,
-    })
+      this.countryPolygons = countryPolygons
 
-    /* Save the map */
-    this.gMap = gMap
+      /* Adjust custom controls' styles then add to the map's controls */
+      this.legendWrpr.style['margin-top'] = '10px'
+      this.legendWrpr.style['margin-left'] = '10px'
+      this.overviewWrpr.style['margin-bottom'] = '24px'
+      gMap.controls[google.maps.ControlPosition.TOP_LEFT].push(this.legendWrpr)
+      gMap.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(this.overviewWrpr)
+
+      /* if the route points to a country, pan the map to it */
+      panIfCountryChanged({
+        nextCountryId: match.params.countryId,
+        gMap,
+        countryPolygons,
+      })
+
+      /* Save the map */
+      this.gMap = gMap
+    }
+
+    if (global.google) {
+      setupGMap()
+      console.log('Google Map has already downloaded upon mounting') // eslint-disable-line no-console
+    } else {
+      gMapCb = setupGMap // eslint-disable-line no-undef
+      console.log('Google Map has NOT downloaded yet upon mounting') // eslint-disable-line no-console
+    }
   }
 
   overviewWrpr = document.createElement('div')
@@ -304,7 +314,17 @@ class BareMapCmpt extends React.Component {
         </Paper>
       </this.LegendPortal>
 
-      <div ref={this.mapRef} className='h-100' />
+      <div ref={this.mapRef} className='h-100'>
+        <div className='loader-wrapper-wrapper relative' style={{ top: -48 }}>
+          <div className='loader-wrapper'>
+            <div className='la-ball-scale-ripple-multiple la-2x la-dark'>
+              <div />
+              <div />
+              <div />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

@@ -20,8 +20,8 @@ const render = (Component) => {
             <BrowserRouter
               basename={
                 process.env.NODE_ENV === 'production'
-                ? '/plans-and-journals'
-                : '/'
+                  ? '/plans-and-journals'
+                  : '/'
               }
             >
               <Component />
@@ -30,15 +30,6 @@ const render = (Component) => {
         </AppContainer>
       </PersistGate>
     ),
-    // (
-    //   <AppContainer>
-    //     <Provider store={store}>
-    //       <BrowserRouter>
-    //         <Component />
-    //       </BrowserRouter>
-    //     </Provider>
-    //   </AppContainer>
-    // ),
     document.getElementById('root'),
   )
 }
