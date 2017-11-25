@@ -12,7 +12,6 @@ import RaisedButton from 'material-ui/RaisedButton'
 import Paper from 'material-ui/Paper'
 
 import overviewGetter from 'state/shared/overviewGetter'
-import worldTopoJson from 'constants/world.topo.json'
 import gMapStyle from 'constants/gMapStyle.json'
 import NonALink from 'components/NonALink'
 
@@ -37,7 +36,6 @@ Checklist:
 
 /* global google */
 
-const worldGeoJson = topojsonFeature(worldTopoJson, worldTopoJson.objects['-'])
 const mapColors = {
   hasJournal: pinkA200,
   hasJournalHovered: pinkA400,
@@ -137,6 +135,8 @@ class BareMapCmpt extends React.Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
+    if (!this.isGMapLoaded) return
+
     const { match } = this.props
     const newCountriesInfo = nextProps.countriesInfo
     let oldCountriesInfo = this.state.countriesInfo
@@ -196,12 +196,15 @@ class BareMapCmpt extends React.Component {
     this.setState({ countriesInfo: newCountriesInfo })
   }
 
-  shouldComponentUpdate = () => false
+  shouldComponentUpdate = () => !this.isGMapLoaded
 
   componentDidMount = () => {
-    const setupGMap = () => {
+    const setupGMap = (worldTopoJson) => {
+      const worldGeoJson = topojsonFeature(worldTopoJson, worldTopoJson.objects['-'])
       const { history, countriesInfo, match } = this.props
       const countryPolygons = {}
+
+      this.isGMapLoaded = true
 
       /* Initiate map */
       const gMap = new google.maps.Map(this.mapEl, {
@@ -275,13 +278,49 @@ class BareMapCmpt extends React.Component {
       this.gMap = gMap
     }
 
-    if (global.google) {
-      setupGMap()
-      console.log('Google Map has already downloaded upon mounting') // eslint-disable-line no-console
-    } else {
-      gMapCb = setupGMap // eslint-disable-line no-undef
-      console.log('Google Map has NOT downloaded yet upon mounting') // eslint-disable-line no-console
+    /* Make sure both Google Map and map data is loaded before rendering the map */
+    /* eslint-disable no-undef, no-console */
+    const getMapData = () => pnjMapObj.mapData
+    const gMap = global.google
+
+    const setupOnMapDataLoad = () => {
+      pnjMapObj.mapDataCb = newlyLoadedMapData => setupGMap(newlyLoadedMapData)
     }
+
+    const setupOnGMapLoad = () => {
+      pnjMapObj.gMapCb = () => setupGMap(getMapData())
+    }
+
+    const setupWhenBothLoaded = () => {
+      pnjMapObj.mapDataCb = () => {
+        if (gMap)
+          setupGMap(getMapData())
+        else
+          setupOnGMapLoad()
+      }
+
+      pnjMapObj.gMapCb = () => {
+        if (getMapData())
+          setupGMap(getMapData())
+        else
+          setupOnMapDataLoad()
+      }
+    }
+
+    if (gMap && getMapData()) {
+      setupGMap(getMapData())
+      console.log('gMap && getMapData()')
+    } else if (gMap && !getMapData()) {
+      setupOnMapDataLoad()
+      console.log('gMap && !getMapData()')
+    } else if (!gMap && getMapData()) {
+      setupOnGMapLoad()
+      console.log('!gMap && getMapData()')
+    } else if (!gMap && !getMapData()) {
+      setupWhenBothLoaded()
+      console.log('!gMap && !getMapData()')
+    }
+    /* eslint-enable no-undef, no-console */
   }
 
   overviewWrpr = document.createElement('div')

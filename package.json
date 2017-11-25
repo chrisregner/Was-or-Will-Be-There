@@ -102,7 +102,7 @@
     "start": "webpack-dev-server --hot",
     "lint": "eslint --ignore-pattern dist/* --fix **/*.js",
     "mocha": "cross-env NODE_PATH=app mocha --require babel-register --require ./tools/testSetup.js",
-    "prod": "del-cli dist/* --force && cross-env NODE_ENV=production webpack",
+    "prod": "del-cli dist/index.html dist/js/* --force && cross-env NODE_ENV=production webpack",
     "deploy": "git subtree push --prefix dist origin gh-pages",
     "test": "yarn mocha --reporter spec --watch app/**/*.unit.js",
     "test-nyan": "yarn mocha --reporter nyan --watch app/**/*.unit.js",

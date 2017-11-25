@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/es/integration/react'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { AppContainer } from 'react-hot-loader'
 
 import configureStore from 'state/store'
@@ -17,7 +17,7 @@ const render = (Component) => {
       <PersistGate persistor={persistor}>
         <AppContainer>
           <Provider store={store}>
-            <BrowserRouter
+            <HashRouter
               basename={
                 process.env.NODE_ENV === 'production'
                   ? '/plans-and-journals'
@@ -25,7 +25,7 @@ const render = (Component) => {
               }
             >
               <Component />
-            </BrowserRouter>
+            </HashRouter>
           </Provider>
         </AppContainer>
       </PersistGate>

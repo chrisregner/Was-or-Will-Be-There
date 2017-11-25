@@ -1,32 +1,31 @@
 ## Todos
 
-- lint
-- check yarn start
-- prod and deploy
-- test?
+- perf
+  - react optimization tips
+  - research how to reduce scripting time
+  - research how to test
+- separate topojson?
+- make features to test
+  - test in ie11, chrome, mobile
+- make looks to test
+  - test in ie11, chrome, firefox, mobile
 
 - misc
-  - css prefixes/polyfills
-    - how do we know they work? as long as crossbrowser test passes, I suppose
-  - webpack production optimization
-    - check if webpack production config makes difference in production output
-    - check if babel production config makes difference in production output
-    - check if remote deletion of photo works
-    - remove excess deps
-      - research how to do it
-      - leaflet
-      - animate.css
-      - tachyons
-      - react-slick
-  - performance test (before and after deployment)
-    - research more
+  - performance
+    - css prefixes/polyfills
+      - how do we know they work? as long as crossbrowser test passes, I suppose
+    - webpack production optimization
+      - check if webpack production config makes difference in production output
+      - check if babel production config makes difference in production output
+      - check if remote deletion of photo works
   - crossbrowser test
     - responsiveness test for each
   - final readme.md
     - credits
       - natural earth data
-  - lint
-  - deploy
+
+  - linted?
+  - deployed?
 
 ---
 
@@ -55,7 +54,7 @@ world overview          - /about
 
 - Full-size image preview on journal form overflows downward (not visible) if the image is a portrait
 
-## Possible Additional features
+## Possible additional features
 
 - additional features
   - notification
@@ -71,104 +70,3 @@ world overview          - /about
   - input on map to search and select places
     - pan map upon selection
   - automatic image deleting (when certain limit is met, delete in the next midnight?)
-
----
-
-import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-import { matchPath } from 'react-router-dom'
-
-const Wrapper = styled.div`
-  @keyframes toLeft {
-    from {
-      transform: translateX(50%);
-    }
-
-    to {
-      transform: none;
-    }
-  }
-
-  @keyframes toRight {
-    from {
-      transform: translateX(-50%);
-    }
-
-    to {
-      transform: none;
-    }
-  }
-
-  &.divergeToLeft {
-    animation-name: toLeft;
-  }
-
-  &.divergeToRight {
-    animation-name: toRight;
-  }
-
-  &.convergeToLeft {
-    animation-name: toLeft;
-  }
-
-  &.convergeToRight {
-    animation-name: toRight;
-  }
-`
-
-class InsertPaperTransition extends React.Component {
-  static propTypes = {
-    nth: PropTypes.number.isRequired,
-    pathname: PropTypes.string.isRequired,
-    children: PropTypes.node.isRequired,
-    className: PropTypes.string,
-  }
-
-  state = {
-    prevPath: null
-  }
-
-  componentWillReceiveProps = (nextProps) => this.setState({
-    prevPath: nextProps.pathname
-  })
-
-  render = () => {
-    const {
-      pathname: currPath,
-      nth, children, className
-    } = this.props
-    const { prevPath } = this.state
-    const insertingPathPattern = '/countries/:countryId/:plansOrJournals(plans|journals)/:any'
-    const shouldSplit = matchPath(currPath, { path: insertingPathPattern })
-    const wasSplitted = matchPath(prevPath, { path: insertingPathPattern })
-    let animation
-
-    console.log(prevPath, currPath)
-
-    switch(true) {
-      case (!prevPath):
-        break;
-      case (nth === 1 && !!((shouldSplit && !wasSplitted) || (shouldSplit && wasSplitted))):
-        animation = 'divergeToLeft'
-        break;
-      case (nth === 1 && !!((!shouldSplit && wasSplitted) || (!shouldSplit && !wasSplitted))):
-        animation = 'convergeToRight'
-        break;
-      case (nth === 2 && !!((shouldSplit && !wasSplitted) || (shouldSplit && wasSplitted))):
-        animation = 'divergeToRight'
-        break;
-      case (nth === 2 && !!((!shouldSplit && wasSplitted) || (!shouldSplit && !wasSplitted))):
-        animation = 'convergeToLeft'
-        break;
-    }
-
-    return (
-      <Wrapper className={`animated ${animation} ${className}`}>
-        {children}
-      </Wrapper>
-    )
-  }
-}
-
-export default InsertPaperTransition
