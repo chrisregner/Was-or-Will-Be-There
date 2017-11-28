@@ -1,28 +1,23 @@
 ## Todos
 
-- perf
-  - react optimization tips
-  - research how to reduce scripting time
-  - research how to test
-- separate topojson?
-- make features to test
-  - test in ie11, chrome, mobile
-- make looks to test
+- make list of features to test
+  - test in ie11 and mobile
+    - image deletion
+      - on manual delete
+      - on deleteion of journal itself
+      - on cancel
   - test in ie11, chrome, firefox, mobile
+    - make this list
 
-- misc
-  - performance
-    - css prefixes/polyfills
-      - how do we know they work? as long as crossbrowser test passes, I suppose
-    - webpack production optimization
-      - check if webpack production config makes difference in production output
-      - check if babel production config makes difference in production output
-      - check if remote deletion of photo works
-  - crossbrowser test
-    - responsiveness test for each
-  - final readme.md
-    - credits
-      - natural earth data
+- issues
+  - photo deletion in cloud
+  - IE11, BottomNavigation in PlansAndJournals, flexed element can't have buttons as children, must be another div or other
+  - IE11, mui text-field shows a giant "X"
+  - Full-size image preview on journal form overflows downward (not visible) if the image is a portrait
+
+- final readme.md
+  - credits
+    - natural earth data
 
   - linted?
   - deployed?
@@ -49,10 +44,6 @@ world overview          - /about
   - PaperWithAnimatingHt
   - InsertPaperTransition
   - PlansAndJournals (active item behavior)
-
-## Issues
-
-- Full-size image preview on journal form overflows downward (not visible) if the image is a portrait
 
 ## Possible additional features
 

@@ -2,7 +2,6 @@ import { test } from 'mocha'
 import { assert } from 'chai'
 import td from 'testdouble'
 import I from 'immutable'
-import * as R from 'ramda'
 
 import journalsReducer, * as fromJournals from './journals'
 
@@ -198,14 +197,14 @@ test('state.journals.editJournal() | it should remove isNotSaved property from a
  * deletePhotos() (side-effect)
  */
 
-const deleteResourcesLens = R.lensPath(['localCloudinary', 'v2', 'api', 'delete_resources'])
-const deps = R.set(
-  deleteResourcesLens,
-  td.func(),
-  {},
-)
-const fakeDeleteResources = R.view(deleteResourcesLens, deps)
-const deletePhotos = fromJournals.deletePhotosShell(deps)
+// const deleteResourcesLens = R.lensPath(['localCloudinary', 'v2', 'api', 'delete_resources'])
+// const deps = R.set(
+//   deleteResourcesLens,
+//   td.func(),
+//   {},
+// )
+const fakeDeleteResources = () => {} // R.view(deleteResourcesLens, deps)
+const deletePhotos = () => {} // fromJournals.deletePhotosShell(deps)
 
 test.skip('state.journals.deletePhotos() | when toDelete arg includes "not-saved", it should delete passed photos with isNotSaved prop in cloud', () => {
   const photos = I.List([

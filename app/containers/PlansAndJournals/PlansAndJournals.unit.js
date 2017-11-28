@@ -86,24 +86,24 @@ const setup = TU.makeTestSetup({
   tools: ['td'],
 })
 
-test('components.PlansAndJournals | it should render without error', () => {
+test('containers.PlansAndJournals | it should render without error', () => {
   const actual = setup().exists()
   assert.isTrue(actual)
 })
 
-test('components.PlansAndJournals | when in plans route, it should render the plans list', () => {
+test('containers.PlansAndJournals | when in plans route, it should render the plans list', () => {
   const actual = setup().find('[data-test="planList"]').length
   const expected = 1
   assert.equal(actual, expected)
 })
 
-test('components.PlansAndJournals | when in plans route, it should NOT render the journals list', () => {
+test('containers.PlansAndJournals | when in plans route, it should NOT render the journals list', () => {
   const actual = setup().find('[data-test="journalList"]').length
   const expected = 0
   assert.equal(actual, expected)
 })
 
-test('components.PlansAndJournals | when in journals route, it should render the journals list', () => {
+test('containers.PlansAndJournals | when in journals route, it should render the journals list', () => {
   const props = {
     location: {
       pathname: '/countries/de/journals',
@@ -114,7 +114,7 @@ test('components.PlansAndJournals | when in journals route, it should render the
   assert.equal(actual, expected)
 })
 
-test('components.PlansAndJournals | when in journals route, it should NOT render the plans list', () => {
+test('containers.PlansAndJournals | when in journals route, it should NOT render the plans list', () => {
   const props = {
     location: {
       pathname: '/countries/de/journals',
@@ -125,23 +125,23 @@ test('components.PlansAndJournals | when in journals route, it should NOT render
   assert.equal(actual, expected)
 })
 
-test('components.PlansAndJournals | when plans tab button is clicked, it should call history.push() with correct args', () => {
+test('containers.PlansAndJournals | when plans tab button is clicked, it should call history.push() with correct args', () => {
   setup().find('[data-test="plansLink"]').simulate('click')
   td.verify(defProps.history.push('/countries/de/plans'))
 })
 
-test('components.PlansAndJournals | when journals tab button is clicked, it should call history.push() with correct args', () => {
+test('containers.PlansAndJournals | when journals tab button is clicked, it should call history.push() with correct args', () => {
   setup().find('[data-test="journalsLink"]').simulate('click')
   td.verify(defProps.history.push('/countries/de/journals'))
 })
 
-test('components.PlansAndJournals > plansList | when there are plans, it should render each', () => {
+test('containers.PlansAndJournals > plansList | when there are plans, it should render each', () => {
   const actual = setup().find('[data-test="plan"]').length
   const expected = 4
   assert.equal(actual, expected)
 })
 
-test('components.PlansAndJournals > plansList | when there are plans, it should render them with correct props', () => {
+test('containers.PlansAndJournals > plansList | when there are plans, it should render them with correct props', () => {
   const actual = I.fromJS(setup().find('[data-test="plan"]').at(1).props())
   const expected = I.Map({
     type: 'plan',
@@ -157,33 +157,33 @@ test('components.PlansAndJournals > plansList | when there are plans, it should 
   assert.isTrue(actual.isSuperset(expected))
 })
 
-test('components.PlansAndJournals > plansList | when there are plans, it should NOT render the no-plan message', () => {
+test('containers.PlansAndJournals > plansList | when there are plans, it should NOT render the no-plan message', () => {
   const actual = setup().find('[data-test="noPlan"]').length
   const expected = 0
   assert.equal(actual, expected)
 })
 
-test('components.PlansAndJournals > plansList | when there are NO plans, it should render a message instead', () => {
+test('containers.PlansAndJournals > plansList | when there are NO plans, it should render a message instead', () => {
   const props = { plans: undefined }
   const actual = setup({ props }).find('[data-test="noPlan"]').length
   const expected = 1
   assert.equal(actual, expected)
 })
 
-test('components.PlansAndJournals > plansList | when there are NO plans, it should NOT render the plans', () => {
+test('containers.PlansAndJournals > plansList | when there are NO plans, it should NOT render the plans', () => {
   const props = { plans: undefined }
   const actual = setup({ props }).find('[data-test="plan"]').length
   const expected = 0
   assert.equal(actual, expected)
 })
 
-test('components.PlansAndJournals > plansList | it should render an "add plan" link', () => {
+test('containers.PlansAndJournals > plansList | it should render an "add plan" link', () => {
   const actual = setup().find('[data-test="addPlan"]').prop('to')
   const expected = '/countries/de/plans/new'
   assert.equal(actual, expected)
 })
 
-test('components.PlansAndJournals > journalList | when there are journals, it should render each', () => {
+test('containers.PlansAndJournals > journalList | when there are journals, it should render each', () => {
   const props = {
     location: {
       pathname: '/countries/de/journals',
@@ -194,7 +194,7 @@ test('components.PlansAndJournals > journalList | when there are journals, it sh
   assert.equal(actual, expected)
 })
 
-test('components.PlansAndJournals > journalList | when there are journals, it should render them with correct props', () => {
+test('containers.PlansAndJournals > journalList | when there are journals, it should render them with correct props', () => {
   const props = {
     location: {
       pathname: '/countries/de/journals',
@@ -230,7 +230,7 @@ test('components.PlansAndJournals > journalList | when there are journals, it sh
   assert.isTrue(actual.isSuperset(expected))
 })
 
-test('components.PlansAndJournals > journalList | when there are journals, it should NOT render the no-journal message', () => {
+test('containers.PlansAndJournals > journalList | when there are journals, it should NOT render the no-journal message', () => {
   const props = {
     location: {
       pathname: '/countries/de/journals',
@@ -241,7 +241,7 @@ test('components.PlansAndJournals > journalList | when there are journals, it sh
   assert.equal(actual, expected)
 })
 
-test('components.PlansAndJournals > journalList | when there are NO journals, it should render a message instead', () => {
+test('containers.PlansAndJournals > journalList | when there are NO journals, it should render a message instead', () => {
   const props = {
     location: {
       pathname: '/countries/de/journals',
@@ -253,7 +253,7 @@ test('components.PlansAndJournals > journalList | when there are NO journals, it
   assert.equal(actual, expected)
 })
 
-test('components.PlansAndJournals > journalList | when there are NO journals, it should NOT render the journals', () => {
+test('containers.PlansAndJournals > journalList | when there are NO journals, it should NOT render the journals', () => {
   const props = {
     location: {
       pathname: '/countries/de/journals',
@@ -265,7 +265,7 @@ test('components.PlansAndJournals > journalList | when there are NO journals, it
   assert.equal(actual, expected)
 })
 
-test('components.PlansAndJournals > journalList | it should render an "add journal" link', () => {
+test('containers.PlansAndJournals > journalList | it should render an "add journal" link', () => {
   const props = {
     location: {
       pathname: '/countries/de/journals',

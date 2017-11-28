@@ -14,7 +14,7 @@ const mapStateToProps = () => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  handleSubmit: (journalDetails, photosDeleted) => {
+  handleSubmit: (journalDetails) => {
     const countryId = ownProps.match.params.countryId
     const journalWithCountryId = journalDetails.set('countryId', countryId)
     const addJournalNotifMsg = 'Added a new journal entry!'

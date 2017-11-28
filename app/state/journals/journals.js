@@ -1,5 +1,10 @@
 import { createAction, handleActions } from 'redux-actions'
-import _localCloudinary from 'services/cloudinary'
+
+import {
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET,
+  CLOUDINARY_CLOUD_NAME,
+} from 'constants/'
 import { journals as dummyJournals } from 'state/dummyData'
 
 const defaultState = dummyJournals
@@ -21,7 +26,10 @@ export const DELETE_JOURNAL = 'journals/DELETE_JOURNAL'
  * Action Creators
  */
 
-export const deletePhotosShell = ({ localCloudinary }) => ({ toDelete, photos }) => {
+export const addJournal = createAction(ADD_JOURNAL, removeMetaDataFromPhotos)
+export const editJournal = createAction(EDIT_JOURNAL, removeMetaDataFromPhotos)
+export const deleteJournal = createAction(DELETE_JOURNAL)
+export const deletePhotos = ({ toDelete, photos }) => {
   let photosToDelete
 
   if (toDelete.includes('all'))
@@ -41,21 +49,42 @@ export const deletePhotosShell = ({ localCloudinary }) => ({ toDelete, photos })
   const photoIds = photosToDelete
     .filter(photo => !photo.get('path').startsWith('default/')) // don't delete dummy photos
     .map(photo => photo.get('id'))
-    .toJS()
 
-  if (photoIds.length)
-    localCloudinary.v2.api.delete_resources(photoIds, (error, result) => {
-      if (error)
-        console.error('Error in attempt to delete the image(s) in cloud: ', error)
-      else
-        console.log('Successfully uploaded images: ', result) // eslint-disable-line no-console
-    })
+  if (photoIds.size) {
+    const reqDelete = () => {
+      const proxyurl = 'https://cors-anywhere.herokuapp.com/'
+      const serviceUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/resources/image/upload`
+      const idsQuery = photoIds.reduce((acc, photoId) => (
+        acc === ''
+          ? `?public_ids[]=${photoId}`
+          : acc + `&public_ids[]=${photoId}`
+      ), '')
+
+      const req = new XMLHttpRequest()
+      req.open(
+        'DELETE',
+        proxyurl + serviceUrl + idsQuery,
+        true,
+        CLOUDINARY_API_KEY,
+        CLOUDINARY_API_SECRET
+      )
+
+      req.setRequestHeader('Authorization', 'Basic ' + btoa(`${CLOUDINARY_API_KEY}:${CLOUDINARY_API_SECRET}`))
+      req.onreadystatechange = function () {
+        if (req.readyState === 4)
+          if (req.status >= 200 && req.status < 400) {
+            console.log('Successfully deleted images: ', req.responseText) // eslint-disable-line no-console
+          } else {
+            console.error('Error in attempt to delete the image(s) in cloudinary: ', req.statusText)
+          }
+      }
+
+      req.send()
+    }
+
+    reqDelete()
+  }
 }
-
-export const addJournal = createAction(ADD_JOURNAL, removeMetaDataFromPhotos)
-export const editJournal = createAction(EDIT_JOURNAL, removeMetaDataFromPhotos)
-export const deleteJournal = createAction(DELETE_JOURNAL)
-export const deletePhotos = deletePhotosShell({ localCloudinary: _localCloudinary })
 
 /**
  * Reducer

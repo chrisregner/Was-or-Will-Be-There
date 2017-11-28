@@ -30,12 +30,11 @@ Checklist:
 - *DONE* colors on hover
 - *DONE* colors on change
 - *DONE* colors initially
-- *DONE*panTo on countryId change
+- *DONE* panTo on countryId change
 
 */
 
-/* global google */
-
+const getGoogleMap = () => pnjScripts.get('googleMap')
 const mapColors = {
   hasJournal: pinkA200,
   hasJournalHovered: pinkA400,
@@ -47,60 +46,73 @@ const mapColors = {
 const computeCountryStyles = (countryInfo) => {
   if (countryInfo && countryInfo.get('hasJournal'))
     return {
-      fillColor: mapColors.hasJournal,
-      fillColorHovered: mapColors.hasJournalHovered,
-      fillOpacity: 0.7,
-      fillOpacityHovered: 0.7,
+      hovered: {
+        fillColor: mapColors.hasJournalHovered,
+        fillOpacity: 0.7,
+      },
+      base: {
+        fillColor: mapColors.hasJournal,
+        fillOpacity: 0.7,
+        strokeWeight: 1,
+        strokeColor: '#fff',
+      },
     }
   else if (countryInfo && countryInfo.get('hasPlan'))
     return {
-      fillColor: mapColors.hasPlan,
-      fillColorHovered: mapColors.hasPlanHovered,
-      fillOpacity: 0.7,
-      fillOpacityHovered: 0.7,
+      hovered: {
+        fillColor: mapColors.hasPlanHovered,
+        fillOpacity: 0.7,
+      },
+      base: {
+        fillColor: mapColors.hasPlan,
+        fillOpacity: 0.7,
+        strokeWeight: 1,
+        strokeColor: '#fff',
+      },
     }
   else
     return {
-      fillColorHovered: mapColors.defaultHovered,
-      fillOpacity: 0,
-      fillOpacityHovered: 0.7,
+      hovered: {
+        fillColor: mapColors.defaultHovered,
+        fillOpacity: 0.7,
+      },
+      base: {
+        fillOpacity: 0,
+        strokeWeight: 0,
+      },
     }
 }
 
 const setCountryHoverListeners = (countryId, country, countryInfo) => {
-  const {
-    fillColor, fillColorHovered, fillOpacity, fillOpacityHovered,
-  } = computeCountryStyles(countryInfo)
+  const { hovered, base } = computeCountryStyles(countryInfo)
 
-  google.maps.event.addListener(country, 'mouseover', () => {
-    country.setOptions({
-      fillOpacity: fillOpacityHovered,
-      fillColor: fillColorHovered,
-    })
+  getGoogleMap().event.addListener(country, 'mouseover', () => {
+    country.setOptions(hovered)
   })
 
-  google.maps.event.addListener(country, 'mouseout', () => {
-    country.setOptions({ fillOpacity, fillColor })
+  getGoogleMap().event.addListener(country, 'mouseout', () => {
+    country.setOptions(base)
   })
 }
 
 const setCountryStyles = (country, countryInfo) => {
-  const { fillColor, fillOpacity } = computeCountryStyles(countryInfo)
-  country.setOptions({ fillOpacity, fillColor })
+  const { base } = computeCountryStyles(countryInfo)
+  country.setOptions(base)
 }
 
 const clearCountryHoverListeners = (country) => {
-  google.maps.event.clearListeners(country, 'mouseover')
-  google.maps.event.clearListeners(country, 'mouseout')
+  getGoogleMap().event.clearListeners(country, 'mouseover')
+  getGoogleMap().event.clearListeners(country, 'mouseout')
 }
 
 const panIfCountryChanged = ({ nextCountryId, gMap, countryPolygons, currCountryId }) => {
   if (nextCountryId && nextCountryId !== currCountryId) {
-    const bounds = new google.maps.LatLngBounds()
+    const googleMap = getGoogleMap()
+    const bounds = new googleMap.LatLngBounds()
     const nextCountryPaths = countryPolygons[nextCountryId]
       .getPaths()
     const pathsIteratee = (path) => {
-      if (path instanceof google.maps.LatLng)
+      if (path instanceof getGoogleMap().LatLng)
         bounds.extend(path)
       else
         path.forEach(pathsIteratee)
@@ -200,14 +212,17 @@ class BareMapCmpt extends React.Component {
 
   componentDidMount = () => {
     const setupGMap = (worldTopoJson) => {
-      const worldGeoJson = topojsonFeature(worldTopoJson, worldTopoJson.objects['-'])
+      const mapData = pnjScripts.get('mapData')
+      const worldGeoJson = topojsonFeature(mapData, mapData.objects['-'])
       const { history, countriesInfo, match } = this.props
       const countryPolygons = {}
 
       this.isGMapLoaded = true
 
+      const googleMap = getGoogleMap()
+
       /* Initiate map */
-      const gMap = new google.maps.Map(this.mapEl, {
+      const gMap = new googleMap.Map(this.mapEl, {
         zoom: 3,
         center: { lat: 45, lng: 0 },
         mapTypeControl: false,
@@ -221,12 +236,12 @@ class BareMapCmpt extends React.Component {
       worldGeoJson.features.forEach((feature) => {
         const countryId = feature.properties.id
         const countryInfo = countriesInfo.get(countryId)
-        const { fillOpacity, fillColor } = computeCountryStyles(countryInfo)
+        const { base } = computeCountryStyles(countryInfo)
 
         /* Derive the country's Google-compatible coordinates from GeoJSON  */
         const reducer = (acc, coords) => {
           if (typeof coords[0][0] === 'number')
-            acc.push(coords.map(coord => new google.maps.LatLng(coord[1], coord[0])))
+            acc.push(coords.map(coord => new googleMap.LatLng(coord[1], coord[0])))
           else
             acc = coords.reduce(reducer, acc)
 
@@ -236,18 +251,16 @@ class BareMapCmpt extends React.Component {
         const gCoords = feature.geometry.coordinates.reduce(reducer, [])
 
         /* Create the Google Map Polygon of the country */
-        const country = new google.maps.Polygon({
+        const country = new googleMap.Polygon({
           paths: gCoords,
-          strokeWeight: 0,
-          fillOpacity,
-          fillColor,
+          ...base,
         })
 
         countryPolygons[countryId] = country
 
         /* Add Listeners to the Country Polygon */
         if (countryId !== 'null') {
-          google.maps.event.addListener(country, 'click', () => {
+          getGoogleMap().event.addListener(country, 'click', () => {
             history.push(`/countries/${countryId}/plans`)
           })
 
@@ -264,8 +277,8 @@ class BareMapCmpt extends React.Component {
       this.legendWrpr.style['margin-top'] = '10px'
       this.legendWrpr.style['margin-left'] = '10px'
       this.overviewWrpr.style['margin-bottom'] = '24px'
-      gMap.controls[google.maps.ControlPosition.TOP_LEFT].push(this.legendWrpr)
-      gMap.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(this.overviewWrpr)
+      gMap.controls[getGoogleMap().ControlPosition.TOP_LEFT].push(this.legendWrpr)
+      gMap.controls[getGoogleMap().ControlPosition.BOTTOM_CENTER].push(this.overviewWrpr)
 
       /* if the route points to a country, pan the map to it */
       panIfCountryChanged({
@@ -279,48 +292,11 @@ class BareMapCmpt extends React.Component {
     }
 
     /* Make sure both Google Map and map data is loaded before rendering the map */
-    /* eslint-disable no-undef, no-console */
-    const getMapData = () => pnjMapObj.mapData
-    const gMap = global.google
 
-    const setupOnMapDataLoad = () => {
-      pnjMapObj.mapDataCb = newlyLoadedMapData => setupGMap(newlyLoadedMapData)
-    }
-
-    const setupOnGMapLoad = () => {
-      pnjMapObj.gMapCb = () => setupGMap(getMapData())
-    }
-
-    const setupWhenBothLoaded = () => {
-      pnjMapObj.mapDataCb = () => {
-        if (gMap)
-          setupGMap(getMapData())
-        else
-          setupOnGMapLoad()
-      }
-
-      pnjMapObj.gMapCb = () => {
-        if (getMapData())
-          setupGMap(getMapData())
-        else
-          setupOnMapDataLoad()
-      }
-    }
-
-    if (gMap && getMapData()) {
-      setupGMap(getMapData())
-      console.log('gMap && getMapData()')
-    } else if (gMap && !getMapData()) {
-      setupOnMapDataLoad()
-      console.log('gMap && !getMapData()')
-    } else if (!gMap && getMapData()) {
-      setupOnGMapLoad()
-      console.log('!gMap && getMapData()')
-    } else if (!gMap && !getMapData()) {
-      setupWhenBothLoaded()
-      console.log('!gMap && !getMapData()')
-    }
-    /* eslint-enable no-undef, no-console */
+    if (pnjScripts.get('googleMap') && pnjScripts.get('mapData'))
+      setupGMap()
+    else
+      pnjScripts.setCallback(['googleMap', 'mapData'], setupGMap)
   }
 
   overviewWrpr = document.createElement('div')

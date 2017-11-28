@@ -60,25 +60,24 @@
         if (tryCount >= 5)
           throw new Error('Maximum attempt for loading map data reached');
 
-        tryCount++
+        tryCount++;
         var request = new XMLHttpRequest();
         request.open('GET', 'assets/world.topo.json', true);
 
-        request.onload = function () {
-          if (request.status >= 200 && request.status < 400) {
-            const mapData = JSON.parse(request.responseText);
-            pnjMapObj.mapDataCb(mapData)
-            pnjMapObj.mapData = mapData;
-          } else {
-            setTimeout(loadMapDate, 500);
+
+        request.onreadystatechange = function () {
+          if (request.readyState === 4) {
+            if (request.status >= 200 && request.status < 400) {
+              var mapData = JSON.parse(request.responseText);
+              pnjMapObj.mapDataCb(mapData);
+              pnjMapObj.mapData = mapData;
+            } else {
+              setTimeout(loadMapDate, 500);
+            }
           }
         };
 
-        request.onerror = function () {
-          setTimeout(loadMapDate, 500);
-        };
-
-        request.send()
+        request.send();
       }
     </script>
 

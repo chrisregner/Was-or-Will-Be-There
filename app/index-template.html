@@ -45,44 +45,73 @@
 
 
     <script type="text/javascript">
-      var pnjMapObj = {
-        gMapCb: function() {},
-        mapDataCb: function() {},
-        mapData: false,
-      };
+      var pnjScripts = makePnjScriptsManager();
 
-      loadMapDate();
+      makeMapDataLoader(pnjScripts)();
 
-      var tryCount = 0;
-      var maxTryCount = 5;
+      function makePnjScriptsManager() {
+        var loadedScripts = {};
+        var callbacks = [];
 
-      function loadMapDate() {
-        if (tryCount >= 5)
-          throw new Error('Maximum attempt for loading map data reached');
+        return {
+          set: function (scriptName, script) {
+            console.log('following script has loaded:', scriptName)
+            loadedScripts[scriptName] = script;
 
-        tryCount++
-        var request = new XMLHttpRequest();
-        request.open('GET', 'assets/world.topo.json', true);
+            callbacks.forEach(function (callbackSet) {
+              var loadedScriptCount = 0;
+              var requiredScriptis = callbackSet[0];
+              var callback = callbackSet[1]
 
-        request.onload = function () {
-          if (request.status >= 200 && request.status < 400) {
-            const mapData = JSON.parse(request.responseText);
-            pnjMapObj.mapDataCb(mapData)
-            pnjMapObj.mapData = mapData;
-          } else {
-            setTimeout(loadMapDate, 500);
+              requiredScripts.forEach(function (callbackScriptName) {
+                if (callbackScriptName === script)
+                  loadedScriptCount++;
+              });
+
+              if (loadedScriptCount === requiredScripts.length) {
+                console.log('callback for the following scripts called:', requiredScripts)
+                callback();
+              }
+            });
+          },
+          get: function (scriptName) {
+            return loadedScripts[scriptName] || false;
+          },
+          setCallback: function (scriptNames, callback) {
+            callbacks.push([scriptNames, callback]);
           }
-        };
+        }
+      }
 
-        request.onerror = function () {
-          setTimeout(loadMapDate, 500);
-        };
+      function makeMapDataLoader(scriptsManager) {
+        var tryCount = 0;
+        var maxTryCount = 5;
 
-        request.send()
+        return function () {
+          if (tryCount >= 5)
+            throw new Error('Maximum attempt for loading map data reached');
+
+          tryCount++;
+          var request = new XMLHttpRequest();
+          request.open('GET', 'assets/world.topo.json', true);
+
+
+          request.onreadystatechange = function () {
+            if (request.readyState === 4) {
+              if (request.status >= 200 && request.status < 400) {
+                scriptsManager.set('mapData', JSON.parse(request.responseText));
+              } else {
+                setTimeout(loadMapDate, 500);
+              }
+            }
+          };
+
+          request.send();
+        }
       }
     </script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQSMXvcbcyNySYjc_l3XOl935z1JN_mM8&callback=pnjMapObj.gMapCb" type="text/javascript"></script>
-    <script src="//widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQSMXvcbcyNySYjc_l3XOl935z1JN_mM8&callback=Function.prototype" type="text/javascript" onLoad="pnjScripts.set('googleMap', google.maps);"></script>
+    <script async defer src="//widget.cloudinary.com/global/all.js" type="text/javascript" onLoad="pnjScripts.set('cloudinaryWidget', cloudinary);"></script>
   </body>
 </html>
