@@ -6,7 +6,6 @@ import { AnimatedSwitch } from 'react-router-transition'
 import { LastLocationProvider } from 'react-router-last-location'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { amber500, amber700, amber900 } from 'material-ui/styles/colors'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
@@ -24,11 +23,6 @@ import NotFoundSetter from 'containers/NotFoundSetter'
 const muiTheme = getMuiTheme({
   appBar: {
     height: 48,
-  },
-  palette: {
-    tertiary1Color: amber500,
-    tertiary2Color: amber700,
-    tertiary3Color: amber900,
   },
 })
 

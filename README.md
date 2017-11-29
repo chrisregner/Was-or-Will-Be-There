@@ -1,19 +1,62 @@
 ## Todos
 
 - make list of features to test
-  - test in ie11 and mobile
+  - navbar
+    - navbar links
+  - map
+    - map controls
+    - map clickable polygons
+    - map hover
+  - overview
+    - close link
+    - individual country link
+    - open map link
+  - plans
+    - add a plan w/ min data
+    - add a plan w/ max data
+    - edit plan to max data
+    - edit plan to min data
+    - plans
+    - delete plans
+  - journals
+    - add a journal w/ min data
+    - add a journal w/ max data
+    - edit journal to max data
+    - edit journal to min data
     - image deletion
       - on manual delete
       - on deleteion of journal itself
       - on cancel
-  - test in ie11, chrome, firefox, mobile
-    - make this list
+    - journals
+    - delete journals
+
+- test in...
+  - ie11
+  - edge
+  - safari?
+  - firefox
+  - mobile
+  - chrome
+
+- ie10 and below fallback
 
 - issues
-  - photo deletion in cloud
-  - IE11, BottomNavigation in PlansAndJournals, flexed element can't have buttons as children, must be another div or other
-  - IE11, mui text-field shows a giant "X"
-  - Full-size image preview on journal form overflows downward (not visible) if the image is a portrait
+  - IE11
+    - **maybe done** svg/png
+      - use png in ie/edge
+    - **maybe done** BottomNavigation in PlansAndJournals
+      - see if mui-next has addressed this first
+      - use div instead of divs, flexed element can't have buttons as children (some browsers)
+    - **maybe done** mui text-field shows a giant "X"
+      - use the text-input from mui-next
+      - maybe replace all other form components as well?
+  - cross-browser
+    - photo deletion
+      - ie says: xhr errror
+      - chrome says: cors
+    - *least priority* Full-size image preview on journal form overflows downward (not visible) if the image is a portrait
+    - *least priority* when switching pages quickly in this manner: paper route -> map -> paper route, vertical scrollbar appears
+
 
 - final readme.md
   - credits
@@ -22,10 +65,10 @@
   - linted?
   - deployed?
 
+- delete cloudinary images
+
 ---
 
-map                     - /
-world overview          - /overview
 country plans           - /countries/:countryId/plans
 country journals        - /countries/:countryId/journals
 new plan                - /countries/:countryId/plans/new
@@ -37,27 +80,19 @@ world overview          - /about
 
 ---
 
-## Todos
-
-- tests
-  - nav
-  - PaperWithAnimatingHt
-  - InsertPaperTransition
-  - PlansAndJournals (active item behavior)
-
 ## Possible additional features
 
-- additional features
-  - notification
-    - notify when...
-      - 30 days before an departure/homecoming
-      - 7 days before an departure/homecoming
-      - 1 day before an departure/homecoming
-      - on the day of departure/homecoming
-      - 1 day after homecoming (journalize)
-  - sort plans/journals/both
-    - chronologically
-    - geographically
-  - input on map to search and select places
-    - pan map upon selection
-  - automatic image deleting (when certain limit is met, delete in the next midnight?)
+- allow clearing datepicker value
+- notification
+  - notify when...
+    - 30 days before an departure/homecoming
+    - 7 days before an departure/homecoming
+    - 1 day before an departure/homecoming
+    - on the day of departure/homecoming
+    - 1 day after homecoming (journalize)
+- sort plans/journals/both
+  - chronologically
+  - geographically
+- input on map to search and select places
+  - pan map upon selection
+- automatic image deleting (when certain limit is met, delete in the next midnight?)

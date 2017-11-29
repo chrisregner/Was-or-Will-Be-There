@@ -73,6 +73,14 @@ const PaperRoutes = ({ location }) => (
     }}
     className='relative z-1 ph1 ph2-m ph2-l pv2 pv3-m pv3-l h-100'
   >
+    {
+      /**
+       * Fixes the issue of having big "X" on ie11 TextInput (material-ui)
+       * https://github.com/mui-org/material-ui/issues/5055#issuecomment-241896137
+       */
+    }
+    <style type='text/css' dangerouslySetInnerHTML={{__html: '::-ms-clear {display: none;}'}} />
+
     {/* Mobile and Tablet */}
     <div className='dn-l ph1 ph2-m tl mw7 center'>
       <Paper className='relative'>
@@ -99,8 +107,7 @@ const PaperRoutes = ({ location }) => (
             />
             <Route exact path='/stats' component={WorldOverview} />
             <Route exact path='/about' component={About} />
-            <Route exact path='/countries/:countryId/plans' component={PlansAndJournals} />
-            <Route exact path='/countries/:countryId/journals' component={PlansAndJournals} />
+            <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)' component={PlansAndJournals} />
             <Route exact path='/countries/:countryId/plans/new' component={AddPlanForm} />
             <Route exact path='/countries/:countryId/plans/:id' component={EditPlanForm} />
             <Route exact path='/countries/:countryId/plans/:id/journalize' component={JournalizeJournalForm} />
@@ -133,13 +140,10 @@ const PaperRoutes = ({ location }) => (
             <Switch>
               <Route exact path='/stats' component={WorldOverview} />
               <Route exact path='/about' component={About} />
-              <Route exact path='/countries/:countryId/plans' component={PlansAndJournals} />
-              <Route exact path='/countries/:countryId/journals' component={PlansAndJournals} />
-              <Route exact path='/countries/:countryId/plans/new' component={PlansAndJournals} />
-              <Route exact path='/countries/:countryId/plans/:id' component={PlansAndJournals} />
-              <Route exact path='/countries/:countryId/plans/:id/journalize' component={PlansAndJournals} />
-              <Route exact path='/countries/:countryId/journals/new' component={PlansAndJournals} />
-              <Route exact path='/countries/:countryId/journals/:id' component={PlansAndJournals} />
+              <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)' component={PlansAndJournals} />
+              <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)/new' component={PlansAndJournals} />
+              <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)/:id' component={PlansAndJournals} />
+              <Route exact path='/countries/:countryId/:plansOrJournals(plans)/:id/journalize' component={PlansAndJournals} />
             </Switch>
           </AnimatingHtDiv>
         </Paper>

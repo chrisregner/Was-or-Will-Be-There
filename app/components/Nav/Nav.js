@@ -10,6 +10,7 @@ import MoreIcon from 'material-ui/svg-icons/navigation/more-vert'
 import MapIcon from 'material-ui/svg-icons/maps/map'
 import InfoIcon from 'material-ui/svg-icons/action/info'
 import StatsIcon from 'material-ui/svg-icons/av/equalizer'
+import muiThemeable from 'material-ui/styles/muiThemeable'
 import { Tabs, Tab } from 'material-ui/Tabs'
 
 const BareNav = ({ history, location }) => {
@@ -111,5 +112,9 @@ BareNav.propTypes = {
   }).isRequired,
 }
 
-const Nav = withRouter(BareNav)
+const Nav = withRouter(muiThemeable({
+  appBar: {
+    height: 48,
+  },
+})(BareNav))
 export default Nav

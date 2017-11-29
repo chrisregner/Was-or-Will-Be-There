@@ -5,7 +5,7 @@ import D from 'date-fns'
 import lolex from 'lolex'
 
 import * as TU from 'services/testUtils'
-import { BareCollapsibleItem } from './CollapsibleItem'
+import CollapsibleItem from './CollapsibleItem'
 
 let fakeClock, mocks, defProps, setup
 
@@ -65,7 +65,7 @@ before(() => {
   }
 
   setup = TU.makeTestSetup({
-    Component: BareCollapsibleItem,
+    Component: CollapsibleItem,
     defaultProps: defProps,
   })
 })

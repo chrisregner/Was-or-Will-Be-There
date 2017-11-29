@@ -27,6 +27,7 @@
       .la-ball-scale-ripple-multiple,.la-ball-scale-ripple-multiple>div{position:relative;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}.la-ball-scale-ripple-multiple{display:block;font-size:0;color:#fff}.la-ball-scale-ripple-multiple.la-dark{color:#333}.la-ball-scale-ripple-multiple>div{display:inline-block;float:none;background-color:currentColor;border:0 solid currentColor}.la-ball-scale-ripple-multiple{width:32px;height:32px}.la-ball-scale-ripple-multiple>div{position:absolute;top:0;left:0;width:32px;height:32px;background:transparent;border-width:2px;border-radius:100%;opacity:0;-webkit-animation:ball-scale-ripple-multiple 1.25s 0s infinite cubic-bezier(0.21, 0.53, 0.56, 0.8);-moz-animation:ball-scale-ripple-multiple 1.25s 0s infinite cubic-bezier(0.21, 0.53, 0.56, 0.8);-o-animation:ball-scale-ripple-multiple 1.25s 0s infinite cubic-bezier(0.21, 0.53, 0.56, 0.8);animation:ball-scale-ripple-multiple 1.25s 0s infinite cubic-bezier(0.21, 0.53, 0.56, 0.8)}.la-ball-scale-ripple-multiple>div:nth-child(1){-webkit-animation-delay:0s;-moz-animation-delay:0s;-o-animation-delay:0s;animation-delay:0s}.la-ball-scale-ripple-multiple>div:nth-child(2){-webkit-animation-delay:.25s;-moz-animation-delay:.25s;-o-animation-delay:.25s;animation-delay:.25s}.la-ball-scale-ripple-multiple>div:nth-child(3){-webkit-animation-delay:.5s;-moz-animation-delay:.5s;-o-animation-delay:.5s;animation-delay:.5s}.la-ball-scale-ripple-multiple.la-sm{width:16px;height:16px}.la-ball-scale-ripple-multiple.la-sm>div{width:16px;height:16px;border-width:1px}.la-ball-scale-ripple-multiple.la-2x{width:64px;height:64px}.la-ball-scale-ripple-multiple.la-2x>div{width:64px;height:64px;border-width:4px}.la-ball-scale-ripple-multiple.la-3x{width:96px;height:96px}.la-ball-scale-ripple-multiple.la-3x>div{width:96px;height:96px;border-width:6px}@-webkit-keyframes ball-scale-ripple-multiple{0%{opacity:1;-webkit-transform:scale(0.1);transform:scale(0.1)}70%{opacity:.5;-webkit-transform:scale(1);transform:scale(1)}95%{opacity:0}}@-moz-keyframes ball-scale-ripple-multiple{0%{opacity:1;-moz-transform:scale(0.1);transform:scale(0.1)}70%{opacity:.5;-moz-transform:scale(1);transform:scale(1)}95%{opacity:0}}@-o-keyframes ball-scale-ripple-multiple{0%{opacity:1;-o-transform:scale(0.1);transform:scale(0.1)}70%{opacity:.5;-o-transform:scale(1);transform:scale(1)}95%{opacity:0}}@keyframes ball-scale-ripple-multiple{0%{opacity:1;-webkit-transform:scale(0.1);-moz-transform:scale(0.1);-o-transform:scale(0.1);transform:scale(0.1)}70%{opacity:.5;-webkit-transform:scale(1);-moz-transform:scale(1);-o-transform:scale(1);transform:scale(1)}95%{opacity:0}}
     </style>
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.9.0/css/tachyons.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
   </head>
@@ -45,43 +46,73 @@
 
 
     <script type="text/javascript">
-      var pnjMapObj = {
-        gMapCb: function() {},
-        mapDataCb: function() {},
-        mapData: false,
-      };
+      var pnjScripts = makePnjScriptsManager();
+      makeMapDataLoader(pnjScripts)();
 
-      loadMapDate();
+      function makePnjScriptsManager() {
+        var loadedScripts = {};
+        var callbacks = [];
 
-      var tryCount = 0;
-      var maxTryCount = 5;
+        return {
+          set: function (scriptName, script) {
+            console.log('following script has loaded:', scriptName)
+            loadedScripts[scriptName] = script;
 
-      function loadMapDate() {
-        if (tryCount >= 5)
-          throw new Error('Maximum attempt for loading map data reached');
+            callbacks.forEach(function (callbackSet) {
+              var loadedScriptCount = 0;
+              var requiredScripts = callbackSet[0];
+              var callback = callbackSet[1]
 
-        tryCount++;
-        var request = new XMLHttpRequest();
-        request.open('GET', 'assets/world.topo.json', true);
+              requiredScripts.forEach(function (requiredScript) {
+                if (loadedScripts[requiredScript])
+                  loadedScriptCount++;
+              });
 
-
-        request.onreadystatechange = function () {
-          if (request.readyState === 4) {
-            if (request.status >= 200 && request.status < 400) {
-              var mapData = JSON.parse(request.responseText);
-              pnjMapObj.mapDataCb(mapData);
-              pnjMapObj.mapData = mapData;
-            } else {
-              setTimeout(loadMapDate, 500);
-            }
+              if (loadedScriptCount === requiredScripts.length) {
+                console.log('callback for the following scripts is called:', requiredScripts)
+                callback();
+              }
+            });
+          },
+          get: function (scriptName) {
+            return loadedScripts[scriptName] || false;
+          },
+          setCallback: function (scriptNames, callback) {
+            console.log('callback for the following scripts is set:', scriptNames)
+            callbacks.push([scriptNames, callback]);
           }
-        };
+        }
+      }
 
-        request.send();
+      function makeMapDataLoader(scriptsManager) {
+        var tryCount = 0;
+        var maxTryCount = 5;
+
+        return function () {
+          if (tryCount >= 5)
+            throw new Error('Maximum attempt for loading map data reached');
+
+          tryCount++;
+          var request = new XMLHttpRequest();
+          request.open('GET', 'assets/world.topo.json', true);
+
+
+          request.onreadystatechange = function () {
+            if (request.readyState === 4) {
+              if (request.status >= 200 && request.status < 400) {
+                scriptsManager.set('mapData', JSON.parse(request.responseText));
+              } else {
+                setTimeout(loadMapDate, 500);
+              }
+            }
+          };
+
+          request.send();
+        }
       }
     </script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQSMXvcbcyNySYjc_l3XOl935z1JN_mM8&callback=pnjMapObj.gMapCb" type="text/javascript"></script>
-    <script src="//widget.cloudinary.com/global/all.js" type="text/javascript"></script>
-  <script type="text/javascript" src="https://chrisregner.github.io/plans-and-journals/js/main.59e348df97c84bfd3c91.js"></script></body>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQSMXvcbcyNySYjc_l3XOl935z1JN_mM8&callback=Function.prototype" type="text/javascript" onLoad="pnjScripts.set('googleMap', google.maps);"></script>
+    <script async defer src="//widget.cloudinary.com/global/all.js" type="text/javascript" onLoad="pnjScripts.set('cloudinaryWidget', cloudinary);"></script>
+  <script type="text/javascript" src="https://chrisregner.github.io/plans-and-journals/js/main.03feedebfe210aca856e.js"></script></body>
 </html>

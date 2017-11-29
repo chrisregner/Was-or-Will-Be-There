@@ -3,14 +3,28 @@ import PropTypes from 'prop-types'
 import IPropTypes from 'react-immutable-proptypes'
 import { connect } from 'react-redux'
 
-import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation'
+import { withStyles } from 'material-ui-next/styles'
+import BottomNavigation, { BottomNavigationButton } from 'material-ui-next/BottomNavigation'
+import { amber700, pinkA200 } from 'material-ui/styles/colors'
 import RaisedButton from 'material-ui/RaisedButton'
-import DestinationIcon from 'material-ui/svg-icons/action/room'
-import FlagIcon from 'material-ui/svg-icons/content/flag'
+import DestinationIcon from 'material-ui-icons/Room'
+import FlagIcon from 'material-ui-icons/Flag'
 import NonALink from 'components/NonALink'
 
 import { plansGetters, journalsGetters } from 'state'
 import CollapsibleItem from 'components/CollapsibleItem'
+
+const PlansButton = withStyles({
+  selected: { color: amber700 },
+})(({ classes, ...props }) => (
+  <BottomNavigationButton classes={classes} {...props} />
+))
+
+const JournalsButton = withStyles({
+  selected: { color: pinkA200 },
+})(({ classes, ...props }) => (
+  <BottomNavigationButton classes={classes} {...props} />
+))
 
 class BarePlansAndJournals extends React.Component {
   static propTypes = {
@@ -19,12 +33,10 @@ class BarePlansAndJournals extends React.Component {
     }),
     match: PropTypes.shape({
       params: PropTypes.shape({
+        plansOrJournals: PropTypes.string.isRequired,
         countryId: PropTypes.string.isRequired,
         id: PropTypes.string,
       }).isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      pathname: PropTypes.string.isRequired,
     }).isRequired,
     plans: IPropTypes.listOf(
       IPropTypes.contains({
@@ -54,34 +66,35 @@ class BarePlansAndJournals extends React.Component {
   }
 
   render = () => {
-    const { history, location, plans, journals } = this.props
-    const { countryId, id } = this.props.match.params
-    const activeTab = location.pathname.includes('plans')
-      ? 'plans'
-      : 'journals'
+    const { history, plans, journals } = this.props
+    const { countryId, id, plansOrJournals } = this.props.match.params
 
     return (
       <div className='pt2'>
         <BottomNavigation
-          style={{ backgroundColor: 'transparet' }}
-          selectedIndex={activeTab === 'plans' ? 0 : 1}
+          value={plansOrJournals}
+          showLabels
         >
-          <BottomNavigationItem
+          <PlansButton
+            component='div'
             data-test='plansLink'
             label='Plans'
+            value='plans'
             icon={<DestinationIcon />}
             onClick={() => history.push(`/countries/${countryId}/plans`)}
           />
-          <BottomNavigationItem
+          <JournalsButton
+            component='div'
             data-test='journalsLink'
             label='Journals'
+            value='journals'
             icon={<FlagIcon />}
             onClick={() => history.push(`/countries/${countryId}/journals`)}
           />
         </BottomNavigation>
 
         {
-          activeTab === 'plans' &&
+          plansOrJournals === 'plans' &&
           <div data-test='planList'>
             {
               (plans && plans.size > 0)
@@ -112,7 +125,7 @@ class BarePlansAndJournals extends React.Component {
         }
 
         {
-          activeTab === 'journals' &&
+          plansOrJournals === 'journals' &&
           <div data-test='journalList'>
             {
               (journals && journals.size > 0)

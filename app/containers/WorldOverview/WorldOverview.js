@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import IPropTypes from 'react-immutable-proptypes'
 import { connect } from 'react-redux'
 
-import muiThemeable from 'material-ui/styles/muiThemeable'
+import { cyan700, amber700, pinkA200, darkBlack } from 'material-ui/styles/colors'
+import { fade } from 'material-ui/utils/colorManipulator'
 import DestinationIcon from 'material-ui/svg-icons/action/room'
 import FlagIcon from 'material-ui/svg-icons/content/flag'
 import GlobeIcon from 'material-ui/svg-icons/social/public'
@@ -18,41 +19,41 @@ import NonALink from 'components/NonALink'
 
 const preventDefault = (ev) => { ev.preventDefault() }
 
-const BareWorldOverview = ({ worldOverview, muiTheme }) => (
+const BareWorldOverview = ({ worldOverview }) => (
   <div>
 
     {/* Counters */}
     <div className='flex pa2 f6'>
       <div className='w-33 tc'>
         <div>
-          <DestinationIcon style={{ color: muiTheme.palette.tertiary2Color }} />
+          <DestinationIcon style={{ color: amber700 }} />
         </div>
         <div className='world-overview-total-plans f3 fw5'>
           {worldOverview.get('totalPlans')}
         </div>
-        <div style={{ color: muiTheme.palette.secondaryTextColor }}>
+        <div style={{ color: fade(darkBlack, 0.54) }}>
           Plans
         </div>
       </div>
       <div className='w-33 tc'>
         <div>
-          <FlagIcon style={{ color: muiTheme.palette.accent1Color }} />
+          <FlagIcon style={{ color: pinkA200 }} />
         </div>
         <div className='world-overview-total-journals f3 fw5'>
           {worldOverview.get('totalJournals')}
         </div>
-        <div style={{ color: muiTheme.palette.secondaryTextColor }}>
+        <div style={{ color: fade(darkBlack, 0.54) }}>
           Journals
         </div>
       </div>
       <div className='w-33 tc'>
         <div>
-          <GlobeIcon style={{ color: muiTheme.palette.primary2Color }} />
+          <GlobeIcon style={{ color: cyan700 }} />
         </div>
         <div className='world-overview-total-countries f3 fw5'>
           {worldOverview.get('totalCountries')}
         </div>
-        <div style={{ color: muiTheme.palette.secondaryTextColor }}>
+        <div style={{ color: fade(darkBlack, 0.54) }}>
           Countries
         </div>
       </div>
@@ -88,7 +89,7 @@ const BareWorldOverview = ({ worldOverview, muiTheme }) => (
                           onClick={preventDefault}
                           className='world-overview-country-item-has-plan'
                           style={{ padding: 6, width: 36, height: 36 }}
-                          iconStyle={{ color: muiTheme.palette.secondaryTextColor }}
+                          iconStyle={{ color: fade(darkBlack, 0.54) }}
                           tooltip='Has plan!'
                           tooltipPosition='bottom-left'
                         >
@@ -101,7 +102,7 @@ const BareWorldOverview = ({ worldOverview, muiTheme }) => (
                           onClick={preventDefault}
                           className='world-overview-country-item-has-journal'
                           style={{ padding: 6, width: 36, height: 36 }}
-                          iconStyle={{ color: muiTheme.palette.secondaryTextColor }}
+                          iconStyle={{ color: fade(darkBlack, 0.54) }}
                           tooltip='Has Journal!'
                           tooltipPosition='bottom-left'
                         >
@@ -146,23 +147,13 @@ BareWorldOverview.propTypes = {
       PropTypes.string,
     ),
   }).isRequired,
-  muiTheme: PropTypes.shape({
-    palette: PropTypes.shape({
-      tertiary2Color: PropTypes.string.isRequired,
-      accent1Color: PropTypes.string.isRequired,
-      secondaryTextColor: PropTypes.string.isRequired,
-      primary2Color: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
 }
 
 const mapStateToProps = state => ({
   worldOverview: overviewGetter(state),
 })
 
-const WorldOverview = muiThemeable()(
-  connect(mapStateToProps)(BareWorldOverview),
-)
+const WorldOverview = connect(mapStateToProps)(BareWorldOverview)
 
 export { BareWorldOverview }
 export default WorldOverview

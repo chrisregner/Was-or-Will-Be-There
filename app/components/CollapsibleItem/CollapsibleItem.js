@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom'
 import formatDate from 'date-fns/format'
 import diffInCalendarDays from 'date-fns/difference_in_calendar_days'
 
-import muiThemeable from 'material-ui/styles/muiThemeable'
+import { cyan500, cyan700, amber700, amber900, darkBlack } from 'material-ui/styles/colors'
+import { fade } from 'material-ui/utils/colorManipulator'
 import { ListItem } from 'material-ui/List'
 import IconButton from 'material-ui/IconButton'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -20,7 +21,7 @@ import NonALink from 'components/NonALink'
 
 const preventDefault = e => e.preventDefault()
 
-class BareCollapsibleItem extends React.Component {
+class CollapsibleItem extends React.Component {
   static propTypes = {
     type: PropTypes.oneOf(['journal', 'plan']).isRequired,
     data: IPropTypes.contains({
@@ -35,15 +36,6 @@ class BareCollapsibleItem extends React.Component {
         path: PropTypes.string.isRequired,
         description: PropTypes.string,
       })),
-    }).isRequired,
-    muiTheme: PropTypes.shape({
-      palette: PropTypes.shape({
-        primary1Color: PropTypes.string.isRequired,
-        primary2Color: PropTypes.string.isRequired,
-        tertiary2Color: PropTypes.string.isRequired,
-        tertiary3Color: PropTypes.string.isRequired,
-        secondaryTextColor: PropTypes.string.isRequired,
-      }).isRequired,
     }).isRequired,
     isSelected: PropTypes.bool.isRequired,
   }
@@ -94,7 +86,6 @@ class BareCollapsibleItem extends React.Component {
 
   render = () => {
     const { type, data, isSelected } = this.props
-    const { palette } = this.props.muiTheme
     const departure = data.get('departure')
     const homecoming = data.get('homecoming')
     const timeAlert = this.getTimeAlert()
@@ -110,7 +101,7 @@ class BareCollapsibleItem extends React.Component {
             ...(
               isSelected
                 ? {
-                  backgroundColor: palette.primary1Color,
+                  backgroundColor: cyan500,
                   color: '#fff',
                 }
                 : {}
@@ -133,8 +124,8 @@ class BareCollapsibleItem extends React.Component {
                   style={{ marginLeft: -16 }}
                   iconStyle={{
                     color: timeAlert === 'journalize'
-                      ? palette.tertiary2Color
-                      : palette.primary2Color,
+                      ? amber700
+                      : cyan700,
                     ...iconStyle,
                   }}
                 >
@@ -159,7 +150,7 @@ class BareCollapsibleItem extends React.Component {
                 <div
                   data-test='dateRange'
                   className='f6'
-                  style={{ color: isSelected ? '#fff' : palette.secondaryTextColor }}
+                  style={{ color: isSelected ? '#fff' : fade(darkBlack, 0.54) }}
                 >
                   {`${
                     departure ? formatDate(departure, 'MM/DD/YY') : '(TBD)'
@@ -191,7 +182,7 @@ class BareCollapsibleItem extends React.Component {
               <div className='pt3 ph3 f6 tc'>
                 {
                   timeAlert === 'journalize'
-                    ? <span style={{ color: palette.tertiary3Color }}>
+                    ? <span style={{ color: amber900 }}>
                     You must already be home. Click{' '}
                       <Link
                         tabIndex={this.state.isExpanded ? 0 : -1}
@@ -203,7 +194,7 @@ class BareCollapsibleItem extends React.Component {
                       </Link>
                       {' '}to journalize and save memories from your journey!
                     </span>
-                    : <span data-test='timeAlert' style={{ color: palette.primary2Color }}>
+                    : <span data-test='timeAlert' style={{ color: cyan700 }}>
                     Don’t forget, you will be leaving {timeAlert}!
                     </span>
                 }
@@ -213,7 +204,7 @@ class BareCollapsibleItem extends React.Component {
             {
               this.isTitleTruncated &&
               <div className='pt3 ph3 w-100 cg'>
-                <div className='f6 pb2' style={{ color: palette.secondaryTextColor }}>
+                <div className='f6 pb2' style={{ color: fade(darkBlack, 0.54) }}>
                   Full title:
                 </div>
                 <div data-test='fullTitle' className='f5 lh-title'>
@@ -233,7 +224,7 @@ class BareCollapsibleItem extends React.Component {
                 <div
                   data-test='copyLabel'
                   className='f6 pb2'
-                  style={{ color: palette.secondaryTextColor }}
+                  style={{ color: fade(darkBlack, 0.54) }}
                 >
                   {type === 'plan' && 'Notes'}
                   {type === 'journal' && 'Story'}
@@ -260,7 +251,4 @@ class BareCollapsibleItem extends React.Component {
   }
 }
 
-const CollapsibleItem = muiThemeable()(BareCollapsibleItem)
-
-export { BareCollapsibleItem }
 export default CollapsibleItem

@@ -10,10 +10,8 @@ const defProps = {
   match: {
     params: {
       countryId: 'de',
+      plansOrJournals: 'plans',
     },
-  },
-  location: {
-    pathname: '/countries/de/plans',
   },
   history: {
     push: td.func(),
@@ -105,8 +103,10 @@ test('containers.PlansAndJournals | when in plans route, it should NOT render th
 
 test('containers.PlansAndJournals | when in journals route, it should render the journals list', () => {
   const props = {
-    location: {
-      pathname: '/countries/de/journals',
+    match: {
+      params: {
+        plansOrJournals: 'journals',
+      },
     },
   }
   const actual = setup({ props }).find('[data-test="journalList"]').length
@@ -116,8 +116,10 @@ test('containers.PlansAndJournals | when in journals route, it should render the
 
 test('containers.PlansAndJournals | when in journals route, it should NOT render the plans list', () => {
   const props = {
-    location: {
-      pathname: '/countries/de/journals',
+    match: {
+      params: {
+        plansOrJournals: 'journals',
+      },
     },
   }
   const actual = setup({ props }).find('[data-test="planList"]').length
@@ -185,8 +187,10 @@ test('containers.PlansAndJournals > plansList | it should render an "add plan" l
 
 test('containers.PlansAndJournals > journalList | when there are journals, it should render each', () => {
   const props = {
-    location: {
-      pathname: '/countries/de/journals',
+    match: {
+      params: {
+        plansOrJournals: 'journals',
+      },
     },
   }
   const actual = setup({ props }).find('[data-test="journal"]').length
@@ -196,8 +200,10 @@ test('containers.PlansAndJournals > journalList | when there are journals, it sh
 
 test('containers.PlansAndJournals > journalList | when there are journals, it should render them with correct props', () => {
   const props = {
-    location: {
-      pathname: '/countries/de/journals',
+    match: {
+      params: {
+        plansOrJournals: 'journals',
+      },
     },
   }
   const actual = I.fromJS(setup({ props }).find('[data-test="journal"]').at(1).props())
@@ -232,8 +238,10 @@ test('containers.PlansAndJournals > journalList | when there are journals, it sh
 
 test('containers.PlansAndJournals > journalList | when there are journals, it should NOT render the no-journal message', () => {
   const props = {
-    location: {
-      pathname: '/countries/de/journals',
+    match: {
+      params: {
+        plansOrJournals: 'journals',
+      },
     },
   }
   const actual = setup({ props }).find('[data-test="noJournal"]').length
@@ -243,8 +251,10 @@ test('containers.PlansAndJournals > journalList | when there are journals, it sh
 
 test('containers.PlansAndJournals > journalList | when there are NO journals, it should render a message instead', () => {
   const props = {
-    location: {
-      pathname: '/countries/de/journals',
+    match: {
+      params: {
+        plansOrJournals: 'journals',
+      },
     },
     journals: undefined,
   }
@@ -255,8 +265,10 @@ test('containers.PlansAndJournals > journalList | when there are NO journals, it
 
 test('containers.PlansAndJournals > journalList | when there are NO journals, it should NOT render the journals', () => {
   const props = {
-    location: {
-      pathname: '/countries/de/journals',
+    match: {
+      params: {
+        plansOrJournals: 'journals',
+      },
     },
     journals: undefined,
   }
@@ -267,8 +279,10 @@ test('containers.PlansAndJournals > journalList | when there are NO journals, it
 
 test('containers.PlansAndJournals > journalList | it should render an "add journal" link', () => {
   const props = {
-    location: {
-      pathname: '/countries/de/journals',
+    match: {
+      params: {
+        plansOrJournals: 'journals',
+      },
     },
   }
   const actual = setup({ props }).find('[data-test="addJournal"]').prop('to')

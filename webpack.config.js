@@ -11,9 +11,15 @@ const prodUrl = 'https://chrisregner.github.io/plans-and-journals/'
 
 module.exports = {
   entry: isProd
-    ? './app/main.js'
+    ? [
+      'babel-polyfill',
+      './app/preloaded.js',
+      './app/main.js',
+    ]
     : [
+      'babel-polyfill',
       'react-hot-loader/patch',
+      './app/preloaded.js',
       './app/main.js',
     ],
   output: {
