@@ -1,5 +1,4 @@
 <!doctype html>
-<html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plans And Journals</title>
@@ -32,6 +31,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
   </head>
   <body>
+    <!--[if lte IE 9 ]>
+    <div class='sorry-ie' style='max-width:20em; width:100%; padding:100px 0 0; margin:0 auto; color:#333; font-family:Roboto, sans-serif; font-size:32px; line-height: 40px; text-align:center;'>
+      Hey there! Looks like you're using an old browser. We're sorry, we weren't able to support your browser. Please update your browser so that you can get the most of the internet!
+    </div>
+    <![endif]-->
+    <div class='sorry-ie' style='display:none; max-width:20em; width:100%; padding:30vh 0 0; margin:0 auto; color:#333; font-family:Roboto, sans-serif; font-size:32px; line-height: 40px; text-align:center;'>
+      Hey there! Looks like you're using an old browser. We're sorry, we weren't able to support your browser. Please update your browser so that you can get the most of the internet!
+    </div>
+
     <div id='root'>
       <div class='loader-wrapper-wrapper'>
         <div class='loader-wrapper'>
@@ -46,6 +54,19 @@
 
 
     <script type="text/javascript">
+      var sorryIes = document.getElementsByClassName('sorry-ie')
+
+      if (Function('/*@cc_on return document.documentMode===10@*/')()) {
+        var rootEl = document.getElementById('root')
+
+        rootEl.parentNode.removeChild(rootEl)
+        sorryIes[0].style.display = 'block'
+        throw new Error('Sorry, you’re using an old browser which we weren’t able to support. Please update your browser to use this site.')
+      }
+
+      if (sorryIes.length === 2)
+        throw new Error('Sorry, you’re using an old browser which we weren’t able to support. Please update your browser to use this site.')
+
       var pnjScripts = makePnjScriptsManager();
       makeMapDataLoader(pnjScripts)();
 
@@ -114,5 +135,5 @@
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQSMXvcbcyNySYjc_l3XOl935z1JN_mM8&callback=Function.prototype" type="text/javascript" onLoad="pnjScripts.set('googleMap', google.maps);"></script>
     <script async defer src="//widget.cloudinary.com/global/all.js" type="text/javascript" onLoad="pnjScripts.set('cloudinaryWidget', cloudinary);"></script>
-  <script type="text/javascript" src="https://chrisregner.github.io/plans-and-journals/js/main.0cbe1b2870972dcf908d.js"></script></body>
+  <script type="text/javascript" src="https://chrisregner.github.io/plans-and-journals/js/main.8606d133af2910d51d9b.js"></script></body>
 </html>
