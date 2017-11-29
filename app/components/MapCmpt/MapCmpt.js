@@ -54,7 +54,7 @@ const computeCountryStyles = (countryInfo) => {
         fillColor: mapColors.hasJournal,
         fillOpacity: 0.7,
         strokeWeight: 1,
-        strokeColor: '#fff',
+        strokeColor: '#b3e5fc',
       },
     }
   else if (countryInfo && countryInfo.get('hasPlan'))
@@ -67,7 +67,7 @@ const computeCountryStyles = (countryInfo) => {
         fillColor: mapColors.hasPlan,
         fillOpacity: 0.7,
         strokeWeight: 1,
-        strokeColor: '#fff',
+        strokeColor: '#b3e5fc',
       },
     }
   else

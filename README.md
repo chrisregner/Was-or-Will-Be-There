@@ -1,6 +1,6 @@
 ## Todos
 
-- make list of features to test
+- features to test
   - navbar
     - navbar links
   - map

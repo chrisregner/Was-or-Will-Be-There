@@ -16,13 +16,7 @@ const render = (Component) => {
       <PersistGate persistor={persistor}>
         <AppContainer>
           <Provider store={store}>
-            <HashRouter
-              basename={
-                process.env.NODE_ENV === 'production'
-                  ? '/plans-and-journals'
-                  : '/'
-              }
-            >
+            <HashRouter>
               <Component />
             </HashRouter>
           </Provider>
