@@ -72,14 +72,17 @@ export const deletePhotos = ({ toDelete, photos }) => {
       req.setRequestHeader('Authorization', 'Basic ' + btoa(`${CLOUDINARY_API_KEY}:${CLOUDINARY_API_SECRET}`))
       req.onreadystatechange = function () {
         if (req.readyState === 4)
-          if (req.status >= 200 && req.status < 400) {
+          if (req.status >= 200 && req.status < 400)
             console.log('Successfully deleted images: ', req.responseText) // eslint-disable-line no-console
-          } else {
+          else
             console.error('Error in attempt to delete the image(s) in cloudinary: ', req.statusText)
-          }
       }
 
-      req.send()
+      try {
+        req.send()
+      } catch (e) {
+        console.error(e)
+      }
     }
 
     reqDelete()

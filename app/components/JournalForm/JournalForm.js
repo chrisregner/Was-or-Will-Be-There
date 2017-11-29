@@ -115,9 +115,8 @@ class JournalForm extends React.Component {
     const id = initialValues.get('id')
 
     this.status = 'deleted'
-    this.props.handleDelete(id)
-
     history.push(`/countries/${match.params.countryId}/journals`)
+    this.props.handleDelete(id)
   }
 
   handleSubmit = (ev) => {

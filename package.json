@@ -10,7 +10,7 @@
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",
-    "babel-plugin-constant-folding": "^1.0.1",
+    "babel-plugin-minify-constant-folding": "^0.2.0",
     "babel-plugin-styled-components": "^1.3.0",
     "babel-plugin-tailcall-optimization": "^1.0.11",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -100,6 +100,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --hot",
+    "start:prod": "cross-env NODE_ENV=production webpack-dev-server --hot",
     "lint": "eslint --ignore-pattern dist/* --fix **/*.js",
     "mocha": "cross-env NODE_PATH=app mocha --require babel-register --require ./tools/testSetup.js",
     "prod": "del-cli dist/index.html dist/js/* --force && cross-env NODE_ENV=production webpack",

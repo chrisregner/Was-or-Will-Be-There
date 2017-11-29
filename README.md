@@ -38,7 +38,8 @@
   - mobile
   - chrome
 
-- ie10 and below fallback
+- perf
+  - Leverage browser caching
 
 - issues
   - IE11
@@ -62,11 +63,11 @@
 - final readme.md
   - credits
     - natural earth data
-
   - linted?
   - deployed?
+  - known issues?
 
-- add known issues to daily routines tracker
+- add known issues to daily routines tracker?
 
 - delete cloudinary images
 
