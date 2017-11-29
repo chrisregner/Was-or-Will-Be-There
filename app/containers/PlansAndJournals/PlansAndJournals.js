@@ -74,9 +74,12 @@ class BarePlansAndJournals extends React.Component {
         <BottomNavigation
           value={plansOrJournals}
           showLabels
+          className='center'
+          style={{
+            maxWidth: 336,
+          }}
         >
           <PlansButton
-            component='div'
             data-test='plansLink'
             label='Plans'
             value='plans'
@@ -84,7 +87,6 @@ class BarePlansAndJournals extends React.Component {
             onClick={() => history.push(`/countries/${countryId}/plans`)}
           />
           <JournalsButton
-            component='div'
             data-test='journalsLink'
             label='Journals'
             value='journals'

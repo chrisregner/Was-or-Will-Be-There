@@ -50,6 +50,7 @@
     - **maybe done** mui text-field shows a giant "X"
       - use the text-input from mui-next
       - maybe replace all other form components as well?
+      - issues
   - cross-browser
     - photo deletion
       - ie says: xhr errror
@@ -64,6 +65,8 @@
 
   - linted?
   - deployed?
+
+- add known issues to daily routines tracker
 
 - delete cloudinary images
 
