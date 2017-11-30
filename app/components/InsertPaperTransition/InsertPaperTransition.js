@@ -25,19 +25,11 @@ const Wrapper = styled.div`
     }
   }
 
-  &.divergeToLeft {
+  &.ToLeft {
     animation-name: toLeft;
   }
 
-  &.divergeToRight {
-    animation-name: toRight;
-  }
-
-  &.convergeToLeft {
-    animation-name: toLeft;
-  }
-
-  &.convergeToRight {
+  &.ToRight {
     animation-name: toRight;
   }
 `
@@ -75,23 +67,24 @@ class BareInsertPaperTransition extends React.Component {
 
     let animation = ''
 
-    if (wasInPlansOrJournals && isInSpecificPlanOrJournal)
-      if (nth === 1) animation = 'divergeToLeft'
-      else animation = 'divergeToRight'
+    if (wasInPlansOrJournals && isInSpecificPlanOrJournal) {
+      if (nth === 1) animation = 'toLeft'
+      else animation = 'toRight'
+    }
 
-    if (wasInSpecificPlanOrJournal && isInPlansOrJournals)
-      if (nth === 1) animation = 'convergeToRight'
-      else animation = 'convergeToLeft'
+    if (wasInSpecificPlanOrJournal && isInPlansOrJournals) {
+      if (nth === 1) animation = 'toRight'
+      else animation = 'toLeft'
+    }
 
-    if (wasInSpecificPlanOrJournal && isInSpecificPlanOrJournal && prevPath !== currPath)
-      if (nth === 2) {
-        animation = 'divergeToRight'
+    if (wasInSpecificPlanOrJournal && isInSpecificPlanOrJournal && prevPath !== currPath && nth === 2) {
+      animation = 'toRight'
 
-        /* force repaint in browser */
-        this.wrapperEl.classList.remove(animation)
-        void this.wrapperEl.offsetWidth
-        this.wrapperEl.classList.add(animation)
-      }
+      /* force repaint in browser */
+      this.wrapperEl.classList.remove(animation)
+      void this.wrapperEl.offsetWidth
+      this.wrapperEl.classList.add(animation)
+    }
 
     return (
       <Wrapper innerRef={this.wrapperRef} className={`animated ${animation} ${className}`}>
