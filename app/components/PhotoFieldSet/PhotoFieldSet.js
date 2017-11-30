@@ -36,7 +36,6 @@ class PhotoFieldSet extends React.PureComponent {
   }
 
   handleHideFullSizedPhoto = () => {
-    console.log('handleHideFullSizedPhoto')
     this.setState({ fullSizedPhotoVisiblity: false })
   }
 

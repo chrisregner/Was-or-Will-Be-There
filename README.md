@@ -1,21 +1,3 @@
-- identify animations in web app
-  - fadingmounter
-    - add will transform
-  - collapse
-    - use modal instead in mobile
-  - animatingpaperht
-    - only in desktop
-  - photofieldset fullsized image
-
-- disappearLastly - is that harmful?
-
-- will change
-- transform
-- avoid composite/implicit composite?
-- why remove some styles on transition end?
-
----
-
 ## Todos
 
 - features to test
@@ -55,6 +37,9 @@
   - firefox
   - mobile
   - chrome
+
+- perf
+  - Leverage browser caching
 
 - issues
   - IE11

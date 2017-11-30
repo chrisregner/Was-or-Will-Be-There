@@ -10,7 +10,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import './App.css'
-import './animated.css'
 import { uiGetters } from 'state'
 import Nav from 'components/Nav'
 import MapCmpt from 'components/MapCmpt'

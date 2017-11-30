@@ -4,6 +4,7 @@
 
 body { font-family: Roboto, sans-serif; }
 a { color: #00838F; }
+/* a:visited { color: #4527A0; } */
 
 /**
  * Tachyons-style Utility classes
@@ -45,9 +46,17 @@ a { color: #00838F; }
 .pl0--i { padding-left: 0 !important; }
 
 /**
- * Animation optimizer
+ * Animate.css overrides
  */
 
-.will-change-hack { transform: translateZ(0); }
-.will-change-transfrom { transform: translateZ(0); will-change: transform; }
-.will-change-opacity { transform: translateZ(0); will-change: opacity; }
+@keyframes disappearLastly {
+  100% { visibility: hidden; }
+}
+
+.animated {
+  animation-duration: .450s !important;
+}
+
+.fadeOut {
+  animation-name: fadeOut, disappearLastly !important;
+}

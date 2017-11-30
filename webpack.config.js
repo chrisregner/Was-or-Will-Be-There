@@ -8,10 +8,11 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 const isDevServer = !!process.argv.find(v => v.includes('webpack-dev-server'))
 const isProd = process.env.NODE_ENV === 'production'
+const isProdAndServerless = isProd && !isDevServer
 const prodUrl = 'https://chrisregner.github.io/plans-and-journals/'
 
 module.exports = {
-  entry: (isProd && !isDevServer)
+  entry: isProdAndServerless
     ? [
       'babel-polyfill',
       './app/preloaded.js',
@@ -24,11 +25,11 @@ module.exports = {
       './app/main.js',
     ],
   output: {
-    filename: (isProd && !isDevServer) ? 'js/[name].[hash].js' : 'js/bundle.js',
+    filename: isProdAndServerless ? 'js/[name].[hash].js' : 'js/bundle.js',
     path: resolve(__dirname, 'dist'),
 
     // path of output bundle relative to HTML file, necessary for live editing
-    publicPath: (isProd && !isDevServer) ? prodUrl : '/',
+    publicPath: isProdAndServerless ? prodUrl : '/',
   },
   devServer: {
     // Respond to 404s with index.html
@@ -38,7 +39,7 @@ module.exports = {
     contentBase: resolve(__dirname, 'dist'),
 
     // Must be the same as output.publicPath, necessary for live editing
-    publicPath: (isProd && !isDevServer) ? prodUrl : '/',
+    publicPath: isProdAndServerless ? prodUrl : '/',
   },
 
   // Solution for request/request-promise issue
@@ -50,7 +51,7 @@ module.exports = {
   },
 
   // TODO: should be 'source-map' if prod
-  devtool: (isProd && !isDevServer) ? 'cheap-module-source-map' : 'cheap-module-eval-source-map',
+  devtool: isProdAndServerless ? 'cheap-module-source-map' : 'cheap-module-eval-source-map',
 
   module: {
     rules: [
@@ -63,13 +64,13 @@ module.exports = {
           presets: [
             ['env', { modules: false }],
             'react',
-            ...((isProd && !isDevServer) ? ['react-optimize'] : []),
+            ...(isProdAndServerless ? ['react-optimize'] : []),
           ],
           plugins: [
             ...(!isProd
               ? ['react-hot-loader/babel']
               : []),
-            ...((isProd && !isDevServer)
+            ...(isProdAndServerless
               ? [
                 'styled-components',
                 'tailcall-optimization',
@@ -88,11 +89,11 @@ module.exports = {
           'style-loader',
           {
             loader: 'css-loader',
-            options: (isProd && !isDevServer)
+            options: isProdAndServerless
               ? { importLoaders: 1 }
               : {},
           },
-          ...((isProd && !isDevServer) ? [] : [{
+          ...(isProdAndServerless ? [] : [{
             loader: 'postcss-loader',
             options: {
               plugins: loader => [
@@ -136,7 +137,7 @@ module.exports = {
       template: resolve(__dirname, 'app/index-template.html'),
       inlineManifestWebpackName: 'webpackManifest',
     }),
-    ...((isProd && !isDevServer)
+    ...(isProdAndServerless
       ? [
         new BundleAnalyzerPlugin(),
         new webpack.optimize.ModuleConcatenationPlugin(),
