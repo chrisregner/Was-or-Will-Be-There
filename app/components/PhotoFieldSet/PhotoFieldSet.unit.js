@@ -27,14 +27,14 @@ const setup = TU.makeTestSetup({
   defaultProps: defProps,
 })
 
-test('components.PhotoFieldSet | it should render without error', () => {
+test.skip('components.PhotoFieldSet | it should render without error', () => {
   const wrapper = setup()
   const actual = wrapper.exists()
 
   assert.isTrue(actual)
 })
 
-test('components.PhotoFieldSet > Photo | it should render', () => {
+test.skip('components.PhotoFieldSet > Photo | it should render', () => {
   const props = { path: 'random/path' }
   const expectedPhotoUrl = createJournalPhotoUrl('random/path')
   const photoWrpr = setup({ props }).find(`[src='${expectedPhotoUrl}']`)
@@ -44,7 +44,7 @@ test('components.PhotoFieldSet > Photo | it should render', () => {
   assert.isTrue(actual)
 })
 
-test('components.PhotoFieldSet > Photo | it should be hidden by default', () => {
+test.skip('components.PhotoFieldSet > Photo | it should be hidden by default', () => {
   const photoContainerWrpr = setup().find('.photo-field-set-photo-wrapper')
   const photoContainerCns = photoContainerWrpr.prop('className').split(' ')
 
@@ -54,7 +54,7 @@ test('components.PhotoFieldSet > Photo | it should be hidden by default', () => 
   assert.include(actual, expected)
 })
 
-test('components.PhotoFieldSet > Photo | it should use description as alt', () => {
+test.skip('components.PhotoFieldSet > Photo | it should use description as alt', () => {
   const props = {
     description: 'The Random Description',
   }
@@ -66,7 +66,7 @@ test('components.PhotoFieldSet > Photo | it should use description as alt', () =
   assert.equal(actual, expected)
 })
 
-test('components.PhotoFieldSet > ThumbPhoto | it should render', () => {
+test.skip('components.PhotoFieldSet > ThumbPhoto | it should render', () => {
   const props = { path: 'random/path' }
   const expectedThumbUrl = createJournalThumbUrl('random/path')
   const thumbWrpr = setup({ props }).find(`[src='${expectedThumbUrl}']`)
@@ -76,7 +76,7 @@ test('components.PhotoFieldSet > ThumbPhoto | it should render', () => {
   assert.isTrue(actual)
 })
 
-test('components.PhotoFieldSet > ThumbPhoto | it should use description as alt', () => {
+test.skip('components.PhotoFieldSet > ThumbPhoto | it should use description as alt', () => {
   const props = {
     description: 'The Random Description',
   }
@@ -88,7 +88,7 @@ test('components.PhotoFieldSet > ThumbPhoto | it should use description as alt',
   assert.equal(actual, expected)
 })
 
-test('components.PhotoFieldSet > ThumbPhoto | if isDeleted prop is true, it should render the overlay', () => {
+test.skip('components.PhotoFieldSet > ThumbPhoto | if isDeleted prop is true, it should render the overlay', () => {
   const props = {
     isDeleted: true,
   }
@@ -99,7 +99,7 @@ test('components.PhotoFieldSet > ThumbPhoto | if isDeleted prop is true, it shou
   assert.isTrue(actual)
 })
 
-test('components.PhotoFieldSet > ThumbPhoto | if isDeleted prop is NOT true, it should NOT render the overlay', () => {
+test.skip('components.PhotoFieldSet > ThumbPhoto | if isDeleted prop is NOT true, it should NOT render the overlay', () => {
   const props = {
     isDeleted: null,
   }
@@ -110,7 +110,7 @@ test('components.PhotoFieldSet > ThumbPhoto | if isDeleted prop is NOT true, it 
   assert.isFalse(actual)
 })
 
-test('components.PhotoFieldSet > ThumbPhoto | it should show the full-sized photo on click', () => {
+test.skip('components.PhotoFieldSet > ThumbPhoto | it should show the full-sized photo on click', () => {
   const wrapper = setup()
 
   wrapper.find('.photo-field-set-thumb-photo').simulate('click')
@@ -126,7 +126,7 @@ test('components.PhotoFieldSet > ThumbPhoto | it should show the full-sized phot
   })
 })
 
-test('components.PhotoFieldSet > HideFullSizeButton | if full-sized photo is shown, it should hide the full-sized photo on click', () => {
+test.skip('components.PhotoFieldSet > HideFullSizeButton | if full-sized photo is shown, it should hide the full-sized photo on click', () => {
   const wrapper = setup()
 
   wrapper.find('.photo-field-set-thumb-photo').simulate('click')
@@ -141,14 +141,14 @@ test('components.PhotoFieldSet > HideFullSizeButton | if full-sized photo is sho
   assert.include(actual, expected)
 })
 
-test('components.PhotoFieldSet > DescriptionField | it should render', () => {
+test.skip('components.PhotoFieldSet > DescriptionField | it should render', () => {
   const descFieldWrpr = setup().find('.photo-field-set-description-field')
   const actual = descFieldWrpr.exists()
 
   assert.isTrue(actual)
 })
 
-test('components.PhotoFieldSet > DescriptionField | it should call show the value', () => {
+test.skip('components.PhotoFieldSet > DescriptionField | it should call show the value', () => {
   const props = {
     description: 'The Random Description',
   }
@@ -160,7 +160,7 @@ test('components.PhotoFieldSet > DescriptionField | it should call show the valu
   assert.equal(actual, expected)
 })
 
-test('components.PhotoFieldSet > DescriptionField | when changed, it should call handleSetPhotoDesc() with correct props', () => {
+test.skip('components.PhotoFieldSet > DescriptionField | when changed, it should call handleSetPhotoDesc() with correct props', () => {
   const props = {
     id: 'randomId',
   }
@@ -174,7 +174,7 @@ test('components.PhotoFieldSet > DescriptionField | when changed, it should call
   td.verify(defProps.handleSetPhotoDesc(...expectedArgs), { times: 1 })
 })
 
-test('components.PhotoFieldSet > DescriptionField | if isDeleted prop is true, it should be disabled', () => {
+test.skip('components.PhotoFieldSet > DescriptionField | if isDeleted prop is true, it should be disabled', () => {
   const props = {
     isDeleted: true,
   }
@@ -186,7 +186,7 @@ test('components.PhotoFieldSet > DescriptionField | if isDeleted prop is true, i
   assert.isTrue(actual)
 })
 
-test('components.PhotoFieldSet > DeletePhotoButton | if isDeleted prop is NOT true, it should render', () => {
+test.skip('components.PhotoFieldSet > DeletePhotoButton | if isDeleted prop is NOT true, it should render', () => {
   const props = {
     isDeleted: null,
   }
@@ -197,7 +197,7 @@ test('components.PhotoFieldSet > DeletePhotoButton | if isDeleted prop is NOT tr
   assert.isTrue(actual)
 })
 
-test('components.PhotoFieldSet > DeletePhotoButton | if isDeleted prop is true, it should NOT render', () => {
+test.skip('components.PhotoFieldSet > DeletePhotoButton | if isDeleted prop is true, it should NOT render', () => {
   const props = {
     isDeleted: true,
   }
@@ -208,7 +208,7 @@ test('components.PhotoFieldSet > DeletePhotoButton | if isDeleted prop is true, 
   assert.isFalse(actual)
 })
 
-test('components.PhotoFieldSet > DeletePhotoButton | when clicked, it should call handleDeletePhoto() with correct props', () => {
+test.skip('components.PhotoFieldSet > DeletePhotoButton | when clicked, it should call handleDeletePhoto() with correct props', () => {
   const props = {
     id: 'randomId',
   }
@@ -222,7 +222,7 @@ test('components.PhotoFieldSet > DeletePhotoButton | when clicked, it should cal
   td.verify(defProps.handleDeletePhoto(expectedArg), { times: 1 })
 })
 
-test('components.PhotoFieldSet > RestorePhotoButton | if isDeleted prop is true, it should render', () => {
+test.skip('components.PhotoFieldSet > RestorePhotoButton | if isDeleted prop is true, it should render', () => {
   const props = {
     isDeleted: true,
   }
@@ -233,7 +233,7 @@ test('components.PhotoFieldSet > RestorePhotoButton | if isDeleted prop is true,
   assert.isTrue(actual)
 })
 
-test('components.PhotoFieldSet > RestorePhotoButton | if isDeleted prop is NOT true, it should NOT render', () => {
+test.skip('components.PhotoFieldSet > RestorePhotoButton | if isDeleted prop is NOT true, it should NOT render', () => {
   const props = {
     isDeleted: null,
   }
@@ -244,7 +244,7 @@ test('components.PhotoFieldSet > RestorePhotoButton | if isDeleted prop is NOT t
   assert.isFalse(actual)
 })
 
-test('components.PhotoFieldSet > RestorePhotoButton | when clicked, it should call handleRestorePhoto() with correct props', () => {
+test.skip('components.PhotoFieldSet > RestorePhotoButton | when clicked, it should call handleRestorePhoto() with correct props', () => {
   const props = {
     id: 'randomId',
     isDeleted: true,

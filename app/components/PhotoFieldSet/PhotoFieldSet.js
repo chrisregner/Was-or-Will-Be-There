@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import c from 'classnames'
 
@@ -62,38 +63,40 @@ class PhotoFieldSet extends React.PureComponent {
     return (
       <div>
         {/* The full-sized photo */}
-        <div
-          style={{
-            top: 48,
-            backgroundColor: 'rgba(0, 0, 0, 0.54)',
-          }}
-          className={c(
-            'photo-field-set-photo-wrapper fixed right-0 left-0 bottom-0 z-2 items-center justify-center content-center',
-            (fullSizedPhotoVisiblity === 'clean') ? 'dn' : 'flex',
-            (fullSizedPhotoVisiblity === true) && 'animated fadeIn',
-            !fullSizedPhotoVisiblity && 'animated fadeOut',
-          )}
-        >
-          <Paper className='relative' rounded={false} style={{ maxHeight: '100%' }}>
-            <img
-              className='photo-field-set-photo db h-auto'
-              src={createJournalPhotoUrl(path)}
-              alt={description}
-            />
-            <div style={{ top: 8, right: 8 }} className='absolute'>
-              <FloatingActionButton
-                onClick={this.handleHideFullSizedPhoto}
-                className='photo-field-set-hide-full-sized-photo'
-                mini
-                tooltip='Hide full sized photo'
-                backgroundColor='rgba(0, 0, 0, 0.54)'
-                iconstyle={{ color: '#fff' }}
-              >
-                <CloseIcon />
-              </FloatingActionButton>
+        {ReactDOM.createPortal(
+          (
+            <div
+              style={{ top: 48, backgroundColor: 'rgba(0, 0, 0, 0.54)', minHeight: 'calc(100vh-48px)' }}
+              className={c(
+                'photo-field-set-photo-wrapper fixed right-0 left-0 z-2 items-center justify-center content-center will-change-opacity',
+                (fullSizedPhotoVisiblity === 'clean') ? 'dn' : 'flex',
+                (fullSizedPhotoVisiblity === true) && 'animated fadeIn',
+                !fullSizedPhotoVisiblity && 'animated fadeOut',
+              )}
+            >
+              <Paper className='relative' rounded={false}>
+                <img
+                  className='photo-field-set-photo w-100 h-auto'
+                  src={createJournalPhotoUrl(path)}
+                  alt={description}
+                />
+                <div style={{ top: 8, right: 8 }} className='absolute'>
+                  <FloatingActionButton
+                    onClick={this.handleHideFullSizedPhoto}
+                    className='photo-field-set-hide-full-sized-photo'
+                    mini
+                    tooltip='Hide full sized photo'
+                    backgroundColor='rgba(0, 0, 0, 0.54)'
+                    iconstyle={{ color: '#fff' }}
+                  >
+                    <CloseIcon />
+                  </FloatingActionButton>
+                </div>
+              </Paper>
             </div>
-          </Paper>
-        </div>
+          ),
+          document.getElementById('modal-portal')
+        )}
 
         {/* The field set */}
         <div className='flex items-center'>

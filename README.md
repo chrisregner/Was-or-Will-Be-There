@@ -1,3 +1,23 @@
+- identify animations in web app
+  - fadingmounter
+    - // add will change
+  - collapse
+    - add will change?
+    - use modal instead in mobile?
+  - animatinghtdiv
+    - add will change?
+    - only in desktop?
+  - photofieldset fullsized image
+    - // add will change
+  - insert paper transition
+    - // add will change
+
+- disappearLastly - is that harmful?
+- avoid composite/implicit composite?
+- why remove some styles on transition end?
+
+---
+
 ## Todos
 
 - features to test

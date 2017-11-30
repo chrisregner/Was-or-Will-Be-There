@@ -67,7 +67,6 @@ const CloseToPlansOrJournals = ({ match }) => (
 const PaperRoutes = ({ location }) => (
   <div
     style={{
-      top: 48,
       minHeight: 'calc(100vh - 48px)',
       backgroundColor: 'rgba(0, 0, 0, 0.54)',
     }}

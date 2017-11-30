@@ -31,7 +31,7 @@ class FadingMounter extends React.Component {
     const { isTimerUp } = this.state
 
     return (
-      <div className={`animated ${isVisible ? 'fadeIn' : 'fadeOut'}`}>
+      <div className={`animated will-change-opacity ${isVisible ? 'fadeIn' : 'fadeOut'}`}>
         {!isTimerUp && <Component />}
       </div>
     )

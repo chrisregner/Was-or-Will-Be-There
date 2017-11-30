@@ -10,6 +10,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import './App.css'
+import './animated.css'
 import { uiGetters } from 'state'
 import Nav from 'components/Nav'
 import MapCmpt from 'components/MapCmpt'
@@ -53,7 +54,7 @@ class BareApp extends React.Component {
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div style={{ minWidth: 300 }} className='min-vh-100 animated fadeIn'>
+        <div style={{ minWidth: 300 }} className='relative min-vh-100 animated fadeIn'>
           <div className='fixed top-0 right-0 left-0 z-2'>
             <Nav />
           </div>
@@ -71,11 +72,13 @@ class BareApp extends React.Component {
             </Switch>
           </div>
 
-          <FadingMounter className='app-not-found' isVisible={isNotFound} component={NotFound} />
+          <div className='absolute w-100' style={{ top: 48 }} >
+            <FadingMounter className='app-not-found' isVisible={isNotFound} component={NotFound} />
 
-          <LastLocationProvider>
-            <FadingMounter className='app-routes' isVisible={!isNotFound} component={Pages} />
-          </LastLocationProvider>
+            <LastLocationProvider>
+              <FadingMounter className='app-routes' isVisible={!isNotFound} component={Pages} />
+            </LastLocationProvider>
+          </div>
 
           <ScrollOnRouteChange />
           <NotifSnackbar />
