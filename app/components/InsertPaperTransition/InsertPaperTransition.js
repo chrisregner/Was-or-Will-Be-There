@@ -67,13 +67,15 @@ class BareInsertPaperTransition extends React.Component {
 
     let animation = ''
 
-    if (wasInPlansOrJournals && isInSpecificPlanOrJournal)
+    if (wasInPlansOrJournals && isInSpecificPlanOrJournal) {
       if (nth === 1) animation = 'toLeft'
       else animation = 'toRight'
+    }
 
-    if (wasInSpecificPlanOrJournal && isInPlansOrJournals)
+    if (wasInSpecificPlanOrJournal && isInPlansOrJournals) {
       if (nth === 1) animation = 'toRight'
       else animation = 'toLeft'
+    }
 
     if (wasInSpecificPlanOrJournal && isInSpecificPlanOrJournal && prevPath !== currPath && nth === 2) {
       animation = 'toRight'

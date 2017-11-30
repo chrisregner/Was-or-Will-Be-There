@@ -73,9 +73,17 @@ const PaperRoutes = ({ location }) => (
     }}
     className='relative z-1 ph1 ph2-m ph2-l pv2 pv3-m pv3-l h-100'
   >
+    {
+      /**
+       * Fixes the issue of having big "X" on ie11 TextInput (material-ui)
+       * https://github.com/mui-org/material-ui/issues/5055#issuecomment-241896137
+       */
+    }
+    <style type='text/css' dangerouslySetInnerHTML={{__html: '::-ms-clear {display: none;}'}} />
+
     {/* Mobile and Tablet */}
     <div className='dn-l ph1 ph2-m tl mw7 center'>
-      <Paper className='relative will-change-contents'>
+      <Paper className='relative'>
         {/* Close Button */}
         <Switch>
           <Route exact path='/stats' component={CloseToMap} />
@@ -114,7 +122,7 @@ const PaperRoutes = ({ location }) => (
     {/* Desktop Only */}
     <InsertPaperTransitionWrpr className='flex items-start justify-center mw9 w-100'>
       <InsertPaperTransition nth={1} pathname={location.pathname} className='relative z-1 dn db-l ph2 tl'>
-        <Paper className='relative will-change-contents'>
+        <Paper className='relative'>
           {/* Close Button */}
           <Switch>
             <Route exact path='/stats' component={CloseToMap} />
@@ -143,9 +151,9 @@ const PaperRoutes = ({ location }) => (
 
       <Route
         path='/countries/:countryId/:plansOrJournals(plans|journals)/:any'
-        render={() => (
-          <InsertPaperTransition nth={2} pathname={location.pathname} className='relative dn db-l ph2 tl'>
-            <Paper className='relative will-change-contents'>
+        render={props => (
+          <InsertPaperTransition nth={2} pathname={props.location.pathname} className='relative dn db-l ph2 tl'>
+            <Paper className='relative'>
               {/* Close Button */}
               <Switch>
                 <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)/new' component={CloseToPlansOrJournals} />

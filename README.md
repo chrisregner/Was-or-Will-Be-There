@@ -1,14 +1,11 @@
 - identify animations in web app
   - fadingmounter
-    - // add will transform
+    - add will transform
   - collapse
-    - add will transform
-    - use modal instead in mobile?
-  - animatinghtdiv
-    - // add will transform
-    - only in desktop?
+    - use modal instead in mobile
+  - animatingpaperht
+    - only in desktop
   - photofieldset fullsized image
-    - add will transform
 
 - disappearLastly - is that harmful?
 
