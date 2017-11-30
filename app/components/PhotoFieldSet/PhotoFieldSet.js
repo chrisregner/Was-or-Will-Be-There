@@ -36,7 +36,6 @@ class PhotoFieldSet extends React.PureComponent {
   }
 
   handleHideFullSizedPhoto = () => {
-    console.log('handleHideFullSizedPhoto')
     this.setState({ fullSizedPhotoVisiblity: false })
   }
 
@@ -69,7 +68,7 @@ class PhotoFieldSet extends React.PureComponent {
             backgroundColor: 'rgba(0, 0, 0, 0.54)',
           }}
           className={c(
-            'photo-field-set-photo-wrapper fixed right-0 left-0 bottom-0 z-2 items-center justify-center content-center',
+            'photo-field-set-photo-wrapper fixed right-0 left-0 bottom-0 z-2 items-center justify-center content-center will-change-opacity',
             (fullSizedPhotoVisiblity === 'clean') ? 'dn' : 'flex',
             (fullSizedPhotoVisiblity === true) && 'animated fadeIn',
             !fullSizedPhotoVisiblity && 'animated fadeOut',

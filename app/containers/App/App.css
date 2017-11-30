@@ -48,6 +48,13 @@ a { color: #00838F; }
  * Animation optimizer
  */
 
-.will-change-hack { transform: translateZ(0); }
+.will-change-contents { transform: translateZ(0); will-change: contents; }
 .will-change-transfrom { transform: translateZ(0); will-change: transform; }
 .will-change-opacity { transform: translateZ(0); will-change: opacity; }
+
+/**
+ * Fixes the issue of having big "X" on ie11 TextInput (material-ui)
+ * https://github.com/mui-org/material-ui/issues/5055#issuecomment-241896137
+ */
+
+::-ms-clear { display: none; }
