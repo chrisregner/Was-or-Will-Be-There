@@ -66,7 +66,7 @@ class PhotoFieldSet extends React.PureComponent {
         {ReactDOM.createPortal(
           (
             <div
-              style={{ top: 48, backgroundColor: 'rgba(0, 0, 0, 0.54)', minHeight: 'calc(100vh-48px)' }}
+              style={{ top: 48, backgroundColor: 'rgba(0, 0, 0, 0.54)', height: 'calc(100vh - 48px)' }}
               className={c(
                 'photo-field-set-photo-wrapper fixed right-0 left-0 z-2 items-center justify-center content-center will-change-opacity',
                 (fullSizedPhotoVisiblity === 'clean') ? 'dn' : 'flex',
@@ -76,7 +76,8 @@ class PhotoFieldSet extends React.PureComponent {
             >
               <Paper className='relative' rounded={false}>
                 <img
-                  className='photo-field-set-photo w-100 h-auto'
+                  style={{ maxHeight: 'calc(100vh - 48px)' }}
+                  className='photo-field-set-photo w-100 h-auto db'
                   src={createJournalPhotoUrl(path)}
                   alt={description}
                 />

@@ -72,14 +72,6 @@ const PaperRoutes = ({ location }) => (
     }}
     className='relative z-1 ph1 ph2-m ph2-l pv2 pv3-m pv3-l h-100'
   >
-    {
-      /**
-       * Fixes the issue of having big "X" on ie11 TextInput (material-ui)
-       * https://github.com/mui-org/material-ui/issues/5055#issuecomment-241896137
-       */
-    }
-    <style type='text/css' dangerouslySetInnerHTML={{__html: '::-ms-clear {display: none;}'}} />
-
     {/* Mobile and Tablet */}
     <div className='dn-l ph1 ph2-m tl mw7 center'>
       <Paper className='relative'>
