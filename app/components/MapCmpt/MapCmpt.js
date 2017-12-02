@@ -14,6 +14,7 @@ import Paper from 'material-ui/Paper'
 import overviewGetter from 'state/shared/overviewGetter'
 import gMapStyle from 'constants/gMapStyle.json'
 import NonALink from 'components/NonALink'
+import checkIfMobile from 'services/checkIfMobile'
 
 /*
 
@@ -106,6 +107,8 @@ const clearCountryHoverListeners = (country) => {
 }
 
 const panIfCountryChanged = ({ nextCountryId, gMap, countryPolygons, currCountryId }) => {
+  if (checkIfMobile()) return
+
   if (nextCountryId && nextCountryId !== currCountryId) {
     const googleMap = getGoogleMap()
     const bounds = new googleMap.LatLngBounds()

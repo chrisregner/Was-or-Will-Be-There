@@ -20,6 +20,7 @@ import JournalizeJournalForm from 'containers/JournalizeJournalForm'
 import NotFoundSetter from 'containers/NotFoundSetter'
 import SmartCountryNameAndFlag from 'containers/SmartCountryNameAndFlag'
 import WorldOverview from 'containers/WorldOverview'
+import checkIfMobile from 'services/checkIfMobile'
 
 const InsertPaperTransitionWrpr = styled.div`
   & > :only-child {
@@ -36,7 +37,7 @@ const InsertPaperTransitionWrpr = styled.div`
 `
 
 const CloseToMap = () => (
-  <NonALink className='absolute top-0 right-0 z-1 db pa1' to='/'>
+  <NonALink className='absolute z-1 top-0 right-0 db pa1' to='/'>
     <IconButton
       style={{ width: 36, height: 36, padding: 8 }}
       iconStyle={{ width: 18, height: 18 }}
@@ -51,7 +52,7 @@ const CloseToMap = () => (
 const CloseToPlansOrJournals = ({ match }) => (
   <NonALink
     to={`/countries/${match.params.countryId}/${match.params.plansOrJournals}`}
-    className='absolute top-0 right-0 z-1 db pa1'
+    className='absolute z-1 top-0 right-0 db pa1'
   >
     <IconButton
       style={{ width: 36, height: 36, padding: 8 }}
@@ -64,30 +65,29 @@ const CloseToPlansOrJournals = ({ match }) => (
   </NonALink>
 )
 
-const PaperRoutes = ({ location }) => (
-  <div
-    style={{
-      minHeight: 'calc(100vh - 48px)',
-      backgroundColor: 'rgba(0, 0, 0, 0.54)',
-    }}
-    className='relative z-1 ph1 ph2-m ph2-l pv2 pv3-m pv3-l h-100'
-  >
-    {/* Mobile and Tablet */}
-    <div className='dn-l ph1 ph2-m tl mw7 center'>
-      <Paper className='relative'>
-        {/* Close Button */}
-        <Switch>
-          <Route exact path='/stats' component={CloseToMap} />
-          <Route exact path='/about' component={CloseToMap} />
-          <Route exact path='/countries/:countryId/plans' component={CloseToMap} />
-          <Route exact path='/countries/:countryId/journals' component={CloseToMap} />
-          <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)/new' component={CloseToPlansOrJournals} />
-          <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)/:id' component={CloseToPlansOrJournals} />
-          <Route exact path='/countries/:countryId/plans/:id/journalize' component={CloseToPlansOrJournals} />
-        </Switch>
+const PaperRoutes = ({ location }) => {
+  const isMobile = checkIfMobile()
 
-        {/* Content */}
-        <AnimatingHtDiv>
+  return (<div
+    style={{ minHeight: 'calc(100vh - 48px)', backgroundColor: 'rgba(0, 0, 0, 0.54)' }}
+    className='ph1 ph2-ns pv2 pv3-ns will-change'
+  >
+    {isMobile
+      ? (<div className='ph1 ph2-m tl mw7 center'>
+        <Paper className='relative'>
+          {/* Close Button */}
+          <Switch>
+            <Route exact path='/stats' component={CloseToMap} />
+            <Route exact path='/about' component={CloseToMap} />
+            <Route exact path='/countries/:countryId/plans' component={CloseToMap} />
+            <Route exact path='/countries/:countryId/journals' component={CloseToMap} />
+            <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)/new' component={CloseToPlansOrJournals} />
+            <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)/:id' component={CloseToPlansOrJournals} />
+            <Route exact path='/countries/:countryId/plans/:id/journalize' component={CloseToPlansOrJournals} />
+          </Switch>
+
+          {/* Content */}
+          {/* <AnimatingHtDiv> */}
           <Route path='/countries/:countryId' component={SmartCountryNameAndFlag} />
 
           <Switch>
@@ -106,69 +106,67 @@ const PaperRoutes = ({ location }) => (
             <Route exact path='/countries/:countryId/journals/:id' component={EditJournalForm} />
             <Route component={NotFoundSetter} />
           </Switch>
-        </AnimatingHtDiv>
-      </Paper>
-    </div>
-
-    {/* Desktop Only */}
-    <InsertPaperTransitionWrpr className='flex items-start justify-center mw9 w-100'>
-      <InsertPaperTransition nth={1} pathname={location.pathname} className='relative z-1 dn db-l ph2 tl'>
-        <Paper className='relative'>
-          {/* Close Button */}
-          <Switch>
-            <Route exact path='/stats' component={CloseToMap} />
-            <Route exact path='/about' component={CloseToMap} />
-            <Route exact path='/countries/:countryId/plans' component={CloseToMap} />
-            <Route exact path='/countries/:countryId/journals' component={CloseToMap} />
-          </Switch>
-
-          {/* Content */}
-          <AnimatingHtDiv>
-            <div>
-              <Route path='/countries/:countryId' component={SmartCountryNameAndFlag} />
-            </div>
-
-            <Switch>
-              <Route exact path='/stats' component={WorldOverview} />
-              <Route exact path='/about' component={About} />
-              <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)' component={PlansAndJournals} />
-              <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)/new' component={PlansAndJournals} />
-              <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)/:id' component={PlansAndJournals} />
-              <Route exact path='/countries/:countryId/:plansOrJournals(plans)/:id/journalize' component={PlansAndJournals} />
-            </Switch>
-          </AnimatingHtDiv>
+          {/* </AnimatingHtDiv> */}
         </Paper>
-      </InsertPaperTransition>
+      </div>)
+      : (<InsertPaperTransitionWrpr className='flex items-start justify-center center mw9 w-100'>
+        <InsertPaperTransition nth={1} pathname={location.pathname} className='ph2 tl will-change'>
+          <Paper className='relative'>
+            {/* Close Button */}
+            <Switch>
+              <Route exact path='/stats' component={CloseToMap} />
+              <Route exact path='/about' component={CloseToMap} />
+              <Route exact path='/countries/:countryId/plans' component={CloseToMap} />
+              <Route exact path='/countries/:countryId/journals' component={CloseToMap} />
+            </Switch>
 
-      <Route
-        path='/countries/:countryId/:plansOrJournals(plans|journals)/:any'
-        render={props => (
-          <InsertPaperTransition nth={2} pathname={props.location.pathname} className='relative dn db-l ph2 tl'>
-            <Paper className='relative'>
-              {/* Close Button */}
+            {/* Content */}
+            <AnimatingHtDiv>
+              <div>
+                <Route path='/countries/:countryId' component={SmartCountryNameAndFlag} />
+              </div>
+
               <Switch>
-                <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)/new' component={CloseToPlansOrJournals} />
-                <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)/:id' component={CloseToPlansOrJournals} />
-                <Route exact path='/countries/:countryId/plans/:id/journalize' component={CloseToPlansOrJournals} />
+                <Route exact path='/stats' component={WorldOverview} />
+                <Route exact path='/about' component={About} />
+                <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)' component={PlansAndJournals} />
+                <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)/new' component={PlansAndJournals} />
+                <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)/:id' component={PlansAndJournals} />
+                <Route exact path='/countries/:countryId/:plansOrJournals(plans)/:id/journalize' component={PlansAndJournals} />
               </Switch>
+            </AnimatingHtDiv>
+          </Paper>
+        </InsertPaperTransition>
 
-              {/* Content */}
-              <AnimatingHtDiv>
+        <Route
+          path='/countries/:countryId/:plansOrJournals(plans|journals)/:any'
+          render={props => (
+            <InsertPaperTransition nth={2} pathname={props.location.pathname} className='ph2 tl will-change'>
+              <Paper className='relative'>
+                {/* Close Button */}
                 <Switch>
-                  <Route exact path='/countries/:countryId/plans/new' component={AddPlanForm} />
-                  <Route exact path='/countries/:countryId/plans/:id' component={EditPlanForm} />
-                  <Route exact path='/countries/:countryId/plans/:id/journalize' component={JournalizeJournalForm} />
-                  <Route exact path='/countries/:countryId/journals/new' component={AddJournalForm} />
-                  <Route exact path='/countries/:countryId/journals/:id' component={EditJournalForm} />
+                  <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)/new' component={CloseToPlansOrJournals} />
+                  <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)/:id' component={CloseToPlansOrJournals} />
+                  <Route exact path='/countries/:countryId/plans/:id/journalize' component={CloseToPlansOrJournals} />
                 </Switch>
-              </AnimatingHtDiv>
-            </Paper>
-          </InsertPaperTransition>
-        )}
-      />
-    </InsertPaperTransitionWrpr>
-  </div>
-)
+
+                {/* Content */}
+                <AnimatingHtDiv>
+                  <Switch>
+                    <Route exact path='/countries/:countryId/plans/new' component={AddPlanForm} />
+                    <Route exact path='/countries/:countryId/plans/:id' component={EditPlanForm} />
+                    <Route exact path='/countries/:countryId/plans/:id/journalize' component={JournalizeJournalForm} />
+                    <Route exact path='/countries/:countryId/journals/new' component={AddJournalForm} />
+                    <Route exact path='/countries/:countryId/journals/:id' component={EditJournalForm} />
+                  </Switch>
+                </AnimatingHtDiv>
+              </Paper>
+            </InsertPaperTransition>
+          )}
+        />
+      </InsertPaperTransitionWrpr>)}
+  </div>)
+}
 
 PaperRoutes.propTypes = {
   location: PropTypes.shape({

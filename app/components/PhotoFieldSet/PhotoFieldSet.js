@@ -68,7 +68,7 @@ class PhotoFieldSet extends React.PureComponent {
             <div
               style={{ top: 48, backgroundColor: 'rgba(0, 0, 0, 0.54)', height: 'calc(100vh - 48px)' }}
               className={c(
-                'photo-field-set-photo-wrapper fixed right-0 left-0 z-2 items-center justify-center content-center will-change-opacity',
+                'photo-field-set-photo-wrapper fixed right-0 left-0 items-center justify-center content-center will-change-opacity',
                 (fullSizedPhotoVisiblity === 'clean') ? 'dn' : 'flex',
                 (fullSizedPhotoVisiblity === true) && 'animated fadeIn',
                 !fullSizedPhotoVisiblity && 'animated fadeOut',
@@ -112,7 +112,7 @@ class PhotoFieldSet extends React.PureComponent {
               isDeleted &&
               <div
                 style={{ backgroundColor: 'rgba(255, 255, 255, 0.54)' }}
-                className={'photo-field-set-thumb-photo-overlay absolute absolute--fill z-1'}
+                className={'photo-field-set-thumb-photo-overlay absolute absolute--fill'}
               />
             }
           </div>

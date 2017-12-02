@@ -20,6 +20,7 @@ import ScrollOnRouteChange from 'components/ScrollOnRouteChange'
 import FadingMounter from 'components/FadingMounter'
 import NotifSnackbar from 'containers/NotifSnackbar'
 import NotFoundSetter from 'containers/NotFoundSetter'
+import checkIfMobile from 'services/checkIfMobile'
 
 const muiTheme = getMuiTheme({
   appBar: {
@@ -48,14 +49,32 @@ class BareApp extends React.Component {
     }).isRequired,
   }
 
+  state = { isMobile: checkIfMobile() }
+
+  componentDidMount = () => window.addEventListener('optimizedResize', this.handleWindowResize)
+  componentWillUnmount = () => window.addEventListener('optimizedResize', this.handleWindowResize)
+
+  hasRendered = false
+
+  handleWindowResize = () => {
+    if (this.state.isMobile !== checkIfMobile()) {
+      this.hasRendered = false
+      this.setState({ isMobile: checkIfMobile() }, () => {
+        if (!this.hasRendered) this.forceUpdate()
+      })
+    }
+  }
+
   render = () => {
     const { isPathNotFound, location } = this.props
     const isNotFound = isPathNotFound(location.pathname) || false
 
+    this.hasRendered = true
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={{ minWidth: 300 }} className='relative min-vh-100 animated fadeIn'>
-          <div className='fixed top-0 right-0 left-0 z-2'>
+          <div className='fixed z-1 top-0 right-0 left-0'>
             <Nav />
           </div>
 

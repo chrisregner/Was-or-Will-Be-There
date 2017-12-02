@@ -25,17 +25,8 @@ const Wrapper = styled.div`
     }
   }
 
-  &.toLeft {
-    animation-name: toLeft;
-    transform: translateZ(0);
-    will-change: transform;
-  }
-
-  &.toRight {
-    animation-name: toRight;
-    transform: translateZ(0);
-    will-change: transform;
-  }
+  &.toLeft { animation-name: toLeft; }
+  &.toRight { animation-name: toRight; }
 `
 
 class BareInsertPaperTransition extends React.Component {
@@ -71,21 +62,19 @@ class BareInsertPaperTransition extends React.Component {
 
     let animation = ''
 
-    if (wasInPlansOrJournals && isInSpecificPlanOrJournal) {
+    if (wasInPlansOrJournals && isInSpecificPlanOrJournal)
       if (nth === 1) animation = 'toLeft'
       else animation = 'toRight'
-    }
 
-    if (wasInSpecificPlanOrJournal && isInPlansOrJournals) {
+    if (wasInSpecificPlanOrJournal && isInPlansOrJournals)
       if (nth === 1) animation = 'toRight'
       else animation = 'toLeft'
-    }
 
     if (
-      wasInSpecificPlanOrJournal
-      && isInSpecificPlanOrJournal
-      && prevPath !== currPath
-      && nth === 2
+      wasInSpecificPlanOrJournal &&
+      isInSpecificPlanOrJournal &&
+      prevPath !== currPath &&
+      nth === 2
     ) {
       animation = 'toRight'
 
@@ -96,7 +85,7 @@ class BareInsertPaperTransition extends React.Component {
     }
 
     return (
-      <Wrapper innerRef={this.wrapperRef} className={`animated ${animation} ${className}`}>
+      <Wrapper innerRef={this.wrapperRef} className={`will-change-transform animated ${animation} ${className}`}>
         {children}
       </Wrapper>
     )

@@ -1,20 +1,11 @@
-- identify animations in web app
-  - fadingmounter
-    - // add will change
-  - collapse
-    - add will change?
-    - use modal instead in mobile?
-  - animatinghtdiv
-    - add will change?
-    - only in desktop?
-  - photofieldset fullsized image
-    - // add will change
-  - insert paper transition
-    - // add will change
+delete image overlay
+full-sized image
+full-sized image close button
+paper close
+paper close in full sized image
+map?
 
-- disappearLastly - is that harmful?
-- avoid composite/implicit composite?
-- why remove some styles on transition end?
+-
 
 ---
 
@@ -43,6 +34,8 @@
     - add a journal w/ max data
     - edit journal to max data
     - edit journal to min data
+    - image preview
+    - image delete/restore
     - image deletion
       - on manual delete
       - on deleteion of journal itself
@@ -58,27 +51,11 @@
   - mobile
   - chrome
 
-- perf
-  - Leverage browser caching
-
 - issues
-  - IE11
-    - **maybe done** svg/png
-      - use png in ie/edge
-    - **maybe done** BottomNavigation in PlansAndJournals
-      - see if mui-next has addressed this first
-      - use div instead of divs, flexed element can't have buttons as children (some browsers)
-    - **maybe done** mui text-field shows a giant "X"
-      - use the text-input from mui-next
-      - maybe replace all other form components as well?
-      - issues
-  - cross-browser
-    - photo deletion
-      - ie says: xhr errror
-      - chrome says: cors
-    - *least priority* Full-size image preview on journal form overflows downward (not visible) if the image is a portrait
-    - *least priority* when switching pages quickly in this manner: paper route -> map -> paper route, vertical scrollbar appears
-
+  - mobile performance
+  - photo deletion error (ie, firefox?)
+  - Full-size image preview on journal form are shrunk vertically when the image is too long (chrome)
+  - when switching pages quickly in this manner: paper route -> map -> paper route, vertical scrollbar appears (all)
 
 - final readme.md
   - credits
@@ -87,22 +64,27 @@
   - deployed?
   - known issues?
 
-- add known issues to daily routines tracker?
+### mobile performance notes
 
-- delete cloudinary images
-
----
-
-country plans           - /countries/:countryId/plans
-country journals        - /countries/:countryId/journals
-new plan                - /countries/:countryId/plans/new
-edit plan               - /countries/:countryId/plans/:id
-journalize plan         - /countries/:countryId/plans/journalize
-new journal             - /countries/:countryId/journals/new
-edit journal            - /countries/:countryId/journals/:id
-world overview          - /about
-
----
+- check repaints on route change
+  - try removing animatinghtdiv
+- identify animations in web app
+  - fadingmounter
+    - possible fixes
+    - **done** add 'will change' style
+  - collapse
+    - add 'will change' style?
+    - use modal instead in mobile?
+  - animatinghtdiv
+    - add 'will change' style?
+    - only in desktop?
+  - photofieldset fullsized image
+    - **done** add 'will change' style
+  - insert paper transition
+    - **done** add 'will change' style
+- disappearLastly animation - is that harmful?
+- do we have composite/implicit composite?
+- should we remove transition styles on transition end?
 
 ## Possible additional features
 

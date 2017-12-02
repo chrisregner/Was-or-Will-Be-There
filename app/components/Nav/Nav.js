@@ -12,12 +12,14 @@ import InfoIcon from 'material-ui/svg-icons/action/info'
 import StatsIcon from 'material-ui/svg-icons/av/equalizer'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 import { Tabs, Tab } from 'material-ui/Tabs'
+import checkIfMobile from 'services/checkIfMobile'
 
 const BareNav = ({ history, location }) => {
   const changePath = (evOrPath, path) =>
     typeof evOrPath === 'string'
       ? history.push(evOrPath)
       : history.push(path)
+  const isMobile = checkIfMobile()
 
   return (
     <AppBar
@@ -25,80 +27,85 @@ const BareNav = ({ history, location }) => {
       titleStyle={{ fontSize: '1.25rem' }}
       title={(
         <div>
-          <div className='dn-l'>
-            <Switch>
-              <Route exact path='/stats' render={() => 'Overall Stats'} />
-              <Route exact path='/countries/:countryId/plans/new' render={() => 'Add New Plan'} />
-              <Route exact path='/countries/:countryId/plans/:id' render={() => 'Edit Plan'} />
-              <Route exact path='/countries/:countryId/plans/:id/journalize' render={() => 'Journalize'} />
-              <Route exact path='/countries/:countryId/journals/new' render={() => 'Add New Journal'} />
-              <Route exact path='/countries/:countryId/journals/:id' render={() => 'Edit Journal'} />
-              <Route render={() => (<Link to='/' className='no-underline white--i'>Plans & Journals</Link>)} />
-            </Switch>
-          </div>
-          <div className='dn db-l'>
-            <Link to='/' className='no-underline white--i'>Plans & Journals</Link>
-          </div>
+          {
+            isMobile
+              ? (<Switch>
+                <Route exact path='/stats' render={() => 'Overall Stats'} />
+                <Route exact path='/countries/:countryId/plans/new' render={() => 'Add New Plan'} />
+                <Route exact path='/countries/:countryId/plans/:id' render={() => 'Edit Plan'} />
+                <Route exact path='/countries/:countryId/plans/:id/journalize' render={() => 'Journalize'} />
+                <Route exact path='/countries/:countryId/journals/new' render={() => 'Add New Journal'} />
+                <Route exact path='/countries/:countryId/journals/:id' render={() => 'Edit Journal'} />
+                <Route render={() => (<Link to='/' className='no-underline white--i'>Plans & Journals</Link>)} />
+              </Switch>)
+              : (<Link to='/' className='no-underline white--i'>Plans & Journals</Link>)
+          }
         </div>
       )}
       showMenuIconButton={false}
     >
-      <div className='dn db-m db-l pr1 mr1'>
-        <Tabs onChange={changePath} value={location.pathname}>
-          <Tab
-            value='/'
-            label={
-              <div className='ph3 flex items-center'>
-                <div>
-                  <MapIcon style={{
-                    color: location.pathname === '/' ? '#fff' : 'rgba(255, 255, 255, 0.7)',
-                  }} />
+      {
+        !isMobile &&
+        (<div className='pr1 mr1'>
+          <Tabs onChange={changePath} value={location.pathname}>
+            <Tab
+              value='/'
+              label={
+                <div className='ph3 flex items-center'>
+                  <div>
+                    <MapIcon style={{
+                      color: location.pathname === '/' ? '#fff' : 'rgba(255, 255, 255, 0.7)',
+                    }} />
+                  </div>
+                  <div className='dn db-l'>&ensp;Map</div>
                 </div>
-                <div className='dn db-l'>&ensp;Map</div>
-              </div>
-            }
-          />
-          <Tab
-            value='/stats'
-            label={
-              <div className='ph3 flex items-center'>
-                <div>
-                  <StatsIcon style={{
-                    color: location.pathname === '/stats' ? '#fff' : 'rgba(255, 255, 255, 0.7)',
-                  }} />
+              }
+            />
+            <Tab
+              value='/stats'
+              label={
+                <div className='ph3 flex items-center'>
+                  <div>
+                    <StatsIcon style={{
+                      color: location.pathname === '/stats' ? '#fff' : 'rgba(255, 255, 255, 0.7)',
+                    }} />
+                  </div>
+                  <div className='dn db-l'>&ensp;Stats</div>
                 </div>
-                <div className='dn db-l'>&ensp;Stats</div>
-              </div>
-            }
-          />
-          <Tab
-            value='/about'
-            label={
-              <div className='ph3 flex items-center'>
-                <div>
-                  <InfoIcon style={{
-                    color: location.pathname === '/map' ? '#fff' : 'rgba(255, 255, 255, 0.7)',
-                  }} />
+              }
+            />
+            <Tab
+              value='/about'
+              label={
+                <div className='ph3 flex items-center'>
+                  <div>
+                    <InfoIcon style={{
+                      color: location.pathname === '/map' ? '#fff' : 'rgba(255, 255, 255, 0.7)',
+                    }} />
+                  </div>
+                  <div className='dn db-l'>&ensp;About</div>
                 </div>
-                <div className='dn db-l'>&ensp;About</div>
-              </div>
-            }
-          />
-        </Tabs>
-      </div>
+              }
+            />
+          </Tabs>
+        </div>)
+      }
 
-      <div className='dn-ns pr2'>
-        <IconMenu
-          onChange={changePath}
-          iconButtonElement={(<IconButton iconStyle={{ color: '#fff' }}><MoreIcon /></IconButton>)}
-          targetOrigin={{horizontal: 'right', vertical: 'top'}}
-          anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-        >
-          <MenuItem leftIcon={<StatsIcon />} primaryText='Stats' value='/stats' />
-          <MenuItem leftIcon={<MapIcon />} primaryText='Map' value='/' />
-          <MenuItem leftIcon={<InfoIcon />} primaryText='About' value='/about' />
-        </IconMenu>
-      </div>
+      {
+        isMobile &&
+        (<div className='pr2'>
+          <IconMenu
+            onChange={changePath}
+            iconButtonElement={(<IconButton iconStyle={{ color: '#fff' }}><MoreIcon /></IconButton>)}
+            targetOrigin={{horizontal: 'right', vertical: 'top'}}
+            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+          >
+            <MenuItem leftIcon={<StatsIcon />} primaryText='Stats' value='/stats' />
+            <MenuItem leftIcon={<MapIcon />} primaryText='Map' value='/' />
+            <MenuItem leftIcon={<InfoIcon />} primaryText='About' value='/about' />
+          </IconMenu>
+        </div>)
+      }
     </AppBar>
   )
 }
