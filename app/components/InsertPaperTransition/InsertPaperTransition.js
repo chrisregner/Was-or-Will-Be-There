@@ -85,7 +85,7 @@ class BareInsertPaperTransition extends React.Component {
     }
 
     return (
-      <Wrapper innerRef={this.wrapperRef} className={`will-change-transform animated ${animation} ${className}`}>
+      <Wrapper innerRef={this.wrapperRef} className={`transform-z will-change-transform animated ${animation} ${className}`}>
         {children}
       </Wrapper>
     )

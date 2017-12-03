@@ -67,9 +67,6 @@ module.exports = {
             ...(isProdAndServerless ? ['react-optimize'] : []),
           ],
           plugins: [
-            ...(!isProd
-              ? ['react-hot-loader/babel']
-              : []),
             ...(isProdAndServerless
               ? [
                 'styled-components',

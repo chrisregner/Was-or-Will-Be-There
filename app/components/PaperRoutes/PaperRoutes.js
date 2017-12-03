@@ -70,7 +70,7 @@ const PaperRoutes = ({ location }) => {
 
   return (<div
     style={{ minHeight: 'calc(100vh - 48px)', backgroundColor: 'rgba(0, 0, 0, 0.54)' }}
-    className='ph1 ph2-ns pv2 pv3-ns will-change'
+    className='ph1 ph2-ns pv2 pv3-ns'
   >
     {isMobile
       ? (<div className='ph1 ph2-m tl mw7 center'>
@@ -87,26 +87,26 @@ const PaperRoutes = ({ location }) => {
           </Switch>
 
           {/* Content */}
-          {/* <AnimatingHtDiv> */}
-          <Route path='/countries/:countryId' component={SmartCountryNameAndFlag} />
+          <AnimatingHtDiv>
+            <Route path='/countries/:countryId' component={SmartCountryNameAndFlag} />
 
-          <Switch>
-            <Route
-              exact
-              path='/countries/:countryId'
-              render={({ match }) => (<Redirect to={`/countries/${match.params.countryId}/plans`} />)}
-            />
-            <Route exact path='/stats' component={WorldOverview} />
-            <Route exact path='/about' component={About} />
-            <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)' component={PlansAndJournals} />
-            <Route exact path='/countries/:countryId/plans/new' component={AddPlanForm} />
-            <Route exact path='/countries/:countryId/plans/:id' component={EditPlanForm} />
-            <Route exact path='/countries/:countryId/plans/:id/journalize' component={JournalizeJournalForm} />
-            <Route exact path='/countries/:countryId/journals/new' component={AddJournalForm} />
-            <Route exact path='/countries/:countryId/journals/:id' component={EditJournalForm} />
-            <Route component={NotFoundSetter} />
-          </Switch>
-          {/* </AnimatingHtDiv> */}
+            <Switch>
+              <Route
+                exact
+                path='/countries/:countryId'
+                render={({ match }) => (<Redirect to={`/countries/${match.params.countryId}/plans`} />)}
+              />
+              <Route exact path='/stats' component={WorldOverview} />
+              <Route exact path='/about' component={About} />
+              <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)' component={PlansAndJournals} />
+              <Route exact path='/countries/:countryId/plans/new' component={AddPlanForm} />
+              <Route exact path='/countries/:countryId/plans/:id' component={EditPlanForm} />
+              <Route exact path='/countries/:countryId/plans/:id/journalize' component={JournalizeJournalForm} />
+              <Route exact path='/countries/:countryId/journals/new' component={AddJournalForm} />
+              <Route exact path='/countries/:countryId/journals/:id' component={EditJournalForm} />
+              <Route component={NotFoundSetter} />
+            </Switch>
+          </AnimatingHtDiv>
         </Paper>
       </div>)
       : (<InsertPaperTransitionWrpr className='flex items-start justify-center center mw9 w-100'>

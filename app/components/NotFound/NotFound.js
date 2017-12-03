@@ -4,11 +4,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 export default () => (
   <div
-    style={{
-      top: 48,
-      backgroundColor: 'rgba(255, 255, 255, 0.75)',
-    }}
-    className='fixed right-0 left-0 bottom-0 z-1 pt5 pb2 ph2 bg-white dark-gray tc'
+    style={{ minHeight: 'calc(100vh - 48px)', backgroundColor: 'rgba(255, 255, 255, 0.75)' }}
+    className='pt5 pb2 ph2 bg-white dark-gray tc'
   >
     <h1
       style={{
