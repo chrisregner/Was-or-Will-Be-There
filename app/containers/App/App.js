@@ -62,7 +62,7 @@ class BareApp extends React.Component {
         <LastLocationProvider>
           <div style={{ minWidth: 300 }} className='relative animated fadeIn'>
             {/* Nav */}
-            <div className='fixed z-1 top-0 right-0 left-0'>
+            <div className='fixed z-2 top-0 right-0 left-0'>
               <Nav />
             </div>
 
@@ -84,7 +84,7 @@ class BareApp extends React.Component {
                   <Fader isShown={!!match && !isNotFound}>
                     <PaperRoutes location={location} />
                   </Fader>
-                  {!match && location.pathname !== '/' && <NotFoundSetter />}
+                  {!match && location.pathname !== '/' && <NotFoundSetter location={location} />}
                 </div>
               } />
             </div>

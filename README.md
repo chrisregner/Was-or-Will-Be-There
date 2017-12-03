@@ -1,14 +1,3 @@
-delete image overlay
-full-sized image
-full-sized image close button
-paper close
-paper close in full sized image
-map?
-
--
-
----
-
 ## Todos
 
 - features to test
@@ -42,6 +31,8 @@ map?
       - on cancel
     - journals
     - delete journals
+  - not found
+  - not found via resources
 
 - test in...
   - ie11
@@ -51,12 +42,6 @@ map?
   - mobile
   - chrome
 
-- issues
-  - mobile performance
-  - photo deletion error (ie, firefox?)
-  - Full-size image preview on journal form are shrunk vertically when the image is too long (chrome)
-  - when switching pages quickly in this manner: paper route -> map -> paper route, vertical scrollbar appears (all)
-
 - final readme.md
   - credits
     - natural earth data
@@ -64,27 +49,12 @@ map?
   - deployed?
   - known issues?
 
-### mobile performance notes
+## Issues
 
-- check repaints on route change
-  - try removing animatinghtdiv
-- identify animations in web app
-  - fadingmounter
-    - possible fixes
-    - **done** add 'will change' style
-  - collapse
-    - add 'will change' style?
-    - use modal instead in mobile?
-  - animatinghtdiv
-    - add 'will change' style?
-    - only in desktop?
-  - photofieldset fullsized image
-    - **done** add 'will change' style
-  - insert paper transition
-    - **done** add 'will change' style
-- disappearLastly animation - is that harmful?
-- do we have composite/implicit composite?
-- should we remove transition styles on transition end?
+- photo deletion error (ie, firefox?)
+- Full-size image preview on journal form are shrunk vertically when the image is too long (chrome)
+- when switching pages quickly in this manner: paper route -> map -> paper route, vertical scrollbar appears (all)
+- mobile performance?
 
 ## Possible additional features
 

@@ -19,24 +19,34 @@ class Fader extends React.Component {
   static propTypes = {
     isShown: PropTypes.bool.isRequired,
     children: PropTypes.node,
+    style: PropTypes.object,
+    className: PropTypes.string,
   }
 
+  wasShown = false
+
   childFn = state =>
-    <div className={c(
-      'animated transform-z will-change-opacity',
-      state === 'entering' && 'fadeIn',
-      state === 'exiting' && 'fadeOut',
+    <div style={this.props.style} className={c(
+      this.props.className,
+      'transform-z will-change-opacity',
+      state === 'entering' && 'animated fadeIn',
+      state === 'exiting' && 'animated fadeOut',
+      state === 'exited' && 'dn',
     )}>
-      {state !== 'exited' &&
-      <UpdateStopper allowUpdate={this.props.isShown}>
+      {this.wasShown && <UpdateStopper allowUpdate={this.props.isShown}>
         {this.props.children}
       </UpdateStopper>}
     </div>
 
-  render = () =>
-    <Transition in={this.props.isShown} timeout={duration}>
-      {this.childFn}
-    </Transition>
+  render = () => {
+    if (this.props.isShown) this.wasShown = true
+
+    return (
+      <Transition in={this.props.isShown} timeout={duration}>
+        {this.childFn}
+      </Transition>
+    )
+  }
 }
 
 export default Fader

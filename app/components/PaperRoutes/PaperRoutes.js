@@ -50,19 +50,21 @@ const CloseToMap = () => (
 )
 
 const CloseToPlansOrJournals = ({ match }) => (
-  <NonALink
-    to={`/countries/${match.params.countryId}/${match.params.plansOrJournals}`}
-    className='absolute z-1 top-0 right-0 db pa1'
-  >
-    <IconButton
-      style={{ width: 36, height: 36, padding: 8 }}
-      iconStyle={{ width: 18, height: 18 }}
-      tooltip={`Go back to ${match.params.plansOrJournals}`}
-      tooltipPosition='bottom-left'
+  match.params.plansOrJournals
+    ? <NonALink
+      to={`/countries/${match.params.countryId}/${match.params.plansOrJournals}`}
+      className='absolute z-1 top-0 right-0 db pa1'
     >
-      <CloseIcon />
-    </IconButton>
-  </NonALink>
+      <IconButton
+        style={{ width: 36, height: 36, padding: 8 }}
+        iconStyle={{ width: 18, height: 18 }}
+        tooltip={`Go back to ${match.params.plansOrJournals}`}
+        tooltipPosition='bottom-left'
+      >
+        <CloseIcon />
+      </IconButton>
+    </NonALink>
+    : null
 )
 
 const PaperRoutes = ({ location }) => {
@@ -178,7 +180,7 @@ CloseToPlansOrJournals.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       countryId: PropTypes.string.isRequired,
-      plansOrJournals: PropTypes.string.isRequired,
+      plansOrJournals: PropTypes.string,
     }).isRequired,
   }).isRequired,
 }

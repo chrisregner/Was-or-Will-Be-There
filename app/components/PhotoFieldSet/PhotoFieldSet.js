@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import c from 'classnames'
 
 import Paper from 'material-ui/Paper'
 import IconButton from 'material-ui/IconButton'
@@ -12,6 +11,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete'
 import RestoreIcon from 'material-ui/svg-icons/action/restore'
 
 import { createJournalThumbUrl, createJournalPhotoUrl } from 'constants/'
+import Fader from 'components/Fader'
 
 class PhotoFieldSet extends React.PureComponent {
   static propTypes = {
@@ -29,15 +29,15 @@ class PhotoFieldSet extends React.PureComponent {
   }
 
   state = {
-    fullSizedPhotoVisiblity: 'clean',
+    isPhotoVisible: false,
   }
 
   handleShowFullSizedPhoto = () => {
-    this.setState({ fullSizedPhotoVisiblity: true })
+    this.setState({ isPhotoVisible: true })
   }
 
   handleHideFullSizedPhoto = () => {
-    this.setState({ fullSizedPhotoVisiblity: false })
+    this.setState({ isPhotoVisible: false })
   }
 
   handleSetPhotoDesc = (ev, newDesc) => {
@@ -58,43 +58,44 @@ class PhotoFieldSet extends React.PureComponent {
 
   render = () => {
     const { path, description, isDeleted } = this.props
-    const { fullSizedPhotoVisiblity } = this.state
+    const { isPhotoVisible } = this.state
 
     return (
       <div>
         {/* The full-sized photo */}
         {ReactDOM.createPortal(
           (
-            <div
-              style={{ top: 48, backgroundColor: 'rgba(0, 0, 0, 0.54)', height: 'calc(100vh - 48px)' }}
-              className={c(
-                'photo-field-set-photo-wrapper fixed right-0 left-0 items-center justify-center content-center will-change-opacity',
-                (fullSizedPhotoVisiblity === 'clean') ? 'dn' : 'flex',
-                (fullSizedPhotoVisiblity === true) && 'animated fadeIn',
-                !fullSizedPhotoVisiblity && 'animated fadeOut',
-              )}
+            <Fader
+              isShown={isPhotoVisible}
+              style={{ top: 48 }}
+              className='photo-field-set-photo-wrapper fixed right-0 left-0'
             >
-              <Paper className='relative' rounded={false}>
-                <img
-                  style={{ maxHeight: 'calc(100vh - 48px)' }}
-                  className='photo-field-set-photo w-100 h-auto db'
-                  src={createJournalPhotoUrl(path)}
-                  alt={description}
-                />
-                <div style={{ top: 8, right: 8 }} className='absolute'>
-                  <FloatingActionButton
-                    onClick={this.handleHideFullSizedPhoto}
-                    className='photo-field-set-hide-full-sized-photo'
-                    mini
-                    tooltip='Hide full sized photo'
-                    backgroundColor='rgba(0, 0, 0, 0.54)'
-                    iconstyle={{ color: '#fff' }}
-                  >
-                    <CloseIcon />
-                  </FloatingActionButton>
-                </div>
-              </Paper>
-            </div>
+              <div
+                style={{ backgroundColor: 'rgba(0, 0, 0, 0.54)', height: 'calc(100vh - 48px)' }}
+                className='flex items-center justify-center content-center'
+              >
+                <Paper className='relative' rounded={false}>
+                  <img
+                    style={{ maxHeight: 'calc(100vh - 48px)' }}
+                    className='photo-field-set-photo w-100 h-auto db'
+                    src={createJournalPhotoUrl(path)}
+                    alt={description}
+                  />
+                  <div style={{ top: 8, right: 8 }} className='absolute'>
+                    <FloatingActionButton
+                      onClick={this.handleHideFullSizedPhoto}
+                      className='photo-field-set-hide-full-sized-photo'
+                      mini
+                      tooltip='Hide full sized photo'
+                      backgroundColor='rgba(0, 0, 0, 0.54)'
+                      iconstyle={{ color: '#fff' }}
+                    >
+                      <CloseIcon />
+                    </FloatingActionButton>
+                  </div>
+                </Paper>
+              </div>
+            </Fader>
           ),
           document.getElementById('modal-portal')
         )}
