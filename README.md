@@ -55,6 +55,7 @@
 - Full-size image preview on journal form are shrunk vertically when the image is too long (chrome)
 - when switching pages quickly in this manner: paper route -> map -> paper route, vertical scrollbar appears (all)
 - mobile performance?
+- Antartica can't be clicked on map
 
 ## Possible additional features
 

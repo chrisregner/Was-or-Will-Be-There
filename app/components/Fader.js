@@ -23,8 +23,6 @@ class Fader extends React.Component {
     className: PropTypes.string,
   }
 
-  wasShown = false
-
   childFn = state =>
     <div style={this.props.style} className={c(
       this.props.className,
@@ -33,20 +31,15 @@ class Fader extends React.Component {
       state === 'exiting' && 'animated fadeOut',
       state === 'exited' && 'dn',
     )}>
-      {this.wasShown && <UpdateStopper allowUpdate={this.props.isShown}>
+      <UpdateStopper allowUpdate={this.props.isShown}>
         {this.props.children}
-      </UpdateStopper>}
+      </UpdateStopper>
     </div>
 
-  render = () => {
-    if (this.props.isShown) this.wasShown = true
-
-    return (
-      <Transition in={this.props.isShown} timeout={duration}>
-        {this.childFn}
-      </Transition>
-    )
-  }
+  render = () =>
+    <Transition in={this.props.isShown} timeout={duration}>
+      {this.childFn}
+    </Transition>
 }
 
 export default Fader
