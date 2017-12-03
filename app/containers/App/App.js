@@ -90,11 +90,11 @@ class BareApp extends React.Component {
             </div>
 
             {/* Not Found Page */}
-            {<div className='absolute w-100' style={{ top: 48 }}>
-              {<Fader isShown={isNotFound}>
+            <div className='absolute w-100' style={{ top: 48 }}>
+              <Fader isShown={isNotFound}>
                 <NotFound />
-              </Fader>}
-            </div>}
+              </Fader>
+            </div>
 
             {/* Invisible Components */}
             <ScrollOnRouteChange />

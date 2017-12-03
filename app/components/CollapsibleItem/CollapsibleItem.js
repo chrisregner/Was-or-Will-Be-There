@@ -18,6 +18,7 @@ import Collapse from 'material-ui-next/transitions/Collapse'
 
 import PhotoSlider from 'components/PhotoSlider'
 import NonALink from 'components/NonALink'
+import checkIfMobile from 'services/checkIfMobile'
 
 const preventDefault = e => e.preventDefault()
 
@@ -90,6 +91,78 @@ class CollapsibleItem extends React.Component {
     const homecoming = data.get('homecoming')
     const timeAlert = this.getTimeAlert()
     const iconStyle = isSelected ? { color: '#fff' } : {}
+    const isMobile = checkIfMobile()
+
+    const collapsedContent =
+      <div className='bg-black-10'>
+        {
+          (timeAlert && type === 'plan') &&
+          <div className='pt3 ph3 f6 tc'>
+            {
+              timeAlert === 'journalize'
+                ? <span style={{ color: amber900 }}>
+                You must already be home. Click{' '}
+                  <Link
+                    tabIndex={this.state.isExpanded ? 0 : -1}
+                    data-test='timeAlert'
+                    to={`/countries/${data.get('countryId')}/${type}s/${data.get('id')}/journalize`}
+                    className='color-inherit'
+                  >
+                  here
+                  </Link>
+                  {' '}to journalize and save memories from your journey!
+                </span>
+                : <span data-test='timeAlert' style={{ color: cyan700 }}>
+                Don’t forget, you will be leaving {timeAlert}!
+                </span>
+            }
+          </div>
+        }
+
+        {
+          this.isTitleTruncated &&
+          <div className='pt3 ph3 w-100 cg'>
+            <div className='f6 pb2' style={{ color: fade(darkBlack, 0.54) }}>
+              Full title:
+            </div>
+            <div data-test='fullTitle' className='f5 lh-title'>
+              {data.get('title')}
+            </div>
+          </div>
+        }
+
+        {
+          data.get('photos') && data.get('photos').size > 0 &&
+          <PhotoSlider data-test='photoSlider' photos={data.get('photos')} />
+        }
+
+        {
+          data.get('copy') &&
+          <div className='pt3 ph3'>
+            <div
+              data-test='copyLabel'
+              className='f6 pb2'
+              style={{ color: fade(darkBlack, 0.54) }}
+            >
+              {type === 'plan' && 'Notes'}
+              {type === 'journal' && 'Story'}
+            </div>
+            <div data-test='copy' className='f5 lh-title'>
+              {data.get('copy')}
+            </div>
+          </div>
+        }
+
+        <div className='pa3 tr'>
+          <NonALink
+            data-test='editLink'
+            to={`/countries/${data.get('countryId')}/${type}s/${data.get('id')}`}
+            className='no-underline'
+          >
+            <RaisedButton tabIndex={this.state.isExpanded ? 0 : -1} label='edit' icon={<EditIcon />} />
+          </NonALink>
+        </div>
+      </div>
 
     return (
       <div>
@@ -175,77 +248,13 @@ class CollapsibleItem extends React.Component {
             />
           }
         </ListItem>
-        <Collapse data-test='details' in={this.state.isExpanded}>
-          <div className='bg-black-10'>
-            {
-              (timeAlert && type === 'plan') &&
-              <div className='pt3 ph3 f6 tc'>
-                {
-                  timeAlert === 'journalize'
-                    ? <span style={{ color: amber900 }}>
-                    You must already be home. Click{' '}
-                      <Link
-                        tabIndex={this.state.isExpanded ? 0 : -1}
-                        data-test='timeAlert'
-                        to={`/countries/${data.get('countryId')}/${type}s/${data.get('id')}/journalize`}
-                        className='color-inherit'
-                      >
-                      here
-                      </Link>
-                      {' '}to journalize and save memories from your journey!
-                    </span>
-                    : <span data-test='timeAlert' style={{ color: cyan700 }}>
-                    Don’t forget, you will be leaving {timeAlert}!
-                    </span>
-                }
-              </div>
-            }
-
-            {
-              this.isTitleTruncated &&
-              <div className='pt3 ph3 w-100 cg'>
-                <div className='f6 pb2' style={{ color: fade(darkBlack, 0.54) }}>
-                  Full title:
-                </div>
-                <div data-test='fullTitle' className='f5 lh-title'>
-                  {data.get('title')}
-                </div>
-              </div>
-            }
-
-            {
-              data.get('photos') && data.get('photos').size > 0 &&
-              <PhotoSlider data-test='photoSlider' photos={data.get('photos')} />
-            }
-
-            {
-              data.get('copy') &&
-              <div className='pt3 ph3'>
-                <div
-                  data-test='copyLabel'
-                  className='f6 pb2'
-                  style={{ color: fade(darkBlack, 0.54) }}
-                >
-                  {type === 'plan' && 'Notes'}
-                  {type === 'journal' && 'Story'}
-                </div>
-                <div data-test='copy' className='f5 lh-title'>
-                  {data.get('copy')}
-                </div>
-              </div>
-            }
-
-            <div className='pa3 tr'>
-              <NonALink
-                data-test='editLink'
-                to={`/countries/${data.get('countryId')}/${type}s/${data.get('id')}`}
-                className='no-underline'
-              >
-                <RaisedButton tabIndex={this.state.isExpanded ? 0 : -1} label='edit' icon={<EditIcon />} />
-              </NonALink>
-            </div>
+        {isMobile
+          ? <div className={this.state.isExpanded ? '' : 'dn'}>
+            {collapsedContent}
           </div>
-        </Collapse>
+          : <Collapse data-test='details' in={this.state.isExpanded}>
+            {collapsedContent}
+          </Collapse>}
       </div>
     )
   }
