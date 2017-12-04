@@ -37,11 +37,11 @@
   - not found via resources
 
 - test in...
-  - ie11 (first)
-  - mobile (first)
-  - edge
   - chrome
-  - safari?
+  - ie11 (first?)
+  - chrome-mobile (first?)
+  - safari-mobile (ios)
+  - safari browser
 
 - final readme.md
   - credits

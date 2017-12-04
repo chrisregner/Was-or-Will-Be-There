@@ -40,7 +40,11 @@ class Fader extends React.Component {
   render = () => {
     if (checkIfMobile()) {
       if (this.props.isShown)
-        return this.props.children
+        return (
+          <div style={this.props.style} className={this.props.className}>
+            {this.props.children}
+          </div>
+        )
 
       return null
     }
