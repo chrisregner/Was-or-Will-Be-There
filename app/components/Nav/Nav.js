@@ -44,56 +44,53 @@ const BareNav = ({ history, location }) => {
       )}
       showMenuIconButton={false}
     >
-      {
-        !isMobile &&
-        (<div className='pr1 mr1'>
-          <Tabs onChange={changePath} value={location.pathname}>
-            <Tab
-              value='/'
-              label={
-                <div className='ph3 flex items-center'>
-                  <div>
-                    <MapIcon style={{
-                      color: location.pathname === '/' ? '#fff' : 'rgba(255, 255, 255, 0.7)',
-                    }} />
-                  </div>
-                  <div className='dn db-l'>&ensp;Map</div>
+      <div className='pr1 mr1 dn db-ns'>
+        <Tabs onChange={changePath} value={location.pathname}>
+          <Tab
+            value='/'
+            label={
+              <div className='ph3 flex items-center'>
+                <div>
+                  <MapIcon style={{
+                    color: location.pathname === '/' ? '#fff' : 'rgba(255, 255, 255, 0.7)',
+                  }} />
                 </div>
-              }
-            />
-            <Tab
-              value='/stats'
-              label={
-                <div className='ph3 flex items-center'>
-                  <div>
-                    <StatsIcon style={{
-                      color: location.pathname === '/stats' ? '#fff' : 'rgba(255, 255, 255, 0.7)',
-                    }} />
-                  </div>
-                  <div className='dn db-l'>&ensp;Stats</div>
+                <div className='dn db-l'>&ensp;Map</div>
+              </div>
+            }
+          />
+          <Tab
+            value='/stats'
+            label={
+              <div className='ph3 flex items-center'>
+                <div>
+                  <StatsIcon style={{
+                    color: location.pathname === '/stats' ? '#fff' : 'rgba(255, 255, 255, 0.7)',
+                  }} />
                 </div>
-              }
-            />
-            <Tab
-              value='/about'
-              label={
-                <div className='ph3 flex items-center'>
-                  <div>
-                    <InfoIcon style={{
-                      color: location.pathname === '/map' ? '#fff' : 'rgba(255, 255, 255, 0.7)',
-                    }} />
-                  </div>
-                  <div className='dn db-l'>&ensp;About</div>
+                <div className='dn db-l'>&ensp;Stats</div>
+              </div>
+            }
+          />
+          <Tab
+            value='/about'
+            label={
+              <div className='ph3 flex items-center'>
+                <div>
+                  <InfoIcon style={{
+                    color: location.pathname === '/map' ? '#fff' : 'rgba(255, 255, 255, 0.7)',
+                  }} />
                 </div>
-              }
-            />
-          </Tabs>
-        </div>)
-      }
+                <div className='dn db-l'>&ensp;About</div>
+              </div>
+            }
+          />
+        </Tabs>
+      </div>
 
       {
         isMobile &&
-        (<div className='pr2'>
+        (<div className='pr2 dn-ns'>
           <IconMenu
             onChange={changePath}
             iconButtonElement={(<IconButton iconStyle={{ color: '#fff' }}><MoreIcon /></IconButton>)}

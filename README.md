@@ -37,9 +37,9 @@
   - not found via resources
 
 - test in...
-  - chrome
-  - ie11 (first?)
-  - chrome-mobile (first?)
+  - // chrome
+  - // ie11 (first?)
+  - // chrome-mobile (first?)
   - safari-mobile (ios)
   - safari browser
 
