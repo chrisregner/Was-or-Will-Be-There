@@ -30,15 +30,15 @@ export const plans = I.List([
     homecoming: inOneMonthAndQuarter,
   }),
   I.Map({
-    id: 'dummy_plan_ca_01',
-    countryId: 'ca',
+    id: 'dummy_plan_sh_01',
+    countryId: 'sh',
     title: 'Ezhtellar team building',
     departure: oneWeekAgo,
     homecoming: today,
   }),
   I.Map({
-    id: 'dummy_plan_ca_02',
-    countryId: 'ca',
+    id: 'dummy_plan_sh_02',
+    countryId: 'sh',
     title: 'Tony’s wedding',
     copy: 'That crystal duck would make a perfect gift',
     departure: inOneMonthAndQuarter,
@@ -49,6 +49,12 @@ export const plans = I.List([
     countryId: 'gb',
     title: 'UK dev conference',
     departure: inOneDay,
+  }),
+  I.Map({
+    id: 'dummy_plan_de_01',
+    countryId: 'de',
+    title: 'Rindfleischetikettierungsueberwachungsaufgabenuebertragungsgesetz',
+    copy: 'Alles hat ein Ende, nur die Wurst hat zwei. Rindfleischetikettierungsueberwachungsaufgabenuebertragungsgesetz!',
   }),
 ])
 

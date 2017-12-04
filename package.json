@@ -68,7 +68,6 @@
     "react-router-dom": "^4.2.2",
     "react-router-last-location": "^1.0.3",
     "react-test-renderer": "^16.0.0",
-    "react-transition-group": "^2.2.1",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-batched-actions": "^0.1.6",

@@ -125,7 +125,7 @@ class CollapsibleItem extends React.Component {
             <div className='f6 pb2' style={{ color: fade(darkBlack, 0.54) }}>
               Full title:
             </div>
-            <div data-test='fullTitle' className='f5 lh-title'>
+            <div data-test='fullTitle' className='f5 lh-title hyphenate'>
               {data.get('title')}
             </div>
           </div>
@@ -147,7 +147,7 @@ class CollapsibleItem extends React.Component {
               {type === 'plan' && 'Notes'}
               {type === 'journal' && 'Story'}
             </div>
-            <div data-test='copy' className='f5 lh-title'>
+            <div data-test='copy' className='f5 lh-title hyphenate'>
               {data.get('copy')}
             </div>
           </div>

@@ -12,17 +12,23 @@ class ImageLoader extends React.Component {
     hasLoaded: false,
   }
 
-  componentDidMount = () => {
-    if (this.img.complete)
+  checkIfImageHasLoaded = () => {
+    if (this.imgEl.complete && !this.state.hasLoaded)
       this.setState({ hasLoaded: true })
-    else
-      this.img.addEventListener('load', () => {
+    else if (!this.imgEl.complete)
+      this.imgEl.addEventListener('load', () => {
         this.setState({ hasLoaded: true })
       })
   }
 
+  componentDidMount = this.checkIfImageHasLoaded
+  componentDidUpdate = this.checkIfImageHasLoaded
+  componentWillUpdate = nextProps =>
+    nextProps.src !== this.props.src &&
+    this.setState({ hasLoaded: false })
+
   imgRef = (img) => {
-    this.img = img
+    this.imgEl = img
   }
 
   render = () => {
@@ -32,7 +38,7 @@ class ImageLoader extends React.Component {
     return (
       <div>
         {hasLoaded ? loaded : loader}
-        <img src={src} ref={this.imgRef} className='dn' role='presentation' />
+        <img src={src} ref={(el) => { this.imgEl = el }} className='dn' role='presentation' />
       </div>
     )
   }

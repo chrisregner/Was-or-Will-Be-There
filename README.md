@@ -8,6 +8,7 @@
     - map clickable polygons
     - map hover
   - overview
+    - long country name truncation
     - close link
     - individual country link
     - open map link
@@ -19,6 +20,7 @@
     - plans
     - delete plans
   - journals
+    - long country name truncation
     - add a journal w/ min data
     - add a journal w/ max data
     - edit journal to max data
@@ -35,12 +37,11 @@
   - not found via resources
 
 - test in...
-  - ie11
+  - ie11 (first)
+  - mobile (first)
   - edge
-  - safari?
-  - firefox
-  - mobile
   - chrome
+  - safari?
 
 - final readme.md
   - credits

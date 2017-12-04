@@ -21,6 +21,14 @@ a { color: #00838F; }
 .bottom-50 { bottom: 50%; }
 .left-50 { left: 50%; }
 .right-50 { right: 50%; }
+.hyphenate {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
 
 /**
  * Tachyons-style classes with !important

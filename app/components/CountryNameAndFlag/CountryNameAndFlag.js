@@ -46,7 +46,7 @@ const CountryNameAndFlag = ({ countryId, customClassNames }) => (
       )}
     />
     <div
-      className={`country-name-and-flag-country-name flex-grow-1 ${
+      className={`country-name-and-flag-country-name flex-grow-1 truncate ${
         (customClassNames && customClassNames.countryName) ||
         defaultClassNames.countryName
       }`}

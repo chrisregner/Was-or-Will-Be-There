@@ -73,7 +73,7 @@ const BareWorldOverview = ({ worldOverview }) => (
               >
                 <ListItem innerDivStyle={{ padding: '8px 8px 8px 16px' }}>
                   <div className='flex items-center'>
-                    <div className='flex-grow-1'>
+                    <div className='flex-grow-1 truncate'>
                       <CountryNameAndFlag
                         customClassNames={{
                           loader: 'w2pt5 mr2',

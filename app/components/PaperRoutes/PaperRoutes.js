@@ -89,7 +89,9 @@ const PaperRoutes = ({ location }) => {
           </Switch>
 
           {/* Content */}
-          <Route path='/countries/:countryId' component={SmartCountryNameAndFlag} />
+          <div style={{ paddingRight: 32 }}>
+            <Route path='/countries/:countryId' component={SmartCountryNameAndFlag} />
+          </div>
           <Switch>
             <Route
               exact
@@ -121,11 +123,16 @@ const PaperRoutes = ({ location }) => {
 
             {/* Content */}
             <AnimatingHtDiv>
-              <div>
+              <div style={{ paddingRight: 32 }}>
                 <Route path='/countries/:countryId' component={SmartCountryNameAndFlag} />
               </div>
 
               <Switch>
+                <Route
+                  exact
+                  path='/countries/:countryId'
+                  render={({ match }) => (<Redirect to={`/countries/${match.params.countryId}/plans`} />)}
+                />
                 <Route exact path='/stats' component={WorldOverview} />
                 <Route exact path='/about' component={About} />
                 <Route exact path='/countries/:countryId/:plansOrJournals(plans|journals)' component={PlansAndJournals} />
