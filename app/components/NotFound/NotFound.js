@@ -1,6 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
+
+import NonALink from 'components/NonALink'
 
 export default () => (
   <div
@@ -19,9 +20,9 @@ export default () => (
     <p className='ma0 lh-copy f4'>That page doesn’t even exist!</p>
     <p className='ma0 lh-copy f6'>Maybe there was some mistake in the URL?</p>
     <div className='tc pt4'>
-      <Link to={'/'}>
+      <NonALink to={'/'}>
         <RaisedButton secondary label='Explore The World Instead' />
-      </Link>
+      </NonALink>
     </div>
   </div>
 )
