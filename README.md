@@ -1,76 +1,25 @@
-## Todos
+Plans And Journals
+========================================
 
-- features to test
-  - navbar
-    - navbar links
-  - map
-    - map controls
-    - map clickable polygons
-    - map hover
-  - overview
-    - long country name truncation
-    - close link
-    - individual country link
-    - open map link
-  - plans
-    - add a plan w/ min data
-    - add a plan w/ max data
-    - edit plan to max data
-    - edit plan to min data
-    - plans
-    - delete plans
-  - journals
-    - long country name truncation
-    - add a journal w/ min data
-    - add a journal w/ max data
-    - edit journal to max data
-    - edit journal to min data
-    - image preview
-    - image delete/restore
-    - image deletion
-      - on manual delete
-      - on deleteion of journal itself
-      - on cancel
-    - journals
-    - delete journals
-  - not found
-  - not found via resources
+See it [here](https://chrisregner.github.io/plans-and-journals/#/).
 
-- test in...
-  - // chrome
-  - // ie11 (first?)
-  - // chrome-mobile (first?)
-  - safari-mobile (ios)
-  - safari browser
+**Features:**
 
-- final readme.md
-  - credits
-    - natural earth data
-  - linted?
-  - deployed?
-  - known issues?
+1. lets you choose a country from the map to...
+2. add a `plan` which can have its its title, notes, departure, and homecoming date; or
+3. add a `journal` which can have the same parts as a `plan` plus you can upload images
+4. lets you edit and delete these plans and journals
+5. lets you see the overview of the countries you've been/planning to go to
 
-## Issues
+## Main tools/libraries used:
 
-- photo deletion error (ie, firefox?)
-- Full-size image preview on journal form are shrunk vertically when the image is too long (chrome)
-- when switching pages quickly in this manner: paper route -> map -> paper route, vertical scrollbar appears (all)
-- mobile performance?
-- Antartica can't be clicked on map
-
-## Possible additional features
-
-- allow clearing datepicker value
-- notification
-  - notify when...
-    - 30 days before an departure/homecoming
-    - 7 days before an departure/homecoming
-    - 1 day before an departure/homecoming
-    - on the day of departure/homecoming
-    - 1 day after homecoming (journalize)
-- sort plans/journals/both
-  - chronologically
-  - geographically
-- input on map to search and select places
-  - pan map upon selection
-- automatic image deleting (when certain limit is met, delete in the next midnight?)
+- [React](https://facebook.github.io/react/)
+- [Redux](http://redux.js.org/)
+- [React-Router](https://reacttraining.com/react-router/)
+- [Webpack](https://webpack.js.org/)
+- [Material-UI](XXX) (UI library)
+- [Tachyons](http://tachyons.io/) (functional CSS framework. Try it, it’s fun!)
+- [Mocha](https://mochajs.org/), [Chai](http://chaijs.com/api/bdd/), [Enzyme](http://airbnb.io/enzyme/) and [Testdouble](https://github.com/testdouble/testdouble.js/) (for unit-tests)
+- [Google Map](https://www.google.com.ph/maps/@14.6907136,121.1244544,13z?hl=en)
+- [Cloudinary](https://cloudinary.com/) (cloud image storage API)
+- [Natural Earth](http://www.naturalearthdata.com/) (map data)
