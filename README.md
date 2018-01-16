@@ -6,10 +6,10 @@ See it [here](https://chrisregner.github.io/plans-and-journals/#/).
 **Features:**
 
 1. lets you choose a country from the map to...
-2. add a `plan` which can have its its title, notes, departure, and homecoming date; or
+2. add a `plan` which can have its title, notes, departure, and homecoming date; or
 3. add a `journal` which can have the same parts as a `plan` plus you can upload images
 4. lets you edit and delete these plans and journals
-5. lets you see the overview of the countries you've been/planning to go to
+5. lets you see the overview of the countries you've been to/planning to go to
 
 ## Main tools/libraries used:
 
